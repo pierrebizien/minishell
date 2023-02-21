@@ -14,7 +14,7 @@ int	main(int ac, char **av, char**envp)
 					\n| ██ \\/  | ██ /██████| ██ \\  ██ /██████|  ██████/| ██  | ██| ████████| ████████| ████████\
 					\n|__/     |__/|______/|__/  \\__/|______/ \\______/ |__/  |__/|________/|________/|________ ";
 	fprintf(stderr, "%s", logo);
-	fprintf(stderr, "\n\n\n\n\n\n\ne\n\n");
+	fprintf(stderr, "\n\n\n\n\n\n\n");
 	while (1)
 	{
 		write(1, "microshell> ", 11);
