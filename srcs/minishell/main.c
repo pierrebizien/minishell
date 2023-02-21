@@ -6,7 +6,11 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 11:41:13 by pbizien           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/02/21 14:12:01 by ngriveau         ###   ########.fr       */
+=======
+/*   Updated: 2023/02/21 14:11:28 by pbizien          ###   ########.fr       */
+>>>>>>> fa431f98dfcf61764e0c0436630c0187f60deaab
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +34,7 @@ int	main(int ac, char **av, char**envp)
 	while (1)
 	{
 		write(1, "microshell> ", 11);
+		write(1, "minishell> ", 11);
 		get_next_line(0);
 		
 	}
