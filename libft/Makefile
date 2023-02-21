@@ -20,7 +20,7 @@ BONUS = 		\
 		ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c
 
 SRCS_PATH = ./src
-SRCS = ${LIBC} ${ADDITIONAL} ${PRINTF} ${BONUS}
+SRCS = ${LIBC} ${ADDITIONAL} ${PRINTF} ${GETNEXTLINE} ${BONUS}
 
 OBJS_PATH = ./obj
 OBJS = ${patsubst %.c, ${OBJS_PATH}/%.o, ${SRCS}}
@@ -36,17 +36,18 @@ vpath %.c ${SRCS_PATH}
 all: 	${LIB}
 
 ${OBJS}: ${OBJS_PATH}/%.o: %.c Makefile ${SRCS_PATH}/inc/SuperLibft.h
-		mkdir -p ${OBJS_PATH}
-		${CC} ${CFLAGS} -c $< -o $@ ${INCLUDE}
+	@	mkdir -p ${OBJS_PATH}
+	@	${CC} ${CFLAGS} -c $< -o $@ ${INCLUDE}
 
 ${LIB}:	${OBJS}
-		ar -rsc ${LIB} ${OBJS}
+	@	ar -rsc ${LIB} ${OBJS}
+	@	echo "\e[32mLibft OK\e[0m"
 
 clean:	
-		rm -rf ${OBJS_PATH}
+	@	rm -rf ${OBJS_PATH}
 
 fclean:	clean;
-		rm -rf ${LIB}
+	@	rm -rf ${LIB}
 
 re:	fclean all
 
