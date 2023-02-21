@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "./inc/minishell.h"
 
 int	main(int ac, char **av, char**envp)
 {
@@ -20,7 +20,7 @@ int	main(int ac, char **av, char**envp)
 		logo = "coucou";
 		write(1, "microshell> ", 11);
 		write(1, "minishell> ", 11);
-		get_next_line(0);
+		ft_strlen(logo);
 		
 	}
 

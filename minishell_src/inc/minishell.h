@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 11:42:10 by pbizien           #+#    #+#             */
-/*   Updated: 2023/02/21 13:30:12 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/02/21 16:22:30 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 # define MINISHELL_H
 
+# include "../../libft/src/inc/SuperLibft.h"
 # include <stdio.h>
-# include "../gnl/get_next_line.h"
 
 #endif
