@@ -25,7 +25,7 @@ int ft_parse(char *str)
     data.args = ft_split(str, ' ');
     if (!data.args)
         return (1);
-    free(str);
+    // free(str);
     return(ft_detect());
     return (0);
 }
