@@ -1,4 +1,6 @@
-#include "minishell.h"
+#include "./inc/minishell.h"
+
+
 
 t_data data;
 
