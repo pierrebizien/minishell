@@ -1,28 +1,30 @@
-#include "./inc/minishell.h"
+#include "minishell.h"
+#include <stdio.h>
+#include <readline/readline.h>
+#include <readline/history.h>
+
+
+t_data data;
 
 int	main(int ac, char **av, char**envp)
 {
 	(void)ac;
 	(void)av;
 	(void)envp;
-	char *logo= "	\n /██      /██ /██████ /██   /██ /██████  /██████  /██   /██ /████████ /██       /██      \
-					\n| ███    /███|_  ██_/| ███ | ██|_  ██_/ /██__  ██| ██  | ██| ██_____/| ██      | ██      \
-					\n| ████  /████  | ██  | ████| ██  | ██  | ██  \\__/| ██  | ██| ██      | ██      | ██      \
-					\n| ██ ██/██ ██  | ██  | ██ ██ ██  | ██  |  ██████ | ████████| █████   | ██      | ██      \
-					\n| ██  ███| ██  | ██  | ██  ████  | ██   \\____  ██| ██__  ██| ██__/   | ██      | ██      \
-					\n| ██\\  █ | ██  | ██  | ██\\  ███  | ██   /██  \\ ██| ██  | ██| ██      | ██      | ██      \
-					\n| ██ \\/  | ██ /██████| ██ \\  ██ /██████|  ██████/| ██  | ██| ████████| ████████| ████████\
-					\n|__/     |__/|______/|__/  \\__/|______/ \\______/ |__/  |__/|________/|________/|________ ";
-	fprintf(stderr, "%s", logo);
-	fprintf(stderr, "\n\n\n\n\n\n\n");
-	while (1)
+	char *str;
+	// read(0, str, 10);
+	ft_init(av, envp, ac);
+	ft_logo();
+	str = readline("minishell> ");
+	fprintf(stderr, "str vaut |%s|\n", str);
+	add_history(str);
+	while (str != 0)
 	{
-		logo = "coucou";
-		write(1, "microshell> ", 11);
-		write(1, "minishell> ", 11);
-		ft_strlen(logo);
-		
+		str = readline("minishell> ");
+		add_history(str);
+		ft_parse(str);
 	}
+	// write(1, &str, 10);
 
 	//test
 }
