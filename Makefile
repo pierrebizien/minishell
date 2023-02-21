@@ -17,6 +17,7 @@ HEAD_PATH += -I ./minishell_src/inc
 HEAD_PATH += -I ./libft/inc
 # INCLUDE += -I ./pipex/inc
 LIB += -L ./libft -lft
+LIB += -L ./pipex -lpipex
 LIB += -lreadline
 
 NAME = minishell
@@ -27,15 +28,17 @@ CFLAGS = -g -Wall -Werror -Wextra
 vpath %.c ${SRC_PATH}
 vpath %.h ${HEAD_PATH}
 
-all:	${NAME}
+all: ${NAME}
 
 
-${OBJS}: ${OBJS_PATH}/%.o: %.c Makefile
-	$(MAKE) -C libft
-	mkdir -p ${OBJS_PATH}
-	${CC} ${CFLAGS} -c $< -o $@ ${HEAD_PATH}
 
-${NAME}: 	${OBJS}
+${OBJS}: ${OBJS_PATH}/%.o: %.c Makefile minishell.h
+	@	$(MAKE) --no-print-directory -s -C libft
+	@	$(MAKE) --no-print-directory -s -C pipex
+	@	mkdir -p ${OBJS_PATH}
+		${CC} ${CFLAGS} -c $< -o $@ ${HEAD_PATH}
+
+${NAME}:  ${OBJS}
 		${CC} ${CFLAGS} -o ${NAME} ${OBJS} ${LIB} ${HEAD_PATH}
 
 
@@ -43,11 +46,13 @@ ${NAME}: 	${OBJS}
 clean:
 	rm -rf ${OBJS_PATH}
 	$(MAKE) clean -C libft
+	$(MAKE) clean -C pipex
 
 
 fclean: clean
 	rm -f ${NAME}
 	$(MAKE) fclean -C libft
+	$(MAKE) fclean -C pipex
 
 
 re: fclean all
