@@ -14,8 +14,8 @@ void	ft_ctrlc(int a)
 void	ft_ctrlb(int a)
 {
 	(void)a;
-	printf("coucou\n");
-	rl_on_new_line();
-	rl_replace_line("", 0);
+	// printf("coucou\n");
+	// rl_on_new_line();
+	rl_replace_line("minishell > ", 0);
 	rl_redisplay();
 }

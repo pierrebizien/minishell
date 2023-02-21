@@ -15,7 +15,7 @@ int	main(int ac, char **av, char**envp)
 	ft_logo();
 	
 	signal(SIGINT, ft_ctrlc);
-	signal(SIGQUIT, ft_ctrlb);
+	signal(SIGQUIT, SIG_IGN);
 	str = readline("minishell> ");
 
 	// // fprintf(stderr, "str vaut |%s|\n", str);
@@ -29,6 +29,7 @@ int	main(int ac, char **av, char**envp)
 		add_history(str);
 	}
 	// write(1, &str, 10);
+	printf("exit\n");
 	return (0);
 	//test
 }
