@@ -1,9 +1,9 @@
 
 NAME = minishell
 
-SRCS_MAIN = ./srcs/minishell/main.c
+SRCS_MAIN = ./minishell/main.c
 
-SRCS_GNL = ./srcs/gnl/get_next_line.c ./srcs/gnl/get_next_line_utils.c
+SRCS_GNL = ./gnl/get_next_line.c ./gnl/get_next_line_utils.c
 
 #SRCS_PIPEX = ./srcs/pipex/ft_close.c ./srcs/pipex/ft_close2.c ./srcs/pipex/ft_close3.c ./srcs/pipex/ft_heredoc.c \
 ./srcs/pipex/ft_utils.c ./srcs/pipex/ft_utils2.c ./srcs/pipex/pipex.c
