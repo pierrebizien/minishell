@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 17:32:42 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/02/21 16:10:57 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/02/21 18:45:32 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <stdarg.h>
-#include  <limits.h> 
+# include <limits.h> 
+# include "get_next_line.h" 
 // # include <bsd/string.h>
 
 
@@ -39,18 +40,6 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
-typedef struct s_bufferList
-{
-	char				*content;
-	struct s_bufferList	*next;	
-}						t_bufferList;
-
-typedef struct s_fdList
-{
-	int					fd;
-	t_bufferList		*begin;
-	struct s_fdList		*next_fd;	
-}					t_fdList;
 
 int		ft_atoi(const char *str);
 void	ft_bzero(void *s, size_t n);
