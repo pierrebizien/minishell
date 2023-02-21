@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_pip_strdup.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 17:08:04 by pbizien           #+#    #+#             */
-/*   Updated: 2022/11/08 09:32:31 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/02/21 15:10:23 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@
 #include "libft.h"
 #include <stdio.h>
 
-char	*ft_strdup(const char *s)
+char	*ft_p_strdup(const char *s)
 {
 	char	*str_dup;
 
-	str_dup = ft_calloc((ft_strlen(s) + 1), sizeof(char));
+	str_dup = ft_p_calloc((ft_p_strlen(s) + 1), sizeof(char));
 	if (!str_dup)
 		return (NULL);
-	ft_memcpy(str_dup, s, (int)ft_strlen(s));
+	ft_p_memcpy(str_dup, s, (int)ft_p_strlen(s));
 	return (str_dup);
 }
 
@@ -34,6 +34,6 @@ int	main()
 	char str[] = "Hello my maaaan";
 	char *str2;
 
-	str2 = ft_strdup(str);
+	str2 = ft_p_strdup(str);
 	printf("%s", str2);
 }*/

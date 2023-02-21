@@ -6,7 +6,7 @@
 /*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:01:03 by pbizien           #+#    #+#             */
-/*   Updated: 2023/02/21 11:52:15 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/02/21 15:10:36 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,20 @@ int		ft_heredoc(t_data *data);
 void	ft_init_pipe(t_data *data);
 
 void	ft_print_fds(t_data *data);
+
+//FILES LIBFT
+long	ft_p_atoi(const char *nptr);
+void	*ft_p_calloc(size_t nmemb, size_t size);
+int		ft_p_isdigit(int c);
+void	ft_p_putendl_fd(char *s, int fd);
+char	**ft_p_split(char const *s, char c);
+char	*ft_p_strdup(const char *s);
+char	*ft_p_strjoin(char const *s1, char const *s2);
+size_t	ft_p_strlen(const char *s);
+int		ft_p_strncmp(const char *s1, const char *s2, size_t n);
+void	ft_p_bzero(void *s, size_t n);
+void	ft_p_putstr_fd(char *s, int fd);
+
+
 
 #endif

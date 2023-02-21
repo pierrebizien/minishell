@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
+/*   ft_p_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -21,9 +21,9 @@
 #include <fcntl.h>
 #include <stdio.h>
 
-void	ft_putendl_fd(char *s, int fd)
+void	ft_p_putendl_fd(char *s, int fd)
 {
-	ft_putstr_fd(s, fd);
+	ft_p_putstr_fd(s, fd);
 	write(fd, "\n", 1);
 }
 
@@ -34,7 +34,7 @@ int	main()
 
 	fd = open("test.txt", O_WRONLY);
 	//printf("%d", fd);
-	ft_putendl_fd("Nouvelle ligne après ça", fd);
-	ft_putendl_fd("Nouvelle ligne après ça", fd);
+	ft_p_putendl_fd("Nouvelle ligne après ça", fd);
+	ft_p_putendl_fd("Nouvelle ligne après ça", fd);
 	close(fd);
 }*/

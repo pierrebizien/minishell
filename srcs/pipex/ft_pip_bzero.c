@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_p_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -16,7 +16,7 @@
 #include "libft.h"
 #include <stdio.h>
 
-void	ft_bzero(void *s, size_t n)
+void	ft_p_bzero(void *s, size_t n)
 {
 	size_t			i;
 	unsigned char	*ptr;
@@ -35,7 +35,7 @@ int	main()
 {
 	char str[] = "Hello je m'appelle Pierre";
 
-	ft_bzero(str+5, 6);
+	ft_p_bzero(str+5, 6);
 	int	i;
 
 	i = 0;
