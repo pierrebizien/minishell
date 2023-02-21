@@ -6,7 +6,7 @@
 /*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 11:42:10 by pbizien           #+#    #+#             */
-/*   Updated: 2023/02/21 18:11:35 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/02/21 18:33:26 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int ft_parse(char *str);
 
 int ft_init(char **argv, char **envp, int ac);
 
+void	ft_ctrlb(int a);
 void	ft_ctrlc(int a);
 
 #endif
