@@ -1,8 +1,4 @@
 #include "minishell.h"
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-
 
 t_data data;
 
@@ -12,19 +8,25 @@ int	main(int ac, char **av, char**envp)
 	(void)av;
 	(void)envp;
 	char *str;
-	// read(0, str, 10);
+
 	ft_init(av, envp, ac);
 	ft_logo();
+	
+	signal(SIGINT, ft_ctrlc);
 	str = readline("minishell> ");
+
 	// fprintf(stderr, "str vaut |%s|\n", str);
 	add_history(str);
-	while (str != 0)
+	while (str)
 	{
+		if (str && str[0])
+			ft_parse(str);
+		free(str);
 		str = readline("minishell> ");
+		rl_replace_line("coucou", 0);
 		add_history(str);
-		ft_parse(str);
 	}
 	// write(1, &str, 10);
-
+	return (0);
 	//test
 }

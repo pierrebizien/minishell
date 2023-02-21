@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 11:42:10 by pbizien           #+#    #+#             */
-/*   Updated: 2023/02/21 16:33:10 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/02/21 18:11:35 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <unistd.h>
+# include <signal.h>
 
 void    ft_logo(void);
 
@@ -43,5 +44,6 @@ int ft_parse(char *str);
 
 int ft_init(char **argv, char **envp, int ac);
 
+void	ft_ctrlc(int a);
 
 #endif
