@@ -5,4 +5,5 @@ int ft_parse(char *str)
 {
     data.args = ft_split(str, ' ');
     free(str);
+    return (0);
 }

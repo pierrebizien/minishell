@@ -1,6 +1,6 @@
 
 
-SRCS = main.c
+SRCS = main.c ft_init.c ft_parsing.c ft_logo.c
 # SRCS += ft_close.c ft_close2.c ft_close3.c ft_heredoc.c ft_utils.c ft_utils2.c pipex.c
 
 
@@ -16,8 +16,8 @@ OBJS_PATH = ./obj
 HEAD_PATH += -I ./minishell_src/inc
 HEAD_PATH += -I ./libft/inc
 # INCLUDE += -I ./pipex/inc
-LIB = -L ./libft -lft
-
+LIB += -L ./libft -lft
+LIB += -lreadline
 
 NAME = minishell
 CC = cc
@@ -41,7 +41,7 @@ ${NAME}: 	${OBJS}
 
 
 clean:
-	rm -f ${OBJS}
+	rm -rf ${OBJS_PATH}
 	$(MAKE) clean -C libft
 
 
