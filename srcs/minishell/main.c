@@ -6,7 +6,7 @@
 /*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 11:41:13 by pbizien           #+#    #+#             */
-/*   Updated: 2023/02/21 13:49:41 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/02/21 14:11:28 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	main(int ac, char **av, char**envp)
 	fprintf(stderr, "\n\n\n\n\n\n");
 	while (1)
 	{
-		write(1, "gigashell> ", 11);
+		write(1, "minishell> ", 11);
 		get_next_line(0);
 		
 	}
