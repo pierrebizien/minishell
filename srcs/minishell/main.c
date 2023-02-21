@@ -17,6 +17,7 @@ int	main(int ac, char **av, char**envp)
 	fprintf(stderr, "\n\n\n\n\n\n\n");
 	while (1)
 	{
+		logo = "coucou";
 		write(1, "microshell> ", 11);
 		write(1, "minishell> ", 11);
 		get_next_line(0);
