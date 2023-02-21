@@ -1,38 +1,56 @@
 
+
+SRCS = main.c
+# SRCS += ft_close.c ft_close2.c ft_close3.c ft_heredoc.c ft_utils.c ft_utils2.c pipex.c
+
+
+# SRC_PATH += /libft/src
+SRC_PATH = ./minishell_src/
+# SRC_PATH += /pipex
+
+
+OBJS = ${patsubst %.c, ${OBJS_PATH}/%.o, ${SRCS}}
+OBJS_PATH = ./obj
+
+
+HEAD_PATH += -I ./minishell_src/inc
+HEAD_PATH += -I ./libft/inc
+# INCLUDE += -I ./pipex/inc
+LIB = -L ./libft -lft
+
+
 NAME = minishell
+CC = cc
+CFLAGS = -g -Wall -Werror -Wextra
 
-SRCS_MAIN = ./srcs/minishell/main.c
 
-SRCS_GNL = ./srcs/gnl/get_next_line.c ./srcs/gnl/get_next_line_utils.c
+vpath %.c ${SRC_PATH}
+vpath %.h ${HEAD_PATH}
 
-#SRCS_PIPEX = ./srcs/pipex/ft_close.c ./srcs/pipex/ft_close2.c ./srcs/pipex/ft_close3.c ./srcs/pipex/ft_heredoc.c \
-./srcs/pipex/ft_utils.c ./srcs/pipex/ft_utils2.c ./srcs/pipex/pipex.c
+all:	${NAME}
 
-OBJS = ${SRCS_MAIN:.c=.o} ${SRCS_GNL:.c=.o}
 
-GCC = cc
-
-LIBRARY = -I. -I ./srcs/libft/ -L ./srcs/libft/ -lft -I ./srcs/gnl -I ./pipex_bonus.h
-
-CFLAGS = -Wall -Werror -Wextra
-
-.c.o:
-	${GCC} -g ${CFLAGS} -c -I. -I ./srcs/gnl $< -o ${<:.c=.o}
-
-all: ${NAME}
-
-${NAME}: ${OBJS} ./srcs/minishell/minishell.h
+${OBJS}: ${OBJS_PATH}/%.o: %.c Makefile
 	$(MAKE) -C libft
-	${GCC} -g -o ${NAME} ${OBJS} ${LIBRARY} 
+	mkdir -p ${OBJS_PATH}
+	${CC} ${CFLAGS} -c $< -o $@ ${HEAD_PATH}
+
+${NAME}: 	${OBJS}
+		${CC} ${CFLAGS} -o ${NAME} ${OBJS} ${LIB} ${HEAD_PATH}
+
+
 
 clean:
 	rm -f ${OBJS}
 	$(MAKE) clean -C libft
 
+
 fclean: clean
-	rm -f ${NAME} ${NAME_BONUS}
+	rm -f ${NAME}
 	$(MAKE) fclean -C libft
 
+
 re: fclean all
+
 
 .PHONY: re clean fclean 

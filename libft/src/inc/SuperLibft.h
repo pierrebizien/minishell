@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   SuperLibft.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
+/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 17:32:42 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/02/18 11:53:22 by nicolasgriv      ###   ########.fr       */
+/*   Updated: 2023/02/21 16:10:57 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,19 @@ typedef struct s_list
 	void			*content;
 	struct s_list	*next;
 }					t_list;
+
+typedef struct s_bufferList
+{
+	char				*content;
+	struct s_bufferList	*next;	
+}						t_bufferList;
+
+typedef struct s_fdList
+{
+	int					fd;
+	t_bufferList		*begin;
+	struct s_fdList		*next_fd;	
+}					t_fdList;
 
 int		ft_atoi(const char *str);
 void	ft_bzero(void *s, size_t n);
@@ -83,11 +96,15 @@ void	ft_lstclear(t_list **lst, void (*del)(void*));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
-int		ft_s(char *str, int verif);
-char	*ft_my_malloc(char *buffer, char *ligne, int size);
-char	*ft_new_line(char *buffer, int size, int fd);
-char	*get_next_line(int fd);
-char	*ft_dup_upligne(char *upligne, char *buffer, int i, int j);
+/* get_next_line_c */
+char			*get_next_line(int fd);
+
+/* get_next_line_utils.c */
+t_bufferList	*ftlst_new_buffer(void);
+t_fdList		*ftlst_new_fd(int fd);
+int				end_of_line(char *content);
+size_t			count_memory(t_bufferList *current);
+t_fdList		*clean_fd_list(t_fdList *fd_list, t_fdList *current);
 
 int		ft_writechar(char ch, int nbrch);
 int		ft_writestr(char *str, int nbrch);
