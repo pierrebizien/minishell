@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_pip_calloc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 17:03:08 by pbizien           #+#    #+#             */
-/*   Updated: 2022/11/08 09:32:31 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/02/21 15:05:37 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 #include <stdio.h>
 #include <stdint.h>
 
-void	*ft_calloc(size_t nmemb, size_t size)
+void	*ft_p_calloc(size_t nmemb, size_t size)
 {
 	void	*str;
 
@@ -30,7 +30,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	str = (void *)malloc(nmemb * size);
 	if (!str)
 		return (NULL);
-	ft_bzero(str, nmemb * size);
+	ft_p_bzero(str, nmemb * size);
 	return (str);
 }
 /*

@@ -6,7 +6,7 @@
 /*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 16:35:20 by pbizien           #+#    #+#             */
-/*   Updated: 2023/02/20 15:08:33 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/02/21 15:09:08 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,13 @@ int	ft_end(t_data *data)
 
 void	ft_not_found(char *str)
 {
-	write(2, str, ft_strlen(str));
+	write(2, str, ft_p_strlen(str));
 	write(2, ": command not found\n", 20);
 }
 
 void	ft_no_dir(char *str)
 {
-	ft_putstr_fd(str, 2);
-	ft_putstr_fd(": ", 2);
+	ft_p_putstr_fd(str, 2);
+	ft_p_putstr_fd(": ", 2);
 	perror("");
 }

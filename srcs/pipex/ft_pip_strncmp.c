@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   ft_p_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -22,7 +22,7 @@
 #include "libft.h"
 #include <stdio.h>
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+int	ft_p_strncmp(const char *s1, const char *s2, size_t n)
 {
 	size_t	i;
 
@@ -39,6 +39,6 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 /*
 int main()
 {
-	printf("\n%d", ft_strncmp("1234", "1235", 3));
+	printf("\n%d", ft_p_strncmp("1234", "1235", 3));
 	printf("\n%d", strncmp("1234", "1235", 3));
 }*/

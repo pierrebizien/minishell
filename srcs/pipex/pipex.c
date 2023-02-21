@@ -6,7 +6,7 @@
 /*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:00:29 by pbizien           #+#    #+#             */
-/*   Updated: 2023/02/21 11:51:54 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/02/21 15:09:22 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ char	**ft_get_paths(char **envp)
 	i = 0;
 	while (envp[i])
 	{
-		if (ft_strncmp("PATH=", envp[i], 5) == 0)
+		if (ft_p_strncmp("PATH=", envp[i], 5) == 0)
 			break ;
 		i++;
 	}
 	if (i == ft_size_dchar(envp))
 		return (NULL);
-	return (ft_split((envp[i] + 5), ':'));
+	return (ft_p_split((envp[i] + 5), ':'));
 }
 
 int	ft_size_dchar(char **strstr)
@@ -48,15 +48,15 @@ char	**ft_put_bs(char **paths)
 	char	**output;
 
 	i = 0;
-	output = ft_calloc(ft_size_dchar(paths) + 2, sizeof(char *));
+	output = ft_p_calloc(ft_size_dchar(paths) + 2, sizeof(char *));
 	if (!output)
 		return (NULL);
 	while (paths && paths[i])
 	{
-		output[i] = ft_strjoin(paths[i], "/");
+		output[i] = ft_p_strjoin(paths[i], "/");
 		i++;
 	}
-	output[i] = ft_strdup("");
+	output[i] = ft_p_strdup("");
 	output[i + 1] = NULL;
 	i = 0;
 	while (paths && paths[i])
@@ -79,7 +79,7 @@ int	ft_find_g_path(t_data *data, char **param, int n)
 	i = -1;
 	while (test == -1 && data->paths[++i])
 	{
-		str = ft_strjoin(data->paths[i], param[0]);
+		str = ft_p_strjoin(data->paths[i], param[0]);
 		test = access(str, X_OK);
 		free(str);
 	}
@@ -96,16 +96,13 @@ int	pipex(int ac, char **av, char **envp)
 {
 	t_data	data;
 
-	if (ac < 5 || (ac < 6 && ft_strncmp(av[1], "here_doc", 8) == 0))
-		return (ft_putstr_fd("NB D ARGS INVALIDE\n", 2), 1);
+	if (ac < 5 || (ac < 6 && ft_p_strncmp(av[1], "here_doc", 8) == 0))
+		return (ft_p_putstr_fd("NB D ARGS INVALIDE\n", 2), 1);
 	if (ft_init(av, &data, envp, ac) != 0)
 		return (1);
-	if (ft_strncmp(av[1], "here_doc", 8) == 0)
+	if (ft_p_strncmp(av[1], "here_doc", 8) == 0)
 		if (ft_heredoc(&data) != 0)
 			return (1);
 	return (ft_main_suite(&data, av, envp));
 }
-
-
-//GERER LE FILE DE SORTIE POUR HERE_DOC
 

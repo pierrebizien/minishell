@@ -6,7 +6,7 @@
 /*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:39:00 by pbizien           #+#    #+#             */
-/*   Updated: 2023/02/21 10:55:37 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/02/21 15:09:22 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,18 @@ int	ft_heredoc(t_data *data)
 	data->limiter = data->av[2];
 	write(1, "here_doc>", 10);
 	str = get_next_line(0);
-	if (str && (ft_strncmp(data->limiter, str, ft_strlen(data->limiter)) || \
-		ft_strlen(str) != ft_strlen(data->limiter) + 1))
-		write(data->tmp_fd, str, ft_strlen(str));
-	while (str && (ft_strncmp(data->limiter, str, ft_strlen(data->limiter)) || \
-		ft_strlen(str) != ft_strlen(data->limiter) + 1))
+	if (str && (ft_p_strncmp(data->limiter, str, ft_p_strlen(data->limiter)) || \
+		ft_p_strlen(str) != ft_p_strlen(data->limiter) + 1))
+		write(data->tmp_fd, str, ft_p_strlen(str));
+	while (str && (ft_p_strncmp(data->limiter, str, ft_p_strlen(data->limiter)) || \
+		ft_p_strlen(str) != ft_p_strlen(data->limiter) + 1))
 	{
 		free(str);
 		write(1, "here_doc>", 10);
 		str = get_next_line(0);
-		if (str && (ft_strncmp(data->limiter, str, ft_strlen(data->limiter)) || \
-			ft_strlen(str) != ft_strlen(data->limiter) + 1))
-			write(data->tmp_fd, str, ft_strlen(str));
+		if (str && (ft_p_strncmp(data->limiter, str, ft_p_strlen(data->limiter)) || \
+			ft_p_strlen(str) != ft_p_strlen(data->limiter) + 1))
+			write(data->tmp_fd, str, ft_p_strlen(str));
 	}
 	free(str);
 	ft_close(&data->tmp_fd);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
+/*   ft_pip_split.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 17:07:51 by pbizien           #+#    #+#             */
-/*   Updated: 2023/02/07 13:20:25 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/02/21 15:08:04 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static char	*ft_generate(char const *s, char c)
 
 	i = 0;
 	len = ft_nb_char_to_c(s, c);
-	output = ft_calloc(len + 1, sizeof(char));
+	output = ft_p_calloc(len + 1, sizeof(char));
 	if (!output)
 		return (NULL);
 	while (s[i] != c && s[i])
@@ -68,7 +68,7 @@ static char	*ft_generate(char const *s, char c)
 	return (output);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_p_split(char const *s, char c)
 {
 	int		i;
 	int		len_mots;
@@ -78,7 +78,7 @@ char	**ft_split(char const *s, char c)
 	i = 0;
 	y = 0;
 	len_mots = ft_nb_mots(s, c);
-	output = ft_calloc(len_mots + 1, sizeof(char *));
+	output = ft_p_calloc(len_mots + 1, sizeof(char *));
 	if (!output)
 		return (NULL);
 	while (s[i])
@@ -104,7 +104,7 @@ int	main()
 	char c = ' ';
 	char **output;
 
-	output = ft_split(str, c);
+	output = ft_p_split(str, c);
 	printf("%s", output[1]);
 	free(output[0]);
 	free(output[1]);

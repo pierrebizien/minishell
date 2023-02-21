@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_pip_atoi.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 17:02:43 by pbizien           #+#    #+#             */
-/*   Updated: 2023/01/31 18:41:38 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/02/21 15:04:46 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include "libft.h"
 
-long	ft_atoi(const char *nptr)
+long	ft_p_atoi(const char *nptr)
 {
 	int		i;
 	int		sign;
@@ -50,7 +50,7 @@ int	main(int ac, char**av)
 	(void)ac;
 	(void)av;
 	printf("réelle %d  \n", atoi("\t 4 2"));
-	printf("moi %d  \n", ft_atoi("\t 4 2"));
+	printf("moi %d  \n", ft_p_atoi("\t 4 2"));
 
 }
 */

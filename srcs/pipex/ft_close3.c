@@ -6,7 +6,7 @@
 /*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 14:42:16 by pbizien           #+#    #+#             */
-/*   Updated: 2023/02/15 16:56:28 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/02/21 15:08:50 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_exec(t_data *data)
 	char	*str;
 
 	ft_close_all(data);
-	str = ft_strjoin(data->paths[data->npath1], data->param1[0]);
+	str = ft_p_strjoin(data->paths[data->npath1], data->param1[0]);
 	execve(str, data->param1, data->envp);
 	perror(data->param1[0]);
 	ft_free_dchar(data->param1);

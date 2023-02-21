@@ -6,7 +6,7 @@
 /*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 10:18:33 by pbizien           #+#    #+#             */
-/*   Updated: 2023/02/20 18:41:03 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/02/21 15:09:22 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_init(char **av, t_data *data, char**envp, int ac)
 	data->paths = ft_get_paths(envp);
 	data->paths = ft_put_bs(data->paths);
 	data->hd = 0;
-	if (ft_strncmp(av[1], "here_doc", 8) != 0)
+	if (ft_p_strncmp(av[1], "here_doc", 8) != 0)
 	{
 		data->fd_in = open(av[1], O_RDONLY, 00644);
 		if (data->fd_in == -1)
@@ -43,7 +43,7 @@ void	ft_first_child(t_data *data, char **av, char **envp)
 		ft_close_all(data);
 		exit (1);
 	}
-	data->param1 = ft_split(av[2 + data->hd], ' ');
+	data->param1 = ft_p_split(av[2 + data->hd], ' ');
 	if (!data->param1[0])
 	{
 		ft_finish_f1(data, av);
@@ -94,7 +94,7 @@ void	ft_last_child(t_data *data, char **av, char **envp, int i)
 		ft_finish_lf_bis(data);
 		exit (1);
 	}
-	data->param1 = ft_split(av[i + 3 + data->hd], ' ');
+	data->param1 = ft_p_split(av[i + 3 + data->hd], ' ');
 	if (data->param1[0] == NULL)
 	{
 		ft_finish_lf(data, av, i);
