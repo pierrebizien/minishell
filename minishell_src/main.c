@@ -1,7 +1,5 @@
-#include "minishell.h"
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+#include "./inc/minishell.h"
+
 
 
 t_data data;
