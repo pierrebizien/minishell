@@ -16,7 +16,7 @@ int	main(int ac, char **av, char**envp)
 	ft_init(av, envp, ac);
 	ft_logo();
 	str = readline("minishell> ");
-	fprintf(stderr, "str vaut |%s|\n", str);
+	// fprintf(stderr, "str vaut |%s|\n", str);
 	add_history(str);
 	while (str != 0)
 	{
