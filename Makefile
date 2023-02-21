@@ -22,16 +22,16 @@ CFLAGS = -Wall -Werror -Wextra
 all: ${NAME}
 
 ${NAME}: ${OBJS} ./srcs/minishell/minishell.h
-	$(MAKE) -C srcs/libft
+	$(MAKE) -C libft
 	${GCC} -g -o ${NAME} ${OBJS} ${LIBRARY} 
 
 clean:
 	rm -f ${OBJS}
-	$(MAKE) clean -C srcs/libft
+	$(MAKE) clean -C libft
 
 fclean: clean
 	rm -f ${NAME} ${NAME_BONUS}
-	$(MAKE) fclean -C srcs/libft
+	$(MAKE) fclean -C libft
 
 re: fclean all
 
