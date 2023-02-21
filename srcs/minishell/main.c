@@ -24,5 +24,6 @@ int	main(int ac, char **av, char**envp)
 		
 	}
 
+	int b;
 	//test
 }
