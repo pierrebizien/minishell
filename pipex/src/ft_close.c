@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_close.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 15:52:40 by pbizien           #+#    #+#             */
-/*   Updated: 2023/02/21 17:46:36 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/02/22 15:26:36 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	ft_close_all(t_data *data)
 		ft_close(&data->pipefd2[1]);
 	if (data->fd_in != -1)
 		ft_close(&data->fd_in);
-	// fprintf(stderr, "fd = %d\n", data->fd_out);
 	if (data->fd_out != -1)
 		ft_close(&data->fd_out);
 }

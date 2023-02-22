@@ -10,10 +10,17 @@ int	main(int ac, char **av, char**envp)
 	(void)av;
 	(void)envp;
 	char *str;
+	DIR *dir;
+	struct dirent *dir_rent;
 
 	ft_init(av, envp, ac);
 	ft_logo();
-	
+	dir = opendir(".");
+	dir_rent = readdir(dir);
+	dir_rent = readdir(dir);
+	dir_rent = readdir(dir);
+	dir_rent = readdir(dir);
+	// printf("%d\n", dir_rent->d_type);
 	signal(SIGINT, ft_ctrlc);
 	signal(SIGQUIT, SIG_IGN);
 	str = readline("minishell> ");

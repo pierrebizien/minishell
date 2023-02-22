@@ -12,6 +12,9 @@
 # include <readline/history.h>
 # include <unistd.h>
 # include <signal.h>
+# include <sys/types.h>
+# include <dirent.h>
+
 
 void    ft_logo(void);
 
