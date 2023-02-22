@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
+/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 11:54:39 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/02/18 11:29:52 by nicolasgriv      ###   ########.fr       */
+/*   Updated: 2023/02/22 15:16:04 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,22 @@
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	int		i;
-	char	*str;
+	char			*new;
+	unsigned int	i;
 
-	i = 0;
-	if (len < start || ((size_t) ft_strlen(s)) <= start)
-		return (ft_strdup(""));
-	if (((size_t) ft_strlen(s)) <= len)
-		str = malloc(sizeof(char) * (ft_strlen(s) - start + 1));
-	else
-		str = malloc(sizeof(char) * (len + 1));
-	if (str == NULL)
+	if (start >= ft_strlen(s))
+		len = 0;
+	else if (len > ft_strlen(s + start))
+		len = ft_strlen(s + start);
+	new = malloc(sizeof(char) * (len + 1));
+	if (!new)
 		return (NULL);
-	while (len > 0 && s[start] != '\0')
+	i = 0;
+	while (start + i < ft_strlen(s) && i < len)
 	{
-		str[i] = s[start];
+		new[i] = s[start + i];
 		i++;
-		start++;
-		len--;
 	}
-	str[i] = '\0';
-	return (str);
+	new[i] = '\0';
+	return (new);
 }
-
-// int main (void)
-// {
-// 	char *test = "123456789";
-// 	int start = 8;
-// 	int len = 10;
-// 	printf("ft = %s\n",ft_substr(test,start,len));
-// }

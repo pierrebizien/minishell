@@ -29,7 +29,7 @@ int	main(int ac, char **av, char**envp)
 		add_history(str);
 	}
 	// write(1, &str, 10);
-	printf("exit\n");
+	printf("\nexit\n");
 	return (0);
 	//test
 }

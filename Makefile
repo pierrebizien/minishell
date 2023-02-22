@@ -1,6 +1,6 @@
 
 
-SRCS = main.c ft_init.c ft_parsing.c ft_logo.c ft_signal.c
+SRCS = main.c ft_init.c ft_parsing.c ft_logo.c ft_signal.c ft_create_env.c
 # SRCS += ft_close.c ft_close2.c ft_close3.c ft_heredoc.c ft_utils.c ft_utils2.c pipex.c
 
 
@@ -22,7 +22,8 @@ LIB += -lreadline
 
 NAME = minishell
 CC = cc
-CFLAGS = -g -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -g
 
 
 vpath %.c ${SRC_PATH}
