@@ -38,6 +38,7 @@ int ft_create_env(char **envp)
 		tmp->value = ft_substr(envp[i], j+1, k);
 		if (!tmp->key)
 			return (1);
+		tmp->print = 1;
 		tmp->env = envp;
 		if (envp[i + 1])
 		{
