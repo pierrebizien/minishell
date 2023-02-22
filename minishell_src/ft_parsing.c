@@ -21,20 +21,22 @@ int ft_detect(void)
 
 int ft_parse(char *str)
 {
-	 data.args = ft_detect_cmd();
+	// (void)str;
+	 data.args = ft_split_m(str, data.sep);
 	 if (!data.args)
 		  return (1);
+	// fprintf(stderr, "data.args[0] %s \n", data.args[0]);
 	 
 	 return(ft_detect());
 	 return (0);
 }
 
-int ft_detect_cmd(void)
-{
-	int  count_w;
+// int ft_detect_cmd(void)
+// {
+// 	int  count_w;
 
-	count_w = 0;
-	ft_split_mini();
+// 	count_w = 0;
+// 	ft_split_mini();
 
-	return (0);
-}
+// 	return (0);
+// }
