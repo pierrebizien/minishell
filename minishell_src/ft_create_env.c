@@ -10,28 +10,28 @@ static t_env	*ft_lstnew_env(void)
 	if (new == NULL)
 		return (NULL);
 	new->key = NULL;
-    new->value = NULL;
+	new->value = NULL;
 	new->next = NULL;
 	return (new);
 }
 
 int ft_create_env(char **envp)
 {
-    int i;
-    int j;
-    int k;
+	int i;
+	int j;
+	int k;
 	t_env	*tmp;
 
-    i = -1;
+	i = -1;
 	tmp = &data.env;
-    while (envp[++i])
-    {
-        j = 0;
-        while (envp[i][j] != '=' && envp[i][j])
-            j++;
+	while (envp[++i])
+	{
+		j = 0;
+		while (envp[i][j] != '=' && envp[i][j])
+			j++;
 		k = 0;
-        while (envp[i][k + j + 1])
-        	k++;
+		while (envp[i][k + j + 1])
+			k++;
 		tmp->key = ft_substr(envp[i], 0, j);
 		if (!tmp->key)
 			return (1);
@@ -46,6 +46,6 @@ int ft_create_env(char **envp)
 		}
 		else
 			tmp->next = NULL;
-    }
+	}
 	return (0);
 }
