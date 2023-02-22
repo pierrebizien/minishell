@@ -53,4 +53,7 @@ int	ft_create_env(char **envp);
 void	ft_ctrlb(int a);
 void	ft_ctrlc(int a);
 
+char	**ft_split_m(char const *s, char *sep);
+
+
 #endif

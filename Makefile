@@ -23,7 +23,7 @@ LIB += -lreadline
 NAME = minishell
 CC = cc
 CFLAGS = -Wall -Werror -Wextra
-CFLAGS = -g
+CFLAGS += -g
 
 
 vpath %.c ${SRC_PATH}
