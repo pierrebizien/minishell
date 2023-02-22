@@ -46,9 +46,9 @@ int ft_parse(char *str);
 
 int ft_init(char **argv, char **envp, int ac);
 
-//FT_CREATE_ENV
-
+//FT_ENV
 int	ft_create_env(char **envp);
+int ft_env(void);
 
 void	ft_ctrlb(int a);
 void	ft_ctrlc(int a);
