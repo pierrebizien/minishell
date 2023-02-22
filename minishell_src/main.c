@@ -23,14 +23,16 @@ int	main(int ac, char **av, char**envp)
 	// printf("%d\n", dir_rent->d_type);
 	signal(SIGINT, ft_ctrlc);
 	signal(SIGQUIT, SIG_IGN);
-	str = readline("minishell> ");
+	str = readline("\e[36;1mminishell> \e[0m");
+
+	// // fprintf(stderr, "str vaut |%s|\n", str);
 	add_history(str);
 	while (str)
 	{
 		if (str && str[0])
 			ft_parse(str);
 		free(str);
-		str = readline("minishell> ");
+		str = readline("\e[36;1mminishell> \e[0m");
 		add_history(str);
 	}
 	// write(1, &str, 10);
