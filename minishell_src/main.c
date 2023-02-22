@@ -33,6 +33,7 @@ int	main(int ac, char **av, char**envp)
 		str = readline("minishell> ");
 		add_history(str);
 	}
-	printf("exit\n");
+	// write(1, &str, 10);
+	printf("\nexit\n");
 	return (0);
 }

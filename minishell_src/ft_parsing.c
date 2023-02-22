@@ -32,5 +32,5 @@ int ft_parse(char *str)
 int ft_prep_pipex(void)
 {
     if (ft_strncmp(data.args[0], "<", ft_strlen(data.args[0])) == 0)
-        
+        {}
 }
