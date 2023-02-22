@@ -20,6 +20,7 @@ void    ft_logo(void);
 
 typedef	struct	s_env
 {
+	int				print;
 	char			**env;
     char			*key;
 	char			*value;
