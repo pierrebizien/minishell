@@ -24,7 +24,13 @@ int ft_parse(char *str)
     data.args = ft_split(str, ' ');
     if (!data.args)
         return (1);
-    // free(str);
+    
     return(ft_detect());
     return (0);
+}
+
+int ft_prep_pipex(void)
+{
+    if (ft_strncmp(data.args[0], "<", ft_strlen(data.args[0])) == 0)
+        
 }
