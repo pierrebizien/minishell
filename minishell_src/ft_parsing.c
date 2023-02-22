@@ -2,7 +2,6 @@
 
 extern t_data data;
 
-
 int ft_1st_chev(void)
 {
     if (data.ac <= 2)
