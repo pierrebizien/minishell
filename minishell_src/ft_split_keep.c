@@ -6,7 +6,7 @@
 /*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 18:29:02 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/02/23 12:34:31 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/02/23 16:27:09 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ static size_t	count_words_2(char const *s, char *sep)
 	i = 0;
 	while (s[i])
 	{
-		// fprintf(stderr, "s[%zu] %c is sep %d\n", i, s[i], is_sep(s[i], data.sep));
 		if (!is_sep(s[i], sep) && (is_sep(s[i + 1], sep) || s[i + 1] == '\0'))
 			words++;
 		i++;
@@ -95,7 +94,6 @@ static int	set_mem_2(char **tab, char const *s, char *sep)
 			fill_tab_2(tab[i], (s + index), sep);
 			i++;
 			index = index + count;
-			fprintf(stderr, "index %zu\n", index);
 		}
 		else if (is_sep(s[index], sep))
 		{
@@ -120,7 +118,6 @@ char	**ft_split_k(char const *s, char *sep)
 	char	**tab;
 
 	words = count_words_2(s, sep);
-	// fprintf(stderr, "str %s sep %s words vaut %zu | is sep %d\n", s, sep, words, is_sep('|', data.sep));
 	tab = malloc(sizeof(char *) * (words + 1));
 	if (!tab)
 		return (NULL);

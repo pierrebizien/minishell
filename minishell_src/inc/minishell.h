@@ -30,10 +30,16 @@ typedef	struct	s_env
 	
 }               t_env;
 
+typedef struct	s_pip
+{
+	int	in_fd;
+	int	out_fd;
+}				t_pip;
+
 typedef	struct	s_data
 {
 	t_env	env;
-
+	t_pip	pip;
     char 	**args;
 	char 	**av;
 	int		ac;
@@ -64,6 +70,12 @@ char	**ft_split_l(char const *s, char *sep);
 void ft_free_dchar(char **s);
 char	**ft_split_l(char const *s, char *sep);
 void	ft_print_args(void);
+
+int	ft_in_q(int in_q);
+
+//FT_PIPEX
+void	ft_pipex(void);
+
 
 
 #endif
