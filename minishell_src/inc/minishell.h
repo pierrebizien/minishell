@@ -51,6 +51,10 @@ int ft_init(char **argv, char **envp, int ac);
 int	ft_create_env(char **envp);
 int ft_env(void);
 
+//FT_TEST_BUILDTIN
+int ft_test_builtin(char *str);
+
+
 void	ft_ctrlb(int a);
 void	ft_ctrlc(int a);
 

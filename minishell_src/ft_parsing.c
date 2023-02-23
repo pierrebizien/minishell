@@ -33,4 +33,5 @@ int ft_prep_pipex(void)
 {
     if (ft_strncmp(data.args[0], "<", ft_strlen(data.args[0])) == 0)
         {}
+    return (0);
 }
