@@ -58,7 +58,24 @@ char	*ft_clean(char *str)
 	}
 	return (str);
 }
+void	ft_clean2(void)
+{
+	int	i;
+	int k;
 
+	i = 0;
+	while (data.args && data.args[i])
+	{
+		if (is_ws(data.args[i][0]))
+			ft_memmove(data.args[i], data.args[i] + 1, ft_strlen(data.args[i]));
+		k = ft_strlen(data.args[i]);
+		fprintf(stderr, " data args [i] |%s| data agr [i][k - 1] |%c| k vaut %d\n", data.args[i], data.args[i][k - 1], k);
+		if (is_ws(data.args[i][k - 1]))
+			data.args[i][k - 1] = '\0';
+		i++;
+	}
+	
+}
 char *ft_parse(char *str)
 {
 	char *tmp;
@@ -71,6 +88,8 @@ char *ft_parse(char *str)
 	str = ft_clean(str);
 	
 	data.args = ft_split_k(str, "|");
+	ft_clean2();
+	// ft_print_args();
 	// printf("str parse vaut |%s|\n", str);
 	 return (str);
 }

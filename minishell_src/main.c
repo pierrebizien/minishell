@@ -27,7 +27,7 @@ int	main(int ac, char **av, char**envp)
 
 	ft_init(av, envp, ac);
 	ft_logo();
-	// printf("%d\n", dir_rent->d_type);
+	printf("AC %d\n", ac);
 	signal(SIGINT, ft_ctrlc);
 	signal(SIGQUIT, SIG_IGN);
 	str = readline("\e[33;1mminishell> \e[0m");
