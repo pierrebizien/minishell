@@ -38,7 +38,7 @@ int	main(int ac, char **av, char**envp)
 	{
 		if (str && str[0])
 			str = ft_parse(str);
-		// ft_print_args();
+		ft_print_args();
 		free(str);
 		str = readline("\e[36;1mminishell> \e[0m");
 		add_history(str);
