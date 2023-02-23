@@ -51,6 +51,20 @@ static int ft_plus_egal_export(char *str)
 	return (0);
 }
 
+static int ft_verif_str_export(char *str)
+{
+	int i;
+
+	i = -1;
+	while (str && str[++i] != '=' && str[i] != '+')
+	{
+		if(ft_isalnum(str[i]) == 0 && str[i] != '_')
+			return (1);
+	}
+	return (0);
+}
+
+
 static int ft_ok_export(char *str, t_env *tmp)
 {
 	int j;
@@ -84,6 +98,8 @@ int ft_export(char *str)
 	while (str[i] && str[i] != ' ')
 		i++;
 	i++;
+	if (ft_verif_str_export(str + i) == 1)
+		return (ft_printf("export: `%s': not a valid identifier", str), 1);
 	if (ft_plus_egal_export(str + i) == 0)
 		return (0);
 	while (tmp->next)
@@ -91,9 +107,6 @@ int ft_export(char *str)
 	tmp->next = ft_lstnew_env();
 	tmp = tmp->next;
 	ft_ok_export(str + i, tmp);
-	
-	
-	
 	return (0);
 }
 
@@ -112,10 +125,16 @@ int main(int c, char **v, char **e)
 	test = "export test+=pierretest";
     fprintf(stderr, "\t\t3|%d|\n", ft_export(test));
 
-	test = "export PATH2+=pierretest";
-    fprintf(stderr, "\t\t3|%d|\n", ft_export(test));
+	test = "export test_2+=pierretest";
+    fprintf(stderr, "\t\t4|%d|\n", ft_export(test));
+
+	test = "export test@=oui";
+    fprintf(stderr, "\t\t5|%d|\n", ft_export(test));
+
+		test = "export test=oui";
+    fprintf(stderr, "\t\t6|%d|\n", ft_export(test));
 
 
 
-	ft_env();
+	// ft_env();
 }
