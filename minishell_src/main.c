@@ -12,7 +12,7 @@ void	ft_print_args(void)
 	i = 0;
 	while (data.args && data.args[i])
 	{
-		printf("%s \n", data.args[i]);
+		printf("|%s| \n", data.args[i]);
 		i++;
 	}
 	
@@ -37,8 +37,8 @@ int	main(int ac, char **av, char**envp)
 	while (str)
 	{
 		if (str && str[0])
-			ft_parse(str);
-		ft_print_args();
+			str = ft_parse(str);
+		// ft_print_args();
 		free(str);
 		str = readline("\e[36;1mminishell> \e[0m");
 		add_history(str);

@@ -6,7 +6,7 @@ int ft_init(char **argv, char **envp, int ac)
 {
 	data.ac = ac;
 	data.av = argv;
-	data.sep = "/|&<>";
+	data.sep = "|";
 	ft_create_env(envp);
 	return (0);
 }
