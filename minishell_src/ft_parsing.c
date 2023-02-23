@@ -93,13 +93,3 @@ char *ft_parse(char *str)
 	// printf("str parse vaut |%s|\n", str);
 	 return (str);
 }
-
-// int ft_detect_cmd(void)
-// {
-// 	int  count_w;
-
-// 	count_w = 0;
-// 	ft_split_mini();
-
-// 	return (0);
-// }
