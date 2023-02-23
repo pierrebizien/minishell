@@ -17,7 +17,7 @@
 
 #define WS " \t\n\f\v\r"
 #define MALLOC_ERROR "erreur de malloc"
-#define MAL_ERCODE -42
+#define MAL_ERCODE 42
 
 void    ft_logo(void);
 
