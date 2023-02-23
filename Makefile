@@ -32,6 +32,9 @@ vpath %.h ${HEAD_PATH}
 
 all: ${NAME}
 
+run: all
+	./${NAME}
+
 
 
 ${OBJS}: ${OBJS_PATH}/%.o: %.c Makefile minishell.h
