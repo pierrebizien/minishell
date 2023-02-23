@@ -1,5 +1,7 @@
 #include "./inc/minishell.h"
 
+extern t_data data;
+
 void    ft_logo(void)
 {
     const char *logo;

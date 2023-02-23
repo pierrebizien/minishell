@@ -20,8 +20,6 @@ void    ft_logo(void);
 
 typedef	struct	s_env
 {
-	int				print;
-	char			**env;
     char			*key;
 	char			*value;
 	struct s_env	*next;
@@ -48,6 +46,7 @@ int ft_parse(char *str);
 int ft_init(char **argv, char **envp, int ac);
 
 //FT_ENV
+t_env	*ft_lstnew_env(void);
 int	ft_create_env(char **envp);
 int ft_env(void);
 
