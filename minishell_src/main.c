@@ -33,6 +33,7 @@ int	main(int ac, char **av, char**envp)
 			ft_parse(str);
 		free(str);
 		str = readline("\e[36;1mminishell> \e[0m");
+		ft_test_builtin(str);
 		add_history(str);
 	}
 	// write(1, &str, 10);
