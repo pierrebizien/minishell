@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split_mini.c                                    :+:      :+:    :+:   */
+/*   ft_split_keep.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 18:29:02 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/02/22 18:11:51 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/02/23 12:34:31 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	is_sep(char c, char *sep)
 	
 }
 
-static size_t	count_words(char const *s, char *sep)
+static size_t	count_words_2(char const *s, char *sep)
 {
 	size_t	words;
 	size_t	i;
@@ -43,10 +43,10 @@ static size_t	count_words(char const *s, char *sep)
 			words++;
 		i++;
 	}
-	return (words);
+	return (2*words - 1);
 }
 
-static void	fill_tab(char *new, char const *s, char *sep)
+static void	fill_tab_2(char *new, char const *s, char *sep)
 {
 	size_t	i;
 
@@ -59,7 +59,7 @@ static void	fill_tab(char *new, char const *s, char *sep)
 	new[i] = '\0';
 }
 
-void	free_tabstr(char **tab)
+void	free_tabstr_2(char **tab)
 {
 	size_t	i;
 
@@ -74,7 +74,7 @@ void	free_tabstr(char **tab)
 	free(tab);
 }
 
-static int	set_mem(char **tab, char const *s, char *sep)
+static int	set_mem_2(char **tab, char const *s, char *sep)
 {
 	size_t	count;
 	size_t	index;
@@ -91,28 +91,39 @@ static int	set_mem(char **tab, char const *s, char *sep)
 		{
 			tab[i] = malloc(sizeof(char) * (count + 1));
 			if (!tab[i])
-				return (free_tabstr(tab), 0);
-			fill_tab(tab[i], (s + index), sep);
+				return (free_tabstr_2(tab), 0);
+			fill_tab_2(tab[i], (s + index), sep);
 			i++;
 			index = index + count;
+			fprintf(stderr, "index %zu\n", index);
+		}
+		else if (is_sep(s[index], sep))
+		{
+			tab[i] = malloc(sizeof(char) * (3));
+			if (!tab[i])
+				return (free_tabstr_2(tab), 0);
+			tab[i][0] = s[index];
+			tab[i][1] = '\0';
+			index++;
+			i++;
 		}
 		else
 			index++;
 	}
 	tab[i] = 0;
-	return (1);
+	return (0);
 }
 
-char	**ft_split_m(char const *s, char *sep)
+char	**ft_split_k(char const *s, char *sep)
 {
 	size_t	words;
 	char	**tab;
 
-	words = count_words(s, sep);
+	words = count_words_2(s, sep);
 	// fprintf(stderr, "str %s sep %s words vaut %zu | is sep %d\n", s, sep, words, is_sep('|', data.sep));
 	tab = malloc(sizeof(char *) * (words + 1));
 	if (!tab)
 		return (NULL);
-	set_mem(tab, s, sep);
+	set_mem_2(tab, s, sep);
 	return (tab);
 }
