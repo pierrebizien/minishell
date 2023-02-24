@@ -230,7 +230,7 @@ int main(int c, char **v, char **e)
 
 	// test = "export test+ =oui";
     // fprintf(stderr, "\t\t\e[35m6.4|%d|\e[0m\n", ft_export(test));
-
+//
 
 
 	ft_env();
