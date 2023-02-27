@@ -32,7 +32,7 @@ char **ft_generate_inp()
 	if (!output)
 		return (NULL); // PENSER A FREE
 	output[0] = ft_strdup("./pipex");
-	fprintf(stderr, "coucou\n");
+	// fprintf(stderr, "coucou\n");
 	while (data.args && data.args[i])
 	{
 		if (ft_strncmp(data.args[i], "|", ft_strlen(data.args[i]) + 1))
@@ -54,10 +54,12 @@ char **ft_generate_inp()
 void	ft_pipex(void)
 {
     char **input;
+	int							len;
 
 	input = ft_generate_inp();
-	// fprintf(stderr, "input[0] %s\n", input[0]);
-	ft_print_dargs(input);
-	pipex(6, input, data.envp);
+	len = ft_len_mpipe();
+	// fprintf(stderr, "len %d\n", len);
+	// ft_print_dargs(input);
+	pipex(len + 3, input, data.envp);
 
 }
