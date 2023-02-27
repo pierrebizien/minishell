@@ -17,7 +17,17 @@ void	ft_print_dargs(char **strstr)
 	}
 	
 }
+void	ft_print_dchar(char **strstr)
+{
+	int	i;
 
+	i = 0;
+	while (strstr[i])
+	{
+		fprintf(stderr, "\ni vaut %d et strstr %s\n", i, strstr[i]);
+		i++;
+	}
+}
 int	main(int ac, char **av, char**envp)
 {
 	(void)ac;
