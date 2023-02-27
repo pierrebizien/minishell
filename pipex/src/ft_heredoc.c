@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:39:00 by pbizien           #+#    #+#             */
-/*   Updated: 2023/02/21 17:46:36 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/02/27 14:40:27 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./inc/pipex_bonus.h"
 
-int	ft_heredoc(t_data *data)
+int	ft_heredoc(t_pipex *data)
 {
 	char	*str;
 
@@ -44,7 +44,7 @@ int	ft_heredoc(t_data *data)
 	return (0);
 }
 
-void	ft_init_pipe(t_data *data)
+void	ft_init_pipex_pipe(t_pipex *data)
 {
 	data->pipefd1[0] = -1;
 	data->pipefd1[1] = -1;

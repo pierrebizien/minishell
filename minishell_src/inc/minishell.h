@@ -4,6 +4,8 @@
 # define MINISHELL_H
 
 # include "../../libft/src/inc/SuperLibft.h"
+# include "../../pipex/src/inc/pipex_bonus.h"
+
 # include <stdio.h>
 // # include "../gnl/get_next_line.h"
 # include <unistd.h>
@@ -31,8 +33,8 @@ typedef	struct	s_env
 
 typedef struct	s_pip
 {
-	int	in_fd;
-	int	out_fd;
+	char	*infile;
+	char	*outfile;
 }				t_pip;
 
 typedef	struct	s_data
@@ -41,6 +43,7 @@ typedef	struct	s_data
 	t_pip	pip;
     char 	**args;
 	char 	**av;
+	char **envp;
 	int		ac;
 	char	*sep;
 	
@@ -71,14 +74,17 @@ char	**ft_split_k(char const *s, char *sep);
 char	**ft_split_l(char const *s, char *sep);
 
 //FT_FREE
-void ft_free_dchar(char **s);
+// void ft_free_dchar(char **s);
 char	**ft_split_l(char const *s, char *sep);
-void	ft_print_args(void);
+void	ft_print_dargs(char **strstr);
 
 int	ft_in_q(int in_q);
 
 //FT_PIPEX
 void	ft_pipex(void);
+
+
+// int	pipex(int ac, char **av, char **envp);
 
 
 

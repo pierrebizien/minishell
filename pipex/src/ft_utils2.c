@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 13:45:16 by pbizien           #+#    #+#             */
-/*   Updated: 2023/02/21 17:46:36 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/02/27 14:39:48 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./inc/pipex_bonus.h"
 
-void	ft_middle_even_child(t_data *data, int i)
+void	ft_middle_even_child(t_pipex *data, int i)
 {
 	data->param1 = ft_p_split(data->av[i + 3 + data->hd], ' ');
 	if (data->param1[0] == NULL)
@@ -32,7 +32,7 @@ void	ft_middle_even_child(t_data *data, int i)
 	ft_exec(data);
 }
 
-void	ft_middle_even(t_data *data, int i)
+void	ft_middle_even(t_pipex *data, int i)
 {
 	int	id;
 
@@ -50,7 +50,7 @@ void	ft_middle_even(t_data *data, int i)
 	}
 }
 
-void	ft_middle_odd_child(t_data *data, int i)
+void	ft_middle_odd_child(t_pipex *data, int i)
 {
 	data->param1 = ft_p_split(data->av[i + 3 + data->hd], ' ');
 	if (data->param1[0] == NULL)
@@ -70,7 +70,7 @@ void	ft_middle_odd_child(t_data *data, int i)
 	ft_exec(data);
 }
 
-void	ft_middle_odd(t_data *data, int i)
+void	ft_middle_odd(t_pipex *data, int i)
 {
 	int	id;
 
@@ -88,7 +88,7 @@ void	ft_middle_odd(t_data *data, int i)
 	}
 }
 
-int	ft_middle(t_data *data)
+int	ft_middle(t_pipex *data)
 {
 	int	i;
 
