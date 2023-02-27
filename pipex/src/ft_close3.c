@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_close3.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 14:42:16 by pbizien           #+#    #+#             */
-/*   Updated: 2023/02/21 17:46:36 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/02/27 14:39:48 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./inc/pipex_bonus.h"
 
-void	ft_close_if(int *fd, t_data *data)
+void	ft_close_if(int *fd, t_pipex *data)
 {
 	if (data->hd == 0 && *fd != -1)
 	{
@@ -21,7 +21,7 @@ void	ft_close_if(int *fd, t_data *data)
 	}
 }
 
-void	ft_exec(t_data *data)
+void	ft_exec(t_pipex *data)
 {
 	char	*str;
 

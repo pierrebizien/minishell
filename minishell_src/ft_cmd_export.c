@@ -199,7 +199,6 @@ int ft_export(char *str)
 	}
 
 	return (0);
-}
 
 // int main(int c, char **v, char **e)
 // {
