@@ -71,6 +71,9 @@ int		ft_env(void);
 
 int ft_export(char *str);
 
+//
+int	ft_echo(char *str);
+
 //FT_TEST_BUILDTIN
 int		ft_test_builtin(char *str);
 
