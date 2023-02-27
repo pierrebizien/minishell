@@ -3,22 +3,6 @@
 extern t_data data;
 
 
-// int	is_ws(char c)
-// {
-// 	int	i;
-// 	const char ws[] = " \n\t\f\r\v";
-
-// 	i = 0;
-// 	while (ws[i])
-// 	{
-// 		if (c == ws[i])
-// 			return (1);
-// 		i++;
-// 	}
-// 	return (0);
-	
-// }
-
 size_t	ft_strlen_WS(const char *str)
 {
 	size_t	i;
