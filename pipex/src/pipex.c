@@ -6,7 +6,7 @@
 /*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:00:29 by pbizien           #+#    #+#             */
-/*   Updated: 2023/02/27 14:40:27 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/02/27 16:24:30 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,8 @@ int	pipex(int ac, char **av, char **envp)
 {
 	t_pipex	data;
 
-	if (ac < 5 || (ac < 6 && ft_p_strncmp(av[1], "here_doc", 8) == 0))
-		return (ft_p_putstr_fd("NB D ARGS INVALIDE\n", 2), 1);
+	// if (ac < 5 || (ac < 6 && ft_p_strncmp(av[1], "here_doc", 8) == 0))
+	// 	return (ft_p_putstr_fd("NB D ARGS INVALIDE\n", 2), 1);
 	if (ft_init_pipex(av, &data, envp, ac) != 0)
 		return (1);
 	if (ft_p_strncmp(av[1], "here_doc", 8) == 0)

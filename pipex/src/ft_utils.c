@@ -6,7 +6,7 @@
 /*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 10:18:33 by pbizien           #+#    #+#             */
-/*   Updated: 2023/02/27 15:42:39 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/02/27 16:47:50 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,18 @@ void	ft_first_child(t_pipex *data, char **av, char **envp)
 	}
 	dup2(data->fd_in, 0);
 	ft_close(&data->pipefd1[0]);
+	// fprintf(stderr, "ici ua 4 ou quoi \t\t%d\n", data->ac);
+	if (data->ac  == 4)
+	{
+		if (data->hd == 0)
+			data->fd_out = open(data->av[data->ac - 1], O_RDWR | O_TRUNC | O_CREAT, 00644);
+		else
+			data->fd_out = open(data->av[data->ac - 1], O_RDWR | O_APPEND | O_CREAT, 00644);
+		dup2(data->fd_out, 1);
+		ft_close(&data->pipefd1[1]);
+		ft_exec(data);
+		exit(1);
+	}
 	dup2(data->pipefd1[1], 1);
 	ft_close(&data->pipefd1[1]);
 	ft_exec(data);
@@ -119,6 +131,11 @@ int	ft_main_suite(t_pipex *data, char **av, char **envp)
 		ft_first_child(data, av, envp);
 	else
 	{
+		if (data->ac == 4)
+		{
+			data->last_pid = id;
+			return (ft_end(data)); //GERER VALIOU
+		}
 		i = ft_middle(data);
 		data->last_pid = fork();
 		if (data->last_pid == 0)
