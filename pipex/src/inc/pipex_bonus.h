@@ -6,7 +6,7 @@
 /*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:01:03 by pbizien           #+#    #+#             */
-/*   Updated: 2023/02/27 14:46:30 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/02/27 15:42:52 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int		ft_middle(t_pipex *data);
 
 //HEREDOC
 int		ft_heredoc(t_pipex *data);
-void	ft_init_pipe(t_pipex *data);
+void	ft_init_pipex_pipe(t_pipex *data);
 
 void	ft_print_fds(t_pipex *data);
 

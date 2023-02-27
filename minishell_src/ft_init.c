@@ -4,12 +4,10 @@ extern t_data data;
 
 int ft_init(char **env)
 {
-	(void)ac;
-	(void)argv;
 	data.sep = "|";
 	data.pip.infile = "/dev/stdin";
 	data.pip.outfile = "/dev/stdout";
-	data.envp = envp;
-	ft_create_env(envp);
+	data.envp = env;
+	ft_create_env(env);
 	return (0);
 }
