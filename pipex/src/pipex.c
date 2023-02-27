@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:00:29 by pbizien           #+#    #+#             */
-/*   Updated: 2023/02/21 17:46:36 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/02/27 14:40:27 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	**ft_put_bs(char **paths)
 	return (output);
 }
 
-int	ft_find_g_path(t_data *data, char **param, int n)
+int	ft_find_g_path(t_pipex *data, char **param, int n)
 {
 	int		test;
 	int		i;
@@ -94,11 +94,11 @@ int	ft_find_g_path(t_data *data, char **param, int n)
 
 int	pipex(int ac, char **av, char **envp)
 {
-	t_data	data;
+	t_pipex	data;
 
 	if (ac < 5 || (ac < 6 && ft_p_strncmp(av[1], "here_doc", 8) == 0))
 		return (ft_p_putstr_fd("NB D ARGS INVALIDE\n", 2), 1);
-	if (ft_init(av, &data, envp, ac) != 0)
+	if (ft_init_pipex(av, &data, envp, ac) != 0)
 		return (1);
 	if (ft_p_strncmp(av[1], "here_doc", 8) == 0)
 		if (ft_heredoc(&data) != 0)

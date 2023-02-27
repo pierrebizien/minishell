@@ -6,13 +6,13 @@
 /*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 15:52:40 by pbizien           #+#    #+#             */
-/*   Updated: 2023/02/22 15:26:36 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/02/27 14:39:48 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./inc/pipex_bonus.h"
 
-void	ft_close_all(t_data *data)
+void	ft_close_all(t_pipex *data)
 {
 	if (data->pipefd1[0] != -1)
 		ft_close(&data->pipefd1[0]);
@@ -50,14 +50,14 @@ void	ft_free_dchar(char **str)
 		free(str);
 }
 
-void	ft_finish_f1_bis(t_data *data)
+void	ft_finish_f1_bis(t_pipex *data)
 {
 	ft_close_all(data);
 	ft_free_dchar(data->paths);
 	ft_free_dchar(data->param1);
 }
 
-void	ft_finish_f1(t_data *data, char **av)
+void	ft_finish_f1(t_pipex *data, char **av)
 {
 	ft_not_found(av[2 + data->hd]);
 	ft_close_all(data);

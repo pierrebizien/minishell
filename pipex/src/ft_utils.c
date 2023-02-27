@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 10:18:33 by pbizien           #+#    #+#             */
-/*   Updated: 2023/02/21 17:58:52 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/02/27 15:25:02 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./inc/pipex_bonus.h"
 
-int	ft_init(char **av, t_data *data, char**envp, int ac)
+int	ft_init_pipex(char **av, t_pipex *data, char**envp, int ac)
 {
 	ft_p_memset(&data->last_pid, 0, sizeof(data->last_pid));
 	data->ac = ac;
@@ -31,11 +31,11 @@ int	ft_init(char **av, t_data *data, char**envp, int ac)
 	}
 	else
 		data->hd = 1;
-	ft_init_pipe(data);
+	ft_init_pipex_pipe(data);
 	return (0);
 }
 
-void	ft_first_child(t_data *data, char **av, char **envp)
+void	ft_first_child(t_pipex *data, char **av, char **envp)
 {
 	if (data->fd_in == -1)
 	{
@@ -62,7 +62,7 @@ void	ft_first_child(t_data *data, char **av, char **envp)
 	(void)envp;
 }
 
-void	ft_last_child_bis(t_data *data, char **envp, int i)
+void	ft_last_child_bis(t_pipex *data, char **envp, int i)
 {
 	if (i % 2 == 0)
 	{
@@ -82,7 +82,7 @@ void	ft_last_child_bis(t_data *data, char **envp, int i)
 	(void)envp;
 }
 
-void	ft_last_child(t_data *data, char **av, char **envp, int i)
+void	ft_last_child(t_pipex *data, char **av, char **envp, int i)
 {
 	if (data->hd == 0)
 		data->fd_out = open(data->av[data->ac - 1], O_RDWR | O_TRUNC | O_CREAT, 00644);
@@ -108,7 +108,7 @@ void	ft_last_child(t_data *data, char **av, char **envp, int i)
 	ft_last_child_bis(data, envp, i);
 }
 
-int	ft_main_suite(t_data *data, char **av, char **envp)
+int	ft_main_suite(t_pipex *data, char **av, char **envp)
 {
 	int	id;
 	int	i;

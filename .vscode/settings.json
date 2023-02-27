@@ -3,6 +3,10 @@
         "pipex_bonus.h": "c",
         "ft_cmd_echo": "c",
         "minishell.h": "c",
+<<<<<<< HEAD
         "typeinfo": "c"
+=======
+        "type_traits": "c"
+>>>>>>> pierre_parsing_1
     }
 }

@@ -1,8 +1,7 @@
 
 
-SRCS =	ft_free.c ft_split_keep.c ft_split_leave.c main.c ft_init.c ft_parsing.c ft_logo.c ft_signal.c \
-		ft_create_env.c ft_cmd_env.c ft_cmd_test_buildin.c ft_cmd_export.c
-# SRCS += ft_close.c ft_close2.c ft_close3.c ft_heredoc.c ft_utils.c ft_utils2.c pipex.c
+SRCS =	ft_cmd_echo.c  ft_cmd_export.c        ft_create_env.c  ft_init.c  ft_parsing.c  ft_quotes.c  ft_split_keep.c   \
+ft_cmd_env.c   ft_cmd_test_buildin.c  ft_free.c        ft_logo.c  ft_pipex.c    ft_signal.c  ft_split_leave.c  main.c
 
 
 # SRC_PATH += /libft/src
@@ -16,7 +15,7 @@ OBJS_PATH = ./obj
 
 HEAD_PATH += -I ./minishell_src/inc
 HEAD_PATH += -I ./libft/inc
-# INCLUDE += -I ./pipex/inc
+HEAD_PATH += -I ./pipex/inc
 LIB += -L ./libft -lft
 LIB += -L ./pipex -lpipex
 LIB += -lreadline
