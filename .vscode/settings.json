@@ -2,6 +2,7 @@
     "files.associations": {
         "pipex_bonus.h": "c",
         "ft_cmd_echo": "c",
-        "minishell.h": "c"
+        "minishell.h": "c",
+        "typeinfo": "c"
     }
 }

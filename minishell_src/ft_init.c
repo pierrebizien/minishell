@@ -2,9 +2,8 @@
 
 extern t_data data;
 
-int ft_init(char **argv, char **envp, int ac)
+int ft_init(char **env)
 {
-	data.sep = "|";
-	ft_create_env(envp);
+	ft_create_env(env);
 	return (0);
 }
