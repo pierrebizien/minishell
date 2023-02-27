@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_p.c                                  :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 10:30:09 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/21 18:24:42 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/02/27 14:33:48 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./inc/get_next_line_p.h"
+#include "./inc/get_next_line.h"
 
 static t_fdList	*find_fdbegin(int fd, t_fdList **fd_list)
 {

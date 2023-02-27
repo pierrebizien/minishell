@@ -15,7 +15,7 @@ OBJS_PATH = ./obj
 
 HEAD_PATH += -I ./minishell_src/inc
 HEAD_PATH += -I ./libft/inc
-# INCLUDE += -I ./pipex/inc
+HEAD_PATH += -I ./pipex/inc
 LIB += -L ./libft -lft
 LIB += -L ./pipex -lpipex
 LIB += -lreadline

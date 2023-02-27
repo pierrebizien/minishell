@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_close2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 16:35:20 by pbizien           #+#    #+#             */
-/*   Updated: 2023/02/21 17:46:36 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/02/27 14:39:48 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./inc/pipex_bonus.h"
 
-void	ft_finish_lf(t_data *data, char **av, int i)
+void	ft_finish_lf(t_pipex *data, char **av, int i)
 {
 	ft_not_found(av[data->hd + i + 3]);
 	ft_close_all(data);
@@ -20,7 +20,7 @@ void	ft_finish_lf(t_data *data, char **av, int i)
 	ft_free_dchar(data->param1);
 }
 
-void	ft_finish_lf_bis(t_data *data)
+void	ft_finish_lf_bis(t_pipex *data)
 {
 	ft_close_all(data);
 	if (data->paths)
@@ -29,7 +29,7 @@ void	ft_finish_lf_bis(t_data *data)
 		ft_free_dchar(data->param1);
 }
 
-int	ft_end(t_data *data)
+int	ft_end(t_pipex *data)
 {
 	int	error;
 

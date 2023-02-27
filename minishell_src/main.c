@@ -5,14 +5,14 @@
 t_data data;
 
 
-void	ft_print_args(void)
+void	ft_print_dargs(char **strstr)
 {
 	int	i;
 
 	i = 0;
-	while (data.args && data.args[i])
+	while (strstr && strstr[i])
 	{
-		printf("|%s| \n", data.args[i]);
+		printf("|%s| \n", strstr[i]);
 		i++;
 	}
 	
@@ -38,7 +38,7 @@ int	main(int ac, char **av, char**envp)
 			str = ft_parse(str);
 		// ft_check();
 		ft_pipex();
-		ft_print_args();
+		// ft_print_args();
 		free(str);
 		str = readline("\e[36;1mminishell> \e[0m");
 		add_history(str);

@@ -6,11 +6,11 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 10:30:06 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/21 18:24:48 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/02/21 18:45:43 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./inc/get_next_line_p.h"
+#include "./inc/get_next_line.h"
 
 t_bufferList	*ftlst_new_buffer(void)
 {
