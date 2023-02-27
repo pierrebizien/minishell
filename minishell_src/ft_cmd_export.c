@@ -108,33 +108,5 @@ int ft_export(char *str)
 	tmp = tmp->next;
 	ft_ok_export(str + i, tmp);
 	return (0);
-}
 
-int main(int c, char **v, char **e)
-{
-	fprintf(stderr, "\n\n");
-	ft_create_env(e);
-
-    char *test;
-	// test = "export";
-    // fprintf(stderr, "\t\t1|%d|\n", ft_export(test));
-
-	test = "export test=42";
-    fprintf(stderr, "\t\t2|%d|\n", ft_export(test));
-
-	test = "export test+=pierretest";
-    fprintf(stderr, "\t\t3|%d|\n", ft_export(test));
-
-	test = "export test_2+=pierretest";
-    fprintf(stderr, "\t\t4|%d|\n", ft_export(test));
-
-	test = "export test@=oui";
-    fprintf(stderr, "\t\t5|%d|\n", ft_export(test));
-
-		test = "export test=oui";
-    fprintf(stderr, "\t\t6|%d|\n", ft_export(test));
-
-
-
-	// ft_env();
 }
