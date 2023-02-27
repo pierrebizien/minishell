@@ -10,7 +10,7 @@ SRC_PATH = ./minishell_src/
 
 
 OBJS = ${patsubst %.c, ${OBJS_PATH}/%.o, ${SRCS}}
-OBJS_PATH = ./obj
+OBJS_PATH = ./minishell_src/obj
 
 
 HEAD_PATH += -I ./minishell_src/inc
