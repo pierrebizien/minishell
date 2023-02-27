@@ -23,7 +23,6 @@ void    ft_logo(void);
 
 typedef	struct	s_env
 {
-	char			**env;
     char			*key;
 	char			*value;
 	struct s_env	*next;
@@ -57,8 +56,13 @@ char	*ft_parse(char *str);
 int ft_init(char **argv, char **envp, int ac);
 
 //FT_ENV
+t_env	*ft_lstnew_env(void);
 int	ft_create_env(char **envp);
 int ft_env(void);
+
+//FT_TEST_BUILDTIN
+int ft_test_builtin(char *str);
+
 
 void	ft_ctrlb(int a);
 void	ft_ctrlc(int a);

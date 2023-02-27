@@ -13,6 +13,5 @@ int main(void)
 {
     char *cmd;
     cmd = "echo -n test numero 1";
-    data.args = ft_split(cmd, ' ');
     ft_echo(1, 4);
 }
