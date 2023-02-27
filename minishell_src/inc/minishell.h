@@ -45,6 +45,8 @@ typedef	struct	s_data
 //FT_PARSING
 
 char	*ft_parse(char *str);
+int		is_ws(char c);
+
 
 //FT_INIT
 
@@ -53,10 +55,15 @@ int ft_init(char **env);
 //FT_ENV
 t_env	*ft_lstnew_env(void);
 int		ft_create_env(char **envp);
+void	ft_free_env(void);
 int		ft_env(void);
 
+//FT_EXPORT
+
+int ft_export(char *str);
+
 //FT_TEST_BUILDTIN
-int ft_test_builtin(char *str);
+int		ft_test_builtin(char *str);
 
 
 void	ft_ctrlb(int a);
