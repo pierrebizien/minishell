@@ -36,6 +36,7 @@ int	main(int ac, char **av, char**envp)
 	add_history(str);
 	while (str)
 	{
+		ft_test_builtin(str);
 		if (str && str[0])
 			str = ft_parse(str);
 		ft_print_args();

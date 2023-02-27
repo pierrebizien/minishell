@@ -15,6 +15,28 @@ t_env	*ft_lstnew_env(void)
 	return (new);
 }
 
+void ft_free_env(void)
+{
+	int i;
+	t_env	*tmp;
+	t_env	*adresse;
+
+	i = -1;
+	tmp = &data.env;
+	free(tmp->key);
+	free(tmp->value);
+	tmp = tmp->next;
+	while (tmp)
+	{
+		// fprintf(stderr, "free = %s=%s\n\n", tmp->key, tmp->value);
+		free(tmp->key);
+		free(tmp->value);
+		adresse = tmp->next;
+		free(tmp);
+		tmp = adresse;
+	}
+}
+
 int ft_create_env(char **envp)
 {
 	int i;
