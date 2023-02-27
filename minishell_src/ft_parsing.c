@@ -2,18 +2,18 @@
 
 extern t_data data;
 
-void ft_print_dchar(char **strstr)
-{
-	int	i;
+// void ft_print_dchar(char **strstr)
+// {
+// 	int	i;
 
-	i = 0;
-	while (strstr && strstr[i])
-	{
-		printf("STRSTR VAUT |%s|\n", strstr[i]);
-		i++;
-	}
+// 	i = 0;
+// 	while (strstr && strstr[i])
+// 	{
+// 		printf("STRSTR VAUT |%s|\n", strstr[i]);
+// 		i++;
+// 	}
 	
-}
+// }
 
 
 int	is_ws(char c)
@@ -60,7 +60,7 @@ char	*ft_clean(char *str)
 		return (free(str), write(2, "Quotes error\n", 14), NULL);
 	return (str);
 }
-void	ft_clean2(void)
+void	ft_clean_ws(void)
 {
 	int	i;
 	int k;
@@ -77,6 +77,8 @@ void	ft_clean2(void)
 	}
 	
 }
+
+
 char *ft_parse(char *str)
 {
 	char *tmp;
@@ -90,7 +92,7 @@ char *ft_parse(char *str)
 	if (!str)
 		return (NULL);
 	data.args = ft_split_k(str, "|");
-	ft_clean2();
+	ft_clean_ws();
 	// ft_print_args();
 	// printf("str parse vaut |%s|\n", str);
 	 return (str);

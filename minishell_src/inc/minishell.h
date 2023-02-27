@@ -47,6 +47,7 @@ typedef	struct	s_data
 	char **envp;
 	int		ac;
 	char	*sep;
+	int		hd;
 	
 }               t_data;
 
@@ -78,6 +79,9 @@ int		ft_test_builtin(char *str);
 void	ft_ctrlb(int a);
 void	ft_ctrlc(int a);
 
+void	ft_print_dchar(char **strstr);
+
+
 char	**ft_split_k(char const *s, char *sep);
 char	**ft_split_l(char const *s, char *sep);
 
@@ -91,6 +95,9 @@ int	ft_in_q(int in_q);
 //FT_PIPEX
 void	ft_pipex(void);
 
+//FT_UTILS
+int		ft_strstrlen(char **strstr);
+size_t	ft_strlen_WS(const char *str);
 
 // int	pipex(int ac, char **av, char **envp);
 

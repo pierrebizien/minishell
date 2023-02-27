@@ -1,6 +1,6 @@
 
 
-SRCS =	ft_cmd_echo.c  ft_cmd_export.c        ft_create_env.c  ft_init.c  ft_parsing.c  ft_quotes.c  ft_split_keep.c   \
+SRCS =	ft_utils.c ft_cmd_echo.c  ft_cmd_export.c        ft_create_env.c  ft_init.c  ft_parsing.c  ft_quotes.c  ft_split_keep.c   \
 ft_cmd_env.c   ft_cmd_test_buildin.c  ft_free.c        ft_logo.c  ft_pipex.c    ft_signal.c  ft_split_leave.c  main.c
 
 
