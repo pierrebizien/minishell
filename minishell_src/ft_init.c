@@ -5,8 +5,6 @@ extern t_data data;
 int ft_init(char **env)
 {
 	data.sep = "|";
-	data.pip.infile = "/dev/stdin";
-	data.pip.outfile = "/dev/stdout";
 	data.envp = env;
 	data.hd = 0;
 	ft_create_env(env);

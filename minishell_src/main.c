@@ -40,13 +40,14 @@ int	main(int ac, char **av, char**envp)
 	signal(SIGINT, ft_ctrlc);
 	signal(SIGQUIT, SIG_IGN);
 	str = readline("\e[36;1mminishell> \e[0m");
-
 	add_history(str);
 	while (str)
 	{
 		if (str && str[0])
-			str = ft_parse(str);
-		ft_pipex();
+			ft_parse(str);
+		ft_print_dchar(data.args);
+		ft_parse_for_exec();
+		// ft_pipex();
 		// ft_test_builtin(data.args[0]);
 		// ft_print_args();
 		free(str);

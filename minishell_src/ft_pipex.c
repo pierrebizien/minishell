@@ -43,8 +43,8 @@ char **ft_generate_inp()
 		}
 		i++;
 	}
-	output[1] = ft_strdup(data.pip.infile);
-	output[k++] = ft_strdup(data.pip.outfile);
+	// output[1] = ft_strdup(data.pip.infile);
+	// output[k++] = ft_strdup(data.pip.outfile);
 	output[k] = 0;
 	if (!output[0] || !output[k - 1])
 		return (NULL); //PENSER A FREE
@@ -72,8 +72,8 @@ int	ft_put_in(char **input)
 		fprintf(stderr, "On rentre\n");
 		free(input[1]);
 		input[1] = ft_substr(input[2], k, len);
-		if (!data.pip.infile)
-			return (1);//GERER
+		// if (!data.pip.infile)
+		// 	return (1);//GERER
 		ft_memcpy(input[2], input[2] + i, len);
 		// input[2][k + len + 1] = '\0';
 	}
