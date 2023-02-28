@@ -38,6 +38,13 @@ typedef struct	s_pip
 	char	*outfile;
 }				t_pip;
 
+
+typedef struct	s_tok
+{
+	char	*infile;
+	char	*outfile;
+}				t_pip;
+
 typedef	struct	s_data
 {
 	t_env	env;
@@ -62,9 +69,7 @@ int		is_ws(char c);
 
 int ft_init(char **env);
 
-//FT_ENV
-t_env	*ft_lstnew_env(void);
-int		ft_create_env(char **envp);
+//FT_ENV 42
 void	ft_free_env(void);
 int		ft_env(void);
 
@@ -112,3 +117,25 @@ size_t	ft_strlen_WS(const char *str);
 
 
 #endif
+
+< Makefile cat | cat | cat > oufile > out > outpierre
+
+Makefile	cat	-e	 out	| 	Bonjour 	|	cat  outile outpierre	out
+	1		   3 	  2		4		3		4	 3		2.5		2.5	 	2
+
+<< Makefile cat | cat | cat > oufile > out
+
+Makefile	cat	-e	 out	| 	Bonjour 	|	cat | cat  | cat outile 	out
+1.5		      3   	  2		4		3		4	 3	4	3  4  3	  2.5	 	 2
+
+
+
+4, 
+	1, 2, DUP, 3 
+4, 
+	1, 2, DUP, 3
+4, 
+	1, 2, DUP, 3 
+
+
+
