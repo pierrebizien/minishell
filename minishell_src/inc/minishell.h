@@ -69,11 +69,16 @@ void	ft_free_env(void);
 int		ft_env(void);
 
 //FT_EXPORT
+int		ft_export(char *str);
 
-int ft_export(char *str);
+// FT_ECHO
+int		ft_echo(char *str);
 
-//
-int	ft_echo(char *str);
+// FT_PWD
+int		ft_pwd(void);
+
+// FT_CD
+int		ft_cd(char *str);
 
 //FT_TEST_BUILDTIN
 int		ft_test_builtin(char *str);
