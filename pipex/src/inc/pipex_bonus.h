@@ -6,7 +6,7 @@
 /*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:01:03 by pbizien           #+#    #+#             */
-/*   Updated: 2023/02/27 15:42:52 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/02/28 15:29:55 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <stdlib.h>
 # include <limits.h>
 # include "get_next_line.h"
+# include "../../../minishell_src/inc/minishell.h"
 
 typedef struct s_pipex
 {
@@ -66,6 +67,7 @@ void	ft_no_dir(char *str);
 //CLOSE 3
 void	ft_close_if(int *fd, t_pipex *data);
 void	ft_exec(t_pipex *data);
+void	ft_exec_f(t_pipex *data);
 
 //UTILS
 int		ft_init_pipex(char **av, t_pipex *data, char**envp, int ac);
@@ -102,6 +104,8 @@ void	*ft_p_memset(void *b, int c, size_t len);
 char	*get_next_line(int fd);
 
 
+//FT_REDIR
+int		ft_redir_first(t_pipex *data);
 
 
 

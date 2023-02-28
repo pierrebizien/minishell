@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pip_strjoin.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 17:08:11 by pbizien           #+#    #+#             */
-/*   Updated: 2023/02/21 17:46:36 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/02/28 15:48:04 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,14 @@ char	*ft_p_strjoin(char const *s1, char const *s2)
 	int		i;
 	int		j;
 
+	fprintf(stderr, "MESSIEURS BONSIR\n");
 	len = ft_p_strlen(s1) + ft_p_strlen(s2);
 	i = 0;
+	fprintf(stderr, "MESSIEURS BONJOUR\n");
 	output = (char *)ft_p_calloc(len + 1, sizeof(char));
 	if (output == NULL)
 		return (NULL);
+	fprintf(stderr, "MESSIEURS TG\n");
 	while (s1[i])
 	{
 		output[i] = s1[i];
@@ -42,6 +45,7 @@ char	*ft_p_strjoin(char const *s1, char const *s2)
 		j++;
 	}
 	output[j] = '\0';
+	fprintf(stderr, "MESSIEURS KFDDJEGJEJ\n");
 	return (output);
 }
 
