@@ -97,3 +97,41 @@ char *ft_parse(char *str)
 	// printf("str parse vaut |%s|\n", str);
 	 return (str);
 }
+
+
+t_exec	*ft_lstnew_pars(void)
+{
+	t_exec	*new;
+
+	new = malloc(sizeof(t_exec));
+	if (new == NULL)
+		return (NULL);
+	new->str = NULL;
+	new->id = -42;
+	new->next = NULL;
+	new->perv = NULL;
+	return (new);
+}
+
+void ft_parse_for_exec(void)
+{
+	int i;
+	int j;
+	t_exec *tmp;
+	char **tab;
+
+
+	tmp = &data.exec;
+	tmp->perv = NULL;
+	i = 0;
+	j = -1;
+	while (data.args[++j])
+	{
+		tmp->next = ft_lstnew_pars();
+		tab = ft_split_k(data.args[j], "<");
+		ft_print_dchar(tab);
+
+		// i = ft_strlen(data.args[j]);
+		
+	}
+}
