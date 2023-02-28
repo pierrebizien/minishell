@@ -48,7 +48,7 @@ int	main(int ac, char **av, char**envp)
 			str = ft_parse(str);
 		// ft_check();
 		ft_pipex();
-		ft_test_builtin(data.args[0]);
+		// ft_test_builtin(data.args[0]);
 		// ft_print_args();
 		free(str);
 		str = readline("\e[36;1mminishell> \e[0m");
