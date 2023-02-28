@@ -56,6 +56,7 @@ int	ft_put_in(char **input)
 	int	i;
 	int	len;
 	int	k;
+	int len2;
 
 	i = 0;
 	len = 0;
@@ -66,16 +67,18 @@ int	ft_put_in(char **input)
 	k = i;
 	while (input[2][i] && !is_ws(input[2][i++]))
 		len++;
-	fprintf(stderr, "k vaut %d et len vaut %d\n", k, len);
+	// fprintf(stderr, "k vaut %d et len vaut %d\n", k, len);
 	if (input[2][1] && input[2][1] != '<')
 	{
-		fprintf(stderr, "On rentre\n");
+		// fprintf(stderr, "On rentre\n");
 		free(input[1]);
 		input[1] = ft_substr(input[2], k, len);
 		if (!data.pip.infile)
 			return (1);//GERER
-		ft_memcpy(input[2], input[2] + i, len);
-		// input[2][k + len + 1] = '\0';
+		len2 = ft_strlen(input[2] + i);
+		// fprintf(stderr, "input[2] %s \t, i %d \t len %d \t k %d\n", input[2], i, len, k);
+		ft_memcpy(input[2], input[2] + i, len2);
+		input[2][len2] = '\0';
 	}
 	return (0);
 }
@@ -134,7 +137,7 @@ char	**ft_hd(char **input)
 	}
 	data.hd = 1;
 	output[k] = 0;
-	ft_print_dchar(output);
+	// ft_print_dchar(output);
 	return (output);
 
 }
@@ -163,9 +166,12 @@ void	ft_pipex(void)
 	len = ft_len_mpipe();
 	ft_print_dchar(input);
 	input = ft_detect_in_out(input);
-	// ft_print_dchar(input);
+	printf("AVANT PIPEX\n");
+	ft_print_dchar(input);
 	// fprintf(stderr, "len %d\n", len);
 	// ft_print_dargs(input);
+	
 	pipex(len + 3 + data.hd, input, data.envp);
+
 
 }
