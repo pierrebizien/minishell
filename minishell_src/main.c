@@ -46,7 +46,6 @@ int	main(int ac, char **av, char**envp)
 	{
 		if (str && str[0])
 			str = ft_parse(str);
-		// ft_check();
 		ft_pipex();
 		// ft_test_builtin(data.args[0]);
 		// ft_print_args();
