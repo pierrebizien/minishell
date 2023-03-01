@@ -1,7 +1,5 @@
 #include "./inc/minishell.h"
 
-extern t_data data;
-
 t_env	*ft_lstnew_env(void)
 {
 	t_env	*new;
@@ -15,14 +13,14 @@ t_env	*ft_lstnew_env(void)
 	return (new);
 }
 
-void ft_free_env(void)
+void ft_free_env(t_data *data)
 {
 	int i;
 	t_env	*tmp;
 	t_env	*adresse;
 
 	i = -1;
-	tmp = &data.env;
+	tmp = &data->env;
 	free(tmp->key);
 	free(tmp->value);
 	tmp = tmp->next;
@@ -37,7 +35,7 @@ void ft_free_env(void)
 	}
 }
 
-int ft_create_env(char **envp)
+int ft_create_env(char **envp, t_data *data)
 {
 	int i;
 	int j;
@@ -45,7 +43,7 @@ int ft_create_env(char **envp)
 	t_env	*tmp;
 
 	i = -1;
-	tmp = &data.env;
+	tmp = &data->env;
 	while (envp[++i])
 	{
 		j = 0;

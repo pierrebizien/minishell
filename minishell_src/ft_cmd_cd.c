@@ -2,7 +2,6 @@
 #include <sys/types.h>
 #include <dirent.h>
 
-extern t_data data;
 
 int ft_strlen_char(char *str, char c)
 {
@@ -14,13 +13,14 @@ int ft_strlen_char(char *str, char c)
 	return (i);
 }
 
-int	ft_cd(char *str)
+int	ft_cd(char *str, t_data *data)
 {
 	// DIR *dir;
 	// struct dirent *entrey;
 	// int i;
 	// char *path;
 	(void) str;
+	(void)data;
 
 
 	// i = 3;

@@ -1,10 +1,6 @@
 #include "./inc/minishell.h"
 
 
-
-t_data data;
-
-
 void	ft_print_dargs(char **strstr)
 {
 	int	i;
@@ -24,7 +20,7 @@ void	ft_print_dchar(char **strstr)
 	i = 0;
 	while (strstr[i])
 	{
-		fprintf(stderr, "\ni vaut %d et strstr %s\n", i, strstr[i]);
+		fprintf(stderr, "tab[%d] = |%s|\n", i, strstr[i]);
 		i++;
 	}
 }
@@ -34,8 +30,9 @@ int	main(int ac, char **av, char**envp)
 	(void)av;
 	(void)envp;
 	char *str;
+	t_data data;
 
-	ft_init(envp);
+	ft_init(envp, &data);
 	ft_logo();
 	signal(SIGINT, ft_ctrlc);
 	signal(SIGQUIT, SIG_IGN);
@@ -44,9 +41,9 @@ int	main(int ac, char **av, char**envp)
 	while (str)
 	{
 		if (str && str[0])
-			ft_parse(str);
-		ft_print_dchar(data.args);
-		ft_parse_for_exec();
+			ft_parse(str, &data);
+		// ft_print_dchar(data.args);
+		ft_parse_for_exec(&data);
 		// ft_pipex();
 		// ft_test_builtin(data.args[0]);
 		// ft_print_args();
