@@ -169,7 +169,7 @@
 // 	// fprintf(stderr, "len %d\n", len);
 // 	// ft_print_dargs(input);
 	
-// 	pipex(len + 3 + data.hd, input, data.envp);
+	// pipex(len + 3 + data.hd, input, data.envp);
 
 
 // }
