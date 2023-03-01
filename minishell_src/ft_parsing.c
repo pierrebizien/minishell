@@ -91,7 +91,7 @@ void	ft_clean_ws(t_data *data)
 	i = 0;
 	while (data->args && data->args[i])
 	{
-
+		
 		if (is_ws(data->args[i][0]))
 			ft_memmove(data->args[i], data->args[i] + 1, ft_strlen(data->args[i]));
 		k = ft_strlen(data->args[i]);
@@ -241,6 +241,7 @@ void ft_parse_for_exec(t_data *data)
 		i = 0;
 		while (tab && tab[i])
 		{
+
 			if (!ft_strncmp(tab[i], "<", ft_strlen(tab[i])))
 				i++;
 			else if (!ft_strncmp(tab[i], "<<", ft_strlen(tab[i])))
