@@ -37,6 +37,9 @@ all: ${NAME}
 run: all
 	./${NAME}
 
+valgrind: all
+	valgrind ./${NAME}
+
 
 
 ${OBJS}: ${OBJS_PATH}/%.o: %.c Makefile minishell.h
