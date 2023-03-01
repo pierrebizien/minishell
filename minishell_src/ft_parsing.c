@@ -162,48 +162,63 @@ void ft_modif_in_out(t_data *data)
 	t_exec	*tmp;
 	int		bool_out;
 	int		bool_in;
+	t_exec	*tmpstart;
 
 	tmp = &data->exec;
-	bool_in = 0;
-	bool_out = 0;
-	while (tmp->next != NULL && tmp->id != F_PIPE)
+	while (tmp->next != NULL)
 	{
-		if (tmp->id == F_INFILE)
+		tmpstart = tmp;
+		// fprintf(stderr, "chiasse(%d) \t %s\t cul = %d\n", tmp->id, tmp->str, bool_out);
+		bool_in = 0;
+		bool_out = 0;
+		while (tmp->next != NULL && tmp->id != F_PIPE)
+			tmp = tmp->next;
+		if (tmp->id == F_PIPE)
+			tmp = tmp->prev;
+		// fprintf(stderr, "nico(%d) \t %s\t cul = %d\n", tmp->id, tmp->str, bool_out);
+		while (tmp != NULL && tmp->id != F_PIPE)
 		{
-			if (bool_in == 1)
-				tmp->id = F_FALSEI;
-			else
-				bool_in = 1;
+			if (tmp->id == F_APPEND)
+			{
+				if (bool_out == 1)
+					tmp->id = F_FALSEA;
+				else
+					bool_out = 1;
+			}
+			if (tmp->id == F_TRONC)
+			{
+				if (bool_out == 1)
+					tmp->id = F_FALSET;
+				else
+					bool_out = 1;
+			}
+			if (tmp->id == F_INFILE)
+			{
+				if (bool_in == 1)
+					tmp->id = F_FALSEI;
+				else
+					bool_in = 1;
+			}
+			if (tmp->id == F_DELIMITER)
+			{
+				if (bool_in == 1)
+					tmp->id = F_FALSED;
+				else
+					bool_in = 1;
+			}
+			// fprintf(stderr, "cacaa(%d) \t %s\t culin = %d\t cutout = %d\n", tmp->id, tmp->str,bool_in,  bool_out);
+			tmp = tmp->prev;
 		}
-		if (tmp->id == F_DELIMITER)
-		{
-			if (bool_in == 1)
-				tmp->id = F_FALSED;
-			else
-				bool_in = 1;
-		}
-		tmp = tmp->next;
-	}
-	if (tmp->id == F_PIPE)
-		tmp = tmp->prev;
-	while (tmp->prev != NULL && tmp->id != F_PIPE)
-	{
-		fprintf(stderr, "cacaa(%d) \t %s\t cul = %d\n", tmp->id, tmp->str, bool_out);
-		if (tmp->id == F_APPEND)
-		{
-			if (bool_out == 1)
-				tmp->id = F_FALSEA;
-			else
-				bool_out = 1;
-		}
-		if (tmp->id == F_TRONC)
-		{
-			if (bool_out == 1)
-				tmp->id = F_FALSET;
-			else
-				bool_out = 1;
-		}
-		tmp = tmp->prev;
+		tmp = tmpstart;
+		if (tmp->id == F_PIPE && tmp->next != NULL)
+			tmp = tmp->next;
+		while (tmp->next != NULL && tmp->id != F_PIPE)
+			tmp = tmp->next;
+		if (tmp->next != NULL)
+			tmp = tmp->next;
+		// fprintf(stderr, "en bas(%d) \t %s\t next = %p\n", tmp->id, tmp->str,tmp->next);
+		
+
 	}
 }
 
@@ -222,7 +237,7 @@ void ft_parse_for_exec(t_data *data)
 	while (data->args[++j])
 	{
 		tab = ft_split_l(data->args[j], " ");
-		ft_print_dchar(tab);
+		// ft_print_dchar(tab);
 		i = 0;
 		while (tab && tab[i])
 		{
@@ -297,3 +312,7 @@ void ft_parse_for_exec(t_data *data)
 
 
 // < Makefile <<stop ls a > out -la b c | cat | ls -la >out >> out2
+
+// < make <<test <oui << stop cat > out -ls >sexe >>bisous
+
+// < make <<test <oui << stop cat > out -ls >sexe >>bisous | < infule << stop <out ls od > test >> out -la > out 
