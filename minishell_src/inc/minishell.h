@@ -21,9 +21,10 @@
 #define MALLOC_ERROR "erreur de malloc"
 #define MAL_ERCODE 42
 
+
 #define INFILE 0
-#define HERE_DOC 1
-#define FALSEIN 2
+#define DELIMITER 1
+#define PIPE 21
 
 #define CMD 42
 
@@ -49,7 +50,7 @@ typedef struct	s_exec
 	char			*str;
 	int				id;
 	struct s_exec	*next;
-	struct s_exec	*perv;
+	struct s_exec	*prev;
 
 }				t_exec;
 
@@ -68,35 +69,35 @@ typedef	struct	s_data
 
 
 //FT_PARSING
-void ft_parse_for_exec(void);
-char	*ft_parse(char *str);
+void ft_parse_for_exec(t_data *data);
+char	*ft_parse(char *str, t_data *data);
 int		is_ws(char c);
 
 
 //FT_INIT
 
-int ft_init(char **env);
+int ft_init(char **env, t_data *data);
 
 //FT_ENV 42
-int		ft_create_env(char **envp);
+int		ft_create_env(char **envp, t_data *data);
 t_env	*ft_lstnew_env(void);
-void	ft_free_env(void);
-int		ft_env(void);
+void	ft_free_env(t_data *data);
+int		ft_env(t_data *data);
 
 //FT_EXPORT
-int		ft_export(char *str);
+int		ft_export(char *str, t_data *data);
 
 // FT_ECHO
-int		ft_echo(char *str);
+int		ft_echo(char *str, t_data *data);
 
 // FT_PWD
-int		ft_pwd(void);
+int		ft_pwd(t_data *data);
 
 // FT_CD
-int		ft_cd(char *str);
+int		ft_cd(char *str, t_data *data);
 
 //FT_TEST_BUILDTIN
-int		ft_test_builtin(char *str);
+int		ft_test_builtin(char *str, t_data *data);
 
 
 void	ft_ctrlb(int a);
@@ -135,11 +136,11 @@ size_t	ft_strlen_WS(const char *str);
 
 // << Makefile cat | cat | cat > oufile > out
 
-// Makefile	cat	-e	 out	| 	Bonjour 	|	cat | cat  | cat outile 	out
-// 1.5		      3   	  2		4		3		4	 3	4	3  4  3	  2.5	 	 2
+// Makefile	cat	-e	 out	| 	 pls >> fichier -la	|	cat | cat  | cat outile 	out
+// 1.5		  3   	  2		4	  3.3		2   3.3  4	 3	4	3  4  3	  2.5	 	 2
 
 
-
+// ls z > a -la c d
 // 4, 
 // 	1, 2, DUP, 3 
 // 4, 

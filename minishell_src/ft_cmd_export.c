@@ -1,8 +1,5 @@
 #include "./inc/minishell.h"
 
-extern t_data data;
-
-
 size_t	ft_strlen_WS(const char *str)
 {
 	size_t	i;
@@ -15,11 +12,11 @@ size_t	ft_strlen_WS(const char *str)
 	return (i);
 }
 
-static int ft_just_export(void)
+static int ft_just_export(t_data *data)
 {
 	t_env *tmp;
 
-    tmp = &data.env;
+    tmp = &data->env;
     while (tmp)
     {
 		write(1, "export ", 8);
@@ -32,10 +29,10 @@ static int ft_just_export(void)
 	return (0);
 }
 
-static void ft_export_var_in_env(char *str, int i)
+static void ft_export_var_in_env(char *str, int i, t_data *data)
 {
     t_env	*tmp;
-	tmp = &data.env;
+	tmp = &data->env;
 	if (str[i] == 0)
 		i++;
 	while (tmp)
@@ -47,7 +44,7 @@ static void ft_export_var_in_env(char *str, int i)
 }
 
 
-static int ft_plus_egal_export(char *str)
+static int ft_plus_egal_export(char *str, t_data *data)
 {
     t_env	*tmp;
 	char	*var;
@@ -60,11 +57,11 @@ static int ft_plus_egal_export(char *str)
 	while (str[++i] != '=' && str[i] != '+' && str[i])
 	{
 		if (is_ws(str[i]) == 1 || str[i] == '\0')
-			return (ft_export_var_in_env(str, i), 0);
+			return (ft_export_var_in_env(str, i, data), 0);
 	}
 	if (str[i] == '=')
 		return (1);
-	tmp = &data.env;
+	tmp = &data->env;
 	var = ft_substr(str, 0, i);
 	while (tmp->next && ft_strncmp(var, tmp->key, i))
 		tmp = tmp->next;
@@ -110,7 +107,7 @@ static int ft_verif_str_export(char *str)
 }
 
 
-static int ft_ok_export(char *str)
+static int ft_ok_export(char *str, t_data *data)
 {
     t_env	*tmp;
 	char	*var;
@@ -126,7 +123,7 @@ static int ft_ok_export(char *str)
 		i++;
 
 	}	
-	tmp = &data.env;
+	tmp = &data->env;
 	var = ft_substr(str, 0, i);
 	while (tmp->next && ft_strncmp(var, tmp->key, i))
 		tmp = tmp->next;
@@ -150,17 +147,17 @@ static int ft_ok_export(char *str)
 	return (0);
 }
 
-int ft_export(char *str)
+int ft_export(char *str, t_data *data)
 {
     t_env	*tmp;
 	int		i;
 	char	*cmd;
 
 	i = 0;
-	tmp = &data.env;
+	tmp = &data->env;
 	ft_strlen_WS(str);
 	if (ft_strncmp(str, "export", 7) == 0)
-		return (ft_just_export());
+		return (ft_just_export(data));
 	while (str[i] && str[i] != ' ')
 		i++;
 	i++;
@@ -174,8 +171,8 @@ int ft_export(char *str)
 		}
 		else
 		{
-			if (ft_plus_egal_export(str + i) != 0)
-				ft_ok_export(str + i);
+			if (ft_plus_egal_export(str + i, data) != 0)
+				ft_ok_export(str + i, data);
 		}
 		i = i + ft_strlen_WS(str + i);
 		while (str[i] && is_ws(str[i]) == 1)

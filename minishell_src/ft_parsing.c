@@ -53,6 +53,10 @@ char	*ft_clean(char *str)
 		}
 		if (!in_dq && !in_sq && is_ws(str[i]) && is_ws(str[i + 1]))
 			ft_memmove(str + i, (str + i + 1), ft_strlen(str + i) + 2);
+		else if ((str[i] == '<' && str[i+1] != '<' && str[i+1] != ' ') || (str[i] == '>' && str[i+1] != '>' && str[i+1] != ' '))
+		{
+			
+		}
 		else
 			i++;
 	}
@@ -60,26 +64,27 @@ char	*ft_clean(char *str)
 		return (free(str), write(2, "Quotes error\n", 14), NULL);
 	return (str);
 }
-void	ft_clean_ws(void)
+void	ft_clean_ws(t_data *data)
 {
 	int	i;
 	int k;
 
 	i = 0;
-	while (data.args && data.args[i])
+	while (data->args && data->args[i])
 	{
-		if (is_ws(data.args[i][0]))
-			ft_memmove(data.args[i], data.args[i] + 1, ft_strlen(data.args[i]));
-		k = ft_strlen(data.args[i]);
-		if (is_ws(data.args[i][k - 1]))
-			data.args[i][k - 1] = '\0';
+
+		if (is_ws(data->args[i][0]))
+			ft_memmove(data->args[i], data->args[i] + 1, ft_strlen(data->args[i]));
+		k = ft_strlen(data->args[i]);
+		if (is_ws(data->args[i][k - 1]))
+			data->args[i][k - 1] = '\0';
 		i++;
 	}
 	
 }
 
 
-char *ft_parse(char *str)
+char *ft_parse(char *str, t_data *data)
 {
 	char *tmp;
 
@@ -91,8 +96,8 @@ char *ft_parse(char *str)
 	str = ft_clean(str);
 	if (!str)
 		return (NULL);
-	data.args = ft_split_k(str, "|");
-	ft_clean_ws();
+	data->args = ft_split_k(str, "|");
+	ft_clean_ws(data);
 	// ft_print_args();
 	// printf("str parse vaut |%s|\n", str);
 	 return (str);
@@ -109,11 +114,11 @@ t_exec	*ft_lstnew_pars(void)
 	new->str = NULL;
 	new->id = -42;
 	new->next = NULL;
-	new->perv = NULL;
+	new->prev = NULL;
 	return (new);
 }
 
-void ft_parse_for_exec(void)
+void ft_parse_for_exec(t_data *data)
 {
 	int i;
 	int j;
@@ -121,17 +126,22 @@ void ft_parse_for_exec(void)
 	char **tab;
 
 
-	tmp = &data.exec;
-	tmp->perv = NULL;
+	tmp = &data->exec;
+	tmp->prev = NULL;
 	i = 0;
 	j = -1;
-	while (data.args[++j])
+	while (data->args[++j])
 	{
 		tmp->next = ft_lstnew_pars();
-		tab = ft_split_k(data.args[j], "<");
+
+		tab = ft_split_l(data->args[j], " ");
 		ft_print_dchar(tab);
+
 
 		// i = ft_strlen(data.args[j]);
 		
 	}
 }
+
+
+// < Makefile <<stop ls a > out -la b c

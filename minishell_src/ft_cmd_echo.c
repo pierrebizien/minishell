@@ -1,6 +1,5 @@
 #include "./inc/minishell.h"
 
-extern t_data data;
 
 
 
@@ -26,11 +25,12 @@ int ft_verif_nl_echo(char *str)
 	return (1);
 }
 
-int	ft_echo(char *str)
+int	ft_echo(char *str, t_data *data)
 {
 	int i;
 	int nl;
 
+	(void)data;
 	i = 5;
 	nl = ft_verif_nl_echo(str);
 	while (str[i] && (str[i] == '-' || str[i] == 'n' || is_ws(str[i]) == 1))

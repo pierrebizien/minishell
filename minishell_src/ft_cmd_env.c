@@ -1,12 +1,11 @@
 #include "./inc/minishell.h"
 
-extern t_data data;
 
-int ft_env(void)
+int ft_env(t_data *data)
 {
     t_env *tmp;
 
-    tmp = &data.env;
+    tmp = &data->env;
     while (tmp)
     {
         if (tmp->printable == 1)
