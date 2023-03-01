@@ -2,6 +2,7 @@
 
 int ft_test_builtin(char *str, t_data *data)
 {
+
 	if (str && ft_strncmp(str, "env", 3) == 0)
 		ft_env(data);
 	if (str && ft_strncmp(str, "export", 6) == 0)

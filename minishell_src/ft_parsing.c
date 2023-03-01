@@ -237,7 +237,7 @@ void ft_parse_for_exec(t_data *data)
 	while (data->args[++j])
 	{
 		tab = ft_split_l(data->args[j], " ");
-		// ft_print_dchar(tab);
+		ft_print_dchar(tab);
 		i = 0;
 		while (tab && tab[i])
 		{

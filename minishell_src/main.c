@@ -44,11 +44,11 @@ int	main(int ac, char **av, char**envp)
 		{
 			ft_parse(str, &data);
 			// ft_print_dchar(data.args);
-			ft_parse_for_exec(&data);
+			// ft_parse_for_exec(&data);
 		}
 		// ft_pipex();
-		// ft_test_builtin(data.args[0]);
-		// ft_print_args();
+		ft_test_builtin(data.args[0], &data);
+		// ft_print_args(data.args);
 		free(str);
 		str = readline("\e[36;1mminishell> \e[0m");
 		add_history(str);
