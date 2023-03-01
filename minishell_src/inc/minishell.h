@@ -22,15 +22,19 @@
 #define MAL_ERCODE 42
 
 
-#define INFILE 0
-#define DELIMITER 1
-#define PIPE 21
+#define F_INFILE 0
+#define F_DELIMITER 1
+#define F_FALSEI 2
+#define F_FALSED 3
 
-#define CMD 42
+#define F_PIPE 5
 
-#define APPEND 5
-#define TRONC 6
-#define FALSEOUT 7
+#define F_CMD 10
+
+#define F_APPEND 6
+#define F_TRONC 7
+#define F_FALSEA 8
+#define F_FALSET 9
 
 
 
@@ -49,6 +53,7 @@ typedef struct	s_exec
 {
 	char			*str;
 	int				id;
+	int				touch;
 	struct s_exec	*next;
 	struct s_exec	*prev;
 
@@ -122,6 +127,8 @@ void	ft_pipex(void);
 //FT_UTILS
 int		ft_strstrlen(char **strstr);
 size_t	ft_strlen_WS(const char *str);
+char *ft_put_str_in_str(char *dest, char *src, int ind);
+
 
 // int	pipex(int ac, char **av, char **envp);
 
