@@ -41,9 +41,11 @@ int	main(int ac, char **av, char**envp)
 	while (str)
 	{
 		if (str && str[0])
+		{
 			ft_parse(str, &data);
-		// ft_print_dchar(data.args);
-		ft_parse_for_exec(&data);
+			// ft_print_dchar(data.args);
+			ft_parse_for_exec(&data);
+		}
 		// ft_pipex();
 		// ft_test_builtin(data.args[0]);
 		// ft_print_args();
