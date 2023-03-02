@@ -1,3 +1,6 @@
+# SHELL = /usr/bin/bash
+
+
 LIBC =			\
 		ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c \
 		ft_isascii.c ft_isdigit.c ft_isprint.c ft_memchr.c \
@@ -36,17 +39,19 @@ RED='\033[0;31m'
 GREEN='\033[1;32m'
 ORANGE='\033[0;33m'
 YELLOW='\033[1;33m'
+BLUE='\033[1;36m'
 NC='\033[0m' # No Color
 
-ifndef ECHO
-T := $(shell $(MAKE) $(MAKECMDGOALS) --no-print-directory \
-      -nrRf $(firstword $(MAKEFILE_LIST)) \
-      ECHO="COUNTTHIS" | grep -c "COUNTTHIS")
+COLORTITOU=""
+
+T := $(words $(SRCS))
 N := x
 C = $(words $N)$(eval N := x $N)
 
 ECHOC = echo -ne "\r\033[2K"
-ECHO = $(ECHOC) $(ORANGE) "[`expr $C '*' 100 / $T`%]"
+
+ifndef ECHOO
+ECHOO = $(ECHOC) $(COLORTITOU) "[`expr $C '*' 100 / $T`%] "
 endif
 
 
@@ -56,12 +61,18 @@ all: 	${LIB}
 
 ${OBJS}: ${OBJS_PATH}/%.o: %.c Makefile ${SRCS_PATH}/inc/SuperLibft.h
 	@	mkdir -p ${OBJS_PATH}
-	$(ECHO) $(ORANGE) "Compiling $<"
+	@	if [ "$(shell test $C -gt 50; echo $$?)" = "0" ]; then\
+       		ECHOO = $(ECHOC) $(RED) "[`expr $C '*' 100 / $T`%] ";\
+		else\
+       		ECHOO = $(ECHOC) $(RED) "[`expr $C '*' 100 / $T`%] ";\
+    	fi
 	@	${CC} ${CFLAGS} -c $< -o $@ ${INCLUDE}
 
 ${LIB}:	${OBJS}
+	$(ECHOO) $(RED) "Compiling $<"
 	@	ar -rsc ${LIB} ${OBJS}
-	@	echo "\e[32mLibft OK\e[0m"
+	@	$(ECHOC) $(GREEN) "$(LIB) OK"$(NC)"\n"
+
 
 clean:	
 	@	rm -rf ${OBJS_PATH}

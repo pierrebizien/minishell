@@ -1,4 +1,4 @@
-
+# SHELL = /usr/bin/bash
 
 SRCS = ft_utils.c 
 SRCS += ft_init.c 
@@ -34,7 +34,7 @@ HEAD_PATH += -I ./minishell_src/inc
 HEAD_PATH += -I ./libft/inc
 # HEAD_PATH += -I ./pipex/inc
 LIB += -L ./libft -lft
-LIB += -L ./pipex -lpipex
+# LIB += -L ./pipex -lpipex
 LIB += -lreadline
 
 NAME = minishell
@@ -56,21 +56,31 @@ valgrind: all
 	valgrind ./${NAME}
 
 
+NOCOLOR='\033[0m'
 RED='\033[0;31m'
-GREEN='\033[1;32m'
+GREEN='\033[0;32m'
 ORANGE='\033[0;33m'
+BLUE='\033[0;34m'
+PURPLE='\033[0;35m'
+CYAN='\033[0;36m'
+LIGHTGRAY='\033[0;37m'
+
+DARKGRAY='\033[1;30m'
+LIGHTRED='\033[1;31m'
+LIGHTGREEN='\033[1;32m'
+LIGHTBLUE='\033[1;34m'
+LIGHTPURPLE='\033[1;35m'
+LIGHTCYAN='\033[1;36m'
 YELLOW='\033[1;33m'
-NC='\033[0m' # No Color
+WHITE='\033[1;37m'
 
 ifndef ECHO
-T := $(shell $(MAKE) $(MAKECMDGOALS) --no-print-directory \
-      -nrRf $(firstword $(MAKEFILE_LIST)) \
-      ECHO="COUNTTHIS" | grep -c "COUNTTHIS")
+T := $(words $(SRCS))
 N := x
 C = $(words $N)$(eval N := x $N)
 
 ECHOC = echo -ne "\r\033[2K"
-ECHO = $(ECHOC) $(ORANGE) "[`expr $C '*' 100 / $T`%]"
+ECHO = $(ECHOC) $(DARKGRAY) "[`expr $C '*' 100 / $T`%]"
 endif
 
 
@@ -79,7 +89,7 @@ ${OBJS}: ${OBJS_PATH}/%.o: %.c Makefile minishell.h
 	@	$(MAKE) --no-print-directory -s -C libft
 # @	$(MAKE) --no-print-directory -s -C pipex
 	@	mkdir -p ${OBJS_PATH}
-	@	$(ECHO) "\033[0;33m" "Compiling $<"
+	@	$(ECHO)  "Compiling" $(LIGHTGRAY) "$<"
 	@	${CC} ${CFLAGS} -c $< -o $@ ${HEAD_PATH}
 
 ${NAME}:  ${OBJS}
@@ -88,18 +98,22 @@ ${NAME}:  ${OBJS}
 
 
 clean:
-	rm -rf ${OBJS_PATH}
-	$(MAKE) clean -C libft
-	$(MAKE) clean -C pipex
+	@	rm -rf ${OBJS_PATH}
+	@	$(MAKE) --no-print-directory -s clean -C libft
+	@	$(MAKE) --no-print-directory -s clean -C pipex
 
 
 fclean: clean
-	rm -f ${NAME}
-	$(MAKE) fclean -C libft
-	$(MAKE) fclean -C pipex
+	@	rm -f ${NAME}
+	@	$(MAKE) --no-print-directory -s fclean -C libft
+	@	$(MAKE) --no-print-directory -s fclean -C pipex
+	@	$(ECHOC) $(GREEN) "--> $(NAME) cleaned !"$(NC)"\n"
 
 
-re: fclean all
+
+re: fclean
+	@	echo $(YELLOW) "\nRebuilding...\n" $(NC)
+	@	$(MAKE) -s
 
 
 .PHONY: re clean fclean 

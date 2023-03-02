@@ -39,11 +39,11 @@ char *ft_change_pwd(t_data *data)
 	changepwd = 0;
     while (tmp)
     {
-        if (ft_strncmp(tmp->key, "PWD", ft_strlen(tmp->key)) == 0)
-		{
-			if (ft_strncmp(tmp->value,getcwd(NULL, 0) )
-			fprintf(stderr, "tmp->key = |%s|\t value = |%s|\tpwd = %s\n\n", tmp->key, tmp->value, getcwd(NULL, 0));
-		}
+        // if (ft_strncmp(tmp->key, "PWD", ft_strlen(tmp->key)) == 0)
+		// {
+		// 	// if (ft_strncmp(tmp->value,getcwd(NULL, 0) )
+		// 	// fprintf(stderr, "tmp->key = |%s|\t value = |%s|\tpwd = %s\n\n", tmp->key, tmp->value, getcwd(NULL, 0));
+		// }
         tmp = tmp->next;
     }
 	tmp = &data->env;
