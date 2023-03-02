@@ -17,6 +17,8 @@
 # include <sys/types.h>
 # include <dirent.h>
 # include <errno.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 #define WS " \t\n\f\v\r"
 #define MALLOC_ERROR "erreur de malloc"
@@ -65,6 +67,7 @@ typedef	struct	s_pip
 	int		fd_in;
 	int		hd_in;
 	int		fd_out;
+	int		nb_pipes;
 	int		tmp_fd;
 	int		pipefd1[2];
 	int		pipefd2[2];
