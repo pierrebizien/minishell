@@ -18,11 +18,13 @@ void	ft_print_dchar(char **strstr)
 	int	i;
 
 	i = 0;
-	while (strstr[i])
+	while (strstr && strstr[i])
 	{
 		fprintf(stderr, "tab[%d] = |%s|\n", i, strstr[i]);
 		i++;
 	}
+	if (!strstr)
+		fprintf(stderr, "STRSTR N EXISTE PAS\n");
 }
 int	main(int ac, char **av, char**envp)
 {
@@ -43,13 +45,14 @@ int	main(int ac, char **av, char**envp)
 		if (str && str[0])
 		{
 			ft_parse(str, &data);
-			// ft_print_dchar(data.args);
 			ft_parse_for_exec(&data);
+			// fprintf(stderr, "\nICI\n");
+			ft_pipex(&data);
 		}
 		// ft_pipex();
 		// ft_test_builtin(data.args[0]);
 		// ft_print_args();
-		free(str);
+		// free(str);
 		str = readline("\e[36;1mminishell> \e[0m");
 		add_history(str);
 	}
