@@ -45,13 +45,15 @@ NC='\033[0m' # No Color
 COLORTITOU=""
 
 T := $(words $(SRCS))
+P := $(words $(SRCS) + $(SRCS))
+V := $(words $(SRCS) + $(SRCS) + $(SRCS))
 N := x
 C = $(words $N)$(eval N := x $N)
 
 ECHOC = echo -ne "\r\033[2K"
 
 ifndef ECHOO
-ECHOO = $(ECHOC) $(COLORTITOU) "[`expr $C '*' 100 / $T`%] "
+ECHOO = $(ECHOC) $(BLUE) "[`expr $C '*' 100 / $T / 3`%] "
 endif
 
 
@@ -61,15 +63,15 @@ all: 	${LIB}
 
 ${OBJS}: ${OBJS_PATH}/%.o: %.c Makefile ${SRCS_PATH}/inc/SuperLibft.h
 	@	mkdir -p ${OBJS_PATH}
-	@	if [ "$(shell test $C -gt 50; echo $$?)" = "0" ]; then\
-       		ECHOO = $(ECHOC) $(RED) "[`expr $C '*' 100 / $T`%] ";\
-		else\
-       		ECHOO = $(ECHOC) $(RED) "[`expr $C '*' 100 / $T`%] ";\
-    	fi
+	@	if [ "$(shell test $C -gt $T; echo $$?)" = "0" ]; then\
+       		$(ECHOO) $(RED) "Compiling $<"; fi
+	@	if [ "$(shell test $C -gt $P; echo $$?)" = "0" ]; then\
+       		$(ECHOO) $(ORANGE) "Compiling $<"; fi
+	@	if [ "$(shell test $C -gt $V; echo $$?)" = "0" ]; then\
+       		$(ECHOO) $(GREEN) "Compiling $<"; fi
 	@	${CC} ${CFLAGS} -c $< -o $@ ${INCLUDE}
 
 ${LIB}:	${OBJS}
-	$(ECHOO) $(RED) "Compiling $<"
 	@	ar -rsc ${LIB} ${OBJS}
 	@	$(ECHOC) $(GREEN) "$(LIB) OK"$(NC)"\n"
 
@@ -83,3 +85,4 @@ fclean:	clean;
 re:	fclean all
 
 .PHONY: all clean fclean re bonus
+
