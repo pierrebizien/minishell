@@ -1,4 +1,4 @@
-# SHELL = /usr/bin/bash
+SHELL = /usr/bin/bash
 
 
 LIBC =			\
@@ -34,27 +34,34 @@ LIB = libft.a
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -I ./
 
-
+NC='\033[0m'
 RED='\033[0;31m'
-GREEN='\033[1;32m'
+GREEN='\033[0;32m'
 ORANGE='\033[0;33m'
+BLUE='\033[0;34m'
+PURPLE='\033[0;35m'
+CYAN='\033[0;36m'
+LIGHTGRAY='\033[0;37m'
+
+DARKGRAY='\033[1;30m'
+LIGHTRED='\033[1;31m'
+LIGHTGREEN='\033[1;32m'
+LIGHTBLUE='\033[1;34m'
+LIGHTPURPLE='\033[1;35m'
+LIGHTCYAN='\033[1;36m'
 YELLOW='\033[1;33m'
-BLUE='\033[1;36m'
-NC='\033[0m' # No Color
+WHITE='\033[1;37m'
 
 COLORTITOU=""
 
 T := $(words $(SRCS))
-P := $(words $(SRCS) + $(SRCS))
-V := $(words $(SRCS) + $(SRCS) + $(SRCS))
 N := x
 C = $(words $N)$(eval N := x $N)
 
 ECHOC = echo -ne "\r\033[2K"
 
-ifndef ECHOO
-ECHOO = $(ECHOC) $(BLUE) "[`expr $C '*' 100 / $T / 3`%] "
-endif
+P = `expr $C '*' 100 / $T / 5`
+
 
 
 vpath %.c ${SRCS_PATH}
@@ -63,17 +70,20 @@ all: 	${LIB}
 
 ${OBJS}: ${OBJS_PATH}/%.o: %.c Makefile ${SRCS_PATH}/inc/SuperLibft.h
 	@	mkdir -p ${OBJS_PATH}
-	@	if [ "$(shell test $C -gt $T; echo $$?)" = "0" ]; then\
-       		$(ECHOO) $(RED) "Compiling $<"; fi
-	@	if [ "$(shell test $C -gt $P; echo $$?)" = "0" ]; then\
-       		$(ECHOO) $(ORANGE) "Compiling $<"; fi
-	@	if [ "$(shell test $C -gt $V; echo $$?)" = "0" ]; then\
-       		$(ECHOO) $(GREEN) "Compiling $<"; fi
+	@	if [ "$(shell test $P -lt 33; echo $$?)" = "0" ]; then \
+       		$(ECHOC) $(LIGHTRED) "[$(P)%] "$(DARKGRAY) "Compiling" $(WHITE) "$<"; \
+		else \
+			if [ "$(shell test $P -lt 66; echo $$?)" = "0" ]; then \
+       			$(ECHOC) $(YELLOW) "[$(P)%]" $(DARKGRAY) "Compiling" $(WHITE) "$<"; \
+			else \
+       			$(ECHOC) $(LIGHTGREEN) "[$(P)%]" $(DARKGRAY) "Compiling" $(WHITE) "$<"; \
+			fi \
+		fi
 	@	${CC} ${CFLAGS} -c $< -o $@ ${INCLUDE}
 
 ${LIB}:	${OBJS}
 	@	ar -rsc ${LIB} ${OBJS}
-	@	$(ECHOC) $(GREEN) "$(LIB) OK"$(NC)"\n"
+	@	$(ECHOC) $(LIGHTGREEN) "$(LIB) OK"$(NC)"\n"
 
 
 clean:	
@@ -85,4 +95,7 @@ fclean:	clean;
 re:	fclean all
 
 .PHONY: all clean fclean re bonus
+
+
+# ifndef COLORCOMPIL
 
