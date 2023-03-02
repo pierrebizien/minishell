@@ -74,7 +74,7 @@ typedef	struct	s_data
 
 
 //FT_PARSING
-void ft_parse_for_exec(t_data *data);
+void	ft_parse_for_exec(t_data *data);
 char	*ft_parse(char *str, t_data *data);
 int		is_ws(char c);
 

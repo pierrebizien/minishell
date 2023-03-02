@@ -302,7 +302,7 @@ void ft_parse_for_exec(t_data *data)
 				}
 			}
 		}
-		ft_free_dchar(tab);
+		// ft_free_dchar(tab);
 	}
 	ft_clean_list_exec(data);
 	ft_modif_in_out(data);
