@@ -31,12 +31,32 @@ LIB = libft.a
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -I ./
 
+
+RED='\033[0;31m'
+GREEN='\033[1;32m'
+ORANGE='\033[0;33m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+
+ifndef ECHO
+T := $(shell $(MAKE) $(MAKECMDGOALS) --no-print-directory \
+      -nrRf $(firstword $(MAKEFILE_LIST)) \
+      ECHO="COUNTTHIS" | grep -c "COUNTTHIS")
+N := x
+C = $(words $N)$(eval N := x $N)
+
+ECHOC = echo -ne "\r\033[2K"
+ECHO = $(ECHOC) $(ORANGE) "[`expr $C '*' 100 / $T`%]"
+endif
+
+
 vpath %.c ${SRCS_PATH}
 
 all: 	${LIB}
 
 ${OBJS}: ${OBJS_PATH}/%.o: %.c Makefile ${SRCS_PATH}/inc/SuperLibft.h
 	@	mkdir -p ${OBJS_PATH}
+	$(ECHO) $(ORANGE) "Compiling $<"
 	@	${CC} ${CFLAGS} -c $< -o $@ ${INCLUDE}
 
 ${LIB}:	${OBJS}

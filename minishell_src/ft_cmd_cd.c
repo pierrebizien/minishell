@@ -22,7 +22,7 @@ char *ft_just_cd(t_data *data)
     {
         if (ft_strncmp(tmp->key, "HOME", ft_strlen(tmp->key)) == 0)
 		{
-			fprintf(stderr, "tmp->key = |%s|\t value = |%s|\n\n", tmp->key, tmp->value);
+			// fprintf(stderr, "tmp->key = |%s|\t value = |%s|\n\n", tmp->key, tmp->value);
 			return (ft_strdup(tmp->value));
 		}
         tmp = tmp->next;
@@ -30,68 +30,65 @@ char *ft_just_cd(t_data *data)
     return (NULL);
 }
 
-int	ft_cd(char *str, t_data *data)
+char *ft_change_pwd(t_data *data)
 {
-	DIR *dir;
-	struct dirent *entrey;
+    t_env *tmp;
+	int changepwd;
+
+    tmp = &data->env;
+	changepwd = 0;
+    while (tmp)
+    {
+        if (ft_strncmp(tmp->key, "PWD", ft_strlen(tmp->key)) == 0)
+		{
+			if (ft_strncmp(tmp->value,getcwd(NULL, 0) )
+			fprintf(stderr, "tmp->key = |%s|\t value = |%s|\tpwd = %s\n\n", tmp->key, tmp->value, getcwd(NULL, 0));
+		}
+        tmp = tmp->next;
+    }
+	tmp = &data->env;
+    while (tmp && changepwd == 1)
+    {
+		if (ft_strncmp(tmp->key, "OLDPWD", ft_strlen(tmp->key)) == 0)
+		{
+			fprintf(stderr, "tmp->key = |%s|\t value = |%s|\n\n", tmp->key, tmp->value);
+		}
+        tmp = tmp->next;
+    }
+    return (NULL);
+}
+
+int	ft_cd(char *strr, t_data *data)
+{
+	// DIR *dir;
+	// struct dirent *entrey;
 	int i;
 	char *path;
-	(void) data;
+	char **str = ft_split(strr, ' ');
 
-	i = 3;
-	if (ft_strncmp(str, "cd", ft_strlen(str)) == 0)
+	
+	fprintf(stderr, "pwd = %s\n", getcwd(NULL, 0));
+	if (ft_strstrlen(str) == 1)
 	{
-		dir = opendir("/");
 		path = ft_just_cd(data);
-		if (path == NULL)
-			return (write(1, "CHANGE ERROR HERE\n", 19));
-		str = ft_strjoin("cd ", path);
-		i++;
-		fprintf(stderr, "path = %s\n", path);
-	}
-	else if (str[3] == '/')
-	{
-		dir = opendir("/");
-		path = ft_strdup("/");
-		i++;
+		if (chdir(path) != 0)
+			return (perror(path), 1);
 	}
 	else
 	{
-		dir = opendir(".");
-		path = getcwd(NULL, 0);
-		i = i + 1 + ft_strlen_char(str + i, '/');
+		i = 1;
+		while (str[i][0] == '-')
+			i++;
+		if (str[i] == 0)
+			return (0);
+		if (chdir(str[i]) != 0)
+			return (perror(path), 1);
 	}
-	entrey = readdir(dir);
-	// fprintf(stderr, "str[%d] = |%s|\n", i, str + i);
-	// fprintf(stderr, "path|%s|\n", path);
-	while (entrey != NULL)
-	{
-		// fprintf(stderr, "name = (%d)|%s|\t%ld|%d\n", entrey->d_type, entrey->d_name, ft_strlen(entrey->d_name), ft_strlen_char(str + i, '/'));
-		if (ft_strncmp(str + i, entrey->d_name, ft_strlen_char(str + i, '/')) == 0 && entrey->d_type == 4 && (int)ft_strlen(entrey->d_name) == ft_strlen_char(str + i, '/'))
-		{
-			// fprintf(stderr, "CHANGE = (%d)|%s|\n", entrey->d_type, entrey->d_name);
-			i = i + 1 + ft_strlen_char(str + i, '/');
-			free(path);
-			path = ft_substr(str, 3, i - 3);
-			// fprintf(stderr, "PATH = %s\t\tstr + %d = |%s|\n", path, i, ft_substr(str, 3, i - 3));
-			closedir(dir);
-			// fprintf(stderr, "str[%d] = |%s|\n", i, str + i);
-			dir = opendir(path);
+	ft_change_pwd(data);
+	
 
-		}
-		entrey = readdir(dir);
+	// chdir(NULL);
 
-	}
-	closedir(dir);
-	if (ft_strncmp(path, str + 3, ft_strlen(str + 3)))
-	{
-		ft_putstr_fd("cd: ", 1);
-		ft_putstr_fd(str + 3, 1);
-		ft_putstr_fd(": No such file or directory\n", 1);
-	}
-	else
-		fprintf(stderr, "OK\n");
-	free(path);
 
 	return (0);
 }
