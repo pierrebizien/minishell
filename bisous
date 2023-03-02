@@ -1,0 +1,18 @@
+total 120
+drwxr-xr-x  9 pbizien 2022_paris  4096 Mar  2 16:44 .
+drwxr-xr-x 13 pbizien 2022_paris  4096 Feb 22 13:45 ..
+drwxr-xr-x  8 pbizien 2022_paris  4096 Mar  2 10:26 .git
+drwxr-xr-x  2 pbizien 2022_paris  4096 Mar  1 15:34 .vscode
+-rwxr-xr-x  1 pbizien 2022_paris  1294 Mar  2 15:00 Makefile
+-rw-r--r--  1 pbizien 2022_paris     0 Mar  2 14:19 TAISTE
+drwxr-xr-x  2 pbizien 2022_paris  4096 Mar  2 14:56 \-L
+-rw-r--r--  1 pbizien 2022_paris     0 Mar  2 14:32 bisous
+-rw-r--r--  1 pbizien 2022_paris    13 Mar  2 13:43 infile
+drwxr-xr-x  4 pbizien 2022_paris  4096 Mar  2 14:53 libft
+-rwxr-xr-x  1 pbizien 2022_paris 76720 Mar  2 16:44 minishell
+drwxr-xr-x  4 pbizien 2022_paris  4096 Mar  2 14:55 minishell_src
+drwxr-xr-x  2 pbizien 2022_paris  4096 Feb 27 19:49 obj
+-rw-r--r--  1 pbizien 2022_paris     0 Mar  2 14:30 out
+drwxr-xr-x  3 pbizien 2022_paris  4096 Mar  2 14:53 pipex
+-rw-r--r--  1 pbizien 2022_paris     0 Mar  2 14:30 sexe
+-rwxr-xr-x  1 pbizien 2022_paris     0 Mar  2 16:29 tmp-file.txt

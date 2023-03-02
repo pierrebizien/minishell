@@ -4,7 +4,7 @@
 # define MINISHELL_H
 
 # include "../../libft/src/inc/SuperLibft.h"
-# include "../../pipex/src/inc/pipex_bonus.h"
+// # include "../../pipex/src/inc/pipex_bonus.h"
 
 # include <stdio.h>
 // # include "../gnl/get_next_line.h"
@@ -16,6 +16,7 @@
 # include <signal.h>
 # include <sys/types.h>
 # include <dirent.h>
+# include <errno.h>
 
 #define WS " \t\n\f\v\r"
 #define MALLOC_ERROR "erreur de malloc"
@@ -59,10 +60,22 @@ typedef struct	s_exec
 
 }				t_exec;
 
+typedef	struct	s_pip
+{
+	int		fd_in;
+	int		hd_in;
+	int		fd_out;
+	int		tmp_fd;
+	int		pipefd1[2];
+	int		pipefd2[2];
+}				t_pip;
+
+
 typedef	struct	s_data
 {
 	t_env	env;
 	t_exec	exec;
+	t_pip	pip;
     char 	**args;
 	char 	**av;
 	char **envp;
@@ -122,12 +135,21 @@ void	ft_print_dargs(char **strstr);
 int	ft_in_q(int in_q);
 
 //FT_PIPEX
-void	ft_pipex(void);
+void	ft_pipex(t_data *data);
 
 //FT_UTILS
 int		ft_strstrlen(char **strstr);
 size_t	ft_strlen_WS(const char *str);
 char *ft_put_str_in_str(char *dest, char *src, int ind);
+
+//FT_HEREDOC
+int	ft_heredoc(t_data *data, char *delimiter, int w);
+void	ft_close(int *fd);
+
+
+//PIPEX_UTILS
+void	ft_free_dchar(char **str);
+char    *ft_strrjoin(char const *s1, char const *s2, char const *s3);
 
 
 // int	pipex(int ac, char **av, char **envp);

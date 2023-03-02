@@ -1,175 +1,204 @@
-// #include "./minishell.h"
-
-// int	ft_len_mpipe()
-// {
-// 	int	i;
-// 	int count;
-
-// 	i = 0;
-// 	count = 0;
-// 	while (data.args && data.args[i])
-// 	{
-// 		if (ft_strncmp(data.args[i], "|", ft_strlen(data.args[i]) + 1))
-// 			count++;
-// 		i++;
-// 	}
-// 	return (count);
-	
-
-// }
-
-// char **ft_generate_inp()
-// {
-// 	char	**output;
-// 	int		i;
-// 	int		k;
-
-//     i = 0;
-// 	k = 2;
-// 	output = ft_calloc(ft_len_mpipe() + 4, sizeof(char *));
-// 	if (!output)
-// 		return (NULL); // PENSER A FREE
-// 	output[0] = ft_strdup("./pipex");
-// 	// fprintf(stderr, "coucou\n");
-// 	while (data.args && data.args[i])
-// 	{
-// 		if (ft_strncmp(data.args[i], "|", ft_strlen(data.args[i]) + 1))
-// 		{
-// 			output[k++] = ft_strdup(data.args[i]);
-// 			if (!output[k - 1])
-// 				return (NULL); //PENSER A FREE
-// 		}
-// 		i++;
-// 	}
-// 	// output[1] = ft_strdup(data.pip.infile);
-// 	// output[k++] = ft_strdup(data.pip.outfile);
-// 	output[k] = 0;
-// 	if (!output[0] || !output[k - 1])
-// 		return (NULL); //PENSER A FREE
-// 	return (output);
-// }
-
-// int	ft_put_in(char **input)
-// {
-// 	int	i;
-// 	int	len;
-// 	int	k;
-// 	int len2;
-
-// 	i = 0;
-// 	len = 0;
-// 	while (input[2][i] && (input[2][i] == '<' || is_ws(input[2][i])))
-// 	{
-// 		i++;
-// 	}
-// 	k = i;
-// 	while (input[2][i] && !is_ws(input[2][i++]))
-// 		len++;
-// 	// fprintf(stderr, "k vaut %d et len vaut %d\n", k, len);
-// 	if (input[2][1] && input[2][1] != '<')
-// 	{
-// 		// fprintf(stderr, "On rentre\n");
-// 		free(input[1]);
-// 		input[1] = ft_substr(input[2], k, len);
-// 		if (!data.pip.infile)
-// 			return (1);//GERER
-// 		len2 = ft_strlen(input[2] + i);
-// 		// fprintf(stderr, "input[2] %s \t, i %d \t len %d \t k %d\n", input[2], i, len, k);
-// 		ft_memcpy(input[2], input[2] + i, len2);
-// 		input[2][len2] = '\0';
-// 	}
-// 	return (0);
-// }
-
-// char	**ft_hd(char **input)
-// {
-// 	char **output;
-// 	int	i;
-// 	int k;
-// 	int j;
-
-// 	i = 0;
-// 	k = 0;
-// 	j = 0;
-// 	output = ft_calloc(ft_strstrlen(input) + 1, sizeof(char *));
-// 	if (!output)
-// 		return (NULL);
-// 	while (input && input[i])
-// 	{
-// 		if (k == 1)
-// 		{
-// 			fprintf(stderr, "in[%d] = |%s|\n\n", k,  input[k]);
-// 			output[k++] = ft_strdup("here_doc");
-// 			i++;
-// 		fprintf(stderr, "out[%d] = |%s|\n\n", k,  output[1]);
-// 		}
-// 		else if (k == 2)
-// 		{
-// 			while (is_ws(input[i][j]) || input[i][j] == '<')
-// 				j++;
-// 			output[k] = ft_substr(input[i],j , ft_strlen_WS(input[i] + j));
-// 			k++;
-// 		}
-// 		else if (k == 3)
-// 		{
-// 			j = 0;
-// 			while (input[i][j] && (is_ws(input[i][j]) || input[i][j] == '<'))
-// 				j++;
-// 			j++;
-// 			while (input[i][j] && (!is_ws(input[i][j])))
-// 				j++;
-// 			j++;
-// 			output[k] = ft_substr(input[i], j, ft_strlen(input[i] + j));
-// 			i++;
-// 			k++;
-// 		}
-// 		else
-// 		{
-// 			output[k] = ft_strdup(input[i]);
-// 			free(input[i]);
-// 			k++;
-// 			i++;
-// 		}
+#include "./minishell.h"
 
 
-// 	}
-// 	data.hd = 1;
-// 	output[k] = 0;
-// 	// ft_print_dchar(output);
-// 	return (output);
+char **ft_join_dstr(char **dest, char* src)
+{
+	int	i;
+	char **tmp;
 
-// }
+	i = 0;
+	tmp = malloc(sizeof(char *) * (ft_strstrlen(dest) + 2));
+	if (!tmp) //GERER
+		return (NULL);
+	while (dest && dest[i])
+	{
+		tmp[i] = ft_strdup(dest[i]);
+		if (!tmp[i])
+			return (NULL); //GERER LE FREE DE CEUX D AVANT
+		i++;
+	}
+	tmp[i] = ft_strdup(src);
+	if (!tmp[i])
+		return (NULL); 
+	i++;
+	tmp[i] = 0;
+	// ft_free_dchar(dest);
+	dest = tmp;
+	return (dest);
+}
 
-// char	**ft_detect_in_out(char **input)
-// {
-// 	int	i;
+char **ft_get_paths(t_data *data)
+{
+    t_env *tmp;
 
-// 	i = 0;
-// 	if (input[2][0] == '<')
-// 	{
-// 		if (input[2][1] == '<')
-// 			input = ft_hd(input);
-// 		else
-// 			ft_put_in(input);
-// 	}
-// 	return (input);
-// }
+    tmp = &data->env;
+    while (tmp)
+    {
+        if (ft_strncmp(tmp->key, "PATH", ft_strlen(tmp->key)) == 0)
+        {
+            fprintf(stderr, "tmp->key = |%s|\t value = |%s|\n\n", tmp->key, tmp->value);
+            return (ft_split(tmp->value, ':'));
+        }
+        tmp = tmp->next;
+    }
+	return (NULL);
+}
 
-// void	ft_pipex(void)
-// {
-//     char **input;
-// 	int		len;
+char	*find_path(char **cmd, char **paths_env)
+{
+	char *tmp;
+	int	i;
 
-// 	input = ft_generate_inp();
-// 	len = ft_len_mpipe();
-// 	ft_print_dchar(input);
-// 	input = ft_detect_in_out(input);
-// 	printf("AVANT PIPEX\n");
-// 	ft_print_dchar(input);
-// 	// fprintf(stderr, "len %d\n", len);
-// 	// ft_print_dargs(input);
-	
-	// pipex(len + 3 + data.hd, input, data.envp);
+	i = 0;
+	// fprintf(stderr, "ICI 2 cmd[0] %s\n", cmd[0]);
+	if (!access(cmd[0], F_OK))
+	{
+		if (access(cmd[0], X_OK))
+			return (perror(cmd[0]), exit(errno), NULL);
+		else
+			return (ft_strdup(cmd[0]));
+	}
+	while (paths_env && paths_env[i])
+	{
+		tmp = ft_strrjoin(paths_env[i], "/", cmd[0]);
+		if(!tmp)
+			return (ft_putstr_fd(MALLOC_ERROR, 2), NULL);
+		if (!access(tmp, F_OK))
+		{
+			if (access(tmp, X_OK))
+				return (perror(cmd[i]), free(tmp), exit(errno), NULL);
+			else
+				return (tmp);
+		}
+		i++;
+		free(tmp);
+	}
+	return (ft_putstr_fd(cmd[0], 2), ft_putstr_fd(": Command not found", 2),\
+		 exit(errno), NULL);
+}
+
+void	ft_exec_cmd(t_data *data, char **cmd)
+{
+	char **paths_env;
+	char *path_exec;
+	(void)cmd;
+
+	paths_env = ft_get_paths(data);
+	// perror("EXEC");
+	path_exec = find_path(cmd, paths_env);
+	dup2(data->pip.fd_in, 0);
+	dup2(data->pip.fd_out, 1);
+	fprintf(stderr, "fd out vaut %d\n", data->pip.fd_out);
+	// fprintf(stderr, "PATH EXEC VAUT %s\n", path_exec);
+	execve(path_exec, cmd, paths_env);
+	fprintf(stderr, "PROBLEME D EXEC\n");
+	// ft_print_dchar(paths_env);
+	//test built-in
+
+}
+
+void	ft_pipex(t_data *data)
+{
+	t_exec *begin;
+	int		tmp_fd;
+	char 	**cmd;
+	// int		id;
 
 
-// }
+	begin = &data->exec;
+	cmd = NULL;
+	// id = fork();
+	// if (id == 0)
+	// {
+		while (begin && begin->id != F_PIPE)
+		{
+			fprintf(stderr, "STR %s passe dans parsing \n", begin->str);
+			if (begin->id == F_FALSEI)
+			{
+				tmp_fd = open(begin->str, O_RDWR);
+				if (tmp_fd == -1)
+				{
+					perror(begin->str);
+					exit(errno);
+				}
+				ft_close(&tmp_fd);
+			}
+			else if (begin->id == F_FALSEA)
+			{
+				tmp_fd = open(begin->str, O_RDWR | O_APPEND | O_CREAT, 0644);
+				if (tmp_fd == -1)
+				{
+					perror(begin->str);
+					exit(errno);
+				}
+				ft_close(&tmp_fd);
+			}
+			else if (begin->id == F_FALSET)
+			{
+				tmp_fd = open(begin->str, O_CREAT | O_RDWR | O_TRUNC, 0644);
+				if (tmp_fd == -1)
+				{
+					perror(begin->str);
+					exit(errno);
+				}
+				ft_close(&tmp_fd);
+			}
+			else if (begin->id == F_DELIMITER)
+			{
+				ft_heredoc(data, begin->str, 1);
+				
+			}
+			else if (begin->id == F_FALSED)
+				ft_heredoc(data, begin->str, 0);
+			else if (begin->id == F_CMD)
+			{
+				cmd = ft_join_dstr(cmd, begin->str);
+				if (!cmd)
+				{
+					fprintf(stderr, "ERROR 1");
+					return ; //GERER
+				}
+				// fprintf(stderr, "EN BAAAAS DEST |%s|\n", cmd[0]);
+
+				ft_print_dchar(cmd);
+
+			}
+			else if (begin->id == F_APPEND)
+			{
+				data->pip.fd_out = open(begin->str, O_CREAT | O_RDWR | O_APPEND, 0644);
+				fprintf(stderr, "ON RENTRE %d\n", data->pip.fd_in);
+				if (data->pip.fd_out == -1)
+				{
+					perror(begin->str);
+					exit(errno);
+				}
+			}
+			else if (begin->id == F_TRONC)
+			{
+				data->pip.fd_out = open(begin->str, O_CREAT | O_RDWR | O_TRUNC, 0644);
+				if (data->pip.fd_out == -1)
+				{
+					perror(begin->str);
+					exit(errno);
+				}
+			}
+				else if (begin->id == F_INFILE)
+			{
+				data->pip.fd_in = open(begin->str, O_RDONLY | O_TRUNC, 0644);
+				if (data->pip.fd_in == -1)
+				{
+					perror(begin->str);
+					exit(errno);
+				}
+			}
+			// fprintf(stderr, "COUNT");
+			// if (begin->next)
+			begin = begin->next;
+			// fprintf(stderr,"BEGIN->NEXT VAUT %s id vaut %d\n", begin->str, begin->id);
+		}
+			ft_exec_cmd(data, cmd);
+	// }
+
+}
+
+//< infile << stop < TAISTE << stop ls > out -la >sexe >>bisous | < infule << stop <out ls od > test >> out -la > out

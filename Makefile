@@ -1,6 +1,6 @@
 
 
-SRCS =	ft_utils.c ft_init.c ft_parsing.c ft_quotes.c ft_split_keep.c   \
+SRCS = pipex_utils.c ft_heredoc.c ft_utils.c ft_init.c ft_parsing.c ft_quotes.c ft_split_keep.c   \
      ft_free.c ft_logo.c ft_pipex.c ft_signal.c ft_split_leave.c main.c
 
 
@@ -19,7 +19,7 @@ HEAD_PATH += -I ./minishell_src/inc
 HEAD_PATH += -I ./libft/inc
 HEAD_PATH += -I ./pipex/inc
 LIB += -L ./libft -lft
-LIB += -L ./pipex -lpipex
+# LIB += -L ./pipex -lpipex
 LIB += -lreadline
 
 NAME = minishell
@@ -44,7 +44,7 @@ valgrind: all
 
 ${OBJS}: ${OBJS_PATH}/%.o: %.c Makefile minishell.h
 	@	$(MAKE) --no-print-directory -s -C libft
-	@	$(MAKE) --no-print-directory -s -C pipex
+#	 @	$(MAKE) --no-print-directory -s -C pipex
 	@	mkdir -p ${OBJS_PATH}
 		${CC} ${CFLAGS} -c $< -o $@ ${HEAD_PATH}
 
