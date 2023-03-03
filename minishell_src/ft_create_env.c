@@ -15,11 +15,9 @@ t_env	*ft_lstnew_env(void)
 
 void ft_free_env(t_data *data)
 {
-	int i;
 	t_env	*tmp;
 	t_env	*adresse;
 
-	i = -1;
 	tmp = &data->env;
 	free(tmp->key);
 	free(tmp->value);

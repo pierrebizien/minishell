@@ -3,9 +3,7 @@
 size_t	ft_strlen_WS(const char *str)
 {
 	size_t	i;
-	char	*ws;
 
-	ws = WS;
 	i = 0;
 	while (str[i] && is_ws(str[i]) == 0)
 		i++;
@@ -149,12 +147,10 @@ static int ft_ok_export(char *str, t_data *data)
 
 int ft_export(char *str, t_data *data)
 {
-    t_env	*tmp;
 	int		i;
 	char	*cmd;
 
 	i = 0;
-	tmp = &data->env;
 	ft_strlen_WS(str);
 	if (ft_strncmp(str, "export", 7) == 0)
 		return (ft_just_export(data));
