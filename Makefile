@@ -1,4 +1,4 @@
-# SHELL = /usr/bin/bash
+SHELL = /bin/bash
 
 SRCS = ft_utils.c 
 SRCS += ft_init.c 
@@ -32,9 +32,8 @@ OBJS_PATH = ./minishell_src/obj
 
 HEAD_PATH += -I ./minishell_src/inc
 HEAD_PATH += -I ./libft/inc
-# HEAD_PATH += -I ./pipex/inc
+
 LIB += -L ./libft -lft
-# LIB += -L ./pipex -lpipex
 LIB += -lreadline
 
 NAME = minishell
@@ -74,14 +73,6 @@ LIGHTCYAN='\033[1;36m'
 YELLOW='\033[1;33m'
 WHITE='\033[1;37m'
 
-ifndef ECHO
-T := $(words $(SRCS))
-N := x
-C = $(words $N)$(eval N := x $N)
-
-ECHOC = echo -ne "\r\033[2K"
-ECHO = $(ECHOC) $(DARKGRAY) "[`expr $C '*' 100 / $T`%]"
-endif
 
 
 
@@ -89,31 +80,53 @@ ${OBJS}: ${OBJS_PATH}/%.o: %.c Makefile minishell.h
 	@	$(MAKE) --no-print-directory -s -C libft
 # @	$(MAKE) --no-print-directory -s -C pipex
 	@	mkdir -p ${OBJS_PATH}
-	@	$(ECHO)  "Compiling" $(LIGHTGRAY) "$<"
+	@	$(COLORCOMPIL)
 	@	${CC} ${CFLAGS} -c $< -o $@ ${HEAD_PATH}
 
 ${NAME}:  ${OBJS}
-		${CC} ${CFLAGS} -o ${NAME} ${OBJS} ${LIB} ${HEAD_PATH}
+	@	${CC} ${CFLAGS} -o ${NAME} ${OBJS} ${LIB} ${HEAD_PATH}
+	@	echo -ne "\r\033[2K" $(LIGHTGREEN) "\t$(NAME) OK"$(NC)"\n""\n"
+
+
 
 
 
 clean:
+	@	echo -ne "\r\033[2K" $(YELLOW) "Cleaning"$(NC)"\n""\n"
 	@	rm -rf ${OBJS_PATH}
 	@	$(MAKE) --no-print-directory -s clean -C libft
-	@	$(MAKE) --no-print-directory -s clean -C pipex
+	@	echo -ne "\r\033[2K" $(GREEN) "\tLibft cleaned\n"$(NC)
 
 
 fclean: clean
 	@	rm -f ${NAME}
 	@	$(MAKE) --no-print-directory -s fclean -C libft
-	@	$(MAKE) --no-print-directory -s fclean -C pipex
-	@	$(ECHOC) $(GREEN) "--> $(NAME) cleaned !"$(NC)"\n"
+	@	echo -ne "\r\033[2K" $(GREEN) "\t$(NAME) cleaned\n\n"$(NC)
+
 
 
 
 re: fclean
-	@	echo $(YELLOW) "\nRebuilding...\n" $(NC)
+	@	echo -ne "\r\033[2K" $(YELLOW) "Rebuilding..."$(NC)"\n""\n"
+# @	echo ""$(YELLOW) "\nRebuilding...\n" $(NC)
 	@	$(MAKE) -s
 
 
 .PHONY: re clean fclean 
+
+ifndef COLORCOMPIL
+COLORCOMPIL = \
+	if [ "$(shell test $P -lt 33; echo $$?)" = "0" ]; then \
+    	echo -ne "\r\033[2K" $(LIGHTRED) "[$(P)%] "$(DARKGRAY) "Compiling MiniShell" $(WHITE) "$<"; \
+	else \
+		if [ "$(shell test $P -lt 66; echo $$?)" = "0" ]; then \
+    		echo -ne "\r\033[2K" $(YELLOW) "[$(P)%]" $(DARKGRAY) "Compiling MiniShell" $(WHITE) "$<"; \
+		else \
+       		echo -ne "\r\033[2K" $(LIGHTGREEN) "[$(P)%]" $(DARKGRAY) "Compiling MiniShell" $(WHITE) "$<"; \
+		fi \
+	fi
+T := $(words $(SRCS))
+N := x
+C = $(words $N)$(eval N := x $N)
+P = `expr $C '*' 100 / $T / 5`
+endif

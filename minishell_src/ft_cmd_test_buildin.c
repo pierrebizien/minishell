@@ -13,6 +13,6 @@ int ft_test_builtin(char *str, t_data *data)
 		ft_cd(str, data);
 	if (str && ft_strncmp(str, "pwd", 3) == 0)
 		ft_pwd(data);
-	fprintf(stderr, "pwd = %s\n", getcwd(NULL, 0));
+	fprintf(stderr, "\n\n endpwd = %s\n", getcwd(NULL, 0));
     return (0);
 }

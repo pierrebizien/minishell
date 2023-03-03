@@ -1,4 +1,4 @@
-SHELL = /usr/bin/bash
+SHELL = /bin/bash
 
 
 LIBC =			\
@@ -34,6 +34,34 @@ LIB = libft.a
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -I ./
 
+
+
+
+vpath %.c ${SRCS_PATH}
+
+all: 	${LIB}
+
+${OBJS}: ${OBJS_PATH}/%.o: %.c Makefile ${SRCS_PATH}/inc/SuperLibft.h
+	@	mkdir -p ${OBJS_PATH}
+	@	$(COLORCOMPIL)
+	@	${CC} ${CFLAGS} -c $< -o $@ ${INCLUDE}
+
+${LIB}:	${OBJS}
+	@	ar -rsc ${LIB} ${OBJS}
+	@	echo -ne "\r\033[2K" $(LIGHTGREEN) "\t$(LIB) OK"$(NC)"\n""\n"
+
+
+clean:	
+	@	rm -rf ${OBJS_PATH}
+
+fclean:	clean;
+	@	rm -rf ${LIB}
+
+re:	fclean all
+
+.PHONY: all clean fclean re bonus
+
+
 NC='\033[0m'
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -52,50 +80,20 @@ LIGHTCYAN='\033[1;36m'
 YELLOW='\033[1;33m'
 WHITE='\033[1;37m'
 
-COLORTITOU=""
 
+ifndef COLORCOMPIL
+COLORCOMPIL = \
+	if [ "$(shell test $P -lt 33; echo $$?)" = "0" ]; then \
+    	echo -ne "\r\033[2K" $(LIGHTRED) "[$(P)%] "$(DARKGRAY) "Compiling Libft" $(WHITE) "$<"; \
+	else \
+		if [ "$(shell test $P -lt 66; echo $$?)" = "0" ]; then \
+    		echo -ne "\r\033[2K" $(YELLOW) "[$(P)%]" $(DARKGRAY) "Compiling Libft" $(WHITE) "$<"; \
+		else \
+       		echo -ne "\r\033[2K" $(LIGHTGREEN) "[$(P)%]" $(DARKGRAY) "Compiling Libft" $(WHITE) "$<"; \
+		fi \
+	fi
 T := $(words $(SRCS))
 N := x
 C = $(words $N)$(eval N := x $N)
-
-ECHOC = echo -ne "\r\033[2K"
-
 P = `expr $C '*' 100 / $T / 5`
-
-
-
-vpath %.c ${SRCS_PATH}
-
-all: 	${LIB}
-
-${OBJS}: ${OBJS_PATH}/%.o: %.c Makefile ${SRCS_PATH}/inc/SuperLibft.h
-	@	mkdir -p ${OBJS_PATH}
-	@	if [ "$(shell test $P -lt 33; echo $$?)" = "0" ]; then \
-       		$(ECHOC) $(LIGHTRED) "[$(P)%] "$(DARKGRAY) "Compiling" $(WHITE) "$<"; \
-		else \
-			if [ "$(shell test $P -lt 66; echo $$?)" = "0" ]; then \
-       			$(ECHOC) $(YELLOW) "[$(P)%]" $(DARKGRAY) "Compiling" $(WHITE) "$<"; \
-			else \
-       			$(ECHOC) $(LIGHTGREEN) "[$(P)%]" $(DARKGRAY) "Compiling" $(WHITE) "$<"; \
-			fi \
-		fi
-	@	${CC} ${CFLAGS} -c $< -o $@ ${INCLUDE}
-
-${LIB}:	${OBJS}
-	@	ar -rsc ${LIB} ${OBJS}
-	@	$(ECHOC) $(LIGHTGREEN) "$(LIB) OK"$(NC)"\n"
-
-
-clean:	
-	@	rm -rf ${OBJS_PATH}
-
-fclean:	clean;
-	@	rm -rf ${LIB}
-
-re:	fclean all
-
-.PHONY: all clean fclean re bonus
-
-
-# ifndef COLORCOMPIL
-
+endif

@@ -19,3 +19,5 @@ int ft_env(t_data *data)
     }
     return (0);
 }
+
+//
