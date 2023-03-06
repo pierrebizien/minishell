@@ -11,6 +11,8 @@ SRCS += ft_pipex.c
 SRCS += ft_signal.c
 SRCS += ft_split_leave.c
 SRCS += main.c
+SRCS += pipex_utils.c
+SRCS += ft_heredoc.c
 
 
 SRCS += ft_cmd_test_buildin.c
@@ -20,6 +22,7 @@ SRCS += ft_cmd_echo.c
 SRCS += ft_cmd_export.c
 SRCS += ft_cmd_pwd.c
 SRCS += ft_cmd_cd.c
+
 
 # SRC_PATH += /libft/src
 SRC_PATH = ./minishell_src/
@@ -34,6 +37,7 @@ HEAD_PATH += -I ./minishell_src/inc
 HEAD_PATH += -I ./libft/inc
 
 LIB += -L ./libft -lft
+# LIB += -L ./pipex -lpipex
 LIB += -lreadline
 
 NAME = minishell
@@ -52,7 +56,7 @@ run: all
 	./${NAME}
 
 valgrind: all
-	valgrind ./${NAME}
+	valgrind --track-fds=yes ./${NAME}
 
 
 NOCOLOR='\033[0m'
@@ -78,7 +82,7 @@ WHITE='\033[1;37m'
 
 ${OBJS}: ${OBJS_PATH}/%.o: %.c Makefile minishell.h
 	@	$(MAKE) --no-print-directory -s -C libft
-# @	$(MAKE) --no-print-directory -s -C pipex
+#	 @	$(MAKE) --no-print-directory -s -C pipex
 	@	mkdir -p ${OBJS_PATH}
 	@	$(COLORCOMPIL)
 	@	${CC} ${CFLAGS} -c $< -o $@ ${HEAD_PATH}

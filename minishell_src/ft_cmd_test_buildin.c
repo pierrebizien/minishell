@@ -4,15 +4,14 @@ int ft_test_builtin(char *str, t_data *data)
 {
 
 	if (str && ft_strncmp(str, "env", 3) == 0)
-		ft_env(data);
+		return(ft_env(data), 1);
 	if (str && ft_strncmp(str, "export", 6) == 0)
-		ft_export(str, data);
+		return (ft_export(str, data), 1);
 	if (str && ft_strncmp(str, "echo", 4) == 0)
-		ft_echo(str, data);
+		return (ft_echo(str, data), 1);
 	if (str && ft_strncmp(str, "cd", 2) == 0)
-		ft_cd(str, data);
+		return (ft_cd(str, data), 1);
 	if (str && ft_strncmp(str, "pwd", 3) == 0)
-		ft_pwd(data);
-	fprintf(stderr, "\n\n endpwd = %s\n", getcwd(NULL, 0));
+		return (ft_pwd(data), 1);
     return (0);
 }
