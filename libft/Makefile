@@ -35,8 +35,6 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra -I ./
 
 
-
-
 vpath %.c ${SRCS_PATH}
 
 all: 	${LIB}
