@@ -56,13 +56,12 @@ void	ft_change_pwd(t_data *data)
     }
 }
 
-int	ft_cd(char *strr, t_data *data)
+int	ft_cd(char **str, t_data *data)
 {
 	// DIR *dir;
 	// struct dirent *entrey;
 	int i;
 	char *path;
-	char **str = ft_split(strr, ' '); // a changer
 	path = NULL;
 
 	if (ft_strstrlen(str) == 1)

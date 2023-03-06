@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
+/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/09 14:40:05 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/02/18 11:29:52 by nicolasgriv      ###   ########.fr       */
+/*   Created: 2023/03/06 18:42:37 by ngriveau          #+#    #+#             */
+/*   Updated: 2023/03/06 18:42:38 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "SuperLibft.h"
+
+#include "./inc/SuperLibft.h"
 
 static char	*find_begin(char const *s1, char const *set)
 {
