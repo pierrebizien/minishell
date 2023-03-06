@@ -109,6 +109,7 @@ char *ft_parse(char *str, t_data *data) // CHECK GLOBAL ET SI > >OUT RETURN ERRO
 
 	tmp = str;
 	str = ft_strtrim(str, WS);
+	printf("str parse vaut |%s|\n", str);
 	if (!str)
 		return (free(str), exit(-1), NULL);
 	// free(tmp);
@@ -118,7 +119,6 @@ char *ft_parse(char *str, t_data *data) // CHECK GLOBAL ET SI > >OUT RETURN ERRO
 	data->args = ft_split_k(str, "|");
 	ft_clean_ws(data);
 	// ft_print_args();
-	// printf("str parse vaut |%s|\n", str);
 	 return (str);
 }
 

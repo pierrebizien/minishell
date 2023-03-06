@@ -65,6 +65,7 @@ typedef struct	s_exec
 typedef	struct	s_pip
 {
 	int		fd_in;
+	int		last_id;
 	int		hd_in;
 	int		fd_out;
 	int		nb_pipes;

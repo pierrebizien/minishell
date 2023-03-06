@@ -304,7 +304,7 @@ void	ft_child_exec(t_exec *begin, t_data *data, int m)
 void	ft_pipex(t_data *data)
 {
 	t_exec	*begin;
-	int		id;
+	// int		id;
 	int		m;
 	// int		id;
 
@@ -317,8 +317,8 @@ void	ft_pipex(t_data *data)
 			pipe(data->pip.pipefd1);
 		else
 			pipe(data->pip.pipefd2);
-		id = fork();
-		if (id == 0)
+		data->pip.last_id = fork();
+		if (data->pip.last_id == 0)
 			ft_child_exec(begin, data, m);
 		if (!m || m % 2 == 0)
 		{
