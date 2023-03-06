@@ -1,23 +1,43 @@
 #include "./inc/minishell.h"
 
-int ft_test_builtin(char *str, t_data *data)
+int ft_exec_builtin(char **cmd, t_data *data)
 {
-	// fprintf(stderr, "\n\n start pwd = %s\ndata pwd = %s\nold = %s", getcwd(NULL, 0), data->pwd, data->oldpwd);
+	fprintf(stderr, "coucoucoucoucou\n\n");
+	if (cmd && ft_strncmp(cmd[0], "env", 3) == 0)
+		return(ft_env(data), 1);
 
-	if (str && ft_strncmp(str, "env", ft_strlen(str)) == 0)
-		ft_env(data);
-	if (str && ft_strncmp(str, "export", ft_strlen(str)) == 0)
-		ft_export(str, data);
-	if (str && ft_strncmp(str, "echo", ft_strlen(str)) == 0)
-		ft_echo(str, data);
-	if (str && ft_strncmp(str, "cd", ft_strlen(str)) == 0)
-		ft_cd(str, data);
-	if (str && ft_strncmp(str, "pwd", ft_strlen(str)) == 0)
-		ft_pwd(data);
-	if (str && ft_strncmp(str, "unset", 5) == 0)
-		ft_unset(str, data);
-		
-	// fprintf(stderr, "\n\n end pwd = %s\ndata pwd = %s\nold = %s", getcwd(NULL, 0), data->pwd, data->oldpwd);
+	if (cmd && ft_strncmp(cmd[0], "export", 6) == 0)
 
+		return (ft_export(cmd, data), 1);
+
+	if (cmd && ft_strncmp(cmd[0], "echo", 4) == 0)
+		return (ft_echo(cmd), 1);
+
+	if (cmd && ft_strncmp(cmd[0], "cd", 2) == 0)
+		return (ft_cd(cmd, data), 1);
+
+	if (cmd && ft_strncmp(cmd[0], "pwd", 3) == 0)
+		return (ft_pwd(data), 1);
+
+	if (cmd && ft_strncmp(cmd[0], "unset", 5) == 0)
+		return (ft_unset(cmd, data), 1);
+
+    return (0);
+}
+
+int ft_test_builtin(char **cmd)
+{
+	if (cmd && ft_strncmp(cmd[0], "env", 3) == 0)
+		return (1);
+	if (cmd && ft_strncmp(cmd[0], "export", 6) == 0)
+		return (1);
+	if (cmd && ft_strncmp(cmd[0], "echo", 4) == 0)
+		return (1);
+	if (cmd && ft_strncmp(cmd[0], "cd", 2) == 0)
+		return (1);
+	if (cmd && ft_strncmp(cmd[0], "pwd", 3) == 0)
+		return (1);
+	if (cmd && ft_strncmp(cmd[0], "unset", 5) == 0)
+		return (1);
     return (0);
 }

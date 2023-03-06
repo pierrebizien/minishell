@@ -109,16 +109,16 @@ char *ft_parse(char *str, t_data *data) // CHECK GLOBAL ET SI > >OUT RETURN ERRO
 
 	tmp = str;
 	str = ft_strtrim(str, WS);
+	// printf("str parse vaut |%s|\n", str);
 	if (!str)
 		return (free(str), exit(-1), NULL);
-	free(tmp);
+	// free(tmp);
 	str = ft_clean(str);
 	if (!str)
 		return (NULL);
 	data->args = ft_split_k(str, "|");
 	ft_clean_ws(data);
 	// ft_print_args();
-	// printf("str parse vaut |%s|\n", str);
 	 return (str);
 }
 
@@ -221,7 +221,22 @@ void ft_modif_in_out(t_data *data)
 
 	}
 }
+int	ft_count_pipes (t_exec *begin)
+{
+	int count;
+	t_exec *tmp;
 
+	tmp = begin;
+	count = 0;
+	while (begin)
+	{
+		if (begin->id == F_PIPE)
+			count++;
+		begin = begin->next;
+	}
+	return (count);
+	
+}
 
 void ft_parse_for_exec(t_data *data)
 {
@@ -233,11 +248,9 @@ void ft_parse_for_exec(t_data *data)
 
 	tmp = &data->exec;
 	j = -1;
-	// ft_print_dchar(data->args);
 	while (data->args[++j])
 	{
 		tab = ft_split_l(data->args[j], " ");
-		ft_print_dchar(tab);
 		i = 0;
 		while (tab && tab[i])
 		{
@@ -306,8 +319,10 @@ void ft_parse_for_exec(t_data *data)
 	}
 	ft_clean_list_exec(data);
 	ft_modif_in_out(data);
-	ft_print_list(&data->exec);
-	exit(1);
+	// ft_print_list(&data->exec);
+	data->pip.nb_pipes = ft_count_pipes(&data->exec);
+
+	// exit(1);
 		
 }
 

@@ -37,3 +37,35 @@ char *ft_put_str_in_str(char *dest, char *src, int ind)
 	output[j] = '\0';
 	return (output);
 }
+
+char *ft_tab_to_str(char **tab, char sep)
+{
+	int i;
+	int j;
+	int k;
+	char *str;
+
+	i = -1;
+	j = 0;
+	while (tab[++i])
+		j += ft_strlen(tab[i]);
+	j += i - 1;
+	str = malloc(sizeof(char) * j + 1);
+	if (!str)
+		return (NULL);
+	str[j] = '\0';
+	i = -1;
+	k = -1;
+	while (tab[++i])
+	{
+		j = -1;
+		while(tab[i][++j])
+			str[++k] = tab[i][j];
+		if (str[k + 1] != '\0')
+			str[++k] = sep;
+	}
+	return (str);
+	
+
+
+}

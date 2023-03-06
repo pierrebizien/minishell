@@ -145,12 +145,15 @@ static int ft_ok_export(char *str, t_data *data)
 	return (0);
 }
 
-int ft_export(char *str, t_data *data)
+int ft_export(char **tab, t_data *data)
 {
 	int		i;
 	char	*cmd;
+	char	*str;
 
 	i = 0;
+	str = ft_tab_to_str(tab, ' ');
+	fprintf(stderr, "str = |%s|\n\n", str);
 	ft_strlen_WS(str);
 	if (ft_strncmp(str, "export", 7) == 0)
 		return (ft_just_export(data));

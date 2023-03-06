@@ -6,27 +6,27 @@
 /*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 11:00:29 by pbizien           #+#    #+#             */
-/*   Updated: 2023/02/27 16:24:30 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/03/02 14:52:30 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./inc/pipex_bonus.h"
 
-char	**ft_get_paths(char **envp)
-{
-	int	i;
+// char	**ft_get_paths(char **envp)
+// {
+// 	int	i;
 
-	i = 0;
-	while (envp[i])
-	{
-		if (ft_p_strncmp("PATH=", envp[i], 5) == 0)
-			break ;
-		i++;
-	}
-	if (i == ft_size_dchar(envp))
-		return (NULL);
-	return (ft_p_split((envp[i] + 5), ':'));
-}
+// 	i = 0;
+// 	while (envp[i])
+// 	{
+// 		if (ft_p_strncmp("PATH=", envp[i], 5) == 0)
+// 			break ;
+// 		i++;
+// 	}
+// 	if (i == ft_size_dchar(envp))
+// 		return (NULL);
+// 	return (ft_p_split((envp[i] + 5), ':'));
+// }
 
 int	ft_size_dchar(char **strstr)
 {
@@ -100,8 +100,8 @@ int	pipex(int ac, char **av, char **envp)
 	// 	return (ft_p_putstr_fd("NB D ARGS INVALIDE\n", 2), 1);
 	if (ft_init_pipex(av, &data, envp, ac) != 0)
 		return (1);
-	if (ft_p_strncmp(av[1], "here_doc", 8) == 0)
-		if (ft_heredoc(&data) != 0)
+	// if (ft_p_strncmp(av[1], "here_doc", 8) == 0)
+	// 	if (ft_heredoc(&data) != 0)
 			return (1);
 	return (ft_main_suite(&data, av, envp));
 }
