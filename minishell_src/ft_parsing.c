@@ -109,9 +109,9 @@ char *ft_parse(char *str, t_data *data) // CHECK GLOBAL ET SI > >OUT RETURN ERRO
 
 	tmp = str;
 	str = ft_strtrim(str, WS);
-	printf("str parse vaut |%s|\n", str);
-	if (!str)
-		return (free(str), exit(-1), NULL);
+	// printf("str parse vaut |%s|\n", str);
+	if (!str || str[0] == '\0')
+		return (free(str), NULL);
 	// free(tmp);
 	str = ft_clean(str);
 	if (!str)

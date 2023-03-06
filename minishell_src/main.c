@@ -46,9 +46,12 @@ int	main(int ac, char **av, char**envp)
 		if (str && str[0])
 		{
 			str = ft_parse(str, &data);
-			ft_parse_for_exec(&data);
-			ft_pipex(&data);
-			ft_close_all(data.pip);
+			if (str)
+			{
+				ft_parse_for_exec(&data);
+				ft_pipex(&data);
+				ft_close_all(data.pip);
+			}
 		}
 		// fprintf(stderr, "LOOOOP 2 str = %s\n", str);
 		// ft_pipex();
@@ -58,7 +61,7 @@ int	main(int ac, char **av, char**envp)
 		// fprintf(stderr, "LOOOOP 2 str vaut %s\n", str);
 		// dup2(0, 0);
 		// get_next_line(0);
-		str = readline("\e[36;1mminiishell> \e[0m");
+		str = readline("\e[36;1mminishell> \e[0m");
 		// fprintf(stderr, "LOOOOP 3 str vaut %s\n", str);
 		add_history(str);
 	}
