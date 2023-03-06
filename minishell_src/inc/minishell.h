@@ -64,12 +64,13 @@ typedef	struct	s_data
 	t_env	env;
 	t_exec	exec;
     char 	**args;
-	char 	**av;
-	char **envp;
 	int		ac;
+	char 	**av;
+	char	**envp;
 	char	*sep;
 	int		hd;
-	
+	char	*pwd;
+	char	*oldpwd;
 }               t_data;
 
 
@@ -88,6 +89,10 @@ int		ft_create_env(char **envp, t_data *data);
 t_env	*ft_lstnew_env(void);
 void	ft_free_env(t_data *data);
 int		ft_env(t_data *data);
+
+
+//FT_UNSET
+int		ft_unset(char *strr, t_data *data);
 
 //FT_EXPORT
 int		ft_export(char *str, t_data *data);
