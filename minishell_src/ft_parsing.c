@@ -111,7 +111,7 @@ char *ft_parse(char *str, t_data *data) // CHECK GLOBAL ET SI > >OUT RETURN ERRO
 	str = ft_strtrim(str, WS);
 	if (!str)
 		return (free(str), exit(-1), NULL);
-	free(tmp);
+	// free(tmp);
 	str = ft_clean(str);
 	if (!str)
 		return (NULL);
@@ -319,7 +319,7 @@ void ft_parse_for_exec(t_data *data)
 	}
 	ft_clean_list_exec(data);
 	ft_modif_in_out(data);
-	ft_print_list(&data->exec);
+	// ft_print_list(&data->exec);
 	data->pip.nb_pipes = ft_count_pipes(&data->exec);
 
 	// exit(1);

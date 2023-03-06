@@ -85,6 +85,7 @@ typedef	struct	s_data
 	int		ac;
 	char	*sep;
 	int		hd;
+	int		err_built_in;
 	
 }               t_data;
 
@@ -148,11 +149,13 @@ char *ft_put_str_in_str(char *dest, char *src, int ind);
 //FT_HEREDOC
 int	ft_heredoc(t_data *data, char *delimiter, int w);
 void	ft_close(int *fd);
+void	ft_init_pipex_pipe(t_data *data);
 
 
 //PIPEX_UTILS
 void	ft_free_dchar(char **str);
 char    *ft_strrjoin(char const *s1, char const *s2, char const *s3);
+void    ft_close_all(t_pip pip);
 
 
 // int	pipex(int ac, char **av, char **envp);

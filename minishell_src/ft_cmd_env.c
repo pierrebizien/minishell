@@ -3,6 +3,7 @@
 
 int ft_env(t_data *data)
 {
+    fprintf(stderr, "\n\n\nENV_BUILTIN\n\n\n");
     t_env *tmp;
 
     tmp = &data->env;

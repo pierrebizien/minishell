@@ -38,7 +38,7 @@ run: all
 	./${NAME}
 
 valgrind: all
-	valgrind --track-fds=yes ./${NAME}
+	valgrind ./${NAME}
 
 
 

@@ -54,3 +54,13 @@ char    *ft_strrjoin(char const *s1, char const *s2, char const *s3)
     ft_strrjoin_bis(new + i + j, s3);
     return (new);
 }
+
+void    ft_close_all(t_pip pip)
+{
+    ft_close(&pip.fd_in);
+    ft_close(&pip.fd_out);
+    ft_close(&pip.pipefd1[0]);
+    ft_close(&pip.pipefd1[1]);
+    ft_close(&pip.pipefd2[0]);
+    ft_close(&pip.pipefd2[1]);
+}
