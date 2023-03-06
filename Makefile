@@ -20,6 +20,7 @@ SRCS += ft_cmd_echo.c
 SRCS += ft_cmd_export.c
 SRCS += ft_cmd_pwd.c
 SRCS += ft_cmd_cd.c
+SRCS += ft_cmd_unset.c
 
 # SRC_PATH += /libft/src
 SRC_PATH = ./minishell_src/
@@ -41,6 +42,8 @@ CC = cc
 
 CFLAGS += -Wall -Werror -Wextra
 CFLAGS += -g
+CFLAGS += -g
+
 
 
 vpath %.c ${SRC_PATH}
@@ -52,8 +55,46 @@ run: all
 	./${NAME}
 
 valgrind: all
-	valgrind ./${NAME}
+	valgrind --track-fds=yes --suppressions=assets/ignore_readline_leaks.supp --leak-check=full --show-leak-kinds=all ./${NAME}
 
+
+${OBJS}: ${OBJS_PATH}/%.o: %.c Makefile minishell.h
+	@	$(MAKE) --no-print-directory -s -C libft
+# @	$(MAKE) --no-print-directory -s -C pipex
+	@	mkdir -p ${OBJS_PATH}
+	@	$(COLORCOMPIL)
+	@	${CC} ${CFLAGS} -c $< -o $@ ${HEAD_PATH}
+
+${NAME}:  ${OBJS}
+	@	${CC} ${CFLAGS} -o ${NAME} ${OBJS} ${LIB} ${HEAD_PATH}
+	@	echo -ne "\r\033[2K" $(LIGHTGREEN) "\t$(NAME) OK\n\n" "\033[0m"
+
+
+
+
+
+clean:
+	@	echo -ne "\r\033[2K" $(YELLOW) "Cleaning\n\n"$(NC)
+	@	rm -rf ${OBJS_PATH}
+	@	$(MAKE) --no-print-directory -s clean -C libft
+	@	echo -ne "\r\033[2K" $(GREEN) "\tLibft cleaned\n"$(NC)
+
+
+fclean: clean
+	@	rm -f ${NAME}
+	@	$(MAKE) --no-print-directory -s fclean -C libft
+	@	echo -ne "\r\033[2K" $(GREEN) "\t$(NAME) cleaned\n"$(NC)"\n"
+
+
+
+
+re: fclean
+	@	echo -ne "\r\033[2K" $(YELLOW) "Rebuilding..."$(NC)"\n""\n"
+# @	echo ""$(YELLOW) "\nRebuilding...\n" $(NC)
+	@	$(MAKE) -s
+
+
+.PHONY: re clean fclean 
 
 NOCOLOR='\033[0m'
 RED='\033[0;31m'
@@ -73,46 +114,6 @@ LIGHTCYAN='\033[1;36m'
 YELLOW='\033[1;33m'
 WHITE='\033[1;37m'
 
-
-
-
-${OBJS}: ${OBJS_PATH}/%.o: %.c Makefile minishell.h
-	@	$(MAKE) --no-print-directory -s -C libft
-# @	$(MAKE) --no-print-directory -s -C pipex
-	@	mkdir -p ${OBJS_PATH}
-	@	$(COLORCOMPIL)
-	@	${CC} ${CFLAGS} -c $< -o $@ ${HEAD_PATH}
-
-${NAME}:  ${OBJS}
-	@	${CC} ${CFLAGS} -o ${NAME} ${OBJS} ${LIB} ${HEAD_PATH}
-	@	echo -ne "\r\033[2K" $(LIGHTGREEN) "\t$(NAME) OK"$(NC)"\n""\n"
-
-
-
-
-
-clean:
-	@	echo -ne "\r\033[2K" $(YELLOW) "Cleaning"$(NC)"\n""\n"
-	@	rm -rf ${OBJS_PATH}
-	@	$(MAKE) --no-print-directory -s clean -C libft
-	@	echo -ne "\r\033[2K" $(GREEN) "\tLibft cleaned\n"$(NC)
-
-
-fclean: clean
-	@	rm -f ${NAME}
-	@	$(MAKE) --no-print-directory -s fclean -C libft
-	@	echo -ne "\r\033[2K" $(GREEN) "\t$(NAME) cleaned\n\n"$(NC)
-
-
-
-
-re: fclean
-	@	echo -ne "\r\033[2K" $(YELLOW) "Rebuilding..."$(NC)"\n""\n"
-# @	echo ""$(YELLOW) "\nRebuilding...\n" $(NC)
-	@	$(MAKE) -s
-
-
-.PHONY: re clean fclean 
 
 ifndef COLORCOMPIL
 COLORCOMPIL = \

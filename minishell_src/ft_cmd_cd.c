@@ -30,31 +30,30 @@ char *ft_just_cd(t_data *data)
 void	ft_change_pwd(t_data *data)
 {
     t_env *tmp;
-	char *path;
-	char *pwd;
 
-	path = getcwd(NULL, 0);
     tmp = &data->env;
-	pwd = NULL;
+	
+	if (ft_strcmp(data->pwd, getcwd(NULL, 0)) == 0)
+		return ;
+	fprintf(stderr, "\n\nget pwd = %s(%s)\n", getcwd(NULL, 0), data->pwd);
+	free(data->oldpwd);
+	data->oldpwd = ft_strdup(data->pwd);	
+	free(data->pwd);
+	data->pwd = getcwd(NULL, 0);
     while (tmp)
     {
         if (ft_strncmp(tmp->key, "PWD", ft_strlen(tmp->key)) == 0)
 		{
-			pwd = tmp->value;
-			tmp->value = path;
+			free(tmp->value);
+			tmp->value = ft_strdup(data->pwd);
+		}
+		if (ft_strncmp(tmp->key, "OLDPWD", ft_strlen(tmp->key)) == 0)
+		{
+			free(tmp->value);
+			tmp->value = ft_strdup(data->oldpwd);
 		}
         tmp = tmp->next;
     }
-    tmp = &data->env;
-	while (tmp)
-	{
-		if (ft_strncmp(tmp->key, "OLDPWD", ft_strlen(tmp->key)) == 0 && pwd != NULL)
-		{
-			free(tmp->value);
-			tmp->value = pwd;
-		}
-        tmp = tmp->next;
-	}
 }
 
 int	ft_cd(char *strr, t_data *data)
@@ -64,6 +63,7 @@ int	ft_cd(char *strr, t_data *data)
 	int i;
 	char *path;
 	char **str = ft_split(strr, ' '); // a changer
+	path = NULL;
 
 	if (ft_strstrlen(str) == 1)
 	{
@@ -78,8 +78,15 @@ int	ft_cd(char *strr, t_data *data)
 			i++;
 		if (str[i] == 0)
 			return (0);
+		if (ft_strstrlen(str) != i)
+			return (ft_putstr_fd("cd: too many arguments\n", 1), 1);	
 		if (chdir(str[i]) != 0)
+		{
+			ft_putstr_fd("cd: ", 1);
+			ft_putstr_fd(str[i], 1);
+			ft_putstr_fd(": ", 1);
 			return (perror(path), 1);
+		}
 	}
 	ft_change_pwd(data);
 	return (0);
