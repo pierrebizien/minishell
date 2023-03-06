@@ -58,7 +58,7 @@ char	*find_path(char **cmd, char **paths_env)
 			return (perror(cmd[0]), exit(errno), NULL);
 		else if (cmd[0][0] != '.' && cmd[0][0] != '/')
 			return (ft_putstr_fd(cmd[0], 2), ft_putstr_fd(": Command not found\n", 2),\
-				exit(errno), NULL);
+				exit(127), NULL);
 		else
 			return (ft_strdup(cmd[0]));
 	}
@@ -78,7 +78,7 @@ char	*find_path(char **cmd, char **paths_env)
 		free(tmp);
 	}
 	return (ft_putstr_fd(cmd[0], 2), ft_putstr_fd(": Command not found\n", 2),\
-		 exit(errno), NULL);
+		 exit(127), NULL);
 }
 
 int	contain_token(t_exec* begin, int token, int m)
@@ -188,7 +188,7 @@ void	ft_exec_cmd(t_data *data, char **cmd, int m)
 	{
 		ft_putstr_fd(cmd[0],2);
 		ft_putstr_fd(": Is a directory\n", 2);
-		exit(errno);
+		exit(126);
 	}
 	// fprintf(stderr, "PROBLEME D EXEC\n");
 	perror("EXEC");
@@ -336,6 +336,11 @@ void	ft_pipex(t_data *data)
 			begin = begin->next;
 		m++;
 	}
+		waitpid(data->pip.last_id, &data->last_err_num, 0);
+		fprintf(stderr, "HELLO valeur de retour = %d\n", data->last_err_num);
+		if (WIFEXITED(data->last_err_num))
+			data->last_err_num = WEXITSTATUS(data->last_err_num);
+		fprintf(stderr, "HELLO valeur de retour = %d\n", data->last_err_num);
 		while (wait(NULL) != -1)
 			(void)begin;
 		ft_close_all(data->pip);

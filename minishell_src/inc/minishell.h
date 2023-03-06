@@ -87,6 +87,8 @@ typedef	struct	s_data
 	char	*sep;
 	int		hd;
 	int		err_built_in;
+	int		last_err_num;
+	char	*last_err_str;
 	
 }               t_data;
 
