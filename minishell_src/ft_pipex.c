@@ -163,7 +163,8 @@ void	ft_child_exec(t_exec *begin, t_data *data, int m)
 	char **cmd;
 
 	cmd = NULL;
-	fprintf(stderr, "test begin->str %s\n", begin->next->str);
+	// fprintf(stderr, "test begin->str %s\n", begin->next->str);
+	fprintf(stderr, "HELLLO\n");
 	while (begin && begin->id != F_PIPE)
 	{
 	fprintf(stderr, "test begin->str %s\n", begin->str);
@@ -265,6 +266,8 @@ void	ft_pipex(t_data *data)
 		id = fork();
 		if (id == 0)
 			ft_child_exec(begin, data, m);
+		while (wait(NULL) != -1)
+			(void)id;
 		fprintf(stderr, "id vaut %d\n", id);
 		while (begin && begin->id != F_PIPE)
 			begin = begin->next;
@@ -273,8 +276,6 @@ void	ft_pipex(t_data *data)
 			begin = begin->next;
 		m++;
 	}
-	while (wait(NULL) != -1)
-		(void)id;
 }
 
 
