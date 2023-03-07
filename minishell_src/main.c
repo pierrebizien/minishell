@@ -34,6 +34,8 @@ int	main(int ac, char **av, char**envp)
 	char *str;
 	t_data data;
 
+
+
 	ft_init(envp, &data);
 	ft_logo();
 	signal(SIGINT, ft_ctrlc);
@@ -42,18 +44,18 @@ int	main(int ac, char **av, char**envp)
 	add_history(str);
 	while (str)
 	{
-		// fprintf(stderr, "LOOOOP 1\n");
 		if (str && str[0])
 		{
 			str = ft_parse(str, &data);
-			ft_parse_for_exec(&data);
-			ft_pipex(&data);
-			ft_close_all(data.pip);
+			fprintf(stderr, "STR MAIN VAUT %s\n", str);
+			if (str)
+			{
+				ft_parse_for_exec(&data);
+				ft_pipex(&data);
+				ft_close_all(data.pip);
+			}
 		}
-		free(str);
-
-		str = readline("\e[36;1mminiishell> \e[0m");
-		// fprintf(stderr, "LOOOOP 3 str vaut %s\n", str);
+		str = readline("\e[36;1mminishell> \e[0m");
 		add_history(str);
 	}
 	printf("\nexit\n");

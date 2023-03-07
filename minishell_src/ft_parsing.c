@@ -52,11 +52,11 @@ char	*ft_clean(char *str)
 	in_sq = 0;
 	while (str && str[i])
 	{
-		if (str[i] == '"')
+		if (str[i] == '"' && !in_sq)
 		{
 			in_dq = ft_in_q(in_dq);
 		}
-		else if (str[i] == '\'')
+		else if (str[i] == '\'' && !in_dq)
 		{
 			in_sq = ft_in_q(in_sq);
 		}
@@ -102,23 +102,85 @@ void	ft_clean_ws(t_data *data)
 	
 }
 
+static void	ft_maj_quotes(int *dq, int *sq, char c)
+{
+	if (c == '"' && *sq == -1)
+		*dq *= -1;
+	if (c == '\'' && *dq == -1)
+		*sq *= -1;
+}
+size_t	ft_strlen_WS_quotes(const char *str)
+{
+	size_t	i;
+
+	i = 0;
+	while (str[i] && (is_ws(str[i]) == 0 && str[i] != '"' && str[i] != '\''))
+		i++;
+	return (i);
+}
+
+char	*ft_check_env(char *str, t_data *data)
+{
+	// fprintf(stderr, "STR DANS CHEK ENV VAU %s\tfind = %s\n", str, ft_substr(str, 0, ft_strlen_WS_quotes(str)));
+	t_env *tmp_env;
+	tmp_env = &data->env;
+
+	while (tmp_env)
+	{
+		if (!strncmp(str, tmp_env->key, ft_strlen_WS_quotes(str)))
+			return (tmp_env->value);
+		tmp_env = tmp_env->next;
+	}
+	return (NULL);
+	
+}
+char *ft_convert_variable(char *str, t_data *data)
+{
+	int	i;
+	int dq;
+	int sq;
+	char *var;
+	
+	sq = -1;
+	dq = -1;
+	i = 0;
+	while (str && str[i])
+	{
+		if (str[i] == '\'' || str[i] == '"')
+			ft_maj_quotes(&dq, &sq, str[i]);
+		if (str[i] == '$' && str[i + 1] && !is_ws(str[i + 1]) && sq == -1)
+		{
+			var = ft_check_env(str + i + 1, data);
+			// fprintf(stderr, "PD str vaut %s et var vaut %s\n", str, var);
+			ft_memmove(str + i, str + i + ft_strlen_WS_quotes(str + i), ft_strlen(str + i));
+			str = ft_put_str_in_str(str, var, i);
+			// fprintf(stderr, "VAR VAUT |%s| & str |%s|\n", var, str);
+		}
+
+		i++;
+	}
+	return (str);
+	
+	//PENSER A FREE
+}
+
 
 char *ft_parse(char *str, t_data *data) // CHECK GLOBAL ET SI > >OUT RETURN ERROR
 {
 	char *tmp;
 
 	tmp = str;
+	str = ft_convert_variable(str, data);
 	str = ft_strtrim(str, WS);
-	// printf("str parse vaut |%s|\n", str);
-	if (!str)
-		return (free(str), exit(-1), NULL);
-	// free(tmp);
+	if (!str || str[0] == '\0')
+		return (free(str), NULL);
 	str = ft_clean(str);
 	if (!str)
 		return (NULL);
 	data->args = ft_split_k(str, "|");
+	// fprintf(stderr, "\n\nApres split pipe vaut :\n");
 	ft_clean_ws(data);
-	// ft_print_args();
+	ft_print_dchar(data->args);
 	 return (str);
 }
 
@@ -250,11 +312,15 @@ void ft_parse_for_exec(t_data *data)
 	j = -1;
 	while (data->args[++j])
 	{
-		tab = ft_split_l(data->args[j], " ");
+		// fprintf(stderr, "DATA.ARGS[%d] (j) = %s\n", j, data->args[j]);
+		tab = ft_split_lq(data->args[j], " ");
+		// fprintf(stderr, "APRES SPLIT L:\n");
+		ft_print_dchar(tab);
 		i = 0;
 		while (tab && tab[i])
 		{
-
+			
+			tab[i] = ft_strtrim(tab[i], "\"'");
 			if (!ft_strncmp(tab[i], "<", ft_strlen(tab[i])))
 				i++;
 			else if (!ft_strncmp(tab[i], "<<", ft_strlen(tab[i])))
