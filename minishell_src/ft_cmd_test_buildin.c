@@ -21,7 +21,6 @@ int ft_exec_builtin(char **cmd, t_data *data)
 
 	if (cmd && ft_strncmp(cmd[0], "unset", 5) == 0)
 		return (ft_unset(cmd, data), 1);
-
     return (0);
 }
 
