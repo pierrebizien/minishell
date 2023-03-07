@@ -20,7 +20,7 @@ char *ft_put_str_in_str(char *dest, char *src, int ind)
 	size_t		j;
 	int		k;
 
-	fprintf(stderr, "LAIZEGUEA1 dest vaut %s \n", dest);
+	// fprintf(stderr, "LAIZEGUEA1 dest vaut %s \n", dest);
 	len = ft_strlen(dest) + ft_strlen(src) + 1;
 	output = malloc(sizeof(char) * len);
 	if (!output)
@@ -36,7 +36,7 @@ char *ft_put_str_in_str(char *dest, char *src, int ind)
 			output[j++] = dest[i++];
 	}
 	output[j] = '\0';
-	fprintf(stderr, "LAIZEGUEAU2 j vaut %zu \n", j);
+	// fprintf(stderr, "LAIZEGUEAU2 j vaut %zu \n", j);
 	return (output);
 }
 

@@ -34,6 +34,8 @@ int	main(int ac, char **av, char**envp)
 	char *str;
 	t_data data;
 
+
+
 	ft_init(envp, &data);
 	ft_logo();
 	signal(SIGINT, ft_ctrlc);

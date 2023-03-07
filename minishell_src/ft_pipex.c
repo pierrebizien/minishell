@@ -79,7 +79,7 @@ char	*find_path(char **cmd, char **paths_env)
 		i++;
 		free(tmp);
 	}
-		fprintf(stderr, "ici\n");
+		// fprintf(stderr, "ici\n");
 	return (ft_putstr_fd(cmd[0], 2), ft_putstr_fd(": Command not found\n", 2),\
 		 exit(127), NULL);
 }
@@ -174,14 +174,16 @@ void	ft_exec_cmd(t_data *data, char **cmd, int m)
 	paths_env = ft_get_paths(data);
 	// perror("EXEC");
 	path_exec = find_path(cmd, paths_env);
-	(void)m;
 	// fprintf(stderr, "ID VAUT %d \n\n\n", id2);
 	ft_dup_manage(data, m);
 	// dup2(data->pip.fd_in, 0);
 	if (ft_exec_builtin(cmd, data) == 1)
 	{
 		ft_close_all(data->pip);
-		exit(data->err_built_in);
+		if (data->pip.nb_pipes)
+			exit(data->err_built_in);
+		else
+			return ;
 	}
 	// dup2(data->pip.fd_out, 1);
 	// fprintf(stderr, "avant exec out %d\n", data->pip.fd_out);
@@ -209,7 +211,7 @@ void	ft_reset_param_pip(t_data *data)
 }
 
 
-void	ft_child_exec(t_exec *begin, t_data *data, int m)
+int	ft_child_exec(t_exec *begin, t_data *data, int m)
 {
 	int tmp_fd;
 	char **cmd;
@@ -263,7 +265,7 @@ void	ft_child_exec(t_exec *begin, t_data *data, int m)
 		{
 			cmd = ft_join_dstr(cmd, begin->str);
 			if (!cmd)
-				return ; //GERER
+				return (MAL_ERCODE); //GERER
 
 			// ft_print_dchar(cmd);
 
@@ -301,8 +303,10 @@ void	ft_child_exec(t_exec *begin, t_data *data, int m)
 		begin = begin->next;
 		
 	}
+	// if (ft_test_builtin(cmd))
 	ft_exec_cmd(data, cmd, m);
 	ft_free_dchar(cmd);
+	return (0);
 }
 void	ft_pipex(t_data *data)
 {
@@ -314,8 +318,14 @@ void	ft_pipex(t_data *data)
 
 	begin = &data->exec;
 	m = 0;
+	// fprintf(stderr, "SEGFAULT ?");
+	// if (!data->pip.nb_pipes)
+	// 	if(ft_child_exec(begin, data, 0))
+	// 		return ;
+	begin = &data->exec;
 	while (begin)
 	{
+		//FONCTION D INIT DES STDIN ET OUT
 		if (!m || m % 2 == 0)
 			pipe(data->pip.pipefd1);
 		else
@@ -340,10 +350,10 @@ void	ft_pipex(t_data *data)
 		m++;
 	}
 		waitpid(data->pip.last_id, &data->last_err_num, 0);
-		fprintf(stderr, "HELLO valeur de retour = %d\n", data->last_err_num);
+		// fprintf(stderr, "HELLO valeur de retour = %d\n", data->last_err_num);
 		if (WIFEXITED(data->last_err_num))
 			data->last_err_num = WEXITSTATUS(data->last_err_num);
-		fprintf(stderr, "HELLO valeur de retour = %d\n", data->last_err_num);
+		// fprintf(stderr, "HELLO valeur de retour = %d\n", data->last_err_num);
 		while (wait(NULL) != -1)
 			(void)begin;
 		ft_close_all(data->pip);

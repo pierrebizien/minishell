@@ -121,7 +121,7 @@ size_t	ft_strlen_WS_quotes(const char *str)
 
 char	*ft_check_env(char *str, t_data *data)
 {
-	fprintf(stderr, "STR DANS CHEK ENV VAU %s\tfind = %s\n", str, ft_substr(str, 0, ft_strlen_WS_quotes(str)));
+	// fprintf(stderr, "STR DANS CHEK ENV VAU %s\tfind = %s\n", str, ft_substr(str, 0, ft_strlen_WS_quotes(str)));
 	t_env *tmp_env;
 	tmp_env = &data->env;
 
@@ -151,10 +151,10 @@ char *ft_convert_variable(char *str, t_data *data)
 		if (str[i] == '$' && str[i + 1] && !is_ws(str[i + 1]) && sq == -1)
 		{
 			var = ft_check_env(str + i + 1, data);
-			fprintf(stderr, "PD str vaut %s et var vaut %s\n", str, var);
+			// fprintf(stderr, "PD str vaut %s et var vaut %s\n", str, var);
 			ft_memmove(str + i, str + i + ft_strlen_WS_quotes(str + i), ft_strlen(str + i));
 			str = ft_put_str_in_str(str, var, i);
-			fprintf(stderr, "VAR VAUT |%s| & str |%s|\n", var, str);
+			// fprintf(stderr, "VAR VAUT |%s| & str |%s|\n", var, str);
 		}
 
 		i++;
@@ -178,7 +178,7 @@ char *ft_parse(char *str, t_data *data) // CHECK GLOBAL ET SI > >OUT RETURN ERRO
 	if (!str)
 		return (NULL);
 	data->args = ft_split_k(str, "|");
-	fprintf(stderr, "\n\nApres split pipe vaut :\n");
+	// fprintf(stderr, "\n\nApres split pipe vaut :\n");
 	ft_clean_ws(data);
 	ft_print_dchar(data->args);
 	 return (str);
@@ -312,9 +312,9 @@ void ft_parse_for_exec(t_data *data)
 	j = -1;
 	while (data->args[++j])
 	{
-		fprintf(stderr, "DATA.ARGS[%d] (j) = %s\n", j, data->args[j]);
+		// fprintf(stderr, "DATA.ARGS[%d] (j) = %s\n", j, data->args[j]);
 		tab = ft_split_lq(data->args[j], " ");
-		fprintf(stderr, "APRES SPLIT L:\n");
+		// fprintf(stderr, "APRES SPLIT L:\n");
 		ft_print_dchar(tab);
 		i = 0;
 		while (tab && tab[i])

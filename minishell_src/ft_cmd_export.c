@@ -153,7 +153,7 @@ int ft_export(char **tab, t_data *data)
 
 	i = 0;
 	str = ft_tab_to_str(tab, ' ');
-	fprintf(stderr, "str = |%s|\n\n", str);
+	// fprintf(stderr, "str = |%s|\n\n", str);
 	ft_strlen_WS(str);
 	if (ft_strncmp(str, "export", 7) == 0)
 		return (ft_just_export(data));

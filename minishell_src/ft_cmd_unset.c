@@ -12,7 +12,6 @@ int	ft_unset(char **str, t_data *data)
 	i = 1;
 	while (str[i][0] == '-')
 		i++;
-	fprintf(stderr, "coucoucoucoucoucou\n");
 	while (str[i] != 0)
 	{
 		tmp = &data->env;
