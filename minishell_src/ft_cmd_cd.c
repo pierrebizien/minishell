@@ -35,7 +35,7 @@ void	ft_change_pwd(t_data *data)
 	
 	if (ft_strcmp(data->pwd, getcwd(NULL, 0)) == 0)
 		return ;
-	fprintf(stderr, "\n\nget pwd = %s(%s)\n", getcwd(NULL, 0), data->pwd);
+	// fprintf(stderr, "\n\nget pwd = %s(%s)\n", getcwd(NULL, 0), data->pwd);
 	free(data->oldpwd);
 	data->oldpwd = ft_strdup(data->pwd);	
 	free(data->pwd);
