@@ -13,64 +13,80 @@ int ft_strlen_char(char *str, char c)
 	return (i);
 }
 
-int	ft_cd(char *str, t_data *data)
+char *ft_just_cd(t_data *data)
+{
+    t_env *tmp;
+
+    tmp = &data->env;
+    while (tmp)
+    {
+        if (ft_strncmp(tmp->key, "HOME", ft_strlen(tmp->key)) == 0)
+			return (ft_strdup(tmp->value));
+        tmp = tmp->next;
+    }
+    return (NULL);
+}
+
+void	ft_change_pwd(t_data *data)
+{
+    t_env *tmp;
+
+    tmp = &data->env;
+	
+	if (ft_strcmp(data->pwd, getcwd(NULL, 0)) == 0)
+		return ;
+	fprintf(stderr, "\n\nget pwd = %s(%s)\n", getcwd(NULL, 0), data->pwd);
+	free(data->oldpwd);
+	data->oldpwd = ft_strdup(data->pwd);	
+	free(data->pwd);
+	data->pwd = getcwd(NULL, 0);
+    while (tmp)
+    {
+        if (ft_strncmp(tmp->key, "PWD", ft_strlen(tmp->key)) == 0)
+		{
+			free(tmp->value);
+			tmp->value = ft_strdup(data->pwd);
+		}
+		if (ft_strncmp(tmp->key, "OLDPWD", ft_strlen(tmp->key)) == 0)
+		{
+			free(tmp->value);
+			tmp->value = ft_strdup(data->oldpwd);
+		}
+        tmp = tmp->next;
+    }
+}
+
+int	ft_cd(char **str, t_data *data)
 {
 	// DIR *dir;
 	// struct dirent *entrey;
-	// int i;
-	// char *path;
-	(void) str;
-	(void)data;
+	int i;
+	char *path;
+	path = NULL;
 
-
-	// i = 3;
-	// if (str[3] == '/')
-	// {
-	// 	dir = opendir("/");
-	// 	i++;
-	// }
-	// else
-	// 	dir = opendir(".");
-	// // entrey = readdir(dir);
-	// // fprintf(stderr, "str[%d] = |%s|\n", i, str + i);
-	// i = i + ft_strlen_char(str + i, '/');
-	// dir = opendir(path);
-
-	// while (entrey != NULL)
-	// {
-
-	// 	// fprintf(stderr, "name = (%d)|%s|\n", entrey->d_type, entrey->d_name);
-	// 	// if (ft_strncmp(str + i, entrey->d_name, ft_strlen_char(str + i, '/')) == 0 && entrey->d_type == 4 && ft_strlen(entrey->d_name) == ft_strlen_char(str + i, '/'))
-	// 	// {
-	// 	// 	fprintf(stderr, "CHANGE = (%d)|%s|\n", entrey->d_type, entrey->d_name);
-	// 	// 	path = ft_substr(str, 3, i - 3);
-	// 	// 	fprintf(stderr, "PATH = %s\n", path);
-	// 	// 	closedir(dir);
-	// 	// 	i = i + ft_strlen_char(str + i, '/');
-	// 	// 	fprintf(stderr, "str[%d] = |%s|\n", i, str + i);
-	// 	// 	dir = opendir(path);
-	// 	// 	// free(path);
-
-	// 	// }
-	// 	entrey = readdir(dir);
-
-	// }
-	// closedir(dir);
-
+	if (ft_strstrlen(str) == 1)
+	{
+		path = ft_just_cd(data);
+		if (chdir(path) != 0)
+			return (perror(path), 1);
+	}
+	else
+	{
+		i = 1;
+		while (str[i][0] == '-')
+			i++;
+		if (str[i] == 0)
+			return (0);
+		if (ft_strstrlen(str) != i)
+			return (ft_putstr_fd("cd: too many arguments\n", 1), 1);	
+		if (chdir(str[i]) != 0)
+		{
+			ft_putstr_fd("cd: ", 1);
+			ft_putstr_fd(str[i], 1);
+			ft_putstr_fd(": ", 1);
+			return (perror(path), 1);
+		}
+	}
+	ft_change_pwd(data);
 	return (0);
 }
-// int main(void)
-// {
-// 	char *test;
-// 	// test = "cd /";
-//     // fprintf(stderr, "\t\t\t\t\t\e[35m1|%d|(%s)\e[0m\n", ft_cd(test), test);
-
-// 	// test = "cd /mnt/nfs/homes/ngriveau/Desktop/minishell";
-//     // fprintf(stderr, "\t\t\t\t\t\e[35m1|%d|(%s)\e[0m\n", ft_cd(test), test);
-
-// 	test = "cd ./libft";
-//     fprintf(stderr, "\t\t\t\t\t\e[35m1|%d|(%s)\e[0m\n", ft_cd(test), test);
-
-// 	// test = "cd /mnt/nfs/";
-//     // fprintf(stderr, "\t\t\t\t\t\e[35m1|%d|(%s)\e[0m\n", ft_cd(test), test);
-// }

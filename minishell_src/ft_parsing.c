@@ -52,11 +52,11 @@ char	*ft_clean(char *str)
 	in_sq = 0;
 	while (str && str[i])
 	{
-		if (str[i] == '"')
+		if (str[i] == '"' && !in_sq)
 		{
 			in_dq = ft_in_q(in_dq);
 		}
-		else if (str[i] == '\'')
+		else if (str[i] == '\'' && !in_dq)
 		{
 			in_sq = ft_in_q(in_sq);
 		}
@@ -109,16 +109,15 @@ char *ft_parse(char *str, t_data *data) // CHECK GLOBAL ET SI > >OUT RETURN ERRO
 
 	tmp = str;
 	str = ft_strtrim(str, WS);
-	// printf("str parse vaut |%s|\n", str);
 	if (!str || str[0] == '\0')
 		return (free(str), NULL);
-	// free(tmp);
 	str = ft_clean(str);
 	if (!str)
 		return (NULL);
 	data->args = ft_split_k(str, "|");
+	fprintf(stderr, "\n\nApres split pipe vaut :\n");
 	ft_clean_ws(data);
-	// ft_print_args();
+	ft_print_dchar(data->args);
 	 return (str);
 }
 
@@ -315,7 +314,7 @@ void ft_parse_for_exec(t_data *data)
 				}
 			}
 		}
-		ft_free_dchar(tab);
+		// ft_free_dchar(tab);
 	}
 	ft_clean_list_exec(data);
 	ft_modif_in_out(data);

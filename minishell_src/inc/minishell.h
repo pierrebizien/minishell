@@ -81,11 +81,13 @@ typedef	struct	s_data
 	t_exec	exec;
 	t_pip	pip;
     char 	**args;
-	char 	**av;
-	char **envp;
 	int		ac;
+	char 	**av;
+	char	**envp;
 	char	*sep;
 	int		hd;
+	char	*pwd;
+	char	*oldpwd;
 	int		err_built_in;
 	int		last_err_num;
 	char	*last_err_str;
@@ -94,7 +96,7 @@ typedef	struct	s_data
 
 
 //FT_PARSING
-void ft_parse_for_exec(t_data *data);
+void	ft_parse_for_exec(t_data *data);
 char	*ft_parse(char *str, t_data *data);
 int		is_ws(char c);
 
@@ -109,20 +111,26 @@ t_env	*ft_lstnew_env(void);
 void	ft_free_env(t_data *data);
 int		ft_env(t_data *data);
 
+
+//FT_UNSET
+int		ft_unset(char **strr, t_data *data);
+
 //FT_EXPORT
-int		ft_export(char *str, t_data *data);
+int		ft_export(char **str, t_data *data);
 
 // FT_ECHO
-int		ft_echo(char *str, t_data *data);
+int		ft_echo(char **cmd);
 
 // FT_PWD
 int		ft_pwd(t_data *data);
 
 // FT_CD
-int		ft_cd(char *str, t_data *data);
+int		ft_cd(char **str, t_data *data);
 
 //FT_TEST_BUILDTIN
-int		ft_test_builtin(char *str, t_data *data);
+int		ft_test_builtin(char **str);
+int ft_exec_builtin(char **cmd, t_data *data);
+
 
 
 void	ft_ctrlb(int a);
@@ -159,6 +167,7 @@ void	ft_init_pipex_pipe(t_data *data);
 void	ft_free_dchar(char **str);
 char    *ft_strrjoin(char const *s1, char const *s2, char const *s3);
 void    ft_close_all(t_pip pip);
+char *ft_tab_to_str(char **tab, char sep);
 
 
 // int	pipex(int ac, char **av, char **envp);

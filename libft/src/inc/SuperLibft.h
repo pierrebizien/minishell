@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 17:32:42 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/02/22 15:17:31 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/06 13:19:54 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,4 +110,6 @@ void	ft_putnbr_pc_u(unsigned int nb);
 int		ft_pc_x(long nbr, char *base, int nbrch);
 int		ft_len_nbr_pc_x(unsigned int nbr, int nbrch);
 void	ft_print_base_pc_x(unsigned int nbr, char *base);
+
+int		ft_strcmp(const char *s1, const char *s2);
 #endif

@@ -25,12 +25,15 @@ int ft_verif_nl_echo(char *str)
 	return (1);
 }
 
-int	ft_echo(char *str, t_data *data)
+int	ft_echo(char **cmd)
 {
 	int i;
 	int nl;
+	char *str;
 
-	(void)data;
+	fprintf(stderr, "ECHO: \n");
+	ft_print_dchar(cmd);
+	str = ft_tab_to_str(cmd, ' ');
 	i = 5;
 	nl = ft_verif_nl_echo(str);
 	while (str[i] && (str[i] == '-' || str[i] == 'n' || is_ws(str[i]) == 1))

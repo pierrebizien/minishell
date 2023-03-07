@@ -52,6 +52,8 @@ char	*find_path(char **cmd, char **paths_env)
 
 	i = 0;
 	// fprintf(stderr, "ICI 2 cmd[0] %s\n", cmd[0]);
+	if (ft_test_builtin(cmd) == 1)
+		return (NULL);
 	if (!access(cmd[0], R_OK) && (cmd[0][0] != '.' || cmd[0][0] != '/'))
 	{
 		if (access(cmd[0], X_OK))
@@ -77,6 +79,7 @@ char	*find_path(char **cmd, char **paths_env)
 		i++;
 		free(tmp);
 	}
+		fprintf(stderr, "ici\n");
 	return (ft_putstr_fd(cmd[0], 2), ft_putstr_fd(": Command not found\n", 2),\
 		 exit(127), NULL);
 }
@@ -175,7 +178,7 @@ void	ft_exec_cmd(t_data *data, char **cmd, int m)
 	// fprintf(stderr, "ID VAUT %d \n\n\n", id2);
 	ft_dup_manage(data, m);
 	// dup2(data->pip.fd_in, 0);
-	if (ft_test_builtin(cmd[0], data) == 1)
+	if (ft_exec_builtin(cmd, data) == 1)
 	{
 		ft_close_all(data->pip);
 		exit(data->err_built_in);
