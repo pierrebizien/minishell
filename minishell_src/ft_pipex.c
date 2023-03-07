@@ -323,6 +323,7 @@ void	ft_pipex(t_data *data)
 		data->pip.last_id = fork();
 		if (data->pip.last_id == 0)
 			ft_child_exec(begin, data, m);
+		fprintf(stderr, "\n\n\t\t\tdata = %s\n\n", data->env.next->key);
 		if (!m || m % 2 == 0)
 		{
 			ft_close(&data->pip.pipefd2[0]);
