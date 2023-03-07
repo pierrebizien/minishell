@@ -32,7 +32,7 @@ INCLUDE = -I ${SRCS_PATH}/inc
 
 LIB = libft.a
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -I ./
+CFLAGS = -g -Wall -Werror -Wextra -I ./
 
 
 vpath %.c ${SRCS_PATH}
