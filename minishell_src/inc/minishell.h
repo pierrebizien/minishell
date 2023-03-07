@@ -151,6 +151,12 @@ int	ft_in_q(int in_q);
 
 //FT_PIPEX
 void	ft_pipex(t_data *data);
+void ft_dup_manage(t_data *data, int m);
+int	contain_token(t_exec* begin, int token, int m);
+char	*find_path(char **cmd, char **paths_env);
+char **ft_get_paths(t_data *data);
+char **ft_join_dstr(char **dest, char* src);
+
 
 //FT_UTILS
 int		ft_strstrlen(char **strstr);
@@ -172,6 +178,8 @@ char *ft_tab_to_str(char **tab, char sep);
 //SPLIT_LQUOTES
 char	**ft_split_lq(char const *s, char *sep);
 
+//FT_EXEC_BUILT_IN
+int	ft_exec_built_in_solo(t_exec *begin, t_data *data);
 
 // int	pipex(int ac, char **av, char **envp);
 

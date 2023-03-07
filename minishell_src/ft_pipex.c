@@ -318,10 +318,11 @@ void	ft_pipex(t_data *data)
 
 	begin = &data->exec;
 	m = 0;
-	// fprintf(stderr, "SEGFAULT ?");
-	// if (!data->pip.nb_pipes)
-	// 	if(ft_child_exec(begin, data, 0))
-	// 		return ;
+	// fprintf(stderr, "nb pipe ? %d\n", data->pip.nb_pipes);
+	if (!data->pip.nb_pipes)
+		if(!ft_exec_built_in_solo(begin, data))
+			return ;
+	fprintf(stderr, "\n\n\n\n\nON DEVRAI PAD ALLER LA\n");
 	begin = &data->exec;
 	while (begin)
 	{
