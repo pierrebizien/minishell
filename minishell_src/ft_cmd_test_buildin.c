@@ -2,7 +2,7 @@
 
 int ft_exec_builtin(char **cmd, t_data *data)
 {
-	fprintf(stderr, "coucoucoucoucou\n\n");
+	ft_print_dchar(cmd);
 	if (cmd && ft_strncmp(cmd[0], "env", 3) == 0)
 		return(ft_env(data), 1);
 

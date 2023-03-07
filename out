@@ -1,0 +1,17 @@
+total 248
+drwxr-xr-x 8 ngriveau 2022_paris   4096 Mar  7 18:53 .
+drwxr-xr-x 5 ngriveau 2022_paris   4096 Mar  6 11:16 ..
+-rw-r--r-- 1 ngriveau 2022_paris   6148 Mar  6 11:16 .DS_Store
+drwxr-xr-x 8 ngriveau 2022_paris   4096 Mar  7 18:52 .git
+-rwxr-xr-x 1 ngriveau 2022_paris  79592 Mar  7 18:52 .nfs000000001242a17f00000e32
+drwxr-xr-x 2 ngriveau 2022_paris   4096 Mar  6 11:16 .vscode
+-rwxr-xr-x 1 ngriveau 2022_paris   3224 Mar  7 18:52 Makefile
+-rw-r--r-- 1 ngriveau 2022_paris   3197 Mar  7 18:52 Pierre
+drwxr-xr-x 2 ngriveau 2022_paris   4096 Mar  6 14:11 assets
+drwxr-xr-x 4 ngriveau 2022_paris   4096 Mar  7 18:53 libft
+-rwxr-xr-x 1 ngriveau 2022_paris 111600 Mar  7 18:53 minishell
+drwxr-xr-x 4 ngriveau 2022_paris   4096 Mar  7 18:52 minishell_src
+-rw-r--r-- 1 ngriveau 2022_paris      0 Mar  7 18:53 out
+-rw-r--r-- 1 ngriveau 2022_paris      5 Mar  7 18:52 out1
+-rw-r--r-- 1 ngriveau 2022_paris   3355 Mar  7 18:52 out3
+drwxr-xr-x 3 ngriveau 2022_paris   4096 Mar  6 17:47 pipex

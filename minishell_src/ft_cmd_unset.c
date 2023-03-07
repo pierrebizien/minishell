@@ -19,15 +19,15 @@ int	ft_unset(char **str, t_data *data)
 		while (tmp)
 		{
 			// fprintf(stderr, "str[%d] = %s\n", i, str[i]);
-			fprintf(stderr, "key = %s\t value = %s\n", tmp->key, tmp->value);
+			// fprintf(stderr, "key = %s\t value = %s\n", tmp->key, tmp->value);
 			if (ft_strncmp(tmp->key, str[i], ft_strlen(str[i])) == 0)
 			{
-				fprintf(stderr, "tmp->key = %s\t tnp->value = %s\n\n", tmp->key, tmp->value);
+				// fprintf(stderr, "tmp->key = %s\t tnp->value = %s\n\n", tmp->key, tmp->value);
 				after = tmp->next;
 				free(tmp->key);
 				free(tmp->value);
 				free(tmp);
-				fprintf(stderr, "tmp->key = %s\t tnp->value = %s\n\n", tmp->key, tmp->value);
+				// fprintf(stderr, "tmp->key = %s\t tnp->value = %s\n\n", tmp->key, tmp->value);
 				if (before == NULL)
 				{
 					data->env = *after;
@@ -60,5 +60,5 @@ int	ft_unset(char **str, t_data *data)
 	// 	write(1, "\n", 1);
     // 	tmp = tmp->next;
     // }
-	// return (0);
+	return (0);
 }
