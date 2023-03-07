@@ -33,6 +33,7 @@ int	ft_echo(char **cmd)
 
 	fprintf(stderr, "ECHO: \n");
 	ft_print_dchar(cmd);
+	return (0);
 	str = ft_tab_to_str(cmd, ' ');
 	i = 5;
 	nl = ft_verif_nl_echo(str);
