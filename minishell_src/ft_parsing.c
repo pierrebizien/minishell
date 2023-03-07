@@ -101,6 +101,23 @@ void	ft_clean_ws(t_data *data)
 	}
 	
 }
+char *ft_convert_variable(char *str)
+{
+	int	i;
+	int dq;
+	int sq;
+	
+	sq = -1;
+	dq = -1;
+	i = 0;
+	while (str && str[i])
+	{
+
+		i++;
+	}
+	
+	//PENSER A FREE
+}
 
 
 char *ft_parse(char *str, t_data *data) // CHECK GLOBAL ET SI > >OUT RETURN ERROR
@@ -108,6 +125,7 @@ char *ft_parse(char *str, t_data *data) // CHECK GLOBAL ET SI > >OUT RETURN ERRO
 	char *tmp;
 
 	tmp = str;
+	str = ft_convert_variable(str);
 	str = ft_strtrim(str, WS);
 	if (!str || str[0] == '\0')
 		return (free(str), NULL);
@@ -249,11 +267,15 @@ void ft_parse_for_exec(t_data *data)
 	j = -1;
 	while (data->args[++j])
 	{
-		tab = ft_split_l(data->args[j], " ");
+		fprintf(stderr, "DATA.ARGS[%d] (j) = %s\n", j, data->args[j]);
+		tab = ft_split_lq(data->args[j], " ");
+		fprintf(stderr, "APRES SPLIT L:\n");
+		ft_print_dchar(tab);
 		i = 0;
 		while (tab && tab[i])
 		{
-
+			
+			// tab[i] = ft_convert_variable(tab[i]);
 			if (!ft_strncmp(tab[i], "<", ft_strlen(tab[i])))
 				i++;
 			else if (!ft_strncmp(tab[i], "<<", ft_strlen(tab[i])))
