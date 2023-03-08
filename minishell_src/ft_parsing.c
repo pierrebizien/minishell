@@ -109,6 +109,23 @@ static void	ft_maj_quotes(int *dq, int *sq, char c)
 	if (c == '\'' && *dq == -1)
 		*sq *= -1;
 }
+
+size_t	ft_strlen_var_env(char *str)
+{
+	int	i;
+
+	i = 1;
+	if (str && ft_isdigit(str[1]))
+		return (2);
+	while (str && str[i])
+	{
+		fprintf(stderr, "\t\tstrlen[%d]= %s(%c)(%d)\n\n", i, str + i, str[i], str[i]);
+		if (!ft_isalnum(str[i]) && str[i] != '_')
+			return (i);
+		i++;
+	}
+	return (i);
+}
 size_t	ft_strlen_WS_quotes(const char *str)
 {
 	size_t	i;
@@ -151,11 +168,14 @@ char *ft_convert_variable(char *str, t_data *data)
 		if (str[i] == '$' && str[i + 1] && !is_ws(str[i + 1]) && sq == -1)
 		{
 			var = ft_check_env(str + i + 1, data);
-			ft_memmove(str + i, str + i + ft_strlen_WS_quotes(str + i), ft_strlen(str + i));
+			fprintf(stderr, "str + i |%s|\n, str + i + ft_strlen_WS_quotes(str + i) |%s|\n, ft_strlen(str + i) |%zu|\n", str + i, str + i + ft_strlen_var_env(str + i), ft_strlen(str + i + ft_strlen_var_env(str + i)));
+			str = ft_memmove(str + i, str + i + ft_strlen_var_env(str + i), ft_strlen(str + i + ft_strlen_var_env(str + i))+ 1);
 			str = ft_put_str_in_str(str, var, i);
+			fprintf(stderr, "APRES MEMMOVE STR  (%s) et VAR %s\n", str, var);
 			// fprintf(stderr, "VAR VAUT |%s| & str |%s|\n", var, str);
 		}
-
+		if (i > 50)
+			break;
 		i++;
 	}
 	return (str);
