@@ -43,31 +43,39 @@ char *ft_put_str_in_str(char *dest, char *src, int ind)
 char *ft_tab_to_str(char **tab, char sep)
 {
 	int i;
+	int len;
 	int j;
 	int k;
 	char *str;
 
 	i = -1;
 	j = 0;
+	len = 0;
 	while (tab[++i])
-		j += ft_strlen(tab[i]);
-	j += i - 1;
-	str = malloc(sizeof(char) * j + 1);
+		len += ft_strlen(tab[i]);
+	len += i - 1;
+	str = malloc(sizeof(char) * len + 1);
 	if (!str)
 		return (NULL);
-	str[j] = '\0';
-	i = -1;
-	k = -1;
-	while (tab[++i])
+	str[len] = '\0';
+	i = 0;
+	k = 0;
+	while (tab[i])
 	{
-		j = -1;
-		while(tab[i][++j])
-			str[++k] = tab[i][j];
-		if (str[k + 1] != '\0')
-			str[++k] = sep;
+		j = 0;
+		while(tab[i][j])
+		{
+			str[k] = tab[i][j];
+			j++;
+			k++;
+
+		}
+		if (k < len)
+		{
+			str[k] = sep;
+			k++;
+		}
+		i++;
 	}
 	return (str);
-	
-
-
 }
