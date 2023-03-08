@@ -24,9 +24,24 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 {
 	int tmp_fd;
 	char **cmd;
+	t_exec *tmp;
 
 	cmd = NULL;
+	tmp = begin;
 	fprintf(stderr, "HELLO\n");
+	while (begin && begin->id != F_PIPE)
+	{
+		if (begin->id == F_CMD)
+		{
+			cmd = ft_join_dstr(cmd, begin->str);
+			if (!cmd)
+				return (fprintf(stderr, "HELLO ZEBI\n"), MAL_ERCODE); //GERER
+		}
+		begin = begin->next;
+	}
+	begin = tmp;
+	if (!ft_test_builtin(cmd))
+		return (fprintf(stderr, "JE TM NICO ET PAS TITOU\n"), ft_free_dchar(cmd), 1);
 	while (begin && begin->id != F_PIPE)
 	{
 	fprintf(stderr, "test begin->str %s\n", begin->str);
@@ -77,16 +92,6 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 			fprintf(stderr, "HELLLO80\n");
 			ft_heredoc(data, begin->str, 0);
 		}
-		else if (begin->id == F_CMD)
-		{
-			cmd = ft_join_dstr(cmd, begin->str);
-			fprintf(stderr, "HELLLO90\n");
-			if (!cmd)
-				return (fprintf(stderr, "HELLO ZEBI\n"), MAL_ERCODE); //GERER
-
-			// ft_print_dchar(cmd);
-
-		}
 		else if (begin->id == F_APPEND)
 		{
 			fprintf(stderr, "HELLLO14\n");
@@ -123,14 +128,7 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 		begin = begin->next;
 		
 	}
-	return (1);
-	if (ft_test_builtin(cmd))
-	{
-		fprintf(stderr, "ICI CA RENTRE BG\n");
-		ft_exec_cmd_solo(data, cmd);
-	}
-	else
-		return (fprintf(stderr, "JE TM NICO ET PAS TITOU\n"), ft_free_dchar(cmd), 1);
+	ft_exec_cmd_solo(data, cmd);
 	ft_free_dchar(cmd);
 	return (0);
 }
