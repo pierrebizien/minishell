@@ -111,8 +111,10 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 		begin = begin->next;
 		
 	}
-	// if (ft_test_builtin(cmd))
-	ft_exec_cmd_solo(data, cmd);
+	if (ft_test_builtin(cmd))
+		ft_exec_cmd_solo(data, cmd);
+	else
+		return (ft_free_dchar(cmd), 1);
 	ft_free_dchar(cmd);
 	return (0);
 }
