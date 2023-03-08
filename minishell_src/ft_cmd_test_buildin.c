@@ -10,8 +10,8 @@ int ft_exec_builtin(char **cmd, t_data *data)
 
 		return (ft_export(cmd, data), 1);
 
-	// if (cmd && ft_strncmp(cmd[0], "echo", 4) == 0)
-	// 	return (ft_echo(cmd), 1);
+	if (cmd && ft_strncmp(cmd[0], "echo", 4) == 0)
+		return (ft_echo(cmd), 1);
 
 	if (cmd && ft_strncmp(cmd[0], "cd", 2) == 0)
 		return (ft_cd(cmd, data), 1);
@@ -31,8 +31,8 @@ int ft_test_builtin(char **cmd)
 		return (1);
 	if (cmd && ft_strncmp(cmd[0], "export", 6) == 0)
 		return (1);
-	// if (cmd && ft_strncmp(cmd[0], "echo", 4) == 0)
-	// 	return (1);
+	if (cmd && ft_strncmp(cmd[0], "echo", 4) == 0)
+		return (1);
 	if (cmd && ft_strncmp(cmd[0], "cd", 2) == 0)
 		return (1);
 	if (cmd && ft_strncmp(cmd[0], "pwd", 3) == 0)

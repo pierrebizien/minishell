@@ -144,7 +144,7 @@ char	*ft_check_env(char *str, t_data *data)
 		return (ft_itoa(data->last_err_num));
 	while (tmp_env)
 	{
-		if (!strncmp(str, tmp_env->key, ft_strlen_WS_quotes(str)))
+		if (!strncmp(str, tmp_env->key, ft_strlen_var_env(str)))
 			return (tmp_env->value);
 		tmp_env = tmp_env->next;
 	}
@@ -170,20 +170,25 @@ char *ft_convert_variable(char *str, t_data *data)
 		if (str[i] == '$' && str[i + 1] && !is_ws(str[i + 1]) && sq == -1)
 		{
 			var = ft_check_env(str + i + 1, data);
-			// fprintf(stderr, "str + i |%s|\n\tstr + i + ft_strlen_WS_quotes(str + i) |%s|\n\tft_strlen(str + i) |%zu|\n", str + i, str + i + ft_strlen_var_env(str + i), ft_strlen(str + i + ft_strlen_var_env(str + i)));
-			ft_memmove(str + i, str + i  + ft_strlen_var_env(str + i), ft_strlen(str + i + ft_strlen_var_env(str + i))+ 1);
-			// fprintf(stderr, "Apres memmv |%s|\n", str);
-			str = ft_put_str_in_str(str, var, i);
-			
-			// fprintf(stderr, "VAR VAUT |%s| & str |%s|\n", var, str);
+			if ('0' <= var[0] && var[0] <= '9')
+			{
+				ft_memmove(str + i, str + i  + 2, 2);
+				str = ft_put_str_in_str(str, var, i);
+			}
+			else 
+			{
+				// fprintf(stderr, "str + i |%s|\n\tstr + i + ft_strlen_WS_quotes(str + i) |%s|\n\tft_strlen(str + i) |%zu|\n", str + i, str + i + ft_strlen_var_env(str + i), ft_strlen(str + i + ft_strlen_var_env(str + i)) + 1);
+				ft_memmove(str + i, str + i  + ft_strlen_var_env(str + i), ft_strlen(str + i + ft_strlen_var_env(str + i))+ 1);
+				// fprintf(stderr, "Apres memmv |%s|\n", str);
+				str = ft_put_str_in_str(str, var, i);
+				// fprintf(stderr, "VAR VAUT |%s| & str |%s|\n", var, str);
+			}
 		}
 		// test_a_sup = -1;
 		// while (++test_a_sup < 10)
 		// {
 		// 	fprintf(stderr, "str[%d] = %s(%c)(%d)\n", test_a_sup, str + test_a_sup, str[test_a_sup], str[test_a_sup]);
 		// }
-		if (i > 50)
-			break;
 		i++;
 	}
 	return (str);
