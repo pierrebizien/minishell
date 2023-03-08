@@ -26,6 +26,29 @@ void	ft_print_dchar(char **strstr)
 	if (!strstr)
 		fprintf(stderr, "STRSTR N EXISTE PAS\n");
 }
+
+
+char *ft_prompt(void)
+{
+	char *path;
+	char *minipath;
+	int i;
+
+	i = 0;
+	path = getcwd(NULL, 0);
+	while (path[i])
+		i++;
+	i--;
+	while (path[i] != '/')
+		i--;
+	i++;
+	minipath = ft_substr(path, i, ft_strlen(path + i));
+	free(path);
+	path = ft_put_str_in_str("\e[36;1mMinishell (\e[31;1m/\e[36;1m) \e[0m", minipath, 26);
+	return (readline(path));
+}
+
+
 int	main(int ac, char **av, char**envp)
 {
 	(void)ac;
@@ -38,7 +61,7 @@ int	main(int ac, char **av, char**envp)
 	ft_logo();
 	signal(SIGINT, ft_ctrlc);
 	signal(SIGQUIT, SIG_IGN);
-	str = readline("\e[36;1mminishell> \e[0m");
+	str = ft_prompt();
 	add_history(str);
 	while (str)
 	{
@@ -53,7 +76,7 @@ int	main(int ac, char **av, char**envp)
 				ft_close_all(data.pip);
 			}
 		}
-		str = readline("\e[36;1mminishell> \e[0m");
+		str = ft_prompt();
 		add_history(str);
 	}
 	printf("\nexit\n");
