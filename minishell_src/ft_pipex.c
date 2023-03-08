@@ -83,8 +83,21 @@ char	*find_path(char **cmd, char **paths_env)
 	return (ft_putstr_fd(cmd[0], 2), ft_putstr_fd(": Command not found\n", 2),\
 		 exit(127), NULL);
 }
+int	is_out(char *str)
+{
+	int	i;
+	char **tmp;
 
-int	contain_token(t_exec* begin, int token, int m)
+	i = 0;
+	tmp = ft_split(str, '/');
+	if (!tmp)
+		return (-1);
+	if (ft_strncmp(tmp[0], "dev", ft_strlen(tmp[0])) == 0 && ft_strncmp(tmp[1], "stdout", ft_strlen(tmp[1])) == 0)
+		return (ft_free_dchar(tmp),1);
+	ft_free_dchar(tmp);
+	return (0);
+}
+int	contain_token(t_exec* begin, int token, int m) // ET PAS STDOUT
 {
 	int count;
 	t_exec *tmp;
@@ -99,7 +112,7 @@ int	contain_token(t_exec* begin, int token, int m)
 	}
 	while (begin && begin->id != F_PIPE)
 	{
-		if (begin->id == token)
+		if (begin->id == token && is_out(begin->str))
 			return (1);
 		begin = begin->next;
 	}
@@ -116,6 +129,7 @@ void ft_print_fd(t_data *data)
 	fprintf(stderr, "pipefd2 [0]  %d\n", data->pip.pipefd2[0]);
 	fprintf(stderr, "pipefd2 [1] %d\n", data->pip.pipefd2[1]);
 }
+
 
 void ft_dup_manage(t_data *data, int m)
 {
@@ -185,9 +199,7 @@ void	ft_exec_cmd(t_data *data, char **cmd, int m)
 		else
 			return ;
 	}
-	// dup2(data->pip.fd_out, 1);
-	// fprintf(stderr, "avant exec out %d\n", data->pip.fd_out);
-	// fprintf(stderr, "PATH EXEC VAUT %s\n", path_exec);
+	fprintf(stderr, "ON VA EXEC\n");
 	execve(path_exec, cmd, paths_env);
 	if (errno == 13)
 	{
@@ -308,6 +320,12 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 	ft_free_dchar(cmd);
 	return (0);
 }
+
+void	ft_init_in_out(t_data *data)
+{
+	data->pip.fd_in = dup(data->pip.saved_stdin);
+	data->pip.fd_out = dup(data->pip.saved_stdin);
+}
 void	ft_pipex(t_data *data)
 {
 	t_exec	*begin;
@@ -322,11 +340,11 @@ void	ft_pipex(t_data *data)
 	if (!data->pip.nb_pipes)
 		if(!ft_exec_built_in_solo(begin, data))
 			return ;
-	fprintf(stderr, "\n\n\n\n\nON DEVRAI PAD ALLER LA\n");
+	fprintf(stderr, "\n\n\n\n\nON DEVRAI PAD ALLER LA \t%d\n", data->pip.fd_out);
 	begin = &data->exec;
 	while (begin)
 	{
-		//FONCTION D INIT DES STDIN ET OUT
+		ft_init_in_out(data);
 		if (!m || m % 2 == 0)
 			pipe(data->pip.pipefd1);
 		else

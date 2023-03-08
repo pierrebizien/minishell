@@ -121,10 +121,10 @@ size_t	ft_strlen_WS_quotes(const char *str)
 
 char	*ft_check_env(char *str, t_data *data)
 {
-	// fprintf(stderr, "STR DANS CHEK ENV VAU %s\tfind = %s\n", str, ft_substr(str, 0, ft_strlen_WS_quotes(str)));
 	t_env *tmp_env;
 	tmp_env = &data->env;
-
+	if (str && str[0]=='?')
+		return (ft_itoa(data->last_err_num));
 	while (tmp_env)
 	{
 		if (!strncmp(str, tmp_env->key, ft_strlen_WS_quotes(str)))
@@ -151,7 +151,6 @@ char *ft_convert_variable(char *str, t_data *data)
 		if (str[i] == '$' && str[i + 1] && !is_ws(str[i + 1]) && sq == -1)
 		{
 			var = ft_check_env(str + i + 1, data);
-			// fprintf(stderr, "PD str vaut %s et var vaut %s\n", str, var);
 			ft_memmove(str + i, str + i + ft_strlen_WS_quotes(str + i), ft_strlen(str + i));
 			str = ft_put_str_in_str(str, var, i);
 			// fprintf(stderr, "VAR VAUT |%s| & str |%s|\n", var, str);
