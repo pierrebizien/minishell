@@ -150,22 +150,10 @@ int ft_export(char **tab, t_data *data)
 	int		i;
 	char	*cmd;
 	char	*str;
-	char	*tmp;
 
 	i = 0;
-	str = tab[0];
-	while (tab[++i])
-	{
-		tmp = ft_strjoin(str, " ");
-		free(str);
-		str = tmp;
-		tmp = ft_strjoin(str, tab[i]);
-		free(str);
-		str = tmp;
-
-	}
-	i = 0;
-	fprintf(stderr, "str = |%s|\n\n", str);
+	str = ft_tab_to_str(tab, ' ');
+	// fprintf(stderr, "str = |%s|\n\n", str);
 	ft_strlen_WS(str);
 	if (ft_strncmp(str, "export", 7) == 0)
 		return (ft_just_export(data));

@@ -68,7 +68,7 @@ int	ft_cd(char **str, t_data *data)
 	{
 		path = ft_just_cd(data);
 		if (chdir(path) != 0)
-			return (ft_putstr_fd("cd: HOME not set\n", 1), 1);
+			return (perror(path), 1);
 	}
 	else
 	{
@@ -77,11 +77,8 @@ int	ft_cd(char **str, t_data *data)
 			i++;
 		if (str[i] == 0)
 			return (0);
-		if (ft_strstrlen(str) != i + 1)
-		{
-			fprintf(stderr, "len = %d\t, i=%d\n", ft_strstrlen(str), i);
+		if (ft_strstrlen(str) != i)
 			return (ft_putstr_fd("cd: too many arguments\n", 1), 1);	
-		}
 		if (chdir(str[i]) != 0)
 		{
 			ft_putstr_fd("cd: ", 1);

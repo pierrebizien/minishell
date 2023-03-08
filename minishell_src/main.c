@@ -33,7 +33,11 @@ int	main(int ac, char **av, char**envp)
 	(void)envp;
 	char *str;
 	t_data data;
+	// int fd;
 
+	// fd = open("localout", O_RDWR);
+	// fprintf(stderr, "fd vaut %d\n", fd);
+	// write(fd, "BONJOUR\n",9);
 
 
 	ft_init(envp, &data);
