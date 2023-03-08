@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
+/*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 09:35:29 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/02/18 11:29:52 by nicolasgriv      ###   ########.fr       */
+/*   Updated: 2023/03/08 16:53:15 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

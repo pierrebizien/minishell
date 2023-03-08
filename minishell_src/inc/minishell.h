@@ -70,6 +70,8 @@ typedef	struct	s_pip
 	int		fd_out;
 	int		nb_pipes;
 	int		tmp_fd;
+	int		saved_stdin;
+	int		saved_stdout;
 	int		pipefd1[2];
 	int		pipefd2[2];
 }				t_pip;
@@ -99,6 +101,10 @@ typedef	struct	s_data
 void	ft_parse_for_exec(t_data *data);
 char	*ft_parse(char *str, t_data *data);
 int		is_ws(char c);
+char	*ft_check_env(char *str, t_data *data);
+size_t	ft_strlen_WS_quotes(const char *str);
+
+
 
 
 //FT_INIT
