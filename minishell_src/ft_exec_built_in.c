@@ -6,9 +6,9 @@ int	ft_exec_cmd_solo(t_data *data, char **cmd)
 	char *path_exec;
 	(void)cmd;
 
-	fprintf(stderr, "HEEHEHEHEHEHHEHEHE\n");
+	// fprintf(stderr, "HEEHEHEHEHEHHEHEHE\n");
 	paths_env = ft_get_paths(data);
-	perror("EXEC");
+	// perror("EXEC");
 	path_exec = find_path(cmd, paths_env);
 	ft_dup_manage(data, 0);
 	// dup2(data->pip.fd_in, 0);
@@ -28,7 +28,7 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 
 	cmd = NULL;
 	tmp = begin;
-	fprintf(stderr, "HELLO\n");
+	// fprintf(stderr, "HELLO\n");
 	while (begin && begin->id != F_PIPE)
 	{
 		if (begin->id == F_CMD)
@@ -41,10 +41,10 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 	}
 	begin = tmp;
 	if (!ft_test_builtin(cmd))
-		return (fprintf(stderr, "JE TM NICO ET PAS TITOU\n"), ft_free_dchar(cmd), 1);
+		return (ft_free_dchar(cmd), 1);
 	while (begin && begin->id != F_PIPE)
 	{
-	fprintf(stderr, "test begin->str %s\n", begin->str);
+	// fprintf(stderr, "test begin->str %s\n", begin->str);
 		if (begin->id == F_FALSEI)
 		{
 				fprintf(stderr, "HELLLO10\n");

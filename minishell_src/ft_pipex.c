@@ -199,7 +199,7 @@ void	ft_exec_cmd(t_data *data, char **cmd, int m)
 		else
 			return ;
 	}
-	fprintf(stderr, "ON VA EXEC\n");
+	// fprintf(stderr, "ON VA EXEC\n");
 	execve(path_exec, cmd, paths_env);
 	if (errno == 13)
 	{
@@ -340,7 +340,7 @@ void	ft_pipex(t_data *data)
 	if (!data->pip.nb_pipes)
 		if(!ft_exec_built_in_solo(begin, data))
 			return ;
-	fprintf(stderr, "\n\n\n\n\nON DEVRAI PAD ALLER LA \t%d\n", data->pip.fd_out);
+	// fprintf(stderr, "\n\n\n\n\nON DEVRAI PAD ALLER LA \t%d\n", data->pip.fd_out);
 	begin = &data->exec;
 	while (begin)
 	{

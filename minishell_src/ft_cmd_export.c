@@ -144,7 +144,7 @@ int ft_export(char **tab, t_data *data)
 	str = ft_tab_to_str(tab, ' ');
 	ft_strlen_WS(str);
 	if (ft_strncmp(str, "export", 7) == 0)
-		return (ft_just_export(data));
+		return (free(str), ft_just_export(data));
 	while (str[i] && str[i] != ' ')
 		i++;
 	i++;
@@ -165,7 +165,7 @@ int ft_export(char **tab, t_data *data)
 		while (str[i] && is_ws(str[i]) == 1)
 			i++;
 	}
-
+	free(str);
 	return (0);
 }
 // int main(int c, char **v, char **e)
