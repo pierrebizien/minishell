@@ -109,6 +109,23 @@ static void	ft_maj_quotes(int *dq, int *sq, char c)
 	if (c == '\'' && *dq == -1)
 		*sq *= -1;
 }
+
+size_t	ft_strlen_var_env(char *str)
+{
+	int	i;
+
+	i = 1;
+	if (str && ft_isdigit(str[1]))
+		return (2);
+	while (str && str[i])
+	{
+		// fprintf(stderr, "\t\tstrlen[%d]= %s(%c)(%d)\n\n", i, str + i, str[i], str[i]);
+		if (!ft_isalnum(str[i]) && str[i] != '_')
+			return (i);
+		i++;
+	}
+	return (i);
+}
 size_t	ft_strlen_WS_quotes(const char *str)
 {
 	size_t	i;
@@ -121,10 +138,10 @@ size_t	ft_strlen_WS_quotes(const char *str)
 
 char	*ft_check_env(char *str, t_data *data)
 {
-	// fprintf(stderr, "STR DANS CHEK ENV VAU %s\tfind = %s\n", str, ft_substr(str, 0, ft_strlen_WS_quotes(str)));
 	t_env *tmp_env;
 	tmp_env = &data->env;
-
+	if (str && str[0]=='?')
+		return (ft_itoa(data->last_err_num));
 	while (tmp_env)
 	{
 		if (!strncmp(str, tmp_env->key, ft_strlen_WS_quotes(str)))
@@ -140,23 +157,33 @@ char *ft_convert_variable(char *str, t_data *data)
 	int dq;
 	int sq;
 	char *var;
+	// int test_a_sup;
 	
 	sq = -1;
 	dq = -1;
 	i = 0;
 	while (str && str[i])
 	{
+		// fprintf(stderr, "\t\tSTR WHILE = |%s|\n\n",str);
 		if (str[i] == '\'' || str[i] == '"')
 			ft_maj_quotes(&dq, &sq, str[i]);
 		if (str[i] == '$' && str[i + 1] && !is_ws(str[i + 1]) && sq == -1)
 		{
 			var = ft_check_env(str + i + 1, data);
-			// fprintf(stderr, "PD str vaut %s et var vaut %s\n", str, var);
-			ft_memmove(str + i, str + i + ft_strlen_WS_quotes(str + i), ft_strlen(str + i));
+			// fprintf(stderr, "str + i |%s|\n\tstr + i + ft_strlen_WS_quotes(str + i) |%s|\n\tft_strlen(str + i) |%zu|\n", str + i, str + i + ft_strlen_var_env(str + i), ft_strlen(str + i + ft_strlen_var_env(str + i)));
+			ft_memmove(str + i, str + i  + ft_strlen_var_env(str + i), ft_strlen(str + i + ft_strlen_var_env(str + i))+ 1);
+			// fprintf(stderr, "Apres memmv |%s|\n", str);
 			str = ft_put_str_in_str(str, var, i);
+			
 			// fprintf(stderr, "VAR VAUT |%s| & str |%s|\n", var, str);
 		}
-
+		// test_a_sup = -1;
+		// while (++test_a_sup < 10)
+		// {
+		// 	fprintf(stderr, "str[%d] = %s(%c)(%d)\n", test_a_sup, str + test_a_sup, str[test_a_sup], str[test_a_sup]);
+		// }
+		if (i > 50)
+			break;
 		i++;
 	}
 	return (str);

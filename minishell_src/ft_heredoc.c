@@ -6,7 +6,7 @@
 /*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:39:00 by pbizien           #+#    #+#             */
-/*   Updated: 2023/03/06 14:13:31 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/03/08 16:31:53 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,31 @@ void	ft_close(int *fd)
 	*fd = -1;
 }
 
+void	ft_manage_write(char *str, char *delimiter, t_data *data)
+{
+	int	i;
+	char *var;
+	char *tmp;
+
+	i = 0;
+	(void)delimiter;
+
+	while (str && str[i])
+	{
+		if (delimiter[0] != '\'' && str[i] == '$' && str[i + 1] && !is_ws(str[i + 1]))
+		{
+			fprintf(stderr, "dans $ str %s\n",str + i);
+			var = ft_check_env(str + i + 1, data);
+			tmp = str;
+			
+			ft_memmove(str + i, str + i + ft_strlen_WS_quotes(str + i), ft_strlen(str + i));
+			str = ft_put_str_in_str(str, var, i);
+			// free(tmp);
+		}
+		i++;
+	}
+	write(data->pip.tmp_fd, str, ft_strlen(str));
+}
 int	ft_heredoc(t_data *data, char *delimiter, int w)
 {
 	char	*str;
@@ -31,19 +56,19 @@ int	ft_heredoc(t_data *data, char *delimiter, int w)
 			return (1); // GERER
 	}
 	write(1, ">", 1);
-	str = get_next_line(0);
+	str = readline("tirien>");
 	if (w && str && (ft_strncmp(delimiter, str, ft_strlen(delimiter)) || \
 		ft_strlen(str) != ft_strlen(delimiter) + 1))
-		write(data->pip.tmp_fd, str, ft_strlen(str));
+		ft_manage_write(str, delimiter, data);
 	while (str && (ft_strncmp(delimiter, str, ft_strlen(delimiter)) || \
 		ft_strlen(str) != ft_strlen(delimiter) + 1))
 	{
 		free(str);
 		write(1, ">", 1);
-		str = get_next_line(0);
+		str =readline("tirien>");
 		if (w && str && (ft_strncmp(delimiter, str, ft_strlen(delimiter)) || \
 			ft_strlen(str) != ft_strlen(delimiter) + 1))
-			write(data->pip.tmp_fd, str, ft_strlen(str));
+			ft_manage_write(str, delimiter, data);
 	}
 	free(str);
 	if(w)

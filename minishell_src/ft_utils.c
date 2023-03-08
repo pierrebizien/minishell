@@ -21,8 +21,9 @@ char *ft_put_str_in_str(char *dest, char *src, int ind)
 	int		k;
 
 	// fprintf(stderr, "LAIZEGUEA1 dest vaut %s \n", dest);
-	len = ft_strlen(dest) + ft_strlen(src) + 1;
-	output = malloc(sizeof(char) * len);
+	len = ft_strlen(dest) + ft_strlen(src);
+	// fprintf(stderr, "len vaut %zu\n", len);
+	output = malloc(sizeof(char) * len + 1);
 	if (!output)
 		return (NULL); //GERER
 	i = 0;
@@ -35,8 +36,8 @@ char *ft_put_str_in_str(char *dest, char *src, int ind)
 		else
 			output[j++] = dest[i++];
 	}
-	output[j] = '\0';
 	// fprintf(stderr, "LAIZEGUEAU2 j vaut %zu \n", j);
+	output[j] = '\0';
 	return (output);
 }
 
