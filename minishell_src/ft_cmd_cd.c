@@ -77,7 +77,8 @@ int	ft_cd(char **str, t_data *data)
 			i++;
 		if (str[i] == 0)
 			return (0);
-		if (ft_strstrlen(str) != i)
+		fprintf(stderr, "ft_strstrlen(str) %d,  i %d\n\n", ft_strstrlen(str),  i);
+		if (ft_strstrlen(str) != i + 1)
 			return (ft_putstr_fd("cd: too many arguments\n", 1), 1);	
 		if (chdir(str[i]) != 0)
 		{

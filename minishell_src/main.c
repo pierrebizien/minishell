@@ -45,7 +45,7 @@ int	main(int ac, char **av, char**envp)
 		if (str && str[0])
 		{
 			str = ft_parse(str, &data);
-			fprintf(stderr, "STR MAIN VAUT %s\n", str);
+			// fprintf(stderr, "STR MAIN VAUT %s\n", str);
 			if (str)
 			{
 				ft_parse_for_exec(&data);
