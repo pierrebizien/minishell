@@ -19,26 +19,12 @@ static int ft_just_export(t_data *data)
     {
 		write(1, "export ", 8);
         write(1, tmp->key, ft_strlen(tmp->key));
-        write(1, "=", 1);
+        write(1, "=\"", 2);
         write(1, tmp->value, ft_strlen(tmp->value));
-        write(1, "\n", 1);
+        write(1, "\"\n", 2);
         tmp = tmp->next;
     }
 	return (0);
-}
-
-static void ft_export_var_in_env(char *str, int i, t_data *data)
-{
-    t_env	*tmp;
-	tmp = &data->env;
-	if (str[i] == 0)
-		i++;
-	while (tmp)
-	{
-		if (ft_strncmp(tmp->key, str, i) == 0)
-			tmp->printable = 1;
-		tmp = tmp->next;
-	}
 }
 
 
@@ -54,8 +40,8 @@ static int ft_plus_egal_export(char *str, t_data *data)
 	k = 0;
 	while (str[++i] != '=' && str[i] != '+' && str[i])
 	{
-		if (is_ws(str[i]) == 1 || str[i] == '\0')
-			return (ft_export_var_in_env(str, i, data), 0);
+		if (is_ws(str[i]) == 1 || str[i+1] == '\0')
+			return (0);
 	}
 	if (str[i] == '=')
 		return (1);
@@ -119,23 +105,26 @@ static int ft_ok_export(char *str, t_data *data)
 		if (is_ws(str[i]))
 			return (0);
 		i++;
-
 	}	
 	tmp = &data->env;
 	var = ft_substr(str, 0, i);
-	while (tmp->next && ft_strncmp(var, tmp->key, i))
+	while (tmp->next && ft_strncmp(var, tmp->key, i+1))
 		tmp = tmp->next;
 	while (str[k + i + 1] && is_ws(str[k + i + 1]) == 0)
 		k++;
 	i = i + 1;
+	fprintf(stderr, "var = %s|%s\n", var, tmp->key);
 	if (ft_strncmp(var, tmp->key, i) == 0)
 	{
+		fprintf(stderr, "1\n");
+
 		free(tmp->value);
 		free(var);
 		tmp->value = ft_strdup(str + i);
 	}
 	else
 	{
+		fprintf(stderr, "2\n");
 		tmp->next = ft_lstnew_env();
 		tmp = tmp->next;
 		tmp->key = var;
@@ -153,7 +142,6 @@ int ft_export(char **tab, t_data *data)
 
 	i = 0;
 	str = ft_tab_to_str(tab, ' ');
-	// fprintf(stderr, "str = |%s|\n\n", str);
 	ft_strlen_WS(str);
 	if (ft_strncmp(str, "export", 7) == 0)
 		return (ft_just_export(data));
@@ -204,7 +192,7 @@ int ft_export(char **tab, t_data *data)
 // 	test = "export testspace=4  2 sansegal PATH 54";
 //     fprintf(stderr, "\t\t\t\t\t\e[35m5.2|%d|(%s)\e[0m\n", ft_export(test), test);
 	
-// 	test = "export testspace=4 2 sansegal PATH=test";
+// 	test = "export testspace=4 2 sansegal USER=test";
 //     fprintf(stderr, "\t\t\t\t\t\e[35m5.3|%d|(%s)\e[0m\n", ft_export(test), test);
 
 // 	test = "export testspace=4  2 test=test";
@@ -225,3 +213,4 @@ int ft_export(char **tab, t_data *data)
 // 	ft_env();
 // 	ft_free_env();
 // }
+
