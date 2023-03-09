@@ -103,6 +103,8 @@ char	*ft_parse(char *str, t_data *data);
 int		is_ws(char c);
 char	*ft_check_env(char *str, t_data *data);
 size_t	ft_strlen_WS_quotes(const char *str);
+char *ft_convert_variable(char *str, t_data *data);
+
 
 
 

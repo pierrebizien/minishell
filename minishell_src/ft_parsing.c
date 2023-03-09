@@ -344,7 +344,7 @@ void ft_parse_for_exec(t_data *data)
 	j = -1;
 	while (data->args[++j])
 	{
-		// fprintf(stderr, "DATA.ARGS[%d] (j) = %s\n", j, data->args[j]);
+		fprintf(stderr, "DATA.ARGS[%d] (j) = %s\n", j, data->args[j]);
 		tab = ft_split_lq(data->args[j], " ");
 		// fprintf(stderr, "APRES SPLIT L:\n");
 		// ft_print_dchar(tab);
@@ -381,6 +381,8 @@ void ft_parse_for_exec(t_data *data)
 				}
 				else if (0 < i && tab[i-1] && !ft_strncmp(tab[i - 1], "<<", ft_strlen(tab[i - 1])))
 				{
+					fprintf(stderr, "delimiter vaut %s\n", tab[i]);
+
 					tmp->id = F_DELIMITER;
 					tmp->str = ft_strdup(tab[i]);
 					tmp->next = ft_lstnew_pars();
