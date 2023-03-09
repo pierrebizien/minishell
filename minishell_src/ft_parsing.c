@@ -250,17 +250,48 @@ void ft_clean_list_exec(t_data *data)
 	free(tmp->next);
 	tmp->next = NULL;
 }
+int	ft_find_if_hd_quotes(t_data *data, int count_p)
+{
+	// int count;
+	t_exec *tmp;
+	int	i;
+	int len1;
+	int len2;
+
+	tmp = &data->exec;
+	// count = 0;
+	i = 0;
+	fprintf(stderr, " On rentre fonction gestion HD\n");
+	(void)count_p;
+	len1 = ft_strlen(data->args[count_p]);
+	len2 = len1;
+	while (len1 - 1)
+	{
+		if (len1 - 2 && data->args[count_p][len1 - 1] == '<' && data->args[count_p][len1 - 2] == '<')
+			if (len1 != len2 && data->args[count_p][len1] == '\'')
+				return (1);
+		fprintf(stderr, "DATA ARGS %s\n", data->args[i]);
+		i++;
+		len1--;
+
+	}
+	return (0);
+}
+
 
 void ft_modif_in_out(t_data *data)
 {
 	t_exec	*tmp;
 	int		bool_out;
 	int		bool_in;
+	int count_p;
 	t_exec	*tmpstart;
 
+	count_p = 0;
 	tmp = &data->exec;
 	while (tmp->next != NULL)
 	{
+		fprintf(stderr, "HELLO\n");
 		tmpstart = tmp;
 		// fprintf(stderr, "chiasse(%d) \t %s\t cul = %d\n", tmp->id, tmp->str, bool_out);
 		bool_in = 0;
@@ -295,10 +326,15 @@ void ft_modif_in_out(t_data *data)
 			}
 			if (tmp->id == F_DELIMITER)
 			{
+				fprintf(stderr, "TEST ID %d \n", tmp->id);
 				if (bool_in == 1)
 					tmp->id = F_FALSED;
 				else
+				{
+					if (ft_find_if_hd_quotes(data, count_p))
+						tmp->id = F_DELIMITER_SQ;
 					bool_in = 1;
+				}
 			}
 			// fprintf(stderr, "cacaa(%d) \t %s\t culin = %d\t cutout = %d\n", tmp->id, tmp->str,bool_in,  bool_out);
 			tmp = tmp->prev;
@@ -309,7 +345,10 @@ void ft_modif_in_out(t_data *data)
 		while (tmp->next != NULL && tmp->id != F_PIPE)
 			tmp = tmp->next;
 		if (tmp->next != NULL)
+		{
 			tmp = tmp->next;
+			count_p ++;
+		}
 		// fprintf(stderr, "en bas(%d) \t %s\t next = %p\n", tmp->id, tmp->str,tmp->next);
 		
 
