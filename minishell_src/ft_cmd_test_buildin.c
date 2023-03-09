@@ -13,8 +13,8 @@ int ft_exec_builtin(char **cmd, t_data *data)
 	if (cmd && ft_strncmp(cmd[0], "echo", ft_strlen(cmd[0])) == 0)
 		return (ft_echo(cmd), 1);
 
-	if (cmd && ft_strncmp(cmd[0], "cd", ft_strlen(cmd[0])) == 0)
-		return (ft_cd(cmd, data), 1);
+	if (cmd && ft_strncmp(cmd[0], "exit", ft_strlen(cmd[0])) == 0)
+		return (ft_exit(cmd, data), 1);
 
 	if (cmd && ft_strncmp(cmd[0], "cd", ft_strlen(cmd[0])) == 0)
 		return (ft_cd(cmd, data), 1);
@@ -41,6 +41,8 @@ int ft_test_builtin(char **cmd)
 	if (cmd && ft_strncmp(cmd[0], "pwd", ft_strlen(cmd[0])) == 0)
 		return (1);
 	if (cmd && ft_strncmp(cmd[0], "unset", ft_strlen(cmd[0])) == 0)
+		return (1);
+	if (cmd && ft_strncmp(cmd[0], "exit", ft_strlen(cmd[0])) == 0)
 		return (1);
     return (0);
 }

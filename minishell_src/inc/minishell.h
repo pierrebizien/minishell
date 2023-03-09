@@ -137,9 +137,12 @@ int		ft_pwd(t_data *data);
 // FT_CD
 int		ft_cd(char **str, t_data *data);
 
+// FT_EXIT
+int	ft_exit(char **str, t_data *data);
+
 //FT_TEST_BUILDTIN
 int		ft_test_builtin(char **str);
-int ft_exec_builtin(char **cmd, t_data *data);
+int		ft_exec_builtin(char **cmd, t_data *data);
 
 
 
