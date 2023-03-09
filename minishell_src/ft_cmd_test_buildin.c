@@ -16,6 +16,9 @@ int ft_exec_builtin(char **cmd, t_data *data)
 	if (cmd && ft_strncmp(cmd[0], "cd", ft_strlen(cmd[0])) == 0)
 		return (ft_cd(cmd, data), 1);
 
+	if (cmd && ft_strncmp(cmd[0], "cd", ft_strlen(cmd[0])) == 0)
+		return (ft_cd(cmd, data), 1);
+
 	if (cmd && ft_strncmp(cmd[0], "pwd", ft_strlen(cmd[0])) == 0)
 		return (ft_pwd(data), 1);
 

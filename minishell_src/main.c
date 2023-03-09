@@ -44,7 +44,7 @@ char *ft_prompt(void)
 	i++;
 	minipath = ft_substr(path, i, ft_strlen(path + i));
 	free(path);
-	path = ft_put_str_in_str("\e[36;1mMinishell (\e[31;1m/\e[36;1m) \e[0m", minipath, 26);
+	path = ft_put_str_in_str("\e[36;1mMinishell (\e[32;1m/\e[36;1m) \e[0m", minipath, 26);
 	return (readline(path));
 }
 
@@ -68,7 +68,6 @@ int	main(int ac, char **av, char**envp)
 		if (str && str[0])
 		{
 			str = ft_parse(str, &data);
-			// fprintf(stderr, "STR MAIN VAUT %s\n", str);
 			if (str)
 			{
 				ft_parse_for_exec(&data);
