@@ -58,7 +58,7 @@ vpath %.h ${HEAD_PATH}
 all: ${NAME}
 
 run: all
-	@	clear
+# @	clear
 	@	./${NAME}
 
 valgrind: all
