@@ -59,8 +59,15 @@ char	*find_path(char **cmd, char **paths_env)
 		if (access(cmd[0], X_OK))
 			return (perror(cmd[0]), exit(errno), NULL);
 		else if (cmd[0][0] != '.' && cmd[0][0] != '/')
-			return (ft_putstr_fd(cmd[0], 2), ft_putstr_fd(": Command not found\n", 2),\
-				exit(127), NULL);
+		{
+			ft_putstr_fd(cmd[0], 2);
+			if (ft_strchr(cmd[0], '/'))
+				ft_putstr_fd(": No such file or directory\n", 2);
+			else
+				ft_putstr_fd(": Command not found\n", 2);
+			return (exit(127), NULL);
+
+		}
 		else
 			return (ft_strdup(cmd[0]));
 	}
@@ -80,8 +87,12 @@ char	*find_path(char **cmd, char **paths_env)
 		free(tmp);
 	}
 		// fprintf(stderr, "ici\n");
-	return (ft_putstr_fd(cmd[0], 2), ft_putstr_fd(": Command not found\n", 2),\
-		 exit(127), NULL);
+	ft_putstr_fd(cmd[0], 2);
+	if (ft_strchr(cmd[0], '/'))
+		ft_putstr_fd(": No such file or directory\n", 2);
+	else
+		ft_putstr_fd(": Command not found\n", 2);
+	return (exit(127), NULL);
 }
 int	is_out(char *str)
 {
@@ -179,12 +190,58 @@ void ft_dup_manage(t_data *data, int m)
 	// ft_print_fd(data);
 }
 
+int	ft_len_list(t_env *begin)
+{
+	t_env *tmp;
+	int	count;
+
+	tmp = begin;
+	count = 0;
+	while (begin)
+	{
+		count++;
+		begin = begin->next;
+	}
+	begin = tmp;
+	return (count);
+}
+
+
+char **ft_get_env(t_env *env)
+{
+	t_env *tmp;
+	char **output;
+	int	k;
+
+	tmp = env;
+	k = 0;
+	output = malloc (sizeof(char *) * ft_len_list(env) + 1);
+	if (!output)
+		return (NULL);
+	output[ft_len_list(env)] = 0;
+	while (env)
+	{
+		output[k] = malloc(sizeof(char) * (ft_strlen(env->key) + ft_strlen(env->value) + 2));
+		if (!output[k])
+			return (ft_free_dchar(output), NULL);
+		ft_memcpy(output[k], env->key, ft_strlen(env->key));
+		output[k][ft_strlen(env->key)] = '=';
+		ft_memcpy(output[k] + ft_strlen(env->key) + 1, env->value, ft_strlen(env->value)  + 1);
+		k++;
+		env = env->next;
+	}
+	env  = tmp;
+	return (output);
+}
+
 void	ft_exec_cmd(t_data *data, char **cmd, int m)
 {
 	char **paths_env;
 	char *path_exec;
+	char **env_tab;
 	(void)cmd;
 
+	env_tab = ft_get_env(&data->env);
 	paths_env = ft_get_paths(data);
 	// perror("EXEC");
 	path_exec = find_path(cmd, paths_env);
@@ -199,8 +256,7 @@ void	ft_exec_cmd(t_data *data, char **cmd, int m)
 		else
 			return ;
 	}
-	// fprintf(stderr, "ON VA EXEC\n");
-	execve(path_exec, cmd, paths_env);
+	execve(path_exec, cmd, env_tab);
 	if (errno == 13)
 	{
 		ft_putstr_fd(cmd[0],2);
@@ -210,9 +266,6 @@ void	ft_exec_cmd(t_data *data, char **cmd, int m)
 	// fprintf(stderr, "PROBLEME D EXEC\n");
 	perror("EXEC");
 	exit(errno);
-	// ft_print_dchar(paths_env);
-	//test built-in
-
 }
 
 void	ft_reset_param_pip(t_data *data)
