@@ -27,6 +27,8 @@
 
 #define F_INFILE 0
 #define F_DELIMITER 1
+#define F_DELIMITER_SQ 4
+
 #define F_FALSEI 2
 #define F_FALSED 3
 

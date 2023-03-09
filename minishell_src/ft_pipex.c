@@ -324,6 +324,12 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 			ft_heredoc(data, begin->str, 1);
 
 		}
+		else if (begin->id == F_DELIMITER_SQ)
+		{
+			fprintf(stderr, "DELIMITER_SQ");
+			ft_heredoc(data, begin->str, 1);
+
+		}
 		else if (begin->id == F_FALSED)
 			ft_heredoc(data, begin->str, 0);
 		else if (begin->id == F_CMD)
