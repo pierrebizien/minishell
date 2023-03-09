@@ -58,7 +58,8 @@ vpath %.h ${HEAD_PATH}
 all: ${NAME}
 
 run: all
-	./${NAME}
+	@	clear
+	@	./${NAME}
 
 valgrind: all
 	valgrind --track-fds=yes --suppressions=assets/ignore_readline_leaks.supp  ./${NAME}
