@@ -6,7 +6,7 @@
 /*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:39:00 by pbizien           #+#    #+#             */
-/*   Updated: 2023/03/08 16:31:53 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/03/09 15:09:58 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,32 +23,21 @@ void	ft_close(int *fd)
 void	ft_manage_write(char *str, char *delimiter, t_data *data)
 {
 	int	i;
-	char *var;
-	char *tmp;
+	// char *var;
+	// char *tmp;
 
 	i = 0;
 	(void)delimiter;
-
-	while (str && str[i])
-	{
-		if (delimiter[0] != '\'' && str[i] == '$' && str[i + 1] && !is_ws(str[i + 1]))
-		{
-			fprintf(stderr, "dans $ str %s\n",str + i);
-			var = ft_check_env(str + i + 1, data);
-			tmp = str;
-			
-			ft_memmove(str + i, str + i + ft_strlen_WS_quotes(str + i), ft_strlen(str + i));
-			str = ft_put_str_in_str(str, var, i);
-			// free(tmp);
-		}
-		i++;
-	}
+	fprintf(stderr, "DELIMITER %s\n", delimiter);
+	str = ft_convert_variable(str, data);
 	write(data->pip.tmp_fd, str, ft_strlen(str));
+	write (data->pip.tmp_fd, "\n", 1);
 }
 int	ft_heredoc(t_data *data, char *delimiter, int w)
 {
 	char	*str;
 
+	fprintf(stderr, "DELIMITER ENTREE VAUT %s\n", delimiter);
 	if (w)
 	{
 		data->pip.tmp_fd = open("tmp-file.txt", O_TRUNC | O_CREAT | O_RDWR, 00777);
@@ -81,40 +70,6 @@ int	ft_heredoc(t_data *data, char *delimiter, int w)
 	}
 	return (0);
 }
-// int	ft_heredoc(t_pipex *data, int w)
-// {
-// 	char	*str;
-
-// 	if (w)
-// 	{
-// 		data->tmp_fd = open("tmp-file.txt", O_TRUNC | O_CREAT | O_RDWR, 00777);
-// 		if (data->tmp_fd == -1)
-// 			return (ft_close(&data->fd_out), ft_free_dchar(data->paths), 1);
-// 	}
-// 	data->limiter = data->av[2];
-// 	write(1, ">", 1);
-// 	str = get_next_line(0);
-// 	if (w && str && (ft_p_strncmp(data->limiter, str, ft_p_strlen(data->limiter)) || \
-// 		ft_p_strlen(str) != ft_p_strlen(data->limiter) + 1))
-// 		write(data->tmp_fd, str, ft_p_strlen(str));
-// 	while (str && (ft_p_strncmp(data->limiter, str, ft_p_strlen(data->limiter)) || \
-// 		ft_p_strlen(str) != ft_p_strlen(data->limiter) + 1))
-// 	{
-// 		free(str);
-// 		write(1, ">", 1);
-// 		str = get_next_line(0);
-// 		if (w && str && (ft_p_strncmp(data->limiter, str, ft_p_strlen(data->limiter)) || \
-// 			ft_p_strlen(str) != ft_p_strlen(data->limiter) + 1))
-// 			write(data->tmp_fd, str, ft_p_strlen(str));
-// 	}
-// 	free(str);
-// 	ft_close(&data->tmp_fd);
-// 	data->tmp_fd = open("tmp-file.txt", O_RDWR);
-// 	if (data->tmp_fd == -1)
-// 		return (ft_close(&data->fd_out), ft_free_dchar(data->paths), 1);
-// 	data->fd_in = data->tmp_fd;
-// 	return (0);
-// }
 
 void	ft_init_pipex_pipe(t_data *data)
 {
