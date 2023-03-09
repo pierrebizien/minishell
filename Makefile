@@ -25,6 +25,7 @@ SRCS += ft_cmd_export.c
 SRCS += ft_cmd_pwd.c
 SRCS += ft_cmd_cd.c
 SRCS += ft_cmd_unset.c
+SRCS += ft_cmd_exit.c
 
 
 # SRC_PATH += /libft/src
@@ -47,7 +48,6 @@ NAME = minishell
 CC = cc
 
 CFLAGS += -Wall -Werror -Wextra
-CFLAGS += -g
 CFLAGS += -g
 
 
