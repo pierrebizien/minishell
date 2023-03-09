@@ -254,13 +254,11 @@ int	ft_find_if_hd_quotes(t_data *data, int count_p)
 {
 	// int count;
 	t_exec *tmp;
-	int	i;
 	int len1;
 	int len2;
 
 	tmp = &data->exec;
 	// count = 0;
-	i = 0;
 	fprintf(stderr, " On rentre fonction gestion HD\n");
 	(void)count_p;
 	len1 = ft_strlen(data->args[count_p]);
@@ -270,8 +268,6 @@ int	ft_find_if_hd_quotes(t_data *data, int count_p)
 		if (len1 - 2 && data->args[count_p][len1 - 1] == '<' && data->args[count_p][len1 - 2] == '<')
 			if (len1 != len2 && data->args[count_p][len1] == '\'')
 				return (1);
-		fprintf(stderr, "DATA ARGS %s\n", data->args[i]);
-		i++;
 		len1--;
 
 	}
