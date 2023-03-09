@@ -95,7 +95,7 @@ ${OBJS}: ${OBJS_PATH}/%.o: %.c Makefile minishell.h
 
 ${NAME}:  ${OBJS}
 	@	${CC} ${CFLAGS} -o ${NAME} ${OBJS} ${LIB} ${HEAD_PATH}
-	@	echo -ne "\r\033[2K" $(LIGHTGREEN) "\t$(NAME) OK\n\n" "\033[0m"
+	@	echo -ne "\r\033[2K" $(LIGHTGREEN) "\t$(NAME) OK" "\033[0m" "\n"
 
 
 
