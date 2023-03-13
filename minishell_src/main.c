@@ -36,16 +36,19 @@ char *ft_prompt(void)
 
 	i = 0;
 	path = getcwd(NULL, 0);
-	while (path[i])
+	if (!path)
+		return (NULL); //GERER
+	while (path && path[i])
 		i++;
 	i--;
-	while (path[i] != '/')
+	while (path && path[i] != '/')
 		i--;
 	i++;
 	minipath = ft_substr(path, i, ft_strlen(path + i));
 	free(path);
-	path = ft_put_str_in_str("\e[36;1mMinishell (\e[32;1m/\e[36;1m) \e[0m", minipath, 26);
-	return (readline(path));
+	path = ft_put_str_in_str("\001\e[36;1m\002minishell (\001\e[32;1m\002/\001\e[36;1m\002) \001\e[0m\002", minipath, 30);
+	char *str = readline(path);
+	return (str);
 }
 
 
@@ -65,8 +68,10 @@ int	main(int ac, char **av, char**envp)
 	add_history(str);
 	while (str)
 	{
+		signal(SIGINT, ft_ctrlc);
 		if (str && str[0])
 		{
+			fprintf(stderr, "ICIIIII\n");
 			str = ft_parse(str, &data);
 			if (str)
 			{

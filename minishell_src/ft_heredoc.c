@@ -6,7 +6,7 @@
 /*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:39:00 by pbizien           #+#    #+#             */
-/*   Updated: 2023/03/09 15:09:58 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/03/13 14:59:27 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,44 +20,42 @@ void	ft_close(int *fd)
 	*fd = -1;
 }
 
-void	ft_manage_write(char *str, char *delimiter, t_data *data)
+void	ft_manage_write(char *str, char *delimiter, t_data *data, int sq)
 {
 	int	i;
 	// char *var;
 	// char *tmp;
 
 	i = 0;
+	(void)sq;
 	(void)delimiter;
-	fprintf(stderr, "DELIMITER %s\n", delimiter);
-	str = ft_convert_variable(str, data);
+
 	write(data->pip.tmp_fd, str, ft_strlen(str));
 	write (data->pip.tmp_fd, "\n", 1);
 }
-int	ft_heredoc(t_data *data, char *delimiter, int w)
+int	ft_heredoc(t_data *data, char *delimiter, int w, int sq)
 {
 	char	*str;
 
-	fprintf(stderr, "DELIMITER ENTREE VAUT %s\n", delimiter);
 	if (w)
 	{
 		data->pip.tmp_fd = open("tmp-file.txt", O_TRUNC | O_CREAT | O_RDWR, 00777);
 		if (data->pip.tmp_fd == -1)
 			return (1); // GERER
 	}
-	write(1, ">", 1);
-	str = readline("tirien>");
-	if (w && str && (ft_strncmp(delimiter, str, ft_strlen(delimiter)) || \
-		ft_strlen(str) != ft_strlen(delimiter) + 1))
-		ft_manage_write(str, delimiter, data);
-	while (str && (ft_strncmp(delimiter, str, ft_strlen(delimiter)) || \
-		ft_strlen(str) != ft_strlen(delimiter) + 1))
+	str = readline(">");
+	if (!sq)
+		str = ft_convert_variable_hd(str, data, delimiter);
+	if (w && str && ft_strncmp(delimiter, str, ft_strlen(delimiter) + 1))
+		ft_manage_write(str, delimiter, data, sq);
+	while (str && (ft_strncmp(delimiter, str, ft_strlen(delimiter) + 1)))
 	{
 		free(str);
-		write(1, ">", 1);
-		str =readline("tirien>");
-		if (w && str && (ft_strncmp(delimiter, str, ft_strlen(delimiter)) || \
-			ft_strlen(str) != ft_strlen(delimiter) + 1))
-			ft_manage_write(str, delimiter, data);
+		str =readline(">");
+			if (!sq)
+		str = ft_convert_variable_hd(str, data, delimiter);
+		if (w && str && ft_strncmp(delimiter, str, ft_strlen(delimiter) + 1))
+			ft_manage_write(str, delimiter, data, sq);
 	}
 	free(str);
 	if(w)

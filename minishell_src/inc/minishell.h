@@ -106,6 +106,7 @@ int		is_ws(char c);
 char	*ft_check_env(char *str, t_data *data);
 size_t	ft_strlen_WS_quotes(const char *str);
 char *ft_convert_variable(char *str, t_data *data);
+char *ft_convert_variable_hd(char *str, t_data *data, char *delimiter);
 
 
 
@@ -147,6 +148,8 @@ int		ft_exec_builtin(char **cmd, t_data *data);
 
 
 void	ft_ctrlb(int a);
+void	ft_ctrlc_exec(int a);
+
 void	ft_ctrlc(int a);
 
 void	ft_print_dchar(char **strstr);
@@ -177,7 +180,7 @@ size_t	ft_strlen_WS(const char *str);
 char *ft_put_str_in_str(char *dest, char *src, int ind);
 
 //FT_HEREDOC
-int	ft_heredoc(t_data *data, char *delimiter, int w);
+int	ft_heredoc(t_data *data, char *delimiter, int w, int sq);
 void	ft_close(int *fd);
 void	ft_init_pipex_pipe(t_data *data);
 

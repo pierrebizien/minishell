@@ -1,2 +1,0 @@
-ls
-/mnt/nfs/homes/pbizien
