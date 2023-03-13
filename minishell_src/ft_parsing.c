@@ -151,6 +151,22 @@ char	*ft_check_env(char *str, t_data *data)
 	return (NULL);
 	
 }
+
+int	ft_is_hd(char *str, int	i)
+{
+	int	j;
+
+	j = 0;
+	if (i > 0)
+		i--;
+	else
+		return (0);
+	while (str && i >= 0 && is_ws(str[i]))
+		i--;
+	if (i > 0 && str[i] == '<'  && str[i - 1] == '<')
+		return (1);
+	return (0);
+}
 char *ft_convert_variable(char *str, t_data *data)
 {
 	int	i;
@@ -164,31 +180,26 @@ char *ft_convert_variable(char *str, t_data *data)
 	i = 0;
 	while (str && str[i])
 	{
-		// fprintf(stderr, "\t\tSTR WHILE = |%s|\n\n",str);
 		if (str[i] == '\'' || str[i] == '"')
 			ft_maj_quotes(&dq, &sq, str[i]);
 		if (str[i] == '$' && str[i + 1] && !is_ws(str[i + 1]) && sq == -1)
 		{
 			var = ft_check_env(str + i + 1, data);
+			// if (!var && ft_is_hd(str, i))
 			if (var && '0' <= var[0] && var[0] <= '9')
 			{
 				ft_memmove(str + i, str + i  + 2, 2);
 				str = ft_put_str_in_str(str, var, i);
+				i = 0;
 			}
-			else 
+			else if (!var && !ft_is_hd(str, i))
 			{
-				// fprintf(stderr, "str + i |%s|\n\tstr + i + ft_strlen_WS_quotes(str + i) |%s|\n\tft_strlen(str + i) |%zu|\n", str + i, str + i + ft_strlen_var_env(str + i), ft_strlen(str + i + ft_strlen_var_env(str + i)) + 1);
+
 				ft_memmove(str + i, str + i  + ft_strlen_var_env(str + i), ft_strlen(str + i + ft_strlen_var_env(str + i))+ 1);
-				// fprintf(stderr, "Apres memmv |%s|\n", str);
 				str = ft_put_str_in_str(str, var, i);
-				// fprintf(stderr, "VAR VAUT |%s| & str |%s|\n", var, str);
+				i = 0;
 			}
 		}
-		// test_a_sup = -1;
-		// while (++test_a_sup < 10)
-		// {
-		// 	fprintf(stderr, "str[%d] = %s(%c)(%d)\n", test_a_sup, str + test_a_sup, str[test_a_sup], str[test_a_sup]);
-		// }
 		i++;
 	}
 	return (str);
@@ -196,6 +207,42 @@ char *ft_convert_variable(char *str, t_data *data)
 	//PENSER A FREE
 }
 
+char *ft_convert_variable_hd(char *str, t_data *data, char *delimiter)
+{
+	int	i;
+	int dq;
+	int sq;
+	char *var;
+	// int test_a_sup;
+	
+	sq = -1;
+	dq = -1;
+	i = 0;
+	while (str && str[i])
+	{
+		if (str[i] == '\'' || str[i] == '"')
+			ft_maj_quotes(&dq, &sq, str[i]);
+		if (str[i] == '$' && str[i + 1] && !is_ws(str[i + 1]) && sq == -1)
+		{
+			var = ft_check_env(str + i + 1, data);
+			// if (!var && ft_is_hd(str, i))
+			if (var && '0' <= var[0] && var[0] <= '9')
+			{
+				ft_memmove(str + i, str + i  + 2, 2);
+				str = ft_put_str_in_str(str, var, i);
+				i = 0;
+			}
+			else if (!var && ft_strncmp(delimiter, str, ft_strlen(str + i)))
+			{
+				ft_memmove(str + i, str + i  + ft_strlen_var_env(str + i), ft_strlen(str + i + ft_strlen_var_env(str + i))+ 1);
+				str = ft_put_str_in_str(str, var, i);
+				i = 0;
+			}
+		}
+		i++;
+	}
+	return (str);
+}
 
 char *ft_parse(char *str, t_data *data) // CHECK GLOBAL ET SI > >OUT RETURN ERROR
 {
@@ -247,7 +294,7 @@ void ft_clean_list_exec(t_data *data)
 			tmp->prev = before;
 	}
 	tmp = tmp->prev;
-	free(tmp->next);
+	// free(tmp->next);
 	tmp->next = NULL;
 }
 int	ft_find_if_hd_quotes(t_data *data, int count_p)
@@ -259,15 +306,16 @@ int	ft_find_if_hd_quotes(t_data *data, int count_p)
 
 	tmp = &data->exec;
 	// count = 0;
-	fprintf(stderr, " On rentre fonction gestion HD\n");
 	(void)count_p;
 	len1 = ft_strlen(data->args[count_p]);
 	len2 = len1;
 	while (len1 - 1)
 	{
-		if (len1 - 2 && data->args[count_p][len1 - 1] == '<' && data->args[count_p][len1 - 2] == '<')
-			if (len1 != len2 && data->args[count_p][len1] == '\'')
+		if (len1 - 2 >= 0 && data->args[count_p][len1 - 1] == '<' && data->args[count_p][len1 - 2] == '<')
+		{
+			if (len1 != len2 && data->args[count_p][len2 - 1] == '\'')
 				return (1);
+		}
 		len1--;
 
 	}
@@ -287,16 +335,13 @@ void ft_modif_in_out(t_data *data)
 	tmp = &data->exec;
 	while (tmp->next != NULL)
 	{
-		fprintf(stderr, "HELLO\n");
 		tmpstart = tmp;
-		// fprintf(stderr, "chiasse(%d) \t %s\t cul = %d\n", tmp->id, tmp->str, bool_out);
 		bool_in = 0;
 		bool_out = 0;
 		while (tmp->next != NULL && tmp->id != F_PIPE)
 			tmp = tmp->next;
 		if (tmp->id == F_PIPE)
 			tmp = tmp->prev;
-		// fprintf(stderr, "nico(%d) \t %s\t cul = %d\n", tmp->id, tmp->str, bool_out);
 		while (tmp != NULL && tmp->id != F_PIPE)
 		{
 			if (tmp->id == F_APPEND)
@@ -320,15 +365,12 @@ void ft_modif_in_out(t_data *data)
 				else
 					bool_in = 1;
 			}
-			if (tmp->id == F_DELIMITER)
+			if (tmp->id == F_DELIMITER || tmp->id == F_DELIMITER_SQ)
 			{
-				fprintf(stderr, "TEST ID %d \n", tmp->id);
 				if (bool_in == 1)
 					tmp->id = F_FALSED;
 				else
 				{
-					if (ft_find_if_hd_quotes(data, count_p))
-						tmp->id = F_DELIMITER_SQ;
 					bool_in = 1;
 				}
 			}
@@ -371,18 +413,17 @@ void ft_parse_for_exec(t_data *data)
 {
 	int i;
 	int j;
+	int count_p;
 	t_exec *tmp;
 	char **tab;
 
 
 	tmp = &data->exec;
 	j = -1;
+	count_p = 0;
 	while (data->args[++j])
 	{
-		fprintf(stderr, "DATA.ARGS[%d] (j) = %s\n", j, data->args[j]);
 		tab = ft_split_lq(data->args[j], " ");
-		// fprintf(stderr, "APRES SPLIT L:\n");
-		// ft_print_dchar(tab);
 		i = 0;
 		while (tab && tab[i])
 		{
@@ -398,6 +439,7 @@ void ft_parse_for_exec(t_data *data)
 				i++;
 			else if (!ft_strncmp(tab[i], "|", ft_strlen(tab[i])))
 			{
+				count_p++;
 				tmp->id = F_PIPE;
 				tmp->str = ft_strdup(tab[i]);
 				tmp->next = ft_lstnew_pars();
@@ -416,15 +458,16 @@ void ft_parse_for_exec(t_data *data)
 				}
 				else if (0 < i && tab[i-1] && !ft_strncmp(tab[i - 1], "<<", ft_strlen(tab[i - 1])))
 				{
-					fprintf(stderr, "delimiter vaut %s\n", tab[i]);
-
-					tmp->id = F_DELIMITER;
+					if (ft_find_if_hd_quotes(data, count_p))
+						tmp->id = F_DELIMITER_SQ;
+					else
+						tmp->id = F_DELIMITER;
 					tmp->str = ft_strdup(tab[i]);
 					tmp->next = ft_lstnew_pars();
 					tmp = tmp->next;
 					i++;	
 				}
-				else if (0 < i && tab[i-1] && !ft_strncmp(tab[i - 1], ">", ft_strlen(tab[i - 1])))
+				else if (0 < i && tab[i - 1] && !ft_strncmp(tab[i - 1], ">", ft_strlen(tab[i - 1])))
 				{
 					tmp->id = F_TRONC;
 					tmp->str = ft_strdup(tab[i]);
@@ -450,15 +493,10 @@ void ft_parse_for_exec(t_data *data)
 				}
 			}
 		}
-		// ft_free_dchar(tab);
 	}
 	ft_clean_list_exec(data);
 	ft_modif_in_out(data);
-	// ft_print_list(&data->exec);
 	data->pip.nb_pipes = ft_count_pipes(&data->exec);
-
-	// exit(1);
-		
 }
 
 

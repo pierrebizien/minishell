@@ -84,13 +84,19 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 		else if (begin->id == F_DELIMITER)
 		{
 			fprintf(stderr, "HELLLO70\n");
-			ft_heredoc(data, begin->str, 1);
+			ft_heredoc(data, begin->str, 1 , 0);
+
+		}
+		else if (begin->id == F_DELIMITER_SQ)
+		{
+			fprintf(stderr, "HELLLO75\n");
+			ft_heredoc(data, begin->str, 1 , 1);
 
 		}
 		else if (begin->id == F_FALSED)
 		{
 			fprintf(stderr, "HELLLO80\n");
-			ft_heredoc(data, begin->str, 0);
+			ft_heredoc(data, begin->str, 0, 0);
 		}
 		else if (begin->id == F_APPEND)
 		{

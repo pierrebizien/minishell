@@ -218,7 +218,7 @@ char **ft_get_env(t_env *env)
 	output = malloc (sizeof(char *) * ft_len_list(env) + 1);
 	if (!output)
 		return (NULL);
-	output[ft_len_list(env)] = 0;
+	output[ft_len_list(env) - 1] = 0;
 	while (env)
 	{
 		output[k] = malloc(sizeof(char) * (ft_strlen(env->key) + ft_strlen(env->value) + 2));
@@ -282,16 +282,14 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 	char **cmd;
 
 	cmd = NULL;
-	// fprintf(stderr, "test begin->str %s\n", begin->next->str);
+
 	while (begin && begin->id != F_PIPE)
 	{
-	// fprintf(stderr, "test begin->str %s\n", begin->str);
 		if (begin->id == F_FALSEI)
 		{
 			tmp_fd = open(begin->str, O_RDWR);
 			if (tmp_fd == -1)
 			{
-				// fprintf(stderr, "HELLLO1\n");
 				perror(begin->str);
 				exit(errno);
 			}
@@ -302,7 +300,6 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 			tmp_fd = open(begin->str, O_RDWR | O_APPEND | O_CREAT, 0644);
 			if (tmp_fd == -1)
 			{
-				// fprintf(stderr, "HELLLO2\n");
 				perror(begin->str);
 				exit(errno);
 			}
@@ -313,7 +310,6 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 			tmp_fd = open(begin->str, O_CREAT | O_RDWR | O_TRUNC, 0644);
 			if (tmp_fd == -1)
 			{
-				// fprintf(stderr, "HELLLO3\n");
 				perror(begin->str);
 				exit(errno);
 			}
@@ -321,24 +317,22 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 		}
 		else if (begin->id == F_DELIMITER)
 		{
-			ft_heredoc(data, begin->str, 1);
+			ft_heredoc(data, begin->str, 1, 0);
 
 		}
 		else if (begin->id == F_DELIMITER_SQ)
 		{
-			fprintf(stderr, "DELIMITER_SQ");
-			ft_heredoc(data, begin->str, 1);
+			ft_heredoc(data, begin->str, 1, 1);
 
 		}
 		else if (begin->id == F_FALSED)
-			ft_heredoc(data, begin->str, 0);
+			ft_heredoc(data, begin->str, 0, 0);
 		else if (begin->id == F_CMD)
 		{
 			cmd = ft_join_dstr(cmd, begin->str);
 			if (!cmd)
 				return (MAL_ERCODE); //GERER
 
-			// ft_print_dchar(cmd);
 
 		}
 		else if (begin->id == F_APPEND)
@@ -346,7 +340,6 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 			data->pip.fd_out = open(begin->str, O_CREAT | O_RDWR | O_APPEND, 0644);
 			if (data->pip.fd_out == -1)
 			{
-				// fprintf(stderr, "HELLLO4\n");
 				perror(begin->str);
 				exit(errno);
 			}
@@ -356,7 +349,6 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 			data->pip.fd_out = open(begin->str, O_CREAT | O_RDWR | O_TRUNC, 0644);
 			if (data->pip.fd_out == -1)
 			{
-				// fprintf(stderr, "HELLLO5\n");
 				perror(begin->str);
 				exit(errno);
 			}
@@ -366,7 +358,6 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 			data->pip.fd_in = open(begin->str, O_RDONLY, 0644);
 			if (data->pip.fd_in == -1)
 			{
-				// fprintf(stderr, "HELLLO6\n");
 				perror(begin->str);
 				exit(errno);
 			}
@@ -374,7 +365,6 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 		begin = begin->next;
 		
 	}
-	// if (ft_test_builtin(cmd))
 	ft_exec_cmd(data, cmd, m);
 	ft_free_dchar(cmd);
 	return (0);
@@ -395,11 +385,9 @@ void	ft_pipex(t_data *data)
 
 	begin = &data->exec;
 	m = 0;
-	// fprintf(stderr, "nb pipe ? %d\n", data->pip.nb_pipes);
 	if (!data->pip.nb_pipes)
 		if(!ft_exec_built_in_solo(begin, data))
 			return ;
-	// fprintf(stderr, "\n\n\n\n\nON DEVRAI PAD ALLER LA \t%d\n", data->pip.fd_out);
 	begin = &data->exec;
 	while (begin)
 	{
@@ -408,6 +396,7 @@ void	ft_pipex(t_data *data)
 			pipe(data->pip.pipefd1);
 		else
 			pipe(data->pip.pipefd2);
+		// signal(SIGINT, ft_ctrlc_exec);
 		data->pip.last_id = fork();
 		if (data->pip.last_id == 0)
 			ft_child_exec(begin, data, m);
@@ -428,10 +417,8 @@ void	ft_pipex(t_data *data)
 		m++;
 	}
 		waitpid(data->pip.last_id, &data->last_err_num, 0);
-		// fprintf(stderr, "HELLO valeur de retour = %d\n", data->last_err_num);
 		if (WIFEXITED(data->last_err_num))
 			data->last_err_num = WEXITSTATUS(data->last_err_num);
-		// fprintf(stderr, "HELLO valeur de retour = %d\n", data->last_err_num);
 		while (wait(NULL) != -1)
 			(void)begin;
 		ft_close_all(data->pip);
