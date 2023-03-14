@@ -15,7 +15,11 @@ int	ft_exec_cmd_solo(t_data *data, char **cmd)
 	if (ft_test_builtin(cmd) == 1)
 	{
 		ft_close_all(data->pip);
-		return (ft_exec_builtin(cmd, data));
+		ft_exec_builtin(cmd, data);
+		ft_init_in_out(data);
+		dup2(data->pip.saved_stdin, 0);
+		dup2(data->pip.saved_stdout, 1);
+		return (0);
 	}
 	else
 		return (0);
@@ -28,14 +32,14 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 
 	cmd = NULL;
 	tmp = begin;
-	fprintf(stderr, "HELLO\n");
+	// fprintf(stderr, "HELLO\n");
 	while (begin && begin->id != F_PIPE)
 	{
 		if (begin->id == F_CMD)
 		{
 			cmd = ft_join_dstr(cmd, begin->str);
 			if (!cmd)
-				return (fprintf(stderr, "HELLO ZEBI\n"), MAL_ERCODE); //GERER
+				return (MAL_ERCODE); //GERER
 		}
 		begin = begin->next;
 	}
@@ -44,14 +48,13 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 		return (ft_free_dchar(cmd), 1);
 	while (begin && begin->id != F_PIPE)
 	{
-	// fprintf(stderr, "test begin->str %s\n", begin->str);
 		if (begin->id == F_FALSEI)
 		{
-				fprintf(stderr, "HELLLO10\n");
+				// // fprintf(stderr, "HELLLO10\n");
 			tmp_fd = open(begin->str, O_RDWR);
 			if (tmp_fd == -1)
 			{
-				fprintf(stderr, "HELLLO1\n");
+				// fprintf(stderr, "HELLLO1\n");
 				perror(begin->str);
 				return(errno);
 			}
@@ -59,11 +62,11 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 		}
 		else if (begin->id == F_FALSEA)
 		{
-				fprintf(stderr, "HELLLO20\n");
+				// fprintf(stderr, "HELLLO20\n");
 			tmp_fd = open(begin->str, O_RDWR | O_APPEND | O_CREAT, 0644);
 			if (tmp_fd == -1)
 			{
-				fprintf(stderr, "HELLLO2\n");
+				// fprintf(stderr, "HELLLO2\n");
 				perror(begin->str);
 				return(errno);
 			}
@@ -71,11 +74,11 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 		}
 		else if (begin->id == F_FALSET)
 		{
-				fprintf(stderr, "HELLLO30\n");
+				// fprintf(stderr, "HELLLO30\n");
 			tmp_fd = open(begin->str, O_CREAT | O_RDWR | O_TRUNC, 0644);
 			if (tmp_fd == -1)
 			{
-				fprintf(stderr, "HELLLO3\n");
+				// fprintf(stderr, "HELLLO3\n");
 				perror(begin->str);
 				return(errno);
 			}
@@ -83,50 +86,50 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 		}
 		else if (begin->id == F_DELIMITER)
 		{
-			fprintf(stderr, "HELLLO70\n");
+			// fprintf(stderr, "HELLLO70\n");
 			ft_heredoc(data, begin->str, 1 , 0);
 
 		}
 		else if (begin->id == F_DELIMITER_SQ)
 		{
-			fprintf(stderr, "HELLLO75\n");
+			// fprintf(stderr, "HELLLO75\n");
 			ft_heredoc(data, begin->str, 1 , 1);
 
 		}
 		else if (begin->id == F_FALSED)
 		{
-			fprintf(stderr, "HELLLO80\n");
+			// fprintf(stderr, "HELLLO80\n");
 			ft_heredoc(data, begin->str, 0, 0);
 		}
 		else if (begin->id == F_APPEND)
 		{
-			fprintf(stderr, "HELLLO14\n");
+			// fprintf(stderr, "HELLLO14\n");
 			data->pip.fd_out = open(begin->str, O_CREAT | O_RDWR | O_APPEND, 0644);
 			if (data->pip.fd_out == -1)
 			{
-				fprintf(stderr, "HELLLO4\n");
+				// fprintf(stderr, "HELLLO4\n");
 				perror(begin->str);
 				return(errno);
 			}
 		}
 		else if (begin->id == F_TRONC)
 		{
-			fprintf(stderr, "HELLLO15\n");
+			// fprintf(stderr, "HELLLO15\n");
 			data->pip.fd_out = open(begin->str, O_CREAT | O_RDWR | O_TRUNC, 0644);
 			if (data->pip.fd_out == -1)
 			{
-				fprintf(stderr, "HELLLO5\n");
+				// fprintf(stderr, "HELLLO5\n");
 				perror(begin->str);
 				return(errno);
 			}
 		}
 		else if (begin->id == F_INFILE)
 		{
-			fprintf(stderr, "HELLLO16\n");
+			// fprintf(stderr, "HELLLO16\n");
 			data->pip.fd_in = open(begin->str, O_RDONLY, 0644);
 			if (data->pip.fd_in == -1)
 			{
-				fprintf(stderr, "HELLLO6\n");
+				// fprintf(stderr, "HELLLO6\n");
 				perror(begin->str);
 				return(errno);
 			}

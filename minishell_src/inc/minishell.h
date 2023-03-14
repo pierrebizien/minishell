@@ -173,6 +173,7 @@ int	contain_token(t_exec* begin, int token, int m);
 char	*find_path(char **cmd, char **paths_env);
 char **ft_get_paths(t_data *data);
 char **ft_join_dstr(char **dest, char* src);
+void	ft_init_in_out(t_data *data);
 
 
 //FT_UTILS

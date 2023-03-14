@@ -39,7 +39,6 @@ int	ft_new_split_w_redir(t_pipex *data)
 
         if (contain_chev_out(data->param1[i]))
 		{
-			fprintf(stderr, "on va remplacer data param 1 [%d] |%s|", i, data->param1[i]);
             tmp = data->param1;
 			data->param1 = ft_repl_ind_dchar(data, i, ft_split_k(data->param1[i], "><"));
 			free(tmp);
