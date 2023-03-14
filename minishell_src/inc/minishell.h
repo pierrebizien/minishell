@@ -41,8 +41,6 @@
 #define F_FALSEA 8
 #define F_FALSET 9
 
-
-
 void    ft_logo(void);
 
 typedef	struct	s_env
@@ -58,6 +56,7 @@ typedef struct	s_exec
 {
 	char			*str;
 	int				id;
+	char			*hd_filename;
 	int				touch;
 	struct s_exec	*next;
 	struct s_exec	*prev;
@@ -149,6 +148,7 @@ void	ft_print_list(t_exec *begin);
 
 
 void	ft_ctrlb(int a);
+void	ft_ctrlb_exec(int a);
 void	ft_ctrlc_exec(int a);
 
 void	ft_ctrlc(int a);
@@ -201,6 +201,9 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data);
 
 // int	pipex(int ac, char **av, char **envp);
 
+// MAIN
+void	ft_init_sigint_exec(void);
+void	ft_init_sigquit_exec(void);
 
 
 #endif
