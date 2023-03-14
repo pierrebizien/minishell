@@ -12,3 +12,19 @@
 // 	}
 // 	free (str);
 // }
+
+void	ft_unlink_hd(t_exec *begin)
+{
+	t_exec *tmp;
+
+	tmp = begin;
+	while (tmp)
+	{
+		if (begin->hd_filename != NULL)
+		{
+			unlink(begin->hd_filename);
+		}
+		tmp = tmp->next;
+	}
+	
+}

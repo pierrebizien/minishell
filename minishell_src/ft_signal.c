@@ -1,4 +1,5 @@
 #include "./inc/minishell.h"
+extern int err_value;
 
 void	ft_ctrlc(int a)
 {
@@ -13,6 +14,14 @@ void	ft_ctrlc_exec(int a)
 {
 	(void)a;
 	write(1, "\n", 2);
+	return ;
+}
+
+void	ft_ctrlc_hd(int a)
+{
+	(void)a;
+	err_value = 130;
+	rl_done = 1;
 	return ;
 }
 

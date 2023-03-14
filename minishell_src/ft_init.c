@@ -2,6 +2,11 @@
 
 extern t_data data;
 
+int event(void)
+{ 
+	return (42);
+}
+
 int ft_init(char **env, t_data *data)
 {
 	data->sep = "|";
@@ -19,5 +24,6 @@ int ft_init(char **env, t_data *data)
 	data->pip.hd_in = 0;
 	ft_init_pipex_pipe(data);
 	ft_create_env(env, data);
+	rl_event_hook=event;
 	return (0);
 }

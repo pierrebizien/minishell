@@ -314,7 +314,7 @@ int	ft_find_if_hd_quotes(t_data *data, int count_p)
 	{
 		if (len1 - 2 >= 0 && data->args[count_p][len1 - 1] == '<' && data->args[count_p][len1 - 2] == '<')
 		{
-			if (len1 != len2 && data->args[count_p][len2 - 1] == '\'')
+			if (len1 != len2 && (data->args[count_p][len2 - 1] == '\'' || data->args[count_p][len2 - 1] == '"'))
 				return (1);
 		}
 		len1--;
@@ -337,7 +337,6 @@ void ft_modif_in_out(t_data *data)
 
 	while (tmp != NULL)
 	{
-	fprintf(stderr, "HELLOOOOOO\n");
 		tmpstart = tmp;
 		bool_in = 0;
 		bool_out = 0;
@@ -374,16 +373,21 @@ void ft_modif_in_out(t_data *data)
 				{
 					ft_init_sigint_hd();
 					ft_heredoc(data, tmp->str, 0, 0);
+					ft_init_sigint();
 					tmp->id = F_FALSED;
 				}
 				else if (tmp->id == F_DELIMITER)
 				{
+					ft_init_sigint_hd();
 					tmp->hd_filename = ft_heredoc(data, tmp->str, 1, 0);
+					ft_init_sigint();
 					bool_in = 1;
 				}
 				else 
 				{
+					ft_init_sigint_hd();
 					tmp->hd_filename = ft_heredoc(data, tmp->str, 1, 1);
+					ft_init_sigint();
 					bool_in = 1;
 				}
 			}

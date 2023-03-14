@@ -1,5 +1,6 @@
 #include "./inc/minishell.h"
 
+int		err_value;
 
 void	ft_print_dargs(char **strstr)
 {
@@ -58,6 +59,7 @@ void	ft_init_sigint(void)
 
 	sa.sa_handler = &ft_ctrlc;
 	sa.sa_flags = 0;
+	sigemptyset(&(sa.sa_mask));
 	sigaction(SIGINT, &sa, NULL);
 }
 
@@ -66,6 +68,17 @@ void	ft_init_sigint_exec(void)
 	struct sigaction sa;
 
 	sa.sa_handler = &ft_ctrlc_exec;
+	sigemptyset(&(sa.sa_mask));
+	sa.sa_flags = 0;
+	sigaction(SIGINT, &sa, NULL);
+}
+
+void	ft_init_sigint_hd(void)
+{
+	struct sigaction sa;
+
+	sa.sa_handler = &ft_ctrlc_hd;
+	sigemptyset(&(sa.sa_mask));
 	sa.sa_flags = 0;
 	sigaction(SIGINT, &sa, NULL);
 }
@@ -75,6 +88,7 @@ void	ft_init_sigquit_exec(void)
 	struct sigaction sa;
 
 	sa.sa_handler = &ft_ctrlb_exec;
+	sigemptyset(&(sa.sa_mask));
 	sa.sa_flags = 0;
 	sigaction(SIGQUIT, &sa, NULL);
 }
@@ -84,6 +98,7 @@ void	ft_init_sigquit(void)
 	struct sigaction sa;
 
 	sa.sa_handler = SIG_IGN;
+	sigemptyset(&(sa.sa_mask));
 	sa.sa_flags = 0;
 	sigaction(SIGQUIT, &sa, NULL);
 }
@@ -104,8 +119,6 @@ int	main(int ac, char **av, char**envp)
 	add_history(str);
 	while (str)
 	{
-		// ft_init_signal();
-		// signal(SIGINT, SIG_IGN);
 		if (str && str[0])
 		{
 			str = ft_parse(str, &data);
@@ -114,6 +127,7 @@ int	main(int ac, char **av, char**envp)
 				ft_parse_for_exec(&data);
 				ft_pipex(&data);
 				ft_close_all(data.pip);
+				ft_unlink_hd(&data.exec);
 			}
 			ft_init_sigint();
 			ft_init_sigquit();

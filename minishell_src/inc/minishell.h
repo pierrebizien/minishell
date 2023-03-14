@@ -150,6 +150,9 @@ void	ft_print_list(t_exec *begin);
 void	ft_ctrlb(int a);
 void	ft_ctrlb_exec(int a);
 void	ft_ctrlc_exec(int a);
+void	ft_ctrlc_hd(int a);
+
+int event(void);
 
 void	ft_ctrlc(int a);
 
@@ -161,8 +164,8 @@ char	**ft_split_l(char const *s, char *sep);
 
 
 //FT_FREE
-char	**ft_split_l(char const *s, char *sep);
 void	ft_print_dargs(char **strstr);
+void	ft_unlink_hd(t_exec *begin);
 
 int	ft_in_q(int in_q);
 
@@ -204,6 +207,9 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data);
 // MAIN
 void	ft_init_sigint_exec(void);
 void	ft_init_sigquit_exec(void);
+void	ft_init_sigquit(void);
+void	ft_init_sigint(void);
+void	ft_init_sigint_hd(void);
 
 
 #endif
