@@ -282,7 +282,6 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 	char **cmd;
 
 	cmd = NULL;
-
 	while (begin && begin->id != F_PIPE)
 	{
 		if (begin->id == F_FALSEI)
@@ -332,8 +331,6 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 			cmd = ft_join_dstr(cmd, begin->str);
 			if (!cmd)
 				return (MAL_ERCODE); //GERER
-
-
 		}
 		else if (begin->id == F_APPEND)
 		{
@@ -397,6 +394,9 @@ void	ft_pipex(t_data *data)
 		else
 			pipe(data->pip.pipefd2);
 		// signal(SIGINT, ft_ctrlc_exec);
+		ft_init_sigint_exec();
+		ft_init_sigquit_exec();
+
 		data->pip.last_id = fork();
 		if (data->pip.last_id == 0)
 			ft_child_exec(begin, data, m);

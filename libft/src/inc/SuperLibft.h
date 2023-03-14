@@ -84,6 +84,9 @@ void	ft_lstdelone(t_list *lst, void (*del)(void*));
 void	ft_lstclear(t_list **lst, void (*del)(void*));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+char	*ft_strrjoin(char const *s1, char const *s2, char const *s3);
+char	*ft_randomstr(char *prefix, char *suffix, size_t len);
+
 
 /* get_next_line_c */
 char			*get_next_line(int fd);

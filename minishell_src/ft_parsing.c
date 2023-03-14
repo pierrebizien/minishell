@@ -188,14 +188,14 @@ char *ft_convert_variable(char *str, t_data *data)
 			// if (!var && ft_is_hd(str, i))
 			if (var && '0' <= var[0] && var[0] <= '9')
 			{
-				ft_memmove(str + i, str + i  + 2, 2);
+				ft_memmove(str + i, str + i + 2, ft_strlen(str + i));
 				str = ft_put_str_in_str(str, var, i);
 				i = 0;
 			}
 			else if (!var && !ft_is_hd(str, i))
 			{
 
-				ft_memmove(str + i, str + i  + ft_strlen_var_env(str + i), ft_strlen(str + i + ft_strlen_var_env(str + i))+ 1);
+				ft_memmove(str + i, str + i + ft_strlen_var_env(str + i), ft_strlen(str + i + ft_strlen_var_env(str + i))+ 1);
 				str = ft_put_str_in_str(str, var, i);
 				i = 0;
 			}
@@ -228,7 +228,7 @@ char *ft_convert_variable_hd(char *str, t_data *data, char *delimiter)
 			// if (!var && ft_is_hd(str, i))
 			if (var && '0' <= var[0] && var[0] <= '9')
 			{
-				ft_memmove(str + i, str + i  + 2, 2);
+				ft_memmove(str + i, str + i  + 2, ft_strlen(str + i));
 				str = ft_put_str_in_str(str, var, i);
 				i = 0;
 			}
@@ -275,6 +275,7 @@ t_exec	*ft_lstnew_pars(void)
 	new->id = -42;
 	new->next = NULL;
 	new->prev = NULL;
+	new->hd_filename = NULL;
 	return (new);
 }
 
@@ -368,9 +369,18 @@ void ft_modif_in_out(t_data *data)
 			if (tmp->id == F_DELIMITER || tmp->id == F_DELIMITER_SQ)
 			{
 				if (bool_in == 1)
-					tmp->id = F_FALSED;
-				else
 				{
+					// ft_heredoc(data, tmp->str, 0, 0);
+					tmp->id = F_FALSED;
+				}
+				else if (tmp->id == F_DELIMITER)
+				{
+					// ft_heredoc(data, tmp->str, 1, 0);
+					bool_in = 1;
+				}
+				else 
+				{
+					// ft_heredoc(data, tmp->str, 1, 1);
 					bool_in = 1;
 				}
 			}
