@@ -17,7 +17,7 @@ static int ft_just_export(t_data *data)
     tmp = &data->env;
     while (tmp)
     {
-		write(1, "export ", 8);
+		write(1, "export ", 7);
         write(1, tmp->key, ft_strlen(tmp->key));
         write(1, "=\"", 2);
         write(1, tmp->value, ft_strlen(tmp->value));
@@ -113,10 +113,8 @@ static int ft_ok_export(char *str, t_data *data)
 	while (str[k + i + 1] && is_ws(str[k + i + 1]) == 0)
 		k++;
 	i = i + 1;
-	fprintf(stderr, "var = %s|%s\n", var, tmp->key);
 	if (ft_strncmp(var, tmp->key, i) == 0)
 	{
-		fprintf(stderr, "1\n");
 
 		free(tmp->value);
 		free(var);
@@ -124,7 +122,6 @@ static int ft_ok_export(char *str, t_data *data)
 	}
 	else
 	{
-		fprintf(stderr, "2\n");
 		tmp->next = ft_lstnew_env();
 		tmp = tmp->next;
 		tmp->key = var;

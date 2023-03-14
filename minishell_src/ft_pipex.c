@@ -124,7 +124,6 @@ int	contain_token(t_exec* begin, int token, int m) // ET PAS STDOUT
 	}
 	while (begin && begin->id != F_PIPE)
 	{
-		fprintf(stderr, "begin->id vaut %d et token vaut %d\n et is out %d\n", begin->id, token, is_out(begin->str));
 		if (begin->id == token && !is_out(begin->str))
 			return (1);
 		begin = begin->next;
@@ -146,7 +145,6 @@ void ft_print_fd(t_data *data)
 
 void ft_dup_manage(t_data *data, int m)
 {
-	fprintf(stderr, "ON DUP m vaut %d\n", m);
 	if (contain_token(&data->exec, F_INFILE, m) || contain_token(&data->exec, F_DELIMITER, m) || !m)
 	{
 		// fprintf(stderr, "DUP V0\n");
@@ -167,11 +165,11 @@ void ft_dup_manage(t_data *data, int m)
 		dup2(data->pip.pipefd1[0], 0);
 		ft_close(&data->pip.pipefd1[0]);
 	}
-	fprintf(stderr, "containe token F_APPEND %d contain token F_TRONC %d et m %d et data pipes %d\n", \
-	contain_token(&data->exec, F_APPEND, m), contain_token(&data->exec, F_TRONC, m) , m , data->pip.nb_pipes);
+	// fprintf(stderr, "containe token F_APPEND %d contain token F_TRONC %d et m %d et data pipes %d\n", \
+	// contain_token(&data->exec, F_APPEND, m), contain_token(&data->exec, F_TRONC, m) , m , data->pip.nb_pipes);
 	if (contain_token(&data->exec, F_APPEND, m) || contain_token(&data->exec, F_TRONC, m) || m == data->pip.nb_pipes)
 	{
-		fprintf(stderr, "DUP V3 m vaut %d\n", m);
+		// fprintf(stderr, "DUP V3 m vaut %d\n", m);
 		dup2(data->pip.fd_out, 1);
 	}
 	else if (m % 2 == 0)
@@ -348,7 +346,6 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 		}
 		else if (begin->id == F_TRONC)
 		{
-			fprintf(stderr, "On rentre ici bg\n");
 			data->pip.fd_out = open(begin->str, O_CREAT | O_RDWR | O_TRUNC, 0644);
 			if (data->pip.fd_out == -1)
 			{

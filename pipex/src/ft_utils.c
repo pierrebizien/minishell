@@ -6,7 +6,7 @@
 /*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 10:18:33 by pbizien           #+#    #+#             */
-/*   Updated: 2023/02/28 15:29:46 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/03/14 13:47:01 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,8 @@ void	ft_first_child(t_pipex *data, char **av, char **envp)
 		ft_exec(data);
 		exit(1);
 	}
-	fprintf(stderr, "HELLO WORLD\n");
 	if (!ft_redir_first(data))
 		dup2(data->pipefd1[1], 1);
-	fprintf(stderr, "HELLO WORLD2\n");
 	ft_close(&data->pipefd1[1]);
 	ft_exec_f(data);
 	(void)envp;

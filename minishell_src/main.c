@@ -71,7 +71,6 @@ int	main(int ac, char **av, char**envp)
 		signal(SIGINT, SIG_IGN);
 		if (str && str[0])
 		{
-			fprintf(stderr, "ICIIIII\n");
 			str = ft_parse(str, &data);
 			if (str)
 			{
