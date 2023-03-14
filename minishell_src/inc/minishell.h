@@ -182,7 +182,7 @@ size_t	ft_strlen_WS(const char *str);
 char *ft_put_str_in_str(char *dest, char *src, int ind);
 
 //FT_HEREDOC
-int	ft_heredoc(t_data *data, char *delimiter, int w, int sq);
+char	*ft_heredoc(t_data *data, char *delimiter, int w, int sq);
 void	ft_close(int *fd);
 void	ft_init_pipex_pipe(t_data *data);
 
