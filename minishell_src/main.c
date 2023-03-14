@@ -62,13 +62,13 @@ int	main(int ac, char **av, char**envp)
 
 	ft_init(envp, &data);
 	ft_logo();
-	signal(SIGINT, ft_ctrlc);
+	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	str = ft_prompt();
 	add_history(str);
 	while (str)
 	{
-		signal(SIGINT, ft_ctrlc);
+		signal(SIGINT, SIG_IGN);
 		if (str && str[0])
 		{
 			fprintf(stderr, "ICIIIII\n");

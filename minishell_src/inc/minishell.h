@@ -145,6 +145,7 @@ int	ft_exit(char **str, t_data *data);
 int		ft_test_builtin(char **str);
 int		ft_exec_builtin(char **cmd, t_data *data);
 
+void	ft_print_list(t_exec *begin);
 
 
 void	ft_ctrlb(int a);

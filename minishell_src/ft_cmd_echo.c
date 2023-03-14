@@ -30,7 +30,7 @@ int	ft_echo(char **cmd)
 	int i;
 	int nl;
 	char *str;
-
+	fprintf(stderr, "ICI C CARRE ECHO BG onela\n");
 	str = ft_tab_to_str(cmd, ' ');
 	i = 5;
 	nl = ft_verif_nl_echo(str);

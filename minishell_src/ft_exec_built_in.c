@@ -28,7 +28,7 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 
 	cmd = NULL;
 	tmp = begin;
-	// fprintf(stderr, "HELLO\n");
+	fprintf(stderr, "HELLO\n");
 	while (begin && begin->id != F_PIPE)
 	{
 		if (begin->id == F_CMD)
