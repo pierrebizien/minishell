@@ -372,6 +372,7 @@ void ft_modif_in_out(t_data *data)
 			{
 				if (bool_in == 1)
 				{
+					ft_init_sigint_hd();
 					ft_heredoc(data, tmp->str, 0, 0);
 					tmp->id = F_FALSED;
 				}

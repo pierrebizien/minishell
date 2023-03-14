@@ -172,13 +172,12 @@ void ft_dup_manage(t_data *data, int m)
 {
 		fprintf(stderr, "COUCOU\n");
 	ft_print_list(&data->exec);
-	if (!m)
+	if (contain_token(&data->exec, F_INFILE, m))
 	{
-		if (contain_token(&data->exec, F_INFILE, m))
-			dup2(data->pip.fd_in, 0);
-		else if (contain_token(&data->exec, F_DELIMITER, m) || contain_token(&data->exec, F_DELIMITER_SQ, m))
-			dup2(ft_search_hd_name(&data->exec, m), 0);
+		dup2(data->pip.fd_in, 0);
 	}
+	else if (contain_token(&data->exec, F_DELIMITER, m) || contain_token(&data->exec, F_DELIMITER_SQ, m))
+		dup2(ft_search_hd_name(&data->exec, m), 0);
 	else if (m % 2 == 0)
 	{
 		ft_close(&data->pip.pipefd2[1]);
