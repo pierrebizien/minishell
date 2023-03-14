@@ -334,8 +334,10 @@ void ft_modif_in_out(t_data *data)
 
 	count_p = 0;
 	tmp = &data->exec;
-	while (tmp->next != NULL)
+
+	while (tmp != NULL)
 	{
+	fprintf(stderr, "HELLOOOOOO\n");
 		tmpstart = tmp;
 		bool_in = 0;
 		bool_out = 0;
@@ -370,21 +372,20 @@ void ft_modif_in_out(t_data *data)
 			{
 				if (bool_in == 1)
 				{
-					// ft_heredoc(data, tmp->str, 0, 0);
+					ft_heredoc(data, tmp->str, 0, 0);
 					tmp->id = F_FALSED;
 				}
 				else if (tmp->id == F_DELIMITER)
 				{
-					// ft_heredoc(data, tmp->str, 1, 0);
+					tmp->hd_filename = ft_heredoc(data, tmp->str, 1, 0);
 					bool_in = 1;
 				}
 				else 
 				{
-					// ft_heredoc(data, tmp->str, 1, 1);
+					tmp->hd_filename = ft_heredoc(data, tmp->str, 1, 1);
 					bool_in = 1;
 				}
 			}
-			// fprintf(stderr, "cacaa(%d) \t %s\t culin = %d\t cutout = %d\n", tmp->id, tmp->str,bool_in,  bool_out);
 			tmp = tmp->prev;
 		}
 		tmp = tmpstart;
@@ -392,10 +393,10 @@ void ft_modif_in_out(t_data *data)
 			tmp = tmp->next;
 		while (tmp->next != NULL && tmp->id != F_PIPE)
 			tmp = tmp->next;
-		if (tmp->next != NULL)
+		if (tmp != NULL)
 		{
 			tmp = tmp->next;
-			count_p ++;
+			// count_p ++;
 		}
 		// fprintf(stderr, "en bas(%d) \t %s\t next = %p\n", tmp->id, tmp->str,tmp->next);
 		

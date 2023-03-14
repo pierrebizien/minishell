@@ -142,17 +142,45 @@ void ft_print_fd(t_data *data)
 	fprintf(stderr, "pipefd2 [1] %d\n", data->pip.pipefd2[1]);
 }
 
+int ft_search_hd_name(t_exec *begin, int m)
+{
+	t_exec *tmp;
+	int		fd;
+
+	tmp = begin;
+	while (m)
+	{
+		if (tmp->id == F_PIPE)
+			m--;
+		tmp = tmp->next;
+	}
+	while (tmp && tmp->id != F_PIPE)
+	{
+		if (tmp->id == F_DELIMITER || tmp->id == F_DELIMITER_SQ)
+		{
+			fd = open(tmp->hd_filename, O_RDONLY);
+			if (fd == -1)
+				return (-1); // GERER
+			return (fd);
+		}
+		tmp = tmp->next;
+	}
+	return (-2);
+}
 
 void ft_dup_manage(t_data *data, int m)
 {
-	if (contain_token(&data->exec, F_INFILE, m) || contain_token(&data->exec, F_DELIMITER, m) || !m)
+		fprintf(stderr, "COUCOU\n");
+	ft_print_list(&data->exec);
+	if (!m)
 	{
-		// fprintf(stderr, "DUP V0\n");
-		dup2(data->pip.fd_in, 0);
+		if (contain_token(&data->exec, F_INFILE, m))
+			dup2(data->pip.fd_in, 0);
+		else if (contain_token(&data->exec, F_DELIMITER, m) || contain_token(&data->exec, F_DELIMITER_SQ, m))
+			dup2(ft_search_hd_name(&data->exec, m), 0);
 	}
 	else if (m % 2 == 0)
 	{
-		// fprintf(stderr, "DUP V1\n");
 		ft_close(&data->pip.pipefd2[1]);
 		dup2(data->pip.pipefd2[0], 0);
 		ft_close(&data->pip.pipefd2[0]);
@@ -160,34 +188,26 @@ void ft_dup_manage(t_data *data, int m)
 	}
 	else
 	{
-		// fprintf(stderr, "DUP V2\n");
 		ft_close(&data->pip.pipefd1[1]);
 		dup2(data->pip.pipefd1[0], 0);
 		ft_close(&data->pip.pipefd1[0]);
 	}
-	// fprintf(stderr, "containe token F_APPEND %d contain token F_TRONC %d et m %d et data pipes %d\n", \
-	// contain_token(&data->exec, F_APPEND, m), contain_token(&data->exec, F_TRONC, m) , m , data->pip.nb_pipes);
 	if (contain_token(&data->exec, F_APPEND, m) || contain_token(&data->exec, F_TRONC, m) || m == data->pip.nb_pipes)
 	{
-		// fprintf(stderr, "DUP V3 m vaut %d\n", m);
 		dup2(data->pip.fd_out, 1);
 	}
 	else if (m % 2 == 0)
 	{
-		// fprintf(stderr, "DUP V4 data pipefd1[1] = %d\n", data->pip.pipefd1[1]);
 		ft_close(&data->pip.pipefd1[0]);
 		dup2(data->pip.pipefd1[1], 1);
 		ft_close(&data->pip.pipefd1[1]);
 	}
 	else if (m % 2 == 1)
 	{
-		// fprintf(stderr, "DUP V5\n");
 		ft_close(&data->pip.pipefd2[0]);
 		dup2(data->pip.pipefd2[1], 1);
 		ft_close(&data->pip.pipefd2[1]);
 	}
-	// fprintf(stderr, "APRES DUP FD VALENT\n");
-	// ft_print_fd(data);
 }
 
 int	ft_len_list(t_env *begin)
@@ -313,16 +333,6 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 				exit(errno);
 			}
 			ft_close(&tmp_fd);
-		}
-		else if (begin->id == F_DELIMITER)
-		{
-			ft_heredoc(data, begin->str, 1, 0);
-
-		}
-		else if (begin->id == F_DELIMITER_SQ)
-		{
-			ft_heredoc(data, begin->str, 1, 1);
-
 		}
 		else if (begin->id == F_FALSED)
 			ft_heredoc(data, begin->str, 0, 0);
