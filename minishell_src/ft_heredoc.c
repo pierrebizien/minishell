@@ -12,6 +12,8 @@
 
 #include "./inc/minishell.h"
 
+extern int err_value;
+
 void	ft_close(int *fd)
 {
 	if (*fd == -1 || *fd == 1 || *fd == 0)
@@ -40,12 +42,19 @@ char	*ft_heredoc(t_data *data, char *delimiter, int w, int sq)
 
 	if (w)
 	{
-		name = ft_randomstr("hd_", NULL, 16);
+		name = ft_randomstr("/tmp/hd_", NULL, 16);
 		data->pip.tmp_fd = open(name, O_TRUNC | O_CREAT | O_RDWR, 00777);
 		if (data->pip.tmp_fd == -1)
 			return (NULL); // GERER
 	}
 	str = readline(">");
+	if (err_value == 130)
+	{
+		//FREE TOUT LE TINTOUIN
+		//MEME TINTOUIN QU EN DESSOUS METTRE DANS FONCTION PUR LA NONO
+		data->last_err_num = 130;
+		return (NULL);
+	}
 	if (!sq)
 		str = ft_convert_variable_hd(str, data, delimiter);
 	if (w && str && ft_strncmp(delimiter, str, ft_strlen(delimiter) + 1))
@@ -53,11 +62,21 @@ char	*ft_heredoc(t_data *data, char *delimiter, int w, int sq)
 	while (str && (ft_strncmp(delimiter, str, ft_strlen(delimiter) + 1)))
 	{
 		free(str);
-		str =readline(">");
-			if (!sq)
-		str = ft_convert_variable_hd(str, data, delimiter);
+
+		rl_event_hook=event;
+		str = readline(">");
+		if (err_value == 130)
+			break;
+		if (!sq)
+			str = ft_convert_variable_hd(str, data, delimiter);
 		if (w && str && ft_strncmp(delimiter, str, ft_strlen(delimiter) + 1))
 			ft_manage_write(str, delimiter, data, sq);
+	}
+	if (err_value == 130)
+	{
+		//FREE TOUT LE TINTOUIN
+		data->last_err_num = 130;
+		return (NULL);
 	}
 	free(str);
 	if(w)

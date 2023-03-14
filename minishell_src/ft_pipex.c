@@ -170,6 +170,8 @@ int ft_search_hd_name(t_exec *begin, int m)
 
 void ft_dup_manage(t_data *data, int m)
 {
+	int tmp_fd;
+
 		fprintf(stderr, "COUCOU\n");
 	ft_print_list(&data->exec);
 	if (contain_token(&data->exec, F_INFILE, m))
@@ -177,7 +179,11 @@ void ft_dup_manage(t_data *data, int m)
 		dup2(data->pip.fd_in, 0);
 	}
 	else if (contain_token(&data->exec, F_DELIMITER, m) || contain_token(&data->exec, F_DELIMITER_SQ, m))
-		dup2(ft_search_hd_name(&data->exec, m), 0);
+	{
+		tmp_fd = ft_search_hd_name(&data->exec, m);
+		dup2(tmp_fd, 0);
+		ft_close(&tmp_fd);
+	}
 	else if (m % 2 == 0)
 	{
 		ft_close(&data->pip.pipefd2[1]);
@@ -231,13 +237,14 @@ char **ft_get_env(t_env *env)
 	t_env *tmp;
 	char **output;
 	int	k;
-
+	int count = 0;
 	tmp = env;
 	k = 0;
-	output = malloc (sizeof(char *) * ft_len_list(env) + 1);
+	output = malloc(sizeof(char *) * (ft_len_list(env) + 1));
 	if (!output)
 		return (NULL);
-	output[ft_len_list(env) - 1] = 0;
+	fprintf(stderr, "LEN LIST VAUT %d\n", ft_len_list(env));
+	output[ft_len_list(env)] = 0;
 	while (env)
 	{
 		output[k] = malloc(sizeof(char) * (ft_strlen(env->key) + ft_strlen(env->value) + 2));
@@ -248,7 +255,9 @@ char **ft_get_env(t_env *env)
 		ft_memcpy(output[k] + ft_strlen(env->key) + 1, env->value, ft_strlen(env->value)  + 1);
 		k++;
 		env = env->next;
+		count++;
 	}
+	fprintf(stderr, "count = %d\n\n\n\n\n\n\n", count);
 	env  = tmp;
 	return (output);
 }
@@ -275,6 +284,15 @@ void	ft_exec_cmd(t_data *data, char **cmd, int m)
 		else
 			return ;
 	}
+	int i;
+	i = 0;
+	while(i < ft_len_list(&data->env) + 1)
+	{
+		fprintf(stderr, "i %d tab %s\n", i, env_tab[i]);
+		i++;
+	}
+	fprintf(stderr, "%s", env_tab[0]);
+	// ft_print_dchar(env_tab);
 	execve(path_exec, cmd, env_tab);
 	if (errno == 13)
 	{
@@ -423,6 +441,7 @@ void	ft_pipex(t_data *data)
 			begin = begin->next;
 		if (begin && begin->id == F_PIPE)
 			begin = begin->next;
+		
 		m++;
 	}
 		waitpid(data->pip.last_id, &data->last_err_num, 0);
