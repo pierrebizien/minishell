@@ -247,11 +247,16 @@ int ft_verif_just_chev(char *str)
 {
 	int i;
 	int j;
+	int dq;
+	int sq;
 
 	i = 0;
+	dq = -1;
+	sq = -1;
 	while (str && str[i])
 	{
-		if (str[i] == '<' && str[i+1] != '<')
+		ft_maj_quotes(&dq, &sq, str[i]);
+		if (str[i] == '<' && str[i+1] != '<' && dq != 1 && sq != 1)
 		{
 			j = i + 1;
 			while (1)
