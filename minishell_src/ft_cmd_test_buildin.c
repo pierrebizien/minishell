@@ -6,7 +6,7 @@ int ft_exec_builtin(char **cmd, t_data *data)
 	if (ft_strlen(cmd[0]) == 0)
 		return (0);
 	if (cmd && ft_strncmp(cmd[0], "env", ft_strlen(cmd[0])) == 0)
-		return(fprintf(stderr, "ICI CA ENV\n"), ft_env(data), 1);
+		return(ft_env(data), 1);
 
 	if (cmd && ft_strncmp(cmd[0], "export", ft_strlen(cmd[0])) == 0)
 

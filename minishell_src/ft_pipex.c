@@ -51,9 +51,11 @@ char	*find_path(char **cmd, char **paths_env)
 	int	i;
 
 	i = 0;
-	// fprintf(stderr, "ICI 2 cmd[0] %s\n", cmd[0]);
+	if (cmd && cmd[0] && !cmd[0][0])
+		return (ft_putstr_fd(": Command not found\n", 2), exit(127), NULL);
 	if (ft_test_builtin(cmd) == 1)
 		return (NULL);
+	fprintf(stderr, "cmd[0] %d\n", access(cmd[0], X_OK));
 	if (!access(cmd[0], R_OK) && (cmd[0][0] != '.' || cmd[0][0] != '/'))
 	{
 		if (access(cmd[0], X_OK))
@@ -86,7 +88,7 @@ char	*find_path(char **cmd, char **paths_env)
 		i++;
 		free(tmp);
 	}
-		// fprintf(stderr, "ici\n");
+		fprintf(stderr, "ICIIIII\n");
 	ft_putstr_fd(cmd[0], 2);
 	if (ft_strchr(cmd[0], '/'))
 		ft_putstr_fd(": No such file or directory\n", 2);
@@ -118,7 +120,6 @@ int	contain_token(t_exec* begin, int token, int m) // ET PAS STDOUT
 	tmp = begin;
 	begin = tmp;
 	count = 0;
-	fprintf(stderr, "au d2btu token vut %d et m vaut %d \n", token , m);
 	while (begin && count < m)
 	{
 		if (begin->id == F_PIPE)
@@ -127,13 +128,11 @@ int	contain_token(t_exec* begin, int token, int m) // ET PAS STDOUT
 	}
 	while (begin && begin->id != F_PIPE)
 	{
-		fprintf(stderr, "begin->id = %d token vaut %d is out vaut %d\n", begin->id, token, is_out(begin->str));
 		if (begin->id == token && !is_out(begin->str))
 			return (1);
 		begin = begin->next;
 	}
 	begin = tmp;
-	fprintf(stderr, "tpken %d cooucou\n", token);
 	return (0);
 }
 
@@ -177,15 +176,12 @@ void ft_dup_manage(t_data *data, int m)
 {
 	int tmp_fd;
 
-		fprintf(stderr, "COUCOU\n");
-	ft_print_list(&data->exec);
 	if (contain_token(&data->exec, F_INFILE, m))
 	{
 		dup2(data->pip.fd_in, 0);
 	}
 	else if (contain_token(&data->exec, F_DELIMITER, m) || contain_token(&data->exec, F_DELIMITER_SQ, m))
 	{
-		fprintf(stderr, "HEY\n");
 		tmp_fd = ft_search_hd_name(&data->exec, m);
 		dup2(tmp_fd, 0);
 		ft_close(&tmp_fd);
@@ -285,11 +281,12 @@ void	ft_exec_cmd(t_data *data, char **cmd, int m)
 		else
 			return ;
 	}
+	
 	execve(path_exec, cmd, env_tab);
 	if (errno == 13)
 	{
 		ft_putstr_fd(cmd[0],2);
-		ft_putstr_fd(": Is a directory\n", 2);
+		ft_putstr_fd(": Is a direeeectory\n", 2);
 		exit(126);
 	}
 	// fprintf(stderr, "PROBLEME D EXEC\n");
@@ -404,7 +401,6 @@ void	ft_pipex(t_data *data)
 	if (!data->pip.nb_pipes)
 		if(ft_exec_built_in_solo(begin, data))
 			return ;
-	fprintf(stderr, "Le sexe\n");
 	begin = &data->exec;
 	while (begin)
 	{

@@ -144,7 +144,6 @@ char	*ft_check_env(char *str, t_data *data)
 		return (ft_itoa(data->last_err_num));
 	while (tmp_env)
 	{
-		fprintf(stderr, "ca boucle\n");
 		if (!strncmp(str, tmp_env->key, ft_strlen_var_env(str)))
 			return (tmp_env->value);
 		tmp_env = tmp_env->next;
@@ -162,8 +161,10 @@ int	ft_is_hd(char *str, int	i)
 		i--;
 	else
 		return (0);
-	while (str && i >= 0 && is_ws(str[i]))
-		i--;
+	fprintf(stderr, "STR1 = %s i %d\n", str, i);
+	while (str && i >= 0 && (is_ws(str[i]) || str[i] == '"' || str[i] == '\''))
+		i--; 
+	fprintf(stderr, "STR2 = %s i %d\n", str, i);
 	if (i > 0 && str[i] == '<'  && str[i - 1] == '<')
 		return (1);
 	return (0);
@@ -187,19 +188,20 @@ char *ft_convert_variable(char *str, t_data *data)
 		{
 			var = ft_check_env(str + i + 1, data);
 			// if (!var && ft_is_hd(str, i))
-			if (var && '0' <= var[0] && var[0] <= '9')
+			if (!ft_is_hd(str, i))
 			{
-				ft_memmove(str + i, str + i + 2, ft_strlen(str + i));
-				str = ft_put_str_in_str(str, var, i);
-				i = 0;
-			}
-			else if (!var && !ft_is_hd(str, i))
-			{
-
+				fprintf(stderr, "ON RENTRE\n");
 				ft_memmove(str + i, str + i + ft_strlen_var_env(str + i), ft_strlen(str + i + ft_strlen_var_env(str + i))+ 1);
 				str = ft_put_str_in_str(str, var, i);
 				i = 0;
 			}
+			// else if (!var && !ft_is_hd(str, i))
+			// {
+
+			// 	ft_memmove(str + i, str + i + ft_strlen_var_env(str + i), ft_strlen(str + i + ft_strlen_var_env(str + i))+ 1);
+			// 	str = ft_put_str_in_str(str, var, i);
+			// 	i = 0;
+			// }
 		}
 		i++;
 	}
@@ -226,21 +228,16 @@ char *ft_convert_variable_hd(char *str, t_data *data, char *delimiter)
 		if (str[i] == '$' && str[i + 1] && !is_ws(str[i + 1]) && sq == -1)
 		{
 			var = ft_check_env(str + i + 1, data);
-			// if (!var && ft_is_hd(str, i))
-			if (var && '0' <= var[0] && var[0] <= '9')
+			// fprintf(stderr, "var vaut %s\n", var);
+			if (ft_strncmp(delimiter, str, ft_strlen(str)))
 			{
-				ft_memmove(str + i, str + i  + 2, ft_strlen(str + i));
-				str = ft_put_str_in_str(str, var, i);
-				i = 0;
-			}
-			else if (!var && ft_strncmp(delimiter, str, ft_strlen(str + i)))
-			{
-				ft_memmove(str + i, str + i  + ft_strlen_var_env(str + i), ft_strlen(str + i + ft_strlen_var_env(str + i))+ 1);
+				ft_memmove(str + i, str + i + ft_strlen_var_env(str + i), ft_strlen(str + i + ft_strlen_var_env(str + i))+ 1);
 				str = ft_put_str_in_str(str, var, i);
 				i = 0;
 			}
 		}
-		i++;
+		if (str && str[i])
+			i++;
 	}
 	return (str);
 }
@@ -298,6 +295,20 @@ void ft_clean_list_exec(t_data *data)
 	// free(tmp->next);
 	tmp->next = NULL;
 }
+
+char ft_first_no_chev(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str && str[i])
+	{
+		if (str[i] != '<' && !is_ws(str[i]))
+			return (str[i]);
+		i++;
+	}
+	return (0);
+}
 int	ft_find_if_hd_quotes(t_data *data, int count_p)
 {
 	// int count;
@@ -314,7 +325,7 @@ int	ft_find_if_hd_quotes(t_data *data, int count_p)
 	{
 		if (len1 - 2 >= 0 && data->args[count_p][len1 - 1] == '<' && data->args[count_p][len1 - 2] == '<')
 		{
-			if (len1 != len2 && (data->args[count_p][len2 - 1] == '\'' || data->args[count_p][len2 - 1] == '"'))
+			if (len1 != len2 && (ft_first_no_chev(data->args[count_p] + len1) == '\'' || ft_first_no_chev(data->args[count_p] + len1) == '"'))
 				return (1);
 		}
 		len1--;
@@ -464,10 +475,8 @@ void ft_parse_for_exec(t_data *data)
 			}
 			else
 			{
-				fprintf(stderr, "au else i = %d\n", i);
 				if (0 < i && tab[i-1] && ft_strlen(tab[i - 1]) != 0 && !ft_strncmp(tab[i - 1], "<", ft_strlen(tab[i - 1])))
 				{
-					fprintf(stderr, "1\ti = %d\n", i);
 					tmp->id = F_INFILE;
 					tmp->str = ft_strdup(tab[i]);
 					tmp->next = ft_lstnew_pars();
@@ -476,11 +485,12 @@ void ft_parse_for_exec(t_data *data)
 				}
 				else if (0 < i && tab[i-1] && ft_strlen(tab[i - 1]) != 0 && !ft_strncmp(tab[i - 1], "<<", ft_strlen(tab[i - 1])))
 				{
-					fprintf(stderr, "2\ti = %d\n", i);
 					if (ft_find_if_hd_quotes(data, count_p))
 						tmp->id = F_DELIMITER_SQ;
 					else
 						tmp->id = F_DELIMITER;
+					fprintf(stderr, "tmp->id = %d\n",  tmp->id);
+					fprintf(stderr, "count_p= %d\n",  count_p);
 					tmp->str = ft_strdup(tab[i]);
 					tmp->next = ft_lstnew_pars();
 					tmp = tmp->next;
@@ -488,7 +498,6 @@ void ft_parse_for_exec(t_data *data)
 				}
 				else if (0 < i && tab[i-1] && ft_strlen(tab[i - 1]) != 0 && !ft_strncmp(tab[i - 1], ">", ft_strlen(tab[i - 1])))
 				{
-					fprintf(stderr, "3\ti = %d\n", i);
 					tmp->id = F_TRONC;
 					tmp->str = ft_strdup(tab[i]);
 					tmp->next = ft_lstnew_pars();
@@ -497,7 +506,6 @@ void ft_parse_for_exec(t_data *data)
 				}
 				else if (0 < i && tab[i-1] && ft_strlen(tab[i - 1]) != 0 && !ft_strncmp(tab[i - 1], ">>", ft_strlen(tab[i - 1])))
 				{
-					fprintf(stderr, "4\ti = %d\n", i);
 					tmp->id = F_APPEND;
 					tmp->str = ft_strdup(tab[i]);
 					tmp->next = ft_lstnew_pars();
@@ -506,7 +514,6 @@ void ft_parse_for_exec(t_data *data)
 				}
 				else
 				{
-					fprintf(stderr, "5\ti = %d\n", i);
 					tmp->id = F_CMD;
 					tmp->str = ft_strdup(tab[i]);
 					tmp->next = ft_lstnew_pars();
@@ -518,7 +525,6 @@ void ft_parse_for_exec(t_data *data)
 	}
 	ft_clean_list_exec(data);
 	ft_modif_in_out(data);
-	ft_print_list(&data->exec);
 	data->pip.nb_pipes = ft_count_pipes(&data->exec);
 }
 
