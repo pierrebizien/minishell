@@ -29,15 +29,23 @@ SRCS += ft_cmd_exit.c
 
 
 # SRC_PATH += /libft/src
-SRC_PATH = ./minishell_src/
+SRC_PATH += ./minishell_src/Build-in/
+SRC_PATH += ./minishell_src/Execution/
+SRC_PATH += ./minishell_src/Free/
+SRC_PATH += ./minishell_src/Parsing/
+SRC_PATH += ./minishell_src/Signal/
+SRC_PATH += ./minishell_src/Start/
+SRC_PATH += ./minishell_src/Utiles/
+SRC_PATH += ./minishell_src/Other/
+SRC_PATH += ./minishell_src/
 # SRC_PATH += /pipex
 
 
 OBJS = ${patsubst %.c, ${OBJS_PATH}/%.o, ${SRCS}}
-OBJS_PATH = ./minishell_src/obj
+OBJS_PATH = ./minishell_src/.Object
 
 
-HEAD_PATH += -I ./minishell_src/inc
+HEAD_PATH += -I ./minishell_src/_Include
 HEAD_PATH += -I ./libft/inc
 
 LIB += -L ./libft -lft
