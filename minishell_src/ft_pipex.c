@@ -173,7 +173,6 @@ void ft_dup_manage(t_data *data, int m)
 	int tmp_fd;
 
 		fprintf(stderr, "COUCOU\n");
-	ft_print_list(&data->exec);
 	if (contain_token(&data->exec, F_INFILE, m))
 	{
 		dup2(data->pip.fd_in, 0);

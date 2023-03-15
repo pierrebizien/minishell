@@ -19,11 +19,13 @@ void	ft_print_dchar(char **strstr)
 	int	i;
 
 	i = 0;
+	fprintf(stderr, "--------\n");
 	while (strstr && strstr[i])
 	{
 		fprintf(stderr, "tab[%d] = |%s|\n", i, strstr[i]);
 		i++;
 	}
+	fprintf(stderr, "--------\n");
 	if (!strstr)
 		fprintf(stderr, "STRSTR N EXISTE PAS\n");
 }
