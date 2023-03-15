@@ -42,7 +42,7 @@ char	*ft_heredoc(t_data *data, char *delimiter, int w, int sq)
 
 	if (w)
 	{
-		name = ft_randomstr("hd_", NULL, 16);
+		name = ft_randomstr("/tmp/hd_", NULL, 16);
 		data->pip.tmp_fd = open(name, O_TRUNC | O_CREAT | O_RDWR, 00777);
 		if (data->pip.tmp_fd == -1)
 			return (NULL); // GERER
@@ -82,10 +82,6 @@ char	*ft_heredoc(t_data *data, char *delimiter, int w, int sq)
 	if(w)
 	{
 		ft_close(&data->pip.tmp_fd);
-		// data->pip.tmp_fd = open(name, O_RDWR);
-		// if (data->pip.tmp_fd == -1)
-		// 	return (NULL); //gerer
-		// data->pip.fd_in = data->pip.tmp_fd;
 	}
 	return (name); 
 }

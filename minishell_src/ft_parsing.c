@@ -282,11 +282,11 @@ void ft_clean_list_exec(t_data *data)
 	t_exec *before;
 
 
-    tmp = &data->exec;
+	tmp = &data->exec;
 	tmp->prev = NULL;
 	while (tmp->next != NULL)
-    {
-        before = tmp;
+	{
+		before = tmp;
 		tmp = tmp->next;
 		if (tmp != NULL)
 			tmp->prev = before;
@@ -435,7 +435,21 @@ int	ft_count_pipes (t_exec *begin)
 	return (count);
 	
 }
+int ft_check_chev_pip(char **tab)
+{
+	int	i;
 
+	i = 0;
+	while(tab && tab[i])
+	{
+		if (ft_strlen(tab[i]) != 0 && !ft_strncmp(tab[i], "<", ft_strlen(tab[i])))
+			if (tab[i + 1] && ft_strlen(tab[i + 1]) != 0 && !ft_strncmp(tab[i + 1], "<", ft_strlen(tab[i + 1])))
+				return (fprintf(stderr, "ERROR PRES DE GNEUGNEU\n"), 1);
+		i++;
+	}
+	return (0);
+	
+}
 void ft_parse_for_exec(t_data *data)
 {
 	int i;
@@ -451,6 +465,8 @@ void ft_parse_for_exec(t_data *data)
 	while (data->args[++j])
 	{
 		tab = ft_split_lq(data->args[j], " ");
+		if (ft_check_chev_pip(tab) == 1)
+			return ;
 		i = 0;
 		while (tab && tab[i])
 		{
@@ -523,6 +539,7 @@ void ft_parse_for_exec(t_data *data)
 			}
 		}
 	}
+	// ft_print_list(&data->exec);
 	ft_clean_list_exec(data);
 	ft_modif_in_out(data);
 	data->pip.nb_pipes = ft_count_pipes(&data->exec);
