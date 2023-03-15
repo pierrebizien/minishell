@@ -1,0 +1,25 @@
+	while (str && str[i])
+	{
+		if (str[i] == '\'' || str[i] == '"')
+			ft_maj_quotes(&dq, &sq, str[i]);
+		if (str[i] == '$' && str[i + 1] && !is_ws(str[i + 1]) && sq == -1)
+		{
+			var = ft_check_env(str + i + 1, data);
+			// if (!var && ft_is_hd(str, i))
+			if (var)
+			{
+				ft_memmove(str + i, str + i, ft_strlen(str + i));
+				str = ft_put_str_in_str(str, var, i);
+				i = 0;
+			}
+			else if (!var && !ft_is_hd(str, i))
+			{
+
+				ft_memmove(str + i, str + i + ft_strlen_var_env(str + i), ft_strlen(str + i + ft_strlen_var_env(str + i))+ 1);
+				str = ft_put_str_in_str(str, var, i);
+				i = 0;
+			}
+		}
+		i++;
+	}
+	return (str);

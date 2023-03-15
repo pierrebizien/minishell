@@ -100,6 +100,8 @@ int	is_out(char *str)
 	char **tmp;
 
 	i = 0;
+	if (!str || !str[0])
+		return (0);
 	tmp = ft_split(str, '/');
 	if (!tmp)
 		return (-1);
@@ -116,6 +118,7 @@ int	contain_token(t_exec* begin, int token, int m) // ET PAS STDOUT
 	tmp = begin;
 	begin = tmp;
 	count = 0;
+	fprintf(stderr, "au d2btu token vut %d et m vaut %d \n", token , m);
 	while (begin && count < m)
 	{
 		if (begin->id == F_PIPE)
@@ -124,11 +127,13 @@ int	contain_token(t_exec* begin, int token, int m) // ET PAS STDOUT
 	}
 	while (begin && begin->id != F_PIPE)
 	{
+		fprintf(stderr, "begin->id = %d token vaut %d is out vaut %d\n", begin->id, token, is_out(begin->str));
 		if (begin->id == token && !is_out(begin->str))
 			return (1);
 		begin = begin->next;
 	}
 	begin = tmp;
+	fprintf(stderr, "tpken %d cooucou\n", token);
 	return (0);
 }
 
@@ -180,6 +185,7 @@ void ft_dup_manage(t_data *data, int m)
 	}
 	else if (contain_token(&data->exec, F_DELIMITER, m) || contain_token(&data->exec, F_DELIMITER_SQ, m))
 	{
+		fprintf(stderr, "HEY\n");
 		tmp_fd = ft_search_hd_name(&data->exec, m);
 		dup2(tmp_fd, 0);
 		ft_close(&tmp_fd);
@@ -398,6 +404,7 @@ void	ft_pipex(t_data *data)
 	if (!data->pip.nb_pipes)
 		if(ft_exec_built_in_solo(begin, data))
 			return ;
+	fprintf(stderr, "Le sexe\n");
 	begin = &data->exec;
 	while (begin)
 	{

@@ -144,6 +144,7 @@ char	*ft_check_env(char *str, t_data *data)
 		return (ft_itoa(data->last_err_num));
 	while (tmp_env)
 	{
+		fprintf(stderr, "ca boucle\n");
 		if (!strncmp(str, tmp_env->key, ft_strlen_var_env(str)))
 			return (tmp_env->value);
 		tmp_env = tmp_env->next;
@@ -243,7 +244,6 @@ char *ft_convert_variable_hd(char *str, t_data *data, char *delimiter)
 	}
 	return (str);
 }
-
 char *ft_parse(char *str, t_data *data) // CHECK GLOBAL ET SI > >OUT RETURN ERROR
 {
 	char *tmp;
@@ -465,7 +465,7 @@ void ft_parse_for_exec(t_data *data)
 			else
 			{
 				fprintf(stderr, "au else i = %d\n", i);
-				if (ft_strlen(tab[i - 1]) != 0 && 0 < i && tab[i-1] && !ft_strncmp(tab[i - 1], "<", ft_strlen(tab[i - 1])))
+				if (0 < i && tab[i-1] && ft_strlen(tab[i - 1]) != 0 && !ft_strncmp(tab[i - 1], "<", ft_strlen(tab[i - 1])))
 				{
 					fprintf(stderr, "1\ti = %d\n", i);
 					tmp->id = F_INFILE;
@@ -474,7 +474,7 @@ void ft_parse_for_exec(t_data *data)
 					tmp = tmp->next;
 					i++;	
 				}
-				else if (ft_strlen(tab[i - 1]) != 0 && 0 < i && tab[i-1] && !ft_strncmp(tab[i - 1], "<<", ft_strlen(tab[i - 1])))
+				else if (0 < i && tab[i-1] && ft_strlen(tab[i - 1]) != 0 && !ft_strncmp(tab[i - 1], "<<", ft_strlen(tab[i - 1])))
 				{
 					fprintf(stderr, "2\ti = %d\n", i);
 					if (ft_find_if_hd_quotes(data, count_p))
@@ -486,7 +486,7 @@ void ft_parse_for_exec(t_data *data)
 					tmp = tmp->next;
 					i++;	
 				}
-				else if (ft_strlen(tab[i - 1]) != 0 && 0 < i && tab[i - 1] && !ft_strncmp(tab[i - 1], ">", ft_strlen(tab[i - 1])))
+				else if (0 < i && tab[i-1] && ft_strlen(tab[i - 1]) != 0 && !ft_strncmp(tab[i - 1], ">", ft_strlen(tab[i - 1])))
 				{
 					fprintf(stderr, "3\ti = %d\n", i);
 					tmp->id = F_TRONC;
@@ -495,7 +495,7 @@ void ft_parse_for_exec(t_data *data)
 					tmp = tmp->next;
 					i++;	
 				}
-				else if (ft_strlen(tab[i - 1]) != 0 && 0 < i && tab[i-1] && !ft_strncmp(tab[i - 1], ">>", ft_strlen(tab[i - 1])))
+				else if (0 < i && tab[i-1] && ft_strlen(tab[i - 1]) != 0 && !ft_strncmp(tab[i - 1], ">>", ft_strlen(tab[i - 1])))
 				{
 					fprintf(stderr, "4\ti = %d\n", i);
 					tmp->id = F_APPEND;
