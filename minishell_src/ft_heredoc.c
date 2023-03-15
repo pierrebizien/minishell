@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:39:00 by pbizien           #+#    #+#             */
-/*   Updated: 2023/03/13 14:59:27 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/03/15 16:09:13 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*ft_heredoc(t_data *data, char *delimiter, int w, int sq)
 
 	if (w)
 	{
-		name = ft_randomstr("/tmp/hd_", NULL, 16);
+		name = ft_randomstr("hd_", NULL, 16);
 		data->pip.tmp_fd = open(name, O_TRUNC | O_CREAT | O_RDWR, 00777);
 		if (data->pip.tmp_fd == -1)
 			return (NULL); // GERER

@@ -19,7 +19,7 @@ int	ft_exec_cmd_solo(t_data *data, char **cmd)
 		ft_init_in_out(data);
 		dup2(data->pip.saved_stdin, 0);
 		dup2(data->pip.saved_stdout, 1);
-		return (0);
+		return (1);
 	}
 	else
 		return (0);
@@ -45,7 +45,7 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 	}
 	begin = tmp;
 	if (!ft_test_builtin(cmd))
-		return (ft_free_dchar(cmd), 1);
+		return (ft_free_dchar(cmd), 0);
 	while (begin && begin->id != F_PIPE)
 	{
 		if (begin->id == F_FALSEI)
@@ -137,7 +137,13 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 		begin = begin->next;
 		
 	}
-	ft_exec_cmd_solo(data, cmd);
+	if (ft_exec_cmd_solo(data, cmd) == 1)
+	{
+		fprintf(stderr, "ici c 1\n");
+		ft_free_dchar(cmd);
+		return (1);
+	}
+	fprintf(stderr, "ici c 0\n");
 	ft_free_dchar(cmd);
 	return (0);
 }

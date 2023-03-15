@@ -173,6 +173,7 @@ void ft_dup_manage(t_data *data, int m)
 	int tmp_fd;
 
 		fprintf(stderr, "COUCOU\n");
+	ft_print_list(&data->exec);
 	if (contain_token(&data->exec, F_INFILE, m))
 	{
 		dup2(data->pip.fd_in, 0);
@@ -242,7 +243,6 @@ char **ft_get_env(t_env *env)
 	output = malloc(sizeof(char *) * (ft_len_list(env) + 1));
 	if (!output)
 		return (NULL);
-	fprintf(stderr, "LEN LIST VAUT %d\n", ft_len_list(env));
 	output[ft_len_list(env)] = 0;
 	while (env)
 	{
@@ -256,7 +256,6 @@ char **ft_get_env(t_env *env)
 		env = env->next;
 		count++;
 	}
-	fprintf(stderr, "count = %d\n\n\n\n\n\n\n", count);
 	env  = tmp;
 	return (output);
 }
@@ -270,11 +269,8 @@ void	ft_exec_cmd(t_data *data, char **cmd, int m)
 
 	env_tab = ft_get_env(&data->env);
 	paths_env = ft_get_paths(data);
-	// perror("EXEC");
 	path_exec = find_path(cmd, paths_env);
-	// fprintf(stderr, "ID VAUT %d \n\n\n", id2);
 	ft_dup_manage(data, m);
-	// dup2(data->pip.fd_in, 0);
 	if (ft_exec_builtin(cmd, data) == 1)
 	{
 		ft_close_all(data->pip);
@@ -283,15 +279,6 @@ void	ft_exec_cmd(t_data *data, char **cmd, int m)
 		else
 			return ;
 	}
-	int i;
-	i = 0;
-	while(i < ft_len_list(&data->env) + 1)
-	{
-		fprintf(stderr, "i %d tab %s\n", i, env_tab[i]);
-		i++;
-	}
-	fprintf(stderr, "%s", env_tab[0]);
-	// ft_print_dchar(env_tab);
 	execve(path_exec, cmd, env_tab);
 	if (errno == 13)
 	{
@@ -409,7 +396,7 @@ void	ft_pipex(t_data *data)
 	begin = &data->exec;
 	m = 0;
 	if (!data->pip.nb_pipes)
-		if(!ft_exec_built_in_solo(begin, data))
+		if(ft_exec_built_in_solo(begin, data))
 			return ;
 	begin = &data->exec;
 	while (begin)
