@@ -241,6 +241,36 @@ char *ft_convert_variable_hd(char *str, t_data *data, char *delimiter)
 	}
 	return (str);
 }
+
+
+int ft_verif_just_chev(char *str)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while (str && str[i])
+	{
+		if (str[i] == '<' && str[i+1] != '<')
+		{
+			j = i + 1;
+			while (1)
+			{
+				if (is_ws(str[j]))
+					j++;
+				else if (str[j] == '<' || str[j] == '>' || str[j] == '|')
+					return (ft_putstr_fd("syntax error near unexpected token `", 2), ft_putchar_fd(str[j], 2), ft_putstr_fd("'\n", 2), 0);
+				else if (str[j] == '\0')
+					return (ft_putstr_fd("syntax error near unexpected token `newline'\n", 2), 0);
+				else
+					break ;
+			}
+		}
+		i++;
+	}
+	return (1);
+}
+
 char *ft_parse(char *str, t_data *data) // CHECK GLOBAL ET SI > >OUT RETURN ERROR
 {
 	char *tmp;
@@ -253,9 +283,11 @@ char *ft_parse(char *str, t_data *data) // CHECK GLOBAL ET SI > >OUT RETURN ERRO
 	str = ft_clean(str);
 	if (!str)
 		return (NULL);
+	if (ft_verif_just_chev(str) == 0)
+		return (NULL);
 	data->args = ft_split_k(str, "|");
-	// fprintf(stderr, "\n\nApres split pipe vaut :\n");
 	ft_clean_ws(data);
+	// fprintf(stderr, "\n\nApres split pipe vaut :\n");
 	// ft_print_dchar(data->args);
 	 return (str);
 }
