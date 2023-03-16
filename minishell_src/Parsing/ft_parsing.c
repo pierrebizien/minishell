@@ -256,7 +256,7 @@ int ft_verif_just_chev(char *str)
 	while (str && str[i])
 	{
 		ft_maj_quotes(&dq, &sq, str[i]);
-		if (str[i] == '<' && str[i+1] != '<' && dq != 1 && sq != 1)
+		if (dq != 1 && sq != 1 && ((str[i] == '<' && str[i+1] != '<') || (str[i] == '>' && str[i+1] != '>') || str[i] == '|'))
 		{
 			j = i + 1;
 			while (1)

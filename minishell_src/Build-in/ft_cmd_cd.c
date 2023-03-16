@@ -29,11 +29,11 @@ char *ft_just_cd(t_data *data)
 
 void	ft_change_pwd(t_data *data)
 {
-    t_env *tmp;
+	t_env *tmp;
 
     tmp = &data->env;
 	
-	if (ft_strcmp(data->pwd, getcwd(NULL, 0)) == 0)
+	if (ft_strcmp(data->pwd, getcwd(NULL, 0)) == 0)    tmp = &data->env;
 		return ;
 	// fprintf(stderr, "\n\nget pwd = %s(%s)\n", getcwd(NULL, 0), data->pwd);
 	free(data->oldpwd);

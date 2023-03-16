@@ -26,6 +26,7 @@ SRCS += ft_cmd_pwd.c
 SRCS += ft_cmd_cd.c
 SRCS += ft_cmd_unset.c
 SRCS += ft_cmd_exit.c
+SRCS += ft_free_env.c
 
 
 # SRC_PATH += /libft/src
@@ -42,7 +43,7 @@ SRC_PATH += ./minishell_src/
 
 
 OBJS = ${patsubst %.c, ${OBJS_PATH}/%.o, ${SRCS}}
-OBJS_PATH = ./minishell_src/.Object
+OBJS_PATH = ./minishell_src/_Objet
 
 
 HEAD_PATH += -I ./minishell_src/_Include
