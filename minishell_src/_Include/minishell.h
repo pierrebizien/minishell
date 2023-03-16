@@ -119,7 +119,8 @@ int ft_init(char **env, t_data *data);
 int		ft_create_env(char **envp, t_data *data);
 t_env	*ft_lstnew_env(void);
 void	ft_free_env(t_data *data);
-int		ft_env(t_data *data);
+int		ft_env(char **cmd, t_data *data);
+
 
 
 //FT_UNSET
@@ -132,13 +133,13 @@ int		ft_export(char **str, t_data *data);
 int		ft_echo(char **cmd);
 
 // FT_PWD
-int		ft_pwd(t_data *data);
+int		ft_pwd(char **cmd, t_data *data);
 
 // FT_CD
 int		ft_cd(char **str, t_data *data);
 
 // FT_EXIT
-int	ft_exit(char **str, t_data *data);
+int		ft_exit(char **str, t_data *data);
 
 //FT_TEST_BUILDTIN
 int		ft_test_builtin(char **str);
