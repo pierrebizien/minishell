@@ -56,21 +56,12 @@ char	*find_path(char **cmd, char **paths_env)
 		return (ft_putstr_fd(": Command not found\n", 2), exit(127), NULL);
 	if (ft_test_builtin(cmd) == 1)
 		return (NULL);
-	fprintf(stderr, "cmd[0] %d\n", access(cmd[0], X_OK));
-	if (!access(cmd[0], R_OK) && (cmd[0][0] != '.' || cmd[0][0] != '/'))
+	if (cmd[0][0] == '.' && access(cmd[0], F_OK))
+		return (ft_putstr_fd(cmd[0], 2), ft_putstr_fd(": No such file or directory\n", 2), exit(127), NULL);
+	if (!access(cmd[0], F_OK))
 	{
 		if (access(cmd[0], X_OK))
 			return (perror(cmd[0]), exit(errno), NULL);
-		else if (cmd[0][0] != '.' && cmd[0][0] != '/')
-		{
-			ft_putstr_fd(cmd[0], 2);
-			if (ft_strchr(cmd[0], '/'))
-				ft_putstr_fd(": No such file or directory\n", 2);
-			else
-				ft_putstr_fd(": Command not found\n", 2);
-			return (exit(127), NULL);
-
-		}
 		else
 			return (ft_strdup(cmd[0]));
 	}
@@ -281,6 +272,9 @@ void	ft_exec_cmd(t_data *data, char **cmd, int m)
 		else
 			return ;
 	}
+	fprintf(stderr, "%s", path_exec);
+	ft_print_dchar(cmd);
+	ft_print_dchar(env_tab);
 	execve(path_exec, cmd, env_tab);
 	if (errno == 13)
 	{
@@ -383,7 +377,7 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 void	ft_init_in_out(t_data *data)
 {
 	data->pip.fd_in = dup(data->pip.saved_stdin);
-	data->pip.fd_out = dup(data->pip.saved_stdin);
+	data->pip.fd_out = dup(data->pip.saved_stdout);
 }
 void	ft_pipex(t_data *data)
 {

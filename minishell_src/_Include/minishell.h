@@ -162,7 +162,8 @@ void	ft_print_dchar(char **strstr);
 
 char	**ft_split_k(char const *s, char *sep);
 char	**ft_split_l(char const *s, char *sep);
-
+//FT_STRTRIM_LQ
+char	*ft_strtrim_lq(char const *s1);
 
 //FT_FREE
 void	ft_print_dargs(char **strstr);

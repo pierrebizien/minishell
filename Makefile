@@ -15,6 +15,7 @@ SRCS += main.c
 SRCS += pipex_utils.c
 SRCS += ft_heredoc.c
 SRCS += ft_exec_built_in.c
+SRCS += ft_strtrim_lq.c
 
 
 SRCS += ft_cmd_test_buildin.c

@@ -49,7 +49,8 @@ static size_t	count_words_4(char const *s, char *sep)
 	while (s && s[i])
 	{
 		if (s[i] == '"' || s[i] == '\'')
-			ft_maj_quotes(&dq, &sq, s[i]);
+			if (i <= 0 || s[i - 1] != '\\')
+				ft_maj_quotes(&dq, &sq, s[i]);
 		// fprintf(stderr, "s[%zu[i]] vaut %s et dq vaut %d et sq vaut %d et words %zu\n", i, s + i, dq, sq, words);
 		if ((dq == -1 && sq == -1) && (!is_sep_4(s[i], sep) && (is_sep_4(s[i + 1], sep) || s[i + 1] == '\0')))
 			words++;
