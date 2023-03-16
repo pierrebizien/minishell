@@ -243,7 +243,29 @@ char *ft_convert_variable_hd(char *str, t_data *data, char *delimiter)
 }
 
 
-int ft_verif_just_chev(char *str)
+int ft_verif_et_ou(char *str)
+{
+	int i;
+	int dq;
+	int sq;
+
+	i = 0;
+	dq = -1;
+	sq = -1;
+	while (str && str[i])
+	{
+		ft_maj_quotes(&dq, &sq, str[i]);
+		if (dq != 1 && sq != 1 && str[i] == '&')
+			return (ft_putstr_fd("error: unexpected `&'\n", 2), 0);
+		else if (dq != 1 && sq != 1 && str[i] == '|' && str[i+1] == '|')
+			return (ft_putstr_fd("error: unexpected `||'\n", 2), 0);
+		else
+			i++;
+	}
+	return (1);
+}
+
+int ft_verif_just_chev_and_pipe(char *str)
 {
 	int i;
 	int j;
@@ -288,7 +310,7 @@ char *ft_parse(char *str, t_data *data) // CHECK GLOBAL ET SI > >OUT RETURN ERRO
 	str = ft_clean(str);
 	if (!str)
 		return (NULL);
-	if (ft_verif_just_chev(str) == 0)
+	if (ft_verif_et_ou(str) == 0 || ft_verif_just_chev_and_pipe(str) == 0)
 		return (NULL);
 	data->args = ft_split_k(str, "|");
 	ft_clean_ws(data);
