@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_lquotes.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 18:29:02 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/03/07 15:23:08 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/03/16 11:44:11 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern t_data data;
+extern int err_value;
 
 static int	is_sep_4(char c, char *sep)
 {

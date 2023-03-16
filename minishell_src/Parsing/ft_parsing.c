@@ -1,6 +1,6 @@
 #include "../_Include/minishell.h"
 
-extern t_data data;
+extern int err_value;
 
 // void ft_print_dchar(char **strstr)
 // {
@@ -311,7 +311,10 @@ char *ft_parse(char *str, t_data *data) // CHECK GLOBAL ET SI > >OUT RETURN ERRO
 	if (!str)
 		return (NULL);
 	if (ft_verif_et_ou(str) == 0 || ft_verif_just_chev_and_pipe(str) == 0)
+	{
+		err_value = 2;
 		return (NULL);
+	}
 	data->args = ft_split_k(str, "|");
 	ft_clean_ws(data);
 	// fprintf(stderr, "\n\nApres split pipe vaut :\n");

@@ -1,6 +1,29 @@
 #include "../_Include/minishell.h"
 
 
+int	ft_verif_good_exit(char *str)
+{
+	int i;
+	char nbr[19] = "9223372036854775807";
+
+	fprintf(stderr, "nbr = %s\n", nbr);
+	if (19 < ft_strlen(str))
+		return (1);
+	if (ft_strlen(str) < 19)
+		return (0);
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == nbr[i])
+			i++;
+		else if (str[i] < nbr[i])
+			return (0);
+		else if (str[i] > nbr[i])
+			return (1);
+	}
+	return (0);
+}
+
 int	ft_exit(char **cmd, t_data *data)
 {
 	int i;
@@ -28,6 +51,10 @@ int	ft_exit(char **cmd, t_data *data)
 	{
 		ft_putstr_fd("exit: too many arguments\n", 1);
 		return (1);
+	}
+	else if (ft_verif_good_exit(cmd[1]) == 1)
+	{
+		exit(2);
 	}
 	else
 	{

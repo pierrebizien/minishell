@@ -1,6 +1,6 @@
 #include "../_Include/minishell.h"
 
-extern t_data data;
+extern int err_value;
 
 int event(void)
 { 
