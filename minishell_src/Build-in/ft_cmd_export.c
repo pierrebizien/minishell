@@ -75,7 +75,8 @@ static int ft_verif_str_export(char *str)
 	int i;
 
 	i = 0;
-	if (ft_isdigit(str[i]) == 1 || str[i] == '=' || str[i] == '+')
+	fprintf(stderr, "str = %s\n", str);
+	if (ft_isdigit(str[i]) == 1 || str[i] == '=' || str[i] == '+' || str[i] == '$')
 		return (1);
 	while (str[++i] != '=' && str[i] != '+')
 	{

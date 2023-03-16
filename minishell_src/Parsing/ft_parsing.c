@@ -120,8 +120,7 @@ size_t	ft_strlen_var_env(char *str)
 		return (2);
 	while (str && str[i])
 	{
-		// fprintf(stderr, "\t\tstrlen[%d]= %s(%c)(%d)\n\n", i, str + i, str[i], str[i]);
-		if (!ft_isalnum(str[i]) && str[i] != '_')
+		if (!ft_isalnum(str[i]) && str[i] != '_' && str[i] != '?')
 			return (i);
 		i++;
 	}
@@ -142,7 +141,7 @@ char	*ft_check_env(char *str, t_data *data)
 	t_env *tmp_env;
 	tmp_env = &data->env;
 	if (str && str[0]=='?')
-		return (ft_itoa(data->last_err_num));
+		return (ft_itoa(err_value));
 	while (tmp_env)
 	{
 		if (!strncmp(str, tmp_env->key, ft_strlen_var_env(str)))
@@ -188,21 +187,16 @@ char *ft_convert_variable(char *str, t_data *data)
 		if (str[i] == '$' && str[i + 1] && !is_ws(str[i + 1]) && sq == -1)
 		{
 			var = ft_check_env(str + i + 1, data);
+			fprintf(stderr, "var = %s\n", var);
 			// if (!var && ft_is_hd(str, i))
 			if (!ft_is_hd(str, i))
 			{
-				fprintf(stderr, "ON RENTRE\n");
+				fprintf(stderr, "ON RENTRE = %zu\n", ft_strlen_var_env(str + i));
 				ft_memmove(str + i, str + i + ft_strlen_var_env(str + i), ft_strlen(str + i + ft_strlen_var_env(str + i))+ 1);
+				fprintf(stderr, "atr apres mem = %s\n", str);
 				str = ft_put_str_in_str(str, var, i);
 				i = 0;
 			}
-			// else if (!var && !ft_is_hd(str, i))
-			// {
-
-			// 	ft_memmove(str + i, str + i + ft_strlen_var_env(str + i), ft_strlen(str + i + ft_strlen_var_env(str + i))+ 1);
-			// 	str = ft_put_str_in_str(str, var, i);
-			// 	i = 0;
-			// }
 		}
 		i++;
 	}
@@ -312,7 +306,10 @@ char *ft_parse(char *str, t_data *data) // CHECK GLOBAL ET SI > >OUT RETURN ERRO
 	if (!str)
 		return (NULL);
 	if (ft_verif_et_ou(str) == 0 || ft_verif_just_chev_and_pipe(str) == 0)
+	{
+		err_value = 2;
 		return (NULL);
+	}
 	data->args = ft_split_k(str, "|");
 	ft_clean_ws(data);
 	// fprintf(stderr, "\n\nApres split pipe vaut :\n");

@@ -1,6 +1,7 @@
 #include "./minishell.h"
 
-int id2;
+extern int err_value;
+
 
 char **ft_join_dstr(char **dest, char* src)
 {
@@ -429,9 +430,9 @@ void	ft_pipex(t_data *data)
 		
 		m++;
 	}
-		waitpid(data->pip.last_id, &data->last_err_num, 0);
-		if (WIFEXITED(data->last_err_num))
-			data->last_err_num = WEXITSTATUS(data->last_err_num);
+		waitpid(data->pip.last_id, &err_value, 0);
+		if (WIFEXITED(err_value))
+			err_value = WEXITSTATUS(err_value);
 		while (wait(NULL) != -1)
 			(void)begin;
 		ft_close_all(data->pip);

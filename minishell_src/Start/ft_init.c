@@ -1,6 +1,6 @@
 #include "../_Include/minishell.h"
 
-extern t_data data;
+extern int err_value;
 
 int event(void)
 { 
@@ -25,5 +25,7 @@ int ft_init(char **env, t_data *data)
 	ft_init_pipex_pipe(data);
 	ft_create_env(env, data);
 	rl_event_hook=event;
+	FILE *none = fopen("/dev/null", "r");
+	rl_outstream = none;
 	return (0);
 }
