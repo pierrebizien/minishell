@@ -1,0 +1,12 @@
+(10) 	 wefwef
+cmd[0] -1
+ICIIIII
+wefwef: Command not found
+(10) 	 wef
+cmd[0] -1
+ICIIIII
+wef: Command not found
+(10) 	 ef
+cmd[0] -1
+ICIIIII
+ef: Command not found

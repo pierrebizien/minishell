@@ -112,7 +112,7 @@ int	main(int ac, char **av, char**envp)
 	t_data data;
 
 	ft_init(envp, &data);
-	ft_logo();
+	// ft_logo();
 	ft_init_sigint();
 	ft_init_sigquit();
 	str = ft_prompt();
