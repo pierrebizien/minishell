@@ -18,11 +18,14 @@ void	ft_unlink_hd(t_exec *begin)
 	t_exec *tmp;
 
 	tmp = begin;
+
+	// ft_print_list(begin);
+
 	while (tmp)
 	{
-		if (begin->hd_filename != NULL)
+		if (tmp->hd_filename != NULL)
 		{
-			unlink(begin->hd_filename);
+			unlink(tmp->hd_filename);
 		}
 		tmp = tmp->next;
 	}

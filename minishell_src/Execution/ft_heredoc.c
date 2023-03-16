@@ -62,7 +62,6 @@ char	*ft_heredoc(t_data *data, char *delimiter, int w, int sq)
 	while (str && (ft_strncmp(delimiter, str, ft_strlen(delimiter) + 1)))
 	{
 		free(str);
-
 		rl_event_hook=event;
 		str = readline(">");
 		if (err_value == 130)

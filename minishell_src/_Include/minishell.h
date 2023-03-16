@@ -99,7 +99,7 @@ typedef	struct	s_data
 
 
 //FT_PARSING
-void	ft_parse_for_exec(t_data *data);
+int	ft_parse_for_exec(t_data *data);
 char	*ft_parse(char *str, t_data *data);
 int		is_ws(char c);
 char	*ft_check_env(char *str, t_data *data);

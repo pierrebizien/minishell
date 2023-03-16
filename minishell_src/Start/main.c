@@ -49,6 +49,7 @@ char *ft_prompt(void)
 	free(path);
 	path = ft_put_str_in_str("\001\e[36;1m\002minishell (\001\e[32;1m\002/\001\e[36;1m\002) \001\e[0m\002", minipath, 30);
 	// path = ft_put_str_in_str("\e[36;1mminishell (\e[32;1m/\e[36;1m) \e[0m", minipath, 26);
+	//GLOBAL POUR 2
 	char *str = readline(path);
 	return (str);
 }
@@ -122,12 +123,10 @@ int	main(int ac, char **av, char**envp)
 		if (str && str[0])
 		{
 			str = ft_parse(str, &data);
-			if (str)
+			if (str && !ft_parse_for_exec(&data))
 			{
-				ft_parse_for_exec(&data);
-				ft_print_list(&data.exec);			
 				ft_pipex(&data);
-				ft_close_all(data.pip);
+				// ft_close_all(data.pip);
 				ft_unlink_hd(&data.exec);
 			}
 			ft_init_sigint();

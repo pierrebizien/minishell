@@ -46,6 +46,8 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 		begin = begin->next;
 	}
 	begin = tmp;
+	if (!cmd)
+		return (ft_free_dchar(cmd), 1);
 	if (!ft_test_builtin(cmd))
 		return (ft_free_dchar(cmd), 0);
 	while (begin && begin->id != F_PIPE)
@@ -85,23 +87,6 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 				return(errno);
 			}
 			ft_close(&tmp_fd);
-		}
-		else if (begin->id == F_DELIMITER)
-		{
-			// fprintf(stderr, "HELLLO70\n");
-			ft_heredoc(data, begin->str, 1 , 0);
-
-		}
-		else if (begin->id == F_DELIMITER_SQ)
-		{
-			// fprintf(stderr, "HELLLO75\n");
-			ft_heredoc(data, begin->str, 1 , 1);
-
-		}
-		else if (begin->id == F_FALSED)
-		{
-			// fprintf(stderr, "HELLLO80\n");
-			ft_heredoc(data, begin->str, 0, 0);
 		}
 		else if (begin->id == F_APPEND)
 		{

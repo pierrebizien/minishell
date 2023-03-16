@@ -88,7 +88,6 @@ char	*find_path(char **cmd, char **paths_env)
 		i++;
 		free(tmp);
 	}
-		fprintf(stderr, "ICIIIII\n");
 	ft_putstr_fd(cmd[0], 2);
 	if (ft_strchr(cmd[0], '/'))
 		ft_putstr_fd(": No such file or directory\n", 2);
@@ -281,7 +280,6 @@ void	ft_exec_cmd(t_data *data, char **cmd, int m)
 		else
 			return ;
 	}
-	
 	execve(path_exec, cmd, env_tab);
 	if (errno == 13)
 	{
@@ -340,8 +338,6 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 			}
 			ft_close(&tmp_fd);
 		}
-		else if (begin->id == F_FALSED)
-			ft_heredoc(data, begin->str, 0, 0);
 		else if (begin->id == F_CMD)
 		{
 			cmd = ft_join_dstr(cmd, begin->str);
