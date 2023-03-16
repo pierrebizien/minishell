@@ -1,5 +1,7 @@
 #include "../_Include/minishell.h"
 
+extern int err_value;
+
 
 int	ft_verif_good_exit_signe(char *str)
 {
@@ -50,14 +52,14 @@ int	ft_verif_good_exit(char *str)
 	return (0);
 }
 
-int	ft_exit(char **cmd, t_data *data)
+int	ft_exit(char **cmd)
 {
 	int i;
 	int good_exit;
 
 	i = 0;
 	if (ft_strstrlen(cmd) == 1)
-		exit(data->last_err_num);
+		exit(err_value);
 	good_exit = 1;
 	while (cmd[1][i])
 	{
