@@ -1,12 +1,38 @@
 #include "../_Include/minishell.h"
 
 
+int	ft_verif_good_exit_signe(char *str)
+{
+	int i;
+	char nbr[20] = "_9223372036854775807";
+
+	if (20 < ft_strlen(str))
+		return (1);
+	if (ft_strlen(str) < 20)
+		return (0);
+	i = 1;
+	while (str[i])
+	{
+		if (i == 19 && str[0] == '-' && str[i] <= (nbr[i] + 1) )
+			return (0);
+		else if (i == 19 && str[0] == '-' && str[i] > (nbr[i] + 1))
+			return (1);
+		else if (str[i] == nbr[i])
+			i++;
+		else if (str[i] < nbr[i])
+			return (0);
+		else if (str[i] > nbr[i])
+			return (1);
+	}
+	return (0);
+}
+
 int	ft_verif_good_exit(char *str)
 {
 	int i;
 	char nbr[19] = "9223372036854775807";
-
-	fprintf(stderr, "nbr = %s\n", nbr);
+	if (str[0] == '-' || str[0] == '+')
+		return (ft_verif_good_exit_signe(str));
 	if (19 < ft_strlen(str))
 		return (1);
 	if (ft_strlen(str) < 19)
@@ -35,7 +61,7 @@ int	ft_exit(char **cmd, t_data *data)
 	good_exit = 1;
 	while (cmd[1][i])
 	{
-		if(ft_isdigit(cmd[1][i]) == 0)
+		if(ft_isdigit(cmd[1][i]) == 0 && cmd[1][i] != '-' && cmd[1][i] != '+')
 			good_exit = 0;
 		i++;
 	}
@@ -54,6 +80,7 @@ int	ft_exit(char **cmd, t_data *data)
 	}
 	else if (ft_verif_good_exit(cmd[1]) == 1)
 	{
+		fprintf(stderr, "error\n\n");
 		exit(2);
 	}
 	else
