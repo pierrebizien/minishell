@@ -57,7 +57,6 @@ typedef struct	s_exec
 	char			*str;
 	int				id;
 	char			*hd_filename;
-	int				touch;
 	struct s_exec	*next;
 	struct s_exec	*prev;
 
@@ -170,6 +169,8 @@ char	*ft_strtrim_lq(char const *s1);
 //FT_FREE
 void	ft_print_dargs(char **strstr);
 void	ft_unlink_hd(t_exec *begin);
+void ft_free_end(t_data *data);
+
 
 int	ft_in_q(int in_q);
 

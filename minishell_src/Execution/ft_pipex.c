@@ -167,17 +167,17 @@ void ft_dup_manage(t_data *data, int m)
 {
 	int tmp_fd;
 
-	if (contain_token(&data->exec, F_INFILE, m))
-	{
-		dup2(data->pip.fd_in, 0);
-	}
-	else if (contain_token(&data->exec, F_DELIMITER, m) || contain_token(&data->exec, F_DELIMITER_SQ, m))
+	if (contain_token(&data->exec, F_DELIMITER, m) || contain_token(&data->exec, F_DELIMITER_SQ, m))
 	{
 		tmp_fd = ft_search_hd_name(&data->exec, m);
 		dup2(tmp_fd, 0);
 		ft_close(&tmp_fd);
 	}
-	else if (m % 2 == 0)
+	else if (!m || contain_token(&data->exec, F_INFILE, m))
+	{
+		dup2(data->pip.fd_in, 0);
+	}
+	else if (m &&  m % 2 == 0)
 	{
 		ft_close(&data->pip.pipefd2[1]);
 		dup2(data->pip.pipefd2[0], 0);
@@ -194,13 +194,13 @@ void ft_dup_manage(t_data *data, int m)
 	{
 		dup2(data->pip.fd_out, 1);
 	}
-	else if (m % 2 == 0)
+	else if (!m || m % 2 == 0)
 	{
 		ft_close(&data->pip.pipefd1[0]);
 		dup2(data->pip.pipefd1[1], 1);
 		ft_close(&data->pip.pipefd1[1]);
 	}
-	else if (m % 2 == 1)
+	else
 	{
 		ft_close(&data->pip.pipefd2[0]);
 		dup2(data->pip.pipefd2[1], 1);
@@ -260,9 +260,9 @@ void	ft_exec_cmd(t_data *data, char **cmd, int m)
 	char **env_tab;
 	(void)cmd;
 
-	env_tab = ft_get_env(&data->env);
-	paths_env = ft_get_paths(data);
-	path_exec = find_path(cmd, paths_env);
+	env_tab = ft_get_env(&data->env); //GERER FREE ET FD SUR EXIT
+	paths_env = ft_get_paths(data); //GERER FREE ET FD SUR EXIT
+	path_exec = find_path(cmd, paths_env); //GERER FREE ET FD SUR EXIT
 	ft_dup_manage(data, m);
 	if (ft_exec_builtin(cmd, data) == 1)
 	{
@@ -279,8 +279,8 @@ void	ft_exec_cmd(t_data *data, char **cmd, int m)
 		ft_putstr_fd(": Is a directory\n", 2);
 		exit(126);
 	}
-	// fprintf(stderr, "PROBLEME D EXEC\n");
 	perror("");
+	//CLOSE ET FREE TOUT
 	exit(errno);
 }
 
@@ -306,7 +306,7 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 			if (tmp_fd == -1)
 			{
 				perror(begin->str);
-				exit(errno);
+				exit(1);
 			}
 			ft_close(&tmp_fd);
 		}
@@ -316,7 +316,7 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 			if (tmp_fd == -1)
 			{
 				perror(begin->str);
-				exit(errno);
+				exit(1);
 			}
 			ft_close(&tmp_fd);
 		}
@@ -326,7 +326,7 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 			if (tmp_fd == -1)
 			{
 				perror(begin->str);
-				exit(errno);
+				exit(1);
 			}
 			ft_close(&tmp_fd);
 		}
@@ -342,7 +342,7 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 			if (data->pip.fd_out == -1)
 			{
 				perror(begin->str);
-				exit(errno);
+				exit(1);
 			}
 		}
 		else if (begin->id == F_TRONC)
@@ -350,8 +350,9 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 			data->pip.fd_out = open(begin->str, O_CREAT | O_RDWR | O_TRUNC, 0644);
 			if (data->pip.fd_out == -1)
 			{
+				fprintf(stderr, "errno vaut %d\n", errno);
 				perror(begin->str);
-				exit(errno);
+				exit(1);
 			}
 		}
 			else if (begin->id == F_INFILE)
@@ -360,7 +361,7 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 			if (data->pip.fd_in == -1)
 			{
 				perror(begin->str);
-				exit(errno);
+				exit(1);
 			}
 		}
 		begin = begin->next;

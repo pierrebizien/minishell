@@ -77,7 +77,13 @@ char	*ft_heredoc(t_data *data, char *delimiter, int w, int sq)
 		err_value = 130;
 		return (NULL);
 	}
-	free(str);
+	if (!str)
+	{
+		ft_putstr_fd("warning: here-document delimited by end-of-file (wanted '", 2);
+		ft_putstr_fd(delimiter, 2);
+		ft_putstr_fd("'\n", 2);
+	}
+	free(NULL);
 	if(w)
 	{
 		ft_close(&data->pip.tmp_fd);

@@ -48,9 +48,11 @@ char *ft_prompt(void)
 	minipath = ft_substr(path, i, ft_strlen(path + i));
 	free(path);
 	path = ft_put_str_in_str("\001\e[36;1m\002minishell (\001\e[32;1m\002/\001\e[36;1m\002) \001\e[0m\002", minipath, 30);
+	path = ft_put_str_in_str(path, ft_itoa(err_value), 0);
 	// path = ft_put_str_in_str("\e[36;1mminishell (\e[32;1m/\e[36;1m) \e[0m", minipath, 26);
 	//GLOBAL POUR 2
 	char *str = readline(path);
+	free(path);
 	return (str);
 }
 
@@ -111,6 +113,7 @@ int	main(int ac, char **av, char**envp)
 
 	(void)ac;
 	(void)av;
+	
 	ft_init(envp, &data);
 	if(isatty(0) == 0)
 		data.bool_redir_0 = 1;
@@ -151,6 +154,7 @@ int	main(int ac, char **av, char**envp)
 	free(str);
 	ft_close(&data.pip.saved_stdin);
 	ft_close(&data.pip.saved_stdout);
+	ft_free_end(&data);
 	if (!data.bool_redir_0 && !data.bool_redir_2)
 		write(2,"\nexit\n", 6);
 	return (err_value);

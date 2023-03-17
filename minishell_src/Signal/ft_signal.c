@@ -4,6 +4,7 @@ extern int err_value;
 void	ft_ctrlc(int a)
 {
 	(void)a;
+	err_value = 130;
 	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
@@ -13,6 +14,7 @@ void	ft_ctrlc(int a)
 void	ft_ctrlc_exec(int a)
 {
 	(void)a;
+	err_value = 130;
 	write(1, "\n", 2);
 	return ;
 }
