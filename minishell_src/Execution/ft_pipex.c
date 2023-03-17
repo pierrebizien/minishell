@@ -272,18 +272,15 @@ void	ft_exec_cmd(t_data *data, char **cmd, int m)
 		else
 			return ;
 	}
-	fprintf(stderr, "%s", path_exec);
-	ft_print_dchar(cmd);
-	ft_print_dchar(env_tab);
 	execve(path_exec, cmd, env_tab);
 	if (errno == 13)
 	{
 		ft_putstr_fd(cmd[0],2);
-		ft_putstr_fd(": Is a direeeectory\n", 2);
+		ft_putstr_fd(": Is a directory\n", 2);
 		exit(126);
 	}
 	// fprintf(stderr, "PROBLEME D EXEC\n");
-	perror("EXEC");
+	perror("");
 	exit(errno);
 }
 

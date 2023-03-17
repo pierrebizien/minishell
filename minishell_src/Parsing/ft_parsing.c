@@ -59,8 +59,8 @@ char	*ft_clean(char *str)
 		}
 		else if (str[i] == '\'' && !in_dq)
 		{
-			if (i <= 0 || str[i - 1] != '\\')
-				in_sq = ft_in_q(in_sq);
+			// if (i <= 0 || str[i - 1] != '\\')
+			in_sq = ft_in_q(in_sq);
 		}
 		if (!in_dq && !in_sq && is_ws(str[i]) && is_ws(str[i + 1]))
 			ft_memmove(str + i, (str + i + 1), ft_strlen(str + i) + 2);
@@ -331,6 +331,45 @@ t_exec	*ft_lstnew_pars(void)
 	return (new);
 }
 
+char	*ft_pop_q(char *str)
+{
+	int	i;
+	int	sq;
+	int	dq;
+	
+	i = 0;
+	sq = 0;
+	dq = 0;
+	while (str && str[i])
+	{
+		if (str[i] == '"' && !sq)
+		{
+			if (i <= 0 || str[i - 1] != '\\')
+			{
+				ft_memmove(str + i , str + i + 1, ft_strlen(str + i + 1) + 1);
+				dq = ft_in_q(dq);
+			}
+			else
+				ft_memmove(str + i - 1 , str + i, ft_strlen(str + i) + 1);
+		}
+		else if (str[i] == '\'' && !dq)
+		{
+			if (i <= 0 || str[i - 1] != '\\')
+			{
+				ft_memmove(str + i , str + i + 1, ft_strlen(str + i + 1) + 1);
+				sq = ft_in_q(sq);
+			}
+			else
+				ft_memmove(str + i - 1 , str + i, ft_strlen(str + i) + 1);
+		}
+		else
+			i++;
+	}
+	return (str);
+	
+}
+
+
 void ft_clean_list_exec(t_data *data)
 {
 	t_exec *tmp;
@@ -342,6 +381,7 @@ void ft_clean_list_exec(t_data *data)
 	while (tmp->next != NULL)
 	{
 		tmp->str = ft_strtrim_lq(tmp->str);
+		tmp->str = ft_pop_q(tmp->str);
 		before = tmp;
 		tmp = tmp->next;
 		if (tmp != NULL)
@@ -642,7 +682,6 @@ int ft_parse_for_exec(t_data *data)
 		}
 	}
 	ft_clean_list_exec(data);
-	ft_print_list(&data->exec);
 	if (ft_modif_in_out(data))
 		return (1);
 	data->pip.nb_pipes = ft_count_pipes(&data->exec);

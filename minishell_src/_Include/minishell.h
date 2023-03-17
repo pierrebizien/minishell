@@ -89,6 +89,8 @@ typedef	struct	s_data
 	char	**envp;
 	char	*sep;
 	int		hd;
+	int		bool_redir_0;
+	int		bool_redir_2;
 	char	*pwd;
 	char	*oldpwd;
 	int		err_built_in;

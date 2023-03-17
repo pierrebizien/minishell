@@ -106,17 +106,25 @@ void	ft_init_sigquit(void)
 
 int	main(int ac, char **av, char**envp)
 {
-	(void)ac;
-	(void)av;
-	(void)envp;
 	char *str;
 	t_data data;
 
+	(void)ac;
+	(void)av;
 	ft_init(envp, &data);
-	// ft_logo();
+	if(isatty(0) == 0)
+		data.bool_redir_0 = 1;
+	if(isatty(2) == 0)
+		data.bool_redir_2 = 1;
+	fprintf(stderr,"%d\n", data.bool_redir_0);
+	if (!data.bool_redir_0 && !data.bool_redir_2)
+		ft_logo();
 	ft_init_sigint();
 	ft_init_sigquit();
-	str = ft_prompt();
+	if (!data.bool_redir_0 && !data.bool_redir_2)
+		str = ft_prompt();
+	else
+		str = get_next_line(0);
 	add_history(str);
 	while (str)
 	{
@@ -126,16 +134,24 @@ int	main(int ac, char **av, char**envp)
 			if (str && !ft_parse_for_exec(&data))
 			{
 				ft_pipex(&data);
-				// ft_close_all(data.pip);
+				ft_close_all(data.pip);
 				ft_unlink_hd(&data.exec);
 			}
 			ft_init_sigint();
 			ft_init_sigquit();
 
 		}
-		str = ft_prompt();
+		free(str);
+		if (!data.bool_redir_0 && !data.bool_redir_2)
+			str = ft_prompt();
+		else
+			str = get_next_line(0);
 		add_history(str);
 	}
-	printf("\nexit\n");
-	return (0);
+	free(str);
+	ft_close(&data.pip.saved_stdin);
+	ft_close(&data.pip.saved_stdout);
+	if (!data.bool_redir_0 && !data.bool_redir_2)
+		write(2,"\nexit\n", 6);
+	return (err_value);
 }
