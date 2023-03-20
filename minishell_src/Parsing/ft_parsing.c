@@ -258,7 +258,8 @@ int ft_verif_et_ou(char *str)
 	return (1);
 }
 
-int ft_verif_just_chev_and_pipe(char *str)
+
+int ft_verif_pipe(char *str)
 {
 	int i;
 	int j;
@@ -271,7 +272,45 @@ int ft_verif_just_chev_and_pipe(char *str)
 	while (str && str[i])
 	{
 		ft_maj_quotes(&dq, &sq, str[i]);
-		if (dq != 1 && sq != 1 && ((str[i] == '<' && str[i+1] != '<') || (str[i] == '>' && str[i+1] != '>') || str[i] == '|'))
+		if (dq != 1 && sq != 1 && str[i] == '|')
+		{
+			j = i - 1;
+			fprintf(stderr, "j = %d\t str[j] = |%c|\n", j, str[j]);
+			while (0 <= j && is_ws(str[j]) == 1)
+				j--;
+			if (j == -1)
+				return (ft_putstr_fd("syntax error near unexpected token `|'\n", 2), 0);
+			j = i + 1;
+			while (1)
+			{
+				if (is_ws(str[j]))
+					j++;
+				else if (str[j] == '\0')
+					return (ft_putstr_fd("syntax error near unexpected token `newline'\n", 2), 0);
+				else
+					break ;
+			}
+		}
+		i++;
+	}
+	return (1);
+}
+
+
+int ft_verif_just_chev(char *str)
+{
+	int i;
+	int j;
+	int dq;
+	int sq;
+
+	i = 0;
+	dq = -1;
+	sq = -1;
+	while (str && str[i])
+	{
+		ft_maj_quotes(&dq, &sq, str[i]);
+		if (dq != 1 && sq != 1 && ((str[i] == '<' && str[i+1] != '<') || (str[i] == '>' && str[i+1] != '>')))
 		{
 			j = i + 1;
 			while (1)
@@ -303,7 +342,7 @@ char *ft_parse(char *str, t_data *data) // CHECK GLOBAL ET SI > >OUT RETURN ERRO
 	str = ft_clean(str);
 	if (!str)
 		return (NULL);
-	if (ft_verif_et_ou(str) == 0 || ft_verif_just_chev_and_pipe(str) == 0)
+	if (ft_verif_et_ou(str) == 0 || ft_verif_just_chev(str) == 0 || ft_verif_pipe(str) == 0)
 	{
 		err_value = 2;
 		return (NULL);
