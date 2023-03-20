@@ -1,6 +1,6 @@
 #include "../_Include/minishell.h"
 
-int	ft_exec_cmd_solo(t_data *data, char **cmd)
+int	ft_exec_cmd_solo(t_data *data, char **cmd, char **cmd_quotes)
 {
 	char **paths_env;
 	char *path_exec;
@@ -15,7 +15,7 @@ int	ft_exec_cmd_solo(t_data *data, char **cmd)
 	if (ft_test_builtin(cmd) == 1)
 	{
 		ft_close_all(data->pip);
-		ft_exec_builtin(cmd, data);
+		ft_exec_builtin(cmd, data, cmd_quotes);
 		ft_init_in_out(data);
 		dup2(data->pip.saved_stdin, 0);
 		dup2(data->pip.saved_stdout, 1);
@@ -28,9 +28,11 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 {
 	int tmp_fd;
 	char **cmd;
+	char **cmd_quotes;
 	t_exec *tmp;
 
 	cmd = NULL;
+	cmd_quotes = NULL;
 	tmp = begin;
 	// ft_print_list(begin);
 	begin = tmp;
@@ -40,7 +42,9 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 		if (begin->id == F_CMD)
 		{
 			cmd = ft_join_dstr(cmd, begin->str);
-			if (!cmd)
+			cmd_quotes = ft_join_dstr(cmd_quotes, begin->quotes);
+			fprintf(stderr, "\n\n");
+			if (!cmd || !cmd_quotes)
 				return (MAL_ERCODE); //GERER
 		}
 		begin = begin->next;
@@ -124,7 +128,7 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 		begin = begin->next;
 		
 	}
-	if (ft_exec_cmd_solo(data, cmd) == 1)
+	if (ft_exec_cmd_solo(data, cmd, cmd_quotes) == 1)
 	{
 		ft_free_dchar(cmd);
 		return (1);

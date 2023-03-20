@@ -56,6 +56,7 @@ typedef struct	s_exec
 {
 	char			*str;
 	int				id;
+	char			*quotes;
 	char			*hd_filename;
 	struct s_exec	*next;
 	struct s_exec	*prev;
@@ -131,7 +132,7 @@ int		ft_unset(char **strr, t_data *data);
 int		ft_export(char **str, t_data *data);
 
 // FT_ECHO
-int		ft_echo(char **cmd);
+int		ft_echo(char **cmd, char **cmd_quotes);
 
 // FT_PWD
 int		ft_pwd(char **cmd, t_data *data);
@@ -144,7 +145,7 @@ int		ft_exit(char **str);
 
 //FT_TEST_BUILDTIN
 int		ft_test_builtin(char **str);
-int		ft_exec_builtin(char **cmd, t_data *data);
+int		ft_exec_builtin(char **cmd, t_data *data, char **cmd_quotes);
 
 void	ft_print_list(t_exec *begin);
 

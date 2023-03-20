@@ -2,7 +2,7 @@
 
 extern int err_value;
 
-int ft_exec_builtin(char **cmd, t_data *data)
+int ft_exec_builtin(char **cmd, t_data *data, char **cmd_quotes)
 {
 	if (ft_strlen(cmd[0]) == 0)
 		return (0);
@@ -18,7 +18,7 @@ int ft_exec_builtin(char **cmd, t_data *data)
 	}
 	if (cmd && ft_strncmp(cmd[0], "echo", ft_strlen(cmd[0])) == 0)
 	{
-		err_value = ft_echo(cmd);
+		err_value = ft_echo(cmd, cmd_quotes);
 		return (1);
 	}
 	if (cmd && ft_strncmp(cmd[0], "exit", ft_strlen(cmd[0])) == 0)

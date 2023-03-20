@@ -417,6 +417,12 @@ void ft_clean_list_exec(t_data *data)
 	tmp->prev = NULL;
 	while (tmp->next != NULL)
 	{
+		
+		tmp->quotes = malloc(sizeof(char) * 2);
+		tmp->quotes[0] = '0';
+		tmp->quotes[1] = '\0';
+		if (tmp->str[0] == '\'' || tmp->str[0] == '"')
+			tmp->quotes[0] = '1';
 		tmp->str = ft_strtrim_lq(tmp->str);
 		tmp->str = ft_pop_q(tmp->str);
 		before = tmp;

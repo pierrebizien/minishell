@@ -3,52 +3,47 @@
 
 
 
-int ft_verif_nl_echo(char *str)
-{
-	int i;
-	int verif;
-
-	i = 5;
-	verif = 0;
-	while (str[i])
-	{
-		if (str[i - 1] != '-' && str[i] == '-' && verif == 0)
-			verif = 1;
-		else if ((is_ws(str[i]) || (str[i + 1] == '\0' && str[i] == 'n')) && verif == 2)
-			return (0);
-		else if (str[i] == 'n' && verif <= 2)
-			verif = 2;
-		else 
-			verif = 0;
-		i++;
-	}
-	return (1);
-}
-
-int	ft_echo(char **cmd)
+int ft_verif_nl_echo(char **cmd)
 {
 	int i;
 	int j;
-	int nl;
-	char *str;
-	str = ft_tab_to_str(cmd, ' ');
-	fprintf(stderr, "str = |%s|\n", str);
-	i = 5;
-	nl = ft_verif_nl_echo(str);
-	while (str && str[i] && is_ws(str[i]))
-		i++;
-	j = i + 1;
-	fprintf(stderr, "str[%d] = |%c|\n", i, str[i]);
-	while (str && str[i] && str[i] == '-' && str[j] == 'n')
-		j++;
-	fprintf(stderr, "str[%d] = |%d|\n", j, str[j]);
-	if (str[i] != '\0' && is_ws(str[i]) == 0)
+	int last;
+
+	last = 0;
+	i = 1;
+	while (cmd && cmd[i] && cmd[i][0] == '-')
 	{
-		fprintf(stderr, "vrai -n %d\n", is_ws(str[i]));
-		i = j;
+		fprintf(stderr, "i = %d\n",i);
+		j = 1;
+		while (cmd[i][j] == 'n')
+			j++;
+		if (cmd[i][j] != '\0')
+			return (i);
+		i++;
 	}
-	fprintf(stderr, "str + i = |%s|\n", str + i);
-	
+		fprintf(stderr, "i = %d\n",i);
+	return (i);
+}
+
+int	ft_echo(char **cmd, char **cmd_quotes)
+{
+	int i;
+	// int j;
+	int nl;
+	ft_print_dchar(cmd);
+	ft_print_dchar(cmd_quotes);
+	nl = 1;
+	i = ft_verif_nl_echo(cmd);
+	if (1 < i)
+		nl = 0;
+	while (cmd[i])
+	{
+		ft_putstr_fd(cmd[i], 1);
+		ft_putstr_fd(" ", 1);
+		i++;
+	}
+	if (nl)
+		ft_putstr_fd("\n", 1);
 	return (0);	
 }
 // int main(void)

@@ -253,7 +253,7 @@ char **ft_get_env(t_env *env)
 	return (output);
 }
 
-void	ft_exec_cmd(t_data *data, char **cmd, int m)
+void	ft_exec_cmd(t_data *data, char **cmd, int m, char **cmd_quotes)
 {
 	char **paths_env;
 	char *path_exec;
@@ -264,7 +264,7 @@ void	ft_exec_cmd(t_data *data, char **cmd, int m)
 	paths_env = ft_get_paths(data); //GERER FREE ET FD SUR EXIT
 	path_exec = find_path(cmd, paths_env); //GERER FREE ET FD SUR EXIT
 	ft_dup_manage(data, m);
-	if (ft_exec_builtin(cmd, data) == 1)
+	if (ft_exec_builtin(cmd, data, cmd_quotes) == 1)
 	{
 		ft_close_all(data->pip);
 		if (data->pip.nb_pipes)
@@ -296,8 +296,10 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 {
 	int tmp_fd;
 	char **cmd;
+	char **cmd_quotes;
 
 	cmd = NULL;
+	cmd_quotes = NULL;
 	while (begin && begin->id != F_PIPE)
 	{
 		if (begin->id == F_FALSEI)
@@ -333,7 +335,8 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 		else if (begin->id == F_CMD)
 		{
 			cmd = ft_join_dstr(cmd, begin->str);
-			if (!cmd)
+			cmd_quotes = ft_join_dstr(cmd_quotes, begin->quotes);
+			if (!cmd || !cmd_quotes)
 				return (MAL_ERCODE); //GERER
 		}
 		else if (begin->id == F_APPEND)
@@ -367,7 +370,7 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 		begin = begin->next;
 		
 	}
-	ft_exec_cmd(data, cmd, m);
+	ft_exec_cmd(data, cmd, m, cmd_quotes);
 	ft_free_dchar(cmd);
 	return (0);
 }
