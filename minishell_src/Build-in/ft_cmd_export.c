@@ -132,6 +132,29 @@ static int ft_ok_export(char *str, t_data *data)
 	return (0);
 }
 
+int	ft_verif_option_export(char *str)
+{
+	int i;
+	int dq;
+	int sq;
+
+	i = 0;
+	sq = -1;
+	dq = -1;
+	while (str[i])
+	{
+		fprintf(stderr, "str[%d] = %c\n", i, str[i]);
+		ft_maj_quotes(&dq, &sq, str[i]);
+		if (sq == 1 || dq == 1)
+			i++;
+		else if (is_ws(str[i]) && str[i+1] == '-')
+			return (ft_putstr_fd("export: usage: export [name[=value] ...] (no option)\n", 2), 1);
+		else 
+			i++;
+	}
+	return (0);
+}
+
 int ft_export(char **tab, t_data *data)
 {
 	int		i;
@@ -140,6 +163,8 @@ int ft_export(char **tab, t_data *data)
 
 	i = 0;
 	str = ft_tab_to_str(tab, ' ');
+	if (ft_verif_option_export(str))
+		return (0);
 	ft_strlen_WS(str);
 	if (ft_strncmp(str, "export", 7) == 0)
 		return (free(str), ft_just_export(data));

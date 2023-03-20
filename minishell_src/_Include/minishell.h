@@ -187,7 +187,9 @@ void	ft_init_in_out(t_data *data);
 //FT_UTILS
 int		ft_strstrlen(char **strstr);
 size_t	ft_strlen_WS(const char *str);
-char *ft_put_str_in_str(char *dest, char *src, int ind);
+char	*ft_put_str_in_str(char *dest, char *src, int ind);
+void	ft_maj_quotes(int *dq, int *sq, char c);
+
 
 //FT_HEREDOC
 char	*ft_heredoc(t_data *data, char *delimiter, int w, int sq);

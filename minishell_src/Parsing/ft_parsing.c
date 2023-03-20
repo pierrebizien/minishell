@@ -105,7 +105,7 @@ void	ft_clean_ws(t_data *data)
 	
 }
 
-static void	ft_maj_quotes(int *dq, int *sq, char c)
+void	ft_maj_quotes(int *dq, int *sq, char c)
 {
 	if (c == '"' && *sq == -1)
 		*dq *= -1;
@@ -221,7 +221,6 @@ char *ft_convert_variable_hd(char *str, t_data *data, char *delimiter)
 		if (str[i] == '$' && str[i + 1] && !is_ws(str[i + 1]) && sq == -1)
 		{
 			var = ft_check_env(str + i + 1, data);
-			// fprintf(stderr, "var vaut %s\n", var);
 			if (ft_strncmp(delimiter, str, ft_strlen(str)))
 			{
 				ft_memmove(str + i, str + i + ft_strlen_var_env(str + i), ft_strlen(str + i + ft_strlen_var_env(str + i))+ 1);
@@ -275,7 +274,6 @@ int ft_verif_pipe(char *str)
 		if (dq != 1 && sq != 1 && str[i] == '|')
 		{
 			j = i - 1;
-			fprintf(stderr, "j = %d\t str[j] = |%c|\n", j, str[j]);
 			while (0 <= j && is_ws(str[j]) == 1)
 				j--;
 			if (j == -1)

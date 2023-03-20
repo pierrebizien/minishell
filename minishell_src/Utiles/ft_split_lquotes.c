@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 18:29:02 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/03/16 11:44:11 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/20 13:46:10 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,7 @@ static int	is_sep_4(char c, char *sep)
 	return (0);
 	
 }
-static void	ft_maj_quotes(int *dq, int *sq, char c)
-{
-	if (c == '"' && *sq == -1)
-		*dq *= -1;
-	if (c == '\'' && *dq == -1)
-		*sq *= -1;
-}
+
 static size_t	count_words_4(char const *s, char *sep)
 {
 	size_t	words;
