@@ -28,25 +28,28 @@ int ft_verif_nl_echo(char *str)
 int	ft_echo(char **cmd)
 {
 	int i;
+	int j;
 	int nl;
 	char *str;
 	str = ft_tab_to_str(cmd, ' ');
+	fprintf(stderr, "str = |%s|\n", str);
 	i = 5;
 	nl = ft_verif_nl_echo(str);
-	while (str[i] && (str[i] == '-' || str[i] == 'n' || is_ws(str[i]) == 1))
-	{
-		if (str[i] == '-' && str[i+1] == '-')
-			break ;
+	while (str && str[i] && is_ws(str[i]))
 		i++;
-	}
-	while (str[i] && (str[i-1] == '-' || str[i-1] == 'n'))
-		i--;
-	ft_putstr_fd(str + i, 1);
-	if (nl == 1)
+	j = i + 1;
+	fprintf(stderr, "str[%d] = |%c|\n", i, str[i]);
+	while (str && str[i] && str[i] == '-' && str[j] == 'n')
+		j++;
+	fprintf(stderr, "str[%d] = |%d|\n", j, str[j]);
+	if (str[i] != '\0' && is_ws(str[i]) == 0)
 	{
-		ft_putstr_fd("\n", 1);
+		fprintf(stderr, "vrai -n %d\n", is_ws(str[i]));
+		i = j;
 	}
-	return (0);
+	fprintf(stderr, "str + i = |%s|\n", str + i);
+	
+	return (0);	
 }
 // int main(void)
 // {
