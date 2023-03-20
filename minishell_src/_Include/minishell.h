@@ -129,7 +129,9 @@ int		ft_env(char **cmd, t_data *data);
 int		ft_unset(char **strr, t_data *data);
 
 //FT_EXPORT
-int		ft_export(char **str, t_data *data);
+int		ft_export(char **tab, t_data *data, char **cmd_quotes);
+
+
 
 // FT_ECHO
 int		ft_echo(char **cmd, char **cmd_quotes);

@@ -188,7 +188,6 @@ char *ft_convert_variable(char *str, t_data *data)
 		if (str[i] == '$' && str[i + 1] && !is_ws(str[i + 1]) && sq == -1)
 		{
 			var = ft_check_env(str + i + 1, data);
-			// if (!var && ft_is_hd(str, i))
 			if (!ft_is_hd(str, i))
 			{
 				ft_memmove(str + i, str + i + ft_strlen_var_env(str + i), ft_strlen(str + i + ft_strlen_var_env(str + i))+ 1);
@@ -333,11 +332,15 @@ char *ft_parse(char *str, t_data *data) // CHECK GLOBAL ET SI > >OUT RETURN ERRO
 	char *tmp;
 
 	tmp = str;
+	fprintf(stderr, "coucou\n\n\n");
 	str = ft_convert_variable(str, data);
+	fprintf(stderr, "coucou\n\n\n");
 	str = ft_strtrim(str, WS);
 	if (!str || str[0] == '\0')
 		return (free(str), NULL);
+	fprintf(stderr, "coucou\n\n\n");
 	str = ft_clean(str);
+	fprintf(stderr, "coucou\n\n\n");
 	if (!str)
 		return (NULL);
 	if (ft_verif_et_ou(str) == 0 || ft_verif_just_chev(str) == 0 || ft_verif_pipe(str) == 0)
@@ -345,6 +348,7 @@ char *ft_parse(char *str, t_data *data) // CHECK GLOBAL ET SI > >OUT RETURN ERRO
 		err_value = 2;
 		return (NULL);
 	}
+
 	data->args = ft_split_k(str, "|");
 	ft_clean_ws(data);
 	// fprintf(stderr, "\n\nApres split pipe vaut :\n");

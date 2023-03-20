@@ -13,7 +13,7 @@ int ft_exec_builtin(char **cmd, t_data *data, char **cmd_quotes)
 	}
 	if (cmd && ft_strncmp(cmd[0], "export", ft_strlen(cmd[0])) == 0)
 	{
-		err_value = ft_export(cmd, data);
+		err_value = ft_export(cmd, data, cmd_quotes);
 		return (1);
 	}
 	if (cmd && ft_strncmp(cmd[0], "echo", ft_strlen(cmd[0])) == 0)
