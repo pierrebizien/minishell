@@ -3,7 +3,7 @@
 int	ft_pwd(char **cmd, t_data *data)
 {
 	int i;
-
+	char *tmp;
 	i = 0;
 	while (cmd && cmd[i])
 	{
@@ -14,7 +14,9 @@ int	ft_pwd(char **cmd, t_data *data)
 		i++;
 	}
 	(void)data;
-	ft_putstr_fd(getcwd(NULL, 0), 1);
+	tmp = getcwd(NULL, 0);
+	ft_putstr_fd(tmp, 1);
+	free(tmp);
 	ft_putstr_fd("\n", 1);
 	return (0);
 }
