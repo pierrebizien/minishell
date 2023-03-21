@@ -202,6 +202,8 @@ char *ft_convert_variable(char *str, t_data *data)
 				ft_memmove(str + i, str + i + ft_strlen_var_env(str + i), ft_strlen(str + i + ft_strlen_var_env(str + i))+ 1);
 				tmp = str;
 				str = ft_put_str_in_str(str, var, i);
+				if (!str)
+					return (free(var), free(tmp), NULL);
 				free(tmp);
 				free(var);
 			}
@@ -222,6 +224,7 @@ char *ft_convert_variable_hd(char *str, t_data *data, char *delimiter)
 	int dq;
 	int sq;
 	char *var;
+	char *tmp;
 	// int test_a_sup;
 	
 	sq = -1;
@@ -237,8 +240,15 @@ char *ft_convert_variable_hd(char *str, t_data *data, char *delimiter)
 			if (ft_strncmp(delimiter, str, ft_strlen(str)))
 			{
 				ft_memmove(str + i, str + i + ft_strlen_var_env(str + i), ft_strlen(str + i + ft_strlen_var_env(str + i))+ 1);
+				tmp = str;
 				str = ft_put_str_in_str(str, var, i);
+				if (!str)
+				{
+					err_value = MAL_ERCODE;
+					return (free(var), free(tmp), NULL);
+				}
 				free(var);
+				free(tmp);
 			}
 		}
 		if (str && str[i])
@@ -270,6 +280,12 @@ int ft_verif_et_ou(char *str)
 	return (1);
 }
 
+void	ft_pb_malloc(void)
+{
+	ft_putstr_fd("MALLOC ERROR\n", 2);
+	exit(MAL_ERCODE);
+
+}
 
 int ft_verif_pipe(char *str)
 {
@@ -341,12 +357,6 @@ int ft_verif_just_chev(char *str)
 	return (1);
 }
 
-void	ft_pb_malloc(void)
-{
-	ft_putstr_fd("MALLOC ERROR\n", 2);
-	exit(MAL_ERCODE);
-
-}
 
 char *ft_parse(char *str, t_data *data) // CHECK GLOBAL ET SI > >OUT RETURN ERROR
 {
@@ -425,6 +435,8 @@ void ft_clean_list_exec(t_data *data)
 	{
 		
 		tmp->quotes = malloc(sizeof(char) * 2);
+		if (!tmp->quotes)
+			return (ft_free_end(data), free(data->to_free.str), ft_pb_malloc());
 		tmp->quotes[0] = '0';
 		tmp->quotes[1] = '\0';
 		if (tmp->str[0] == '\'' || tmp->str[0] == '"')
@@ -545,6 +557,8 @@ int ft_modif_in_out(t_data *data)
 					ft_heredoc(data, tmp->str, 0, 0);
 					if (err_value == 130)
 						return (1);
+					if (err_value == MAL_ERCODE)
+						return (MAL_ERCODE);
 					ft_init_sigint();
 				}
 				else if (tmp->id == F_DELIMITER)
@@ -553,6 +567,8 @@ int ft_modif_in_out(t_data *data)
 					tmp->hd_filename = ft_heredoc(data, tmp->str, 1, 0);
 					if (err_value == 130)
 						return (1);
+					if (err_value == MAL_ERCODE)
+						return (MAL_ERCODE);
 					ft_init_sigint();
 				}
 				else 
@@ -561,6 +577,8 @@ int ft_modif_in_out(t_data *data)
 					tmp->hd_filename = ft_heredoc(data, tmp->str, 1, 1);
 					if (err_value == 130)
 						return (1);
+					if (err_value == MAL_ERCODE)
+						return (MAL_ERCODE);
 					ft_init_sigint();
 				}
 			}
@@ -672,6 +690,8 @@ int ft_parse_for_exec(t_data *data)
 				tmp->hd_filename = NULL;
 				tmp->str = ft_strdup(tab[i]);
 				tmp->next = ft_lstnew_pars();
+				if (!tmp->str || !tmp->next)
+					return (ft_free_list(&data->exec), ft_free_dchar(tab), ft_pb_malloc(), -42);
 				tmp = tmp->next;
 				tmp->next = NULL;
 				i++;
@@ -685,6 +705,8 @@ int ft_parse_for_exec(t_data *data)
 					tmp->hd_filename = NULL;
 					tmp->str = ft_strdup(tab[i]);
 					tmp->next = ft_lstnew_pars();
+					if (!tmp->str || !tmp->next)
+						return (ft_free_list(&data->exec), ft_free_dchar(tab), ft_pb_malloc(), -42);
 					tmp = tmp->next;
 					tmp->next = NULL;
 					i++;	
@@ -699,6 +721,8 @@ int ft_parse_for_exec(t_data *data)
 					tmp->hd_filename = NULL;
 					tmp->str = ft_strdup(tab[i]);
 					tmp->next = ft_lstnew_pars();
+					if (!tmp->str || !tmp->next)
+						return (ft_free_list(&data->exec), ft_free_dchar(tab), ft_pb_malloc(), -42);
 					tmp = tmp->next;
 					tmp->next = NULL;
 					i++;	
@@ -709,6 +733,8 @@ int ft_parse_for_exec(t_data *data)
 					tmp->hd_filename = NULL;
 					tmp->str = ft_strdup(tab[i]);
 					tmp->next = ft_lstnew_pars();
+					if (!tmp->str || !tmp->next)
+						return (ft_free_list(&data->exec), ft_free_dchar(tab), ft_pb_malloc(), -42);
 					tmp = tmp->next;
 					tmp->next = NULL;
 					i++;	
@@ -719,6 +745,8 @@ int ft_parse_for_exec(t_data *data)
 					tmp->hd_filename = NULL;
 					tmp->str = ft_strdup(tab[i]);
 					tmp->next = ft_lstnew_pars();
+					if (!tmp->str || !tmp->next)
+						return (ft_free_list(&data->exec), ft_free_dchar(tab), ft_pb_malloc(), -42);
 					tmp = tmp->next;
 					tmp->next = NULL;
 					i++;	
@@ -727,14 +755,17 @@ int ft_parse_for_exec(t_data *data)
 				{
 					tmp->id = F_CMD;
 					tmp->str = ft_strdup(tab[i]);
-					tmp->hd_filename = NULL;
 					tmp->next = ft_lstnew_pars();
+					if (!tmp->str || !tmp->next)
+						return (ft_free_list(&data->exec), ft_free_dchar(tab), ft_pb_malloc(), -42);
+					tmp->hd_filename = NULL;
 					tmp = tmp->next;
 					tmp->next = NULL;
 					i++;	
 				}
 			}
 		}
+		ft_free_dchar(tab);
 	}
 	ft_clean_list_exec(data);
 	if (ft_modif_in_out(data))

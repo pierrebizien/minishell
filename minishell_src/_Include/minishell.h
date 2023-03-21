@@ -52,6 +52,12 @@ typedef	struct	s_env
 	
 }               t_env;
 
+typedef	struct	s_to_free
+{
+	char 			*str;
+	
+}               t_to_free;
+
 typedef struct	s_exec
 {
 	char			*str;
@@ -83,6 +89,7 @@ typedef	struct	s_data
 	t_env	env;
 	t_exec	exec;
 	t_pip	pip;
+	t_to_free to_free;
     char 	**args;
 	int		ac;
 	char 	**av;
@@ -110,7 +117,8 @@ char *ft_convert_variable(char *str, t_data *data);
 char *ft_convert_variable_hd(char *str, t_data *data, char *delimiter);
 
 
-
+void	ft_pb_malloc(void);
+void	ft_free_list(t_exec *begin);
 
 
 //FT_INIT

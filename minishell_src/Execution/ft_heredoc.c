@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:39:00 by pbizien           #+#    #+#             */
-/*   Updated: 2023/03/21 15:08:04 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/21 17:46:28 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,11 @@ char	*ft_heredoc(t_data *data, char *delimiter, int w, int sq)
 	if (w)
 	{
 		name = ft_randomstr("/tmp/hd_", NULL, 16);
+		if (name == NULL)
+			return (NULL);
 		data->pip.tmp_fd = open(name, O_TRUNC | O_CREAT | O_RDWR, 00777);
 		if (data->pip.tmp_fd == -1)
-			return (NULL); // GERER
+			return (free(name), NULL); // GERER
 	}
 	if (!data->bool_redir_0 && !data->bool_redir_2)
 		str = readline(">");
@@ -54,13 +56,16 @@ char	*ft_heredoc(t_data *data, char *delimiter, int w, int sq)
 		str[ft_strlen(str) - 1] = '\0';
 	if (err_value == 130)
 	{
-		//FREE TOUT LE TINTOUIN
-		//MEME TINTOUIN QU EN DESSOUS METTRE DANS FONCTION PUR LA NONO
-		err_value = 130;
+		free(name);
+		free(str);
 		return (NULL);
 	}
 	if (!sq)
+	{
 		str = ft_convert_variable_hd(str, data, delimiter);
+		if(!str)
+			return (NULL);
+	}
 	if (w && str && ft_strncmp(delimiter, str, ft_strlen(delimiter) + 1))
 		ft_manage_write(str, delimiter, data, sq);
 	while (str && (ft_strncmp(delimiter, str, ft_strlen(delimiter) + 1)))
@@ -76,14 +81,19 @@ char	*ft_heredoc(t_data *data, char *delimiter, int w, int sq)
 		if (err_value == 130)
 			break;
 		if (!sq)
+		{
 			str = ft_convert_variable_hd(str, data, delimiter);
+			if(!str)
+				return (NULL);
+		}
 		if (w && str && ft_strncmp(delimiter, str, ft_strlen(delimiter) + 1))
 			ft_manage_write(str, delimiter, data, sq);
 	}
 	if (err_value == 130)
 	{
-		//FREE TOUT LE TINTOUIN
-		err_value = 130;
+		
+		free(name);
+		free(str);
 		return (NULL);
 	}
 	if (!str)
@@ -94,9 +104,7 @@ char	*ft_heredoc(t_data *data, char *delimiter, int w, int sq)
 	}
 	free(NULL);
 	if(w)
-	{
 		ft_close(&data->pip.tmp_fd);
-	}
 	return (name); 
 }
 

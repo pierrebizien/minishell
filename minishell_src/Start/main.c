@@ -121,6 +121,7 @@ int	main(int ac, char **av, char**envp)
 		if (str && str[0])
 		{
 			str = ft_parse(str, &data);
+			data.to_free.str = str;
 			if (!str && err_value != -42 && (data.bool_redir_0 || data.bool_redir_2))
 				return (ft_putstr_fd("Line: \n", 2), ft_putstr_fd(cpy_str_tty, 2), free(cpy_str_tty), err_value);
 			if (str && !ft_parse_for_exec(&data))
