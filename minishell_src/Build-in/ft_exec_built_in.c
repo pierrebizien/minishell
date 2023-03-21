@@ -60,11 +60,9 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 	{
 		if (begin->id == F_FALSEI)
 		{
-				// fprintf(stderr, "HELLLO10\n");
 			tmp_fd = open(begin->str, O_RDWR);
 			if (tmp_fd == -1)
 			{
-				// fprintf(stderr, "HELLLO1\n");
 				perror(begin->str);
 				err_value = 1;
 				return(errno);
@@ -73,11 +71,9 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 		}
 		else if (begin->id == F_FALSEA)
 		{
-				// fprintf(stderr, "HELLLO20\n");
 			tmp_fd = open(begin->str, O_RDWR | O_APPEND | O_CREAT, 0644);
 			if (tmp_fd == -1)
 			{
-				// fprintf(stderr, "HELLLO2\n");
 				perror(begin->str);
 				err_value = 1;
 				return(errno);
@@ -86,11 +82,9 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 		}
 		else if (begin->id == F_FALSET)
 		{
-				// fprintf(stderr, "HELLLO30\n");
 			tmp_fd = open(begin->str, O_CREAT | O_RDWR | O_TRUNC, 0644);
 			if (tmp_fd == -1)
 			{
-				// fprintf(stderr, "HELLLO3\n");
 				perror(begin->str);
 				err_value = 1;
 				return(errno);
@@ -99,11 +93,9 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 		}
 		else if (begin->id == F_APPEND)
 		{
-			fprintf(stderr, "HELLLO14\n");
 			data->pip.fd_out = open(begin->str, O_CREAT | O_RDWR | O_APPEND, 0644);
 			if (data->pip.fd_out == -1)
 			{
-				// fprintf(stderr, "HELLLO4\n");
 				perror(begin->str);
 				err_value = 1;
 				return(errno);
@@ -111,11 +103,9 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 		}
 		else if (begin->id == F_TRONC)
 		{
-			fprintf(stderr, "HELLLO15\n");
 			data->pip.fd_out = open(begin->str, O_CREAT | O_RDWR | O_TRUNC, 0644);
 			if (data->pip.fd_out == -1)
 			{
-				// fprintf(stderr, "HELLLO5\n");
 				perror(begin->str);
 				err_value = 1;
 				return(errno);
@@ -123,11 +113,9 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 		}
 		else if (begin->id == F_INFILE)
 		{
-			fprintf(stderr, "HELLLO16\n");
 			data->pip.fd_in = open(begin->str, O_RDONLY, 0644);
 			if (data->pip.fd_in == -1)
 			{
-				// fprintf(stderr, "HELLLO6\n");
 				perror(begin->str);
 				err_value = 1;
 				return(errno);

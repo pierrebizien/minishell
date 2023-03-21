@@ -54,6 +54,8 @@ char	*find_path(char **cmd, char **paths_env)
 	i = 0;
 	if (cmd && cmd[0] && !cmd[0][0])
 		return (ft_putstr_fd(": Command not found\n", 2), exit(127), NULL);
+	if (ft_strncmp(cmd[0], ".", ft_strlen(cmd[0])) == 0 || ft_strncmp(cmd[0], "..", ft_strlen(cmd[0])) == 0)
+		return (ft_putstr_fd(cmd[0], 2), ft_putstr_fd(": Command not found\n", 2), exit(127), NULL);
 	if (ft_test_builtin(cmd) == 1)
 		return (NULL);
 	if ((cmd[0][0] == '/' || cmd[0][0] == '.') && access(cmd[0], F_OK))
@@ -61,7 +63,7 @@ char	*find_path(char **cmd, char **paths_env)
 	if (!access(cmd[0], F_OK))
 	{
 		if (access(cmd[0], X_OK))
-			return (perror(cmd[0]), exit(errno), NULL);
+			return (perror(cmd[0]), exit(126), NULL);
 		else
 			return (ft_strdup(cmd[0]));
 	}
@@ -73,7 +75,7 @@ char	*find_path(char **cmd, char **paths_env)
 		if (!access(tmp, F_OK))
 		{
 			if (access(tmp, X_OK))
-				return (perror(cmd[i]), free(tmp), exit(errno), NULL);
+				return (perror(cmd[i]), free(tmp), exit(126), NULL);
 			else
 				return (tmp);
 		}
