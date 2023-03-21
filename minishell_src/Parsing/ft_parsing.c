@@ -68,6 +68,8 @@ char	*ft_clean(char *str)
 		{
 			// fprintf(stderr, "on rentre 1 str + i vaut %s et dq vaut %d\n", str + i, in_dq);
 			tmp = ft_put_str_in_str(str, " ", ++i);
+			if (!tmp)
+				return (free(str), ft_pb_malloc(), NULL);
 			free(str);
 			str = tmp;
 		}
@@ -75,6 +77,8 @@ char	*ft_clean(char *str)
 		{
 			// fprintf(stderr, "on rentre 2 str + i vaut %s et dq vaut %d\n", str + i, in_dq);
 			tmp = ft_put_str_in_str(str, " ", ++i);
+			if (!tmp)
+				return (free(str), ft_pb_malloc(), NULL);
 			free(str);
 			str = tmp;
 			i++;
@@ -337,6 +341,13 @@ int ft_verif_just_chev(char *str)
 	return (1);
 }
 
+void	ft_pb_malloc(void)
+{
+	ft_putstr_fd("MALLOC ERROR\n", 2);
+	exit(MAL_ERCODE);
+
+}
+
 char *ft_parse(char *str, t_data *data) // CHECK GLOBAL ET SI > >OUT RETURN ERROR
 {
 	char *tmp;
@@ -345,7 +356,7 @@ char *ft_parse(char *str, t_data *data) // CHECK GLOBAL ET SI > >OUT RETURN ERRO
 	tmp = str;
 	str = ft_strtrim(str, WS);
 	if (!str || str[0] == '\0')
-		return (free(tmp), NULL);
+		return (ft_pb_malloc(), free(tmp), NULL);
 	free(tmp);
 	str = ft_clean(str);
 	if (!str)
@@ -357,9 +368,9 @@ char *ft_parse(char *str, t_data *data) // CHECK GLOBAL ET SI > >OUT RETURN ERRO
 	}
 
 	data->args = ft_split_k(str, "|");
+	if (data->args == NULL)
+		return (ft_pb_malloc(), free(str), NULL);
 	ft_clean_ws(data);
-	// fprintf(stderr, "\n\nApres split pipe vaut :\n");
-	// ft_print_dchar(data->args);
 	 return (str);
 }
 
@@ -629,18 +640,17 @@ int ft_parse_for_exec(t_data *data)
 	char **tab;
 
 
-	// &data->exec.next = NULL;
 	tmp = &data->exec;
 	tmp->id = -43;
 	tmp->next = NULL;
 	tmp->str = NULL;
-	// tmp = NULL;
-	// tmp->next = NULL;
 	j = -1;
 	count_p = 0;
 	while (data->args[++j])
 	{
 		tab = ft_split_lq(data->args[j], " ");
+		if (tab == NULL)
+			return (ft_pb_malloc(), -42);
 		// ft_print_dchar(tab);
 		if (ft_check_chev_pip(tab) == 1)
 			return (1);

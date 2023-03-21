@@ -54,6 +54,7 @@ void ft_free_end(t_data *data)
 	free(data->pwd);
 	free(data->oldpwd);
 	rl_clear_history();
+	
 	// ft_free_list(&data->exec);
 	ft_free_env(data);
 }
