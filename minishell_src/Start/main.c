@@ -132,6 +132,7 @@ int	main(int ac, char **av, char**envp)
 				ft_pipex(&data);
 				ft_close_all(data.pip);
 				ft_unlink_hd(&data.exec);
+				ft_free_list(&data.exec);
 			}
 			ft_init_sigint();
 			ft_init_sigquit();

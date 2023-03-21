@@ -143,7 +143,7 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 	{
 		ft_free_dchar(cmd);
 		ft_free_dchar(cmd_quotes);
-		ft_free_list(&data->exec);
+	
 		return (1);
 	}
 	ft_free_dchar(cmd_quotes);

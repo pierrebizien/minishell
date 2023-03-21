@@ -39,7 +39,6 @@ void	ft_free_list(t_exec *begin)
 	tmp = begin;
 	if (begin)
 	{
-		fprintf(stderr, "HEY\n");
 		if (begin->str != NULL)
 			free(begin->str);
 		if (begin->hd_filename != NULL)
