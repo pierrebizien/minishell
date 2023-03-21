@@ -300,6 +300,7 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 	char **cmd;
 	char **cmd_quotes;
 
+	ft_init_sigint_exec();
 	cmd = NULL;
 	cmd_quotes = NULL;
 	while (begin && begin->id != F_PIPE)
@@ -409,8 +410,8 @@ void	ft_pipex(t_data *data)
 			pipe(data->pip.pipefd1);
 		else
 			pipe(data->pip.pipefd2);
-		// signal(SIGINT, ft_ctrlc_exec);
-		ft_init_sigint_exec();
+		signal(SIGINT, SIG_IGN);
+		// ft_init_sigint_exec();
 		ft_init_sigquit_exec();
 
 		data->pip.last_id = fork();

@@ -15,7 +15,7 @@ void	ft_ctrlc_exec(int a)
 {
 	(void)a;
 	err_value = 130;
-	write(1, "\n", 2);
+	// write(1, "\n", 2);
 	return ;
 }
 
