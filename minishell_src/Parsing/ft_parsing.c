@@ -436,7 +436,7 @@ void ft_clean_list_exec(t_data *data)
 		
 		tmp->quotes = malloc(sizeof(char) * 2);
 		if (!tmp->quotes)
-			return (ft_free_end(data), free(data->to_free.str), ft_pb_malloc());
+			return (ft_free_end(data), ft_pb_malloc());
 		tmp->quotes[0] = '0';
 		tmp->quotes[1] = '\0';
 		if (tmp->str[0] == '\'' || tmp->str[0] == '"')
@@ -658,6 +658,7 @@ int ft_parse_for_exec(t_data *data)
 	char **tab;
 
 
+	free(data->to_free.str);
 	tmp = &data->exec;
 	tmp->id = -43;
 	tmp->next = NULL;

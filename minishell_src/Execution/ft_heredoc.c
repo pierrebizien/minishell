@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:39:00 by pbizien           #+#    #+#             */
-/*   Updated: 2023/03/21 17:46:28 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/21 17:49:13 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ char	*ft_heredoc(t_data *data, char *delimiter, int w, int sq)
 		ft_putstr_fd(delimiter, 2);
 		ft_putstr_fd("')\n", 2);
 	}
-	free(NULL);
 	if(w)
 		ft_close(&data->pip.tmp_fd);
 	return (name); 
