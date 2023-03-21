@@ -30,16 +30,17 @@ char *ft_just_cd(t_data *data)
 void	ft_change_pwd(t_data *data)
 {
 	t_env *tmp;
+	char *chartmp;
 
     tmp = &data->env;
-	
-	if (ft_strcmp(data->pwd, getcwd(NULL, 0)) == 0)
+	chartmp = getcwd(NULL, 0);
+	if (ft_strcmp(data->pwd, chartmp) == 0)
 		return ;
+	free(chartmp);
 	free(data->oldpwd);
 	data->oldpwd = ft_strdup(data->pwd);	
 	free(data->pwd);
 	data->pwd = getcwd(NULL, 0);
-	// fprintf(stderr, "data->pwd = |%s|\n", data->pwd);
     while (tmp)
     {
         if (ft_strncmp(tmp->key, "PWD", ft_strlen(tmp->key)) == 0)
@@ -68,7 +69,8 @@ int	ft_cd(char **str, t_data *data)
 	{
 		path = ft_just_cd(data);
 		if (chdir(path) != 0)
-			return (perror(path), 1);
+			return (free(path), perror(path), 1);
+		free(path);
 	}
 	else
 	{

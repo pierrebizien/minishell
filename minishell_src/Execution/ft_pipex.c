@@ -353,9 +353,19 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 		else if (begin->id == F_CMD)
 		{
 			cmd = ft_join_dstr(cmd, begin->str);
-			cmd_quotes = ft_join_dstr(cmd_quotes, begin->quotes);
-			if (!cmd || !cmd_quotes)
+			if (!cmd)
+			{
+				ft_free_list(&data->exec);
+				ft_pb_malloc(data);
 				return (MAL_ERCODE); //GERER
+			}
+			cmd_quotes = ft_join_dstr(cmd_quotes, begin->quotes);
+			if (!cmd_quotes)
+			{
+				ft_free_list(&data->exec);
+				ft_pb_malloc(data);
+				return (MAL_ERCODE); //GERER
+			}
 		}
 		else if (begin->id == F_APPEND)
 		{
