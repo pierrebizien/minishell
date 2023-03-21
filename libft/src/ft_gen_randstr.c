@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_randomstr.c                                     :+:      :+:    :+:   */
+/*   ft_gen_randstr.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 15:24:56 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/03/09 16:26:40 by tchevrie         ###   ########.fr       */
+/*   Updated: 2023/03/21 18:04:11 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*ft_randomstr(char *prefix, char *suffix, size_t len)
 	fd = open("/dev/urandom", O_RDONLY);
 	if (fd == -1)
 		return (NULL);
-	buf = ft_calloc(sizeof(char), len + 1);
+	buf = NULL;
 	if (!buf)
 		return (close(fd), NULL);
 	if (!_buf_iteration(fd, buf, len))

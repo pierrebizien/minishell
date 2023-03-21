@@ -36,6 +36,7 @@ void	ft_free_list(t_exec *begin)
 {
 	t_exec *tmp;
 
+	tmp = begin;
 	while (begin)
 	{
 		if (begin->next)

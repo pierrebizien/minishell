@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:39:00 by pbizien           #+#    #+#             */
-/*   Updated: 2023/03/21 17:49:13 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/21 18:03:27 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,10 @@ char	*ft_heredoc(t_data *data, char *delimiter, int w, int sq)
 	{
 		name = ft_randomstr("/tmp/hd_", NULL, 16);
 		if (name == NULL)
+		{
+			err_value = MAL_ERCODE;
 			return (NULL);
+		}
 		data->pip.tmp_fd = open(name, O_TRUNC | O_CREAT | O_RDWR, 00777);
 		if (data->pip.tmp_fd == -1)
 			return (free(name), NULL); // GERER
@@ -52,7 +55,7 @@ char	*ft_heredoc(t_data *data, char *delimiter, int w, int sq)
 		str = readline(">");
 	else
 		str = get_next_line(0);
-	if (str[ft_strlen(str) - 1] == '\n')
+	if (str && ft_strlen(str) >= 1 && str[ft_strlen(str) - 1] == '\n')
 		str[ft_strlen(str) - 1] = '\0';
 	if (err_value == 130)
 	{

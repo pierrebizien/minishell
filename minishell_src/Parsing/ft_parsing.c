@@ -770,7 +770,11 @@ int ft_parse_for_exec(t_data *data)
 	}
 	ft_clean_list_exec(data);
 	if (ft_modif_in_out(data))
-		return (1);
+	{
+		if (err_value == MAL_ERCODE)
+			return(ft_free_list(&data->exec), ft_pb_malloc(), err_value);
+		return (err_value);
+	}
 	data->pip.nb_pipes = ft_count_pipes(&data->exec);
 	return (0);
 }
