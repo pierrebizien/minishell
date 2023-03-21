@@ -46,7 +46,10 @@ char	*ft_heredoc(t_data *data, char *delimiter, int w, int sq)
 		if (data->pip.tmp_fd == -1)
 			return (NULL); // GERER
 	}
+	// if (!data->bool_redir_0 && !data->bool_redir_2)
 	str = readline(">");
+	// else
+	// 	str = get_next_line(0);
 	if (err_value == 130)
 	{
 		//FREE TOUT LE TINTOUIN
@@ -62,7 +65,10 @@ char	*ft_heredoc(t_data *data, char *delimiter, int w, int sq)
 	{
 		free(str);
 		rl_event_hook=event;
+		// if (!data->bool_redir_0 && !data->bool_redir_2)
 		str = readline(">");
+		// else
+		// 	str = get_next_line(0);
 		if (err_value == 130)
 			break;
 		if (!sq)
@@ -80,7 +86,7 @@ char	*ft_heredoc(t_data *data, char *delimiter, int w, int sq)
 	{
 		ft_putstr_fd("warning: here-document delimited by end-of-file (wanted '", 2);
 		ft_putstr_fd(delimiter, 2);
-		ft_putstr_fd("'\n", 2);
+		ft_putstr_fd("')\n", 2);
 	}
 	free(NULL);
 	if(w)

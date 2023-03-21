@@ -56,7 +56,7 @@ char	*find_path(char **cmd, char **paths_env)
 		return (ft_putstr_fd(": Command not found\n", 2), exit(127), NULL);
 	if (ft_test_builtin(cmd) == 1)
 		return (NULL);
-	if (cmd[0][0] == '.' && access(cmd[0], F_OK))
+	if ((cmd[0][0] == '/' || cmd[0][0] == '.') && access(cmd[0], F_OK))
 		return (ft_putstr_fd(cmd[0], 2), ft_putstr_fd(": No such file or directory\n", 2), exit(127), NULL);
 	if (!access(cmd[0], F_OK))
 	{
