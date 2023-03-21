@@ -148,7 +148,7 @@ char	*ft_check_env(char *str, t_data *data)
 	while (tmp_env)
 	{
 		if (!strncmp(str, tmp_env->key, ft_strlen_var_env(str)))
-			return (tmp_env->value);
+			return (ft_strdup(tmp_env->value));
 		tmp_env = tmp_env->next;
 	}
 	return (NULL);
@@ -176,6 +176,7 @@ char *ft_convert_variable(char *str, t_data *data)
 	int dq;
 	int sq;
 	char *var;
+	char *tmp;
 	// int test_a_sup;
 	
 	sq = -1;
@@ -195,7 +196,10 @@ char *ft_convert_variable(char *str, t_data *data)
 			{
 				// fprintf(stderr, "ft_strlen_var_env(str + i) = %zu\n", ft_strlen_var_env(str + i));
 				ft_memmove(str + i, str + i + ft_strlen_var_env(str + i), ft_strlen(str + i + ft_strlen_var_env(str + i))+ 1);
+				tmp = str;
 				str = ft_put_str_in_str(str, var, i);
+				free(tmp);
+				free(var);
 			}
 			else
 				i++;
@@ -230,6 +234,7 @@ char *ft_convert_variable_hd(char *str, t_data *data, char *delimiter)
 			{
 				ft_memmove(str + i, str + i + ft_strlen_var_env(str + i), ft_strlen(str + i + ft_strlen_var_env(str + i))+ 1);
 				str = ft_put_str_in_str(str, var, i);
+				free(var);
 			}
 		}
 		if (str && str[i])
@@ -336,11 +341,12 @@ char *ft_parse(char *str, t_data *data) // CHECK GLOBAL ET SI > >OUT RETURN ERRO
 {
 	char *tmp;
 
-	tmp = str;
 	str = ft_convert_variable(str, data);
+	tmp = str;
 	str = ft_strtrim(str, WS);
 	if (!str || str[0] == '\0')
-		return (free(str), NULL);
+		return (free(tmp), NULL);
+	free(tmp);
 	str = ft_clean(str);
 	if (!str)
 		return (NULL);

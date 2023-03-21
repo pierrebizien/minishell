@@ -19,6 +19,7 @@ char *ft_prompt(void)
 {
 	char *path;
 	char *minipath;
+	char *str;
 	int i;
 
 	i = 0;
@@ -34,10 +35,11 @@ char *ft_prompt(void)
 	minipath = ft_substr(path, i, ft_strlen(path + i));
 	free(path);
 	path = ft_put_str_in_str("\001\e[36;1m\002minishell (\001\e[32;1m\002/\001\e[36;1m\002) \001\e[0m\002", minipath, 30);
+	free(minipath);
 	// path = ft_put_str_in_str(path, ft_itoa(err_value), 0);
 	// path = ft_put_str_in_str("\e[36;1mminishell (\e[32;1m/\e[36;1m) \e[0m", minipath, 26);
 	//GLOBAL POUR 2
-	char *str = readline(path);
+	str = readline(path);
 	free(path);
 	return (str);
 }
@@ -106,9 +108,6 @@ int	main(int ac, char **av, char**envp)
 		data.bool_redir_0 = 1;
 	if(isatty(2) == 0)
 		data.bool_redir_2 = 1;
-	// fprintf(stderr,"%d\n", data.bool_redir_0);
-	// if (!data.bool_redir_0 && !data.bool_redir_2)
-	// 	ft_logo();
 	ft_init_sigint();
 	ft_init_sigquit();
 	if (!data.bool_redir_0 && !data.bool_redir_2)
