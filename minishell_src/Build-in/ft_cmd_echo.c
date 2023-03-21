@@ -40,7 +40,8 @@ int	ft_echo(char **cmd, char **cmd_quotes)
 	while (cmd[i])
 	{
 		ft_putstr_fd(cmd[i], 1);
-		ft_putstr_fd(" ", 1);
+		if (cmd[i+1] != NULL)
+			ft_putstr_fd(" ", 1);
 		i++;
 	}
 	if (nl)
