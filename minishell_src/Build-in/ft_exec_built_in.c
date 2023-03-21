@@ -2,6 +2,15 @@
 
 extern int err_value;
 
+void	ft_free_err_mal_cmd_solo(char **cmd, char **cmd_quotes, t_data *data)
+{
+		ft_free_dchar(cmd);
+		ft_free_dchar(cmd_quotes);
+		ft_free_list(&data->exec);
+		ft_pb_malloc(data);
+}
+
+
 int	ft_exec_cmd_solo(t_data *data, char **cmd, char **cmd_quotes)
 {
 	char **paths_env;
@@ -10,8 +19,11 @@ int	ft_exec_cmd_solo(t_data *data, char **cmd, char **cmd_quotes)
 
 	// fprintf(stderr, "HEEHEHEHEHEHHEHEHE\n");
 	paths_env = ft_get_paths(data);
+	if (paths_env == NULL)
+		ft_free_err_mal_cmd_solo(cmd, cmd_quotes, data);
 	// perror("EXEC");
 	path_exec = find_path(cmd, paths_env);
+
 	ft_dup_manage(data, 0);
 	// dup2(data->pip.fd_in, 0);
 	if (ft_test_builtin(cmd) == 1)
@@ -44,18 +56,25 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 		if (begin->id == F_CMD)
 		{
 			cmd = ft_join_dstr(cmd, begin->str);
-			cmd_quotes = ft_join_dstr(cmd_quotes, begin->quotes);
-			// fprintf(stderr, "\n\n");
-			if (!cmd || !cmd_quotes)
+			if (!cmd)
+			{
+				ft_free_list(&data->exec);
+				ft_pb_malloc(data);
 				return (MAL_ERCODE); //GERER
+			}
+			cmd_quotes = ft_join_dstr(cmd_quotes, begin->quotes);
+			if (!cmd_quotes)
+			{
+				ft_free_list(&data->exec);
+				ft_pb_malloc(data);
+				return (MAL_ERCODE); //GERER
+			}
 		}
 		begin = begin->next;
 	}
 	begin = tmp;
-	if (!cmd)
-		return (ft_free_dchar(cmd), 1);
 	if (!ft_test_builtin(cmd))
-		return (ft_free_dchar(cmd), 0);
+		return (ft_free_dchar(cmd), ft_free_dchar(cmd_quotes), 0);
 	while (begin && begin->id != F_PIPE)
 	{
 		if (begin->id == F_FALSEI)

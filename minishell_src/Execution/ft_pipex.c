@@ -16,17 +16,16 @@ char **ft_join_dstr(char **dest, char* src)
 	{
 		tmp[i] = ft_strdup(dest[i]);
 		if (!tmp[i])
-			return (NULL); //GERER LE FREE DE CEUX D AVANT
+			return (ft_free_dchar(tmp), NULL); //GERER LE FREE DE CEUX D AVANT
 		i++;
 	}
 	tmp[i] = ft_strdup(src);
 	if (!tmp[i])
-		return (NULL); 
+		return (ft_free_dchar(tmp), NULL); 
 	i++;
 	tmp[i] = 0;
-	// ft_free_dchar(dest);
-	dest = tmp;
-	return (dest);
+	ft_free_dchar(dest);
+	return (tmp);
 }
 
 char **ft_get_paths(t_data *data)
@@ -46,7 +45,7 @@ char **ft_get_paths(t_data *data)
 	return (NULL);
 }
 
-char	*find_path(char **cmd, char **paths_env)
+char	*find_path(char **cmd, char **paths_env, t_data *data)
 {
 	char *tmp;
 	int	i;
@@ -411,9 +410,7 @@ void	ft_pipex(t_data *data)
 		else
 			pipe(data->pip.pipefd2);
 		signal(SIGINT, SIG_IGN);
-		// ft_init_sigint_exec();
 		ft_init_sigquit_exec();
-
 		data->pip.last_id = fork();
 		if (data->pip.last_id == 0)
 			ft_child_exec(begin, data, m);

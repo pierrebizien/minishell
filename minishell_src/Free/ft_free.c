@@ -37,15 +37,30 @@ void	ft_free_list(t_exec *begin)
 	t_exec *tmp;
 
 	tmp = begin;
-	while (begin)
+	if (begin)
 	{
-		if (begin->next)
-			tmp = begin->next;
+		fprintf(stderr, "HEY\n");
 		if (begin->str != NULL)
 			free(begin->str);
 		if (begin->hd_filename != NULL)
 			free(begin->hd_filename);
-		// free(begin);
+		if (begin->quotes != NULL)
+			free(begin->quotes);
+		begin = begin->next;
+	}
+	
+	while (begin)
+	{
+		// fprintf(stderr, "tmp->str vo %s\n", tmp->str);
+		
+		if (begin->str != NULL)
+			free(begin->str);
+		if (begin->hd_filename != NULL)
+			free(begin->hd_filename);
+		if (begin->quotes != NULL)
+			free(begin->quotes);
+		tmp = begin->next;
+		free(begin);
 		begin = tmp;
 	}
 }

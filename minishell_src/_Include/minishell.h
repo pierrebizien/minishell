@@ -115,10 +115,12 @@ char	*ft_check_env(char *str, t_data *data);
 size_t	ft_strlen_WS_quotes(const char *str);
 char *ft_convert_variable(char *str, t_data *data);
 char *ft_convert_variable_hd(char *str, t_data *data, char *delimiter);
+char	*ft_clean(char *str, t_data *data);
 
 
-void	ft_pb_malloc(void);
+void	ft_pb_malloc(t_data *data);
 void	ft_free_list(t_exec *begin);
+void	ft_free_err_mal_cmd_solo(char **cmd, char **cmd_quotes, t_data *data);
 
 
 //FT_INIT
