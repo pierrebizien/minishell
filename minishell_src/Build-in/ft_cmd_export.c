@@ -117,7 +117,7 @@ static int ft_verif_str_export(char *str)
 	int i;
 
 	i = 0;
-	if (ft_isdigit(str[i]) == 1 || str[i] == '=' || str[i] == '+' || str[i] == '$')
+	if (ft_isdigit(str[i]) == 1 || str[i] == '=' || str[i] == '/' || str[i] == '\0' || str[i] == '+' || str[i] == '$' || (str[0] == '-' && (str[1] == '\0' || str[1] == '\0')))
 		return (0);
 	while (str[++i] != '=' && str[i] != '+')
 	{
@@ -144,7 +144,7 @@ int	ft_verif_option_export(char **cmd, char **cmd_quotes)
 	{
 		if (cmd_quotes[i][0] == 1)
 			i++;
-		else if (cmd[i][0] == '-')
+		else if (cmd[i][0] == '-' && (cmd[i][1] != '\0' || cmd[i][1] != '\0'))
 			return (ft_putstr_fd("export: usage: export [name[=value] ...] (no option)\n", 2), 1);
 		else 
 			i++;
@@ -156,9 +156,10 @@ int	ft_verif_option_export(char **cmd, char **cmd_quotes)
 int ft_export(char **cmd, t_data *data, char **cmd_quotes)
 {
 	int		i;
+	int		error;
 
 	i = 1;
-	(void) data;
+	error = 0;
 	// ft_print_dchar(cmd);
 	// ft_print_dchar(cmd_quotes);
 	if (ft_verif_option_export(cmd, cmd_quotes))
@@ -169,7 +170,12 @@ int ft_export(char **cmd, t_data *data, char **cmd_quotes)
 	{
 		// fprintf(stderr, "|%s| = %d\n", cmd[i], ft_verif_str_export(cmd[i]));
 		if (ft_verif_str_export(cmd[i]) == 0)
-			ft_putstr_fd("error", 2);
+		{
+			ft_putstr_fd("export: `", 2);
+			ft_putstr_fd(cmd[i], 2);
+			ft_putstr_fd("': not a valid identifier\n", 2);
+			error = 1;
+		}
 		else if (ft_verif_str_export(cmd[i]) == 1)
 			ft_putstr_fd("exporting a local variable is not possible\n", 2);
 		else if (ft_verif_str_export(cmd[i]) == 2)
@@ -179,7 +185,7 @@ int ft_export(char **cmd, t_data *data, char **cmd_quotes)
 		i++;
 	}
 
-	return (0);
+	return (error);
 }
 
 

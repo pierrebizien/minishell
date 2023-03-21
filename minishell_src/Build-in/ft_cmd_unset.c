@@ -18,7 +18,7 @@ int	ft_verif_option_unset(char *str)
 		if (sq == 1 || dq == 1)
 			i++;
 		else if (is_ws(str[i]) && str[i+1] == '-')
-			return (ft_putstr_fd("export: usage: export [name[=value] ...] (no option)\n", 2), 1);
+			return (ft_putstr_fd("export: usage: export [name[=value] ...] (no option)\n", 2), 2);
 		else 
 			i++;
 	}
@@ -35,6 +35,8 @@ int	ft_unset(char **str, t_data *data)
 	if (ft_strstrlen(str) == 1)
 		return (0);
 	i = 1;
+	if (str[1][0] == '-' && str[1][1] == '\0')
+        return (0);
 	while (str && str[i])
 	{
 		if (str[i][0] == '-')

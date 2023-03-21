@@ -13,6 +13,16 @@ t_env	*ft_lstnew_env(void)
 	return (new);
 }
 
+void ft_modif_SHLVL(t_env *tmp)
+{
+	int nb;
+
+	nb = ft_atoi(tmp->value);
+	free(tmp->value);
+	tmp->value = ft_itoa(nb + 1);
+
+}
+
 int ft_create_env(char **envp, t_data *data)
 {
 	int i;
@@ -37,6 +47,8 @@ int ft_create_env(char **envp, t_data *data)
 		if (!tmp->key)
 			return (1);
 		tmp->printable = 1;
+		if (ft_strncmp(tmp->key, "SHLVL",6 ) == 0)
+			ft_modif_SHLVL(tmp);
 		if (envp[i + 1])
 		{
 			tmp->next = ft_lstnew_env();

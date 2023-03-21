@@ -268,7 +268,7 @@ void	ft_exec_cmd(t_data *data, char **cmd, int m, char **cmd_quotes)
 	{
 		ft_close_all(data->pip);
 		if (data->pip.nb_pipes)
-			exit(data->err_built_in);
+			exit(err_value);
 		else
 			return ;
 	}
@@ -308,6 +308,7 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 			if (tmp_fd == -1)
 			{
 				perror(begin->str);
+				err_value = 1;
 				exit(1);
 			}
 			ft_close(&tmp_fd);
@@ -318,6 +319,7 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 			if (tmp_fd == -1)
 			{
 				perror(begin->str);
+				err_value = 1;
 				exit(1);
 			}
 			ft_close(&tmp_fd);
@@ -328,6 +330,7 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 			if (tmp_fd == -1)
 			{
 				perror(begin->str);
+				err_value = 1;
 				exit(1);
 			}
 			ft_close(&tmp_fd);
@@ -345,6 +348,7 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 			if (data->pip.fd_out == -1)
 			{
 				perror(begin->str);
+				err_value = 1;
 				exit(1);
 			}
 		}
@@ -355,6 +359,7 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 			{
 				fprintf(stderr, "errno vaut %d\n", errno);
 				perror(begin->str);
+				err_value = 1;
 				exit(1);
 			}
 		}
@@ -364,6 +369,7 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 			if (data->pip.fd_in == -1)
 			{
 				perror(begin->str);
+				err_value = 1;
 				exit(1);
 			}
 		}
@@ -425,9 +431,11 @@ void	ft_pipex(t_data *data)
 		
 		m++;
 	}
+		// fprintf(stderr, "1err_value = %d\n\n", err_value);
 		waitpid(data->pip.last_id, &err_value, 0);
 		if (WIFEXITED(err_value))
 			err_value = WEXITSTATUS(err_value);
+		// fprintf(stderr, "2err_value = %d\n\n", err_value);
 		while (wait(NULL) != -1)
 			(void)begin;
 		ft_close_all(data->pip);

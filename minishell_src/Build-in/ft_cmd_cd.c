@@ -33,13 +33,13 @@ void	ft_change_pwd(t_data *data)
 
     tmp = &data->env;
 	
-	if (ft_strcmp(data->pwd, getcwd(NULL, 0)) == 0)    tmp = &data->env;
+	if (ft_strcmp(data->pwd, getcwd(NULL, 0)) == 0)
 		return ;
-	// fprintf(stderr, "\n\nget pwd = %s(%s)\n", getcwd(NULL, 0), data->pwd);
 	free(data->oldpwd);
 	data->oldpwd = ft_strdup(data->pwd);	
 	free(data->pwd);
 	data->pwd = getcwd(NULL, 0);
+	// fprintf(stderr, "data->pwd = |%s|\n", data->pwd);
     while (tmp)
     {
         if (ft_strncmp(tmp->key, "PWD", ft_strlen(tmp->key)) == 0)
@@ -73,8 +73,8 @@ int	ft_cd(char **str, t_data *data)
 	else
 	{
 		i = 1;
-		while (str[i][0] == '-')
-			i++;
+		if (str[i][0] == '-')
+			return (ft_putstr_fd("cd: ", 2), ft_putstr_fd(str[i], 2), ft_putstr_fd(": invalid option", 2), 2);
 		if (str[i] == 0)
 			return (0);
 		if (ft_strstrlen(str) != i + 1)
@@ -84,7 +84,7 @@ int	ft_cd(char **str, t_data *data)
 			ft_putstr_fd("cd: ", 2);
 			ft_putstr_fd(str[i], 2);
 			ft_putstr_fd(": ", 2);
-			return (perror(path), 2);
+			return (perror(path), 1);
 		}
 	}
 	ft_change_pwd(data);

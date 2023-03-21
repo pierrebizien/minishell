@@ -68,14 +68,9 @@ int	ft_exit(char **cmd)
 	cmd[1] = tmp;
 	while (cmd[1][i])
 	{
-		if (cmd[1][0] == '-' && cmd[1][1] == '-' && cmd[1][2] == '\0')
-			good_exit = 1;
-		else if (ft_isdigit(cmd[1][1]) == 0 && cmd[1][0] == '-')
-			good_exit = 0;
-		else if (ft_isdigit(cmd[1][i]) == 0 && cmd[1][i] != '-' && cmd[1][i] != '+')
+		if(ft_isdigit(cmd[1][i]) == 0 && cmd[1][i] != '-' && cmd[1][i] != '+')
 			good_exit = 0;
 		i++;
-		// fprintf(stderr, "%dcmd = |%s|%d(%c)\n",good_exit,  cmd[1], ft_isdigit(cmd[1][1]), cmd[1][0]);
 	}
 	if (good_exit == 0)
 	{

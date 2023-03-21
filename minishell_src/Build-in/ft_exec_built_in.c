@@ -1,5 +1,7 @@
 #include "../_Include/minishell.h"
 
+extern int err_value;
+
 int	ft_exec_cmd_solo(t_data *data, char **cmd, char **cmd_quotes)
 {
 	char **paths_env;
@@ -58,12 +60,13 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 	{
 		if (begin->id == F_FALSEI)
 		{
-				// // fprintf(stderr, "HELLLO10\n");
+				// fprintf(stderr, "HELLLO10\n");
 			tmp_fd = open(begin->str, O_RDWR);
 			if (tmp_fd == -1)
 			{
 				// fprintf(stderr, "HELLLO1\n");
 				perror(begin->str);
+				err_value = 1;
 				return(errno);
 			}
 			ft_close(&tmp_fd);
@@ -76,6 +79,7 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 			{
 				// fprintf(stderr, "HELLLO2\n");
 				perror(begin->str);
+				err_value = 1;
 				return(errno);
 			}
 			ft_close(&tmp_fd);
@@ -88,40 +92,44 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 			{
 				// fprintf(stderr, "HELLLO3\n");
 				perror(begin->str);
+				err_value = 1;
 				return(errno);
 			}
 			ft_close(&tmp_fd);
 		}
 		else if (begin->id == F_APPEND)
 		{
-			// fprintf(stderr, "HELLLO14\n");
+			fprintf(stderr, "HELLLO14\n");
 			data->pip.fd_out = open(begin->str, O_CREAT | O_RDWR | O_APPEND, 0644);
 			if (data->pip.fd_out == -1)
 			{
 				// fprintf(stderr, "HELLLO4\n");
 				perror(begin->str);
+				err_value = 1;
 				return(errno);
 			}
 		}
 		else if (begin->id == F_TRONC)
 		{
-			// fprintf(stderr, "HELLLO15\n");
+			fprintf(stderr, "HELLLO15\n");
 			data->pip.fd_out = open(begin->str, O_CREAT | O_RDWR | O_TRUNC, 0644);
 			if (data->pip.fd_out == -1)
 			{
 				// fprintf(stderr, "HELLLO5\n");
 				perror(begin->str);
+				err_value = 1;
 				return(errno);
 			}
 		}
 		else if (begin->id == F_INFILE)
 		{
-			// fprintf(stderr, "HELLLO16\n");
+			fprintf(stderr, "HELLLO16\n");
 			data->pip.fd_in = open(begin->str, O_RDONLY, 0644);
 			if (data->pip.fd_in == -1)
 			{
 				// fprintf(stderr, "HELLLO6\n");
 				perror(begin->str);
+				err_value = 1;
 				return(errno);
 			}
 		}

@@ -7,10 +7,10 @@ int ft_env(char **cmd, t_data *data)
     int i;
 
 	i = 0;
-	while (cmd && cmd[i])
+    while (cmd && cmd[i])
 	{
 		if (cmd[i][0] == '-')
-			return (ft_putstr_fd("Error env: ", 2), ft_putstr_fd(cmd[i], 2), ft_putstr_fd(": invalid option\n", 2), 2);
+			return (ft_putstr_fd("Error env: ", 2), ft_putstr_fd(cmd[i], 2), ft_putstr_fd(": invalid option\n", 2), 125);
 		i++;
 	}
     tmp = &data->env;
