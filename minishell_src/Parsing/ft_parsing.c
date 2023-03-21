@@ -52,6 +52,7 @@ char	*ft_clean(char *str)
 	in_sq = 0;
 	while (str && str[i])
 	{
+		// fprintf(stderr, "entree boucle str + i %s\n", str + i);
 		if (str[i] == '"' && !in_sq)
 		{
 			if (i <= 0 || str[i - 1] != '\\')
@@ -59,20 +60,20 @@ char	*ft_clean(char *str)
 		}
 		else if (str[i] == '\'' && !in_dq)
 		{
-			// if (i <= 0 || str[i - 1] != '\\')
 			in_sq = ft_in_q(in_sq);
 		}
 		if (!in_dq && !in_sq && is_ws(str[i]) && is_ws(str[i + 1]))
 			ft_memmove(str + i, (str + i + 1), ft_strlen(str + i) + 2);
-		else if (in_dq == 0 && ((str[i] == '<' && str[i+1] != '<' && str[i+1] != ' ' && str[i+1]) || (str[i] == '>' && str[i+1] != '>' && str[i+1] != ' ' && str[i+1])))
+		else if (in_sq == 0 && in_dq == 0 && ((str[i] && str[i] == '<' && str[i+1] != '<' && str[i+1] != ' ' && str[i+1]) || (str[i] == '>' && str[i+1] != '>' && str[i+1] != ' ' && str[i+1])))
 		{
-			
+			// fprintf(stderr, "on rentre 1 str + i vaut %s et dq vaut %d\n", str + i, in_dq);
 			tmp = ft_put_str_in_str(str, " ", ++i);
 			free(str);
 			str = tmp;
 		}
-		else if (in_dq == 0 && ((str[i] && str[i] != '<' && str[i] != ' ' && str[i + 1] && str[i + 1] == '<') || (str[i] && str[i] != '>' && str[i] != ' ' && str[i + 1] && str[i + 1] == '>')))
+		else if (in_sq == 0 && in_dq == 0 && ((str[i] && str[i] != '<' && str[i] != ' ' && str[i + 1] && str[i + 1] == '<') || (str[i] && str[i] != '>' && str[i] != ' ' && str[i + 1] && str[i + 1] == '>')))
 		{
+			// fprintf(stderr, "on rentre 2 str + i vaut %s et dq vaut %d\n", str + i, in_dq);
 			tmp = ft_put_str_in_str(str, " ", ++i);
 			free(str);
 			str = tmp;
@@ -146,7 +147,7 @@ char	*ft_check_env(char *str, t_data *data)
 		return (ft_itoa(err_value));
 	while (tmp_env)
 	{
-		if (!strncmp(str, tmp_env->key, ft_strlen_var_env(tmp_env->key)))
+		if (!strncmp(str, tmp_env->key, ft_strlen_var_env(str)))
 			return (tmp_env->value);
 		tmp_env = tmp_env->next;
 	}
@@ -182,19 +183,25 @@ char *ft_convert_variable(char *str, t_data *data)
 	i = 0;
 	while (str && str[i])
 	{
+		// fprintf(stderr, "dans convert str vaut %s\n", str + i);
 		if (str[i] == '\'' || str[i] == '"')
-			if (i <= 0 || str[i - 1] != '\\')
 				ft_maj_quotes(&dq, &sq, str[i]);
-		if (str[i] == '$' && str[i + 1] && !is_ws(str[i + 1]) && sq == -1)
+		if ((sq == 1 || dq == 1) && str[i] == '$' && (str[i + 1] == '"' || is_ws(str[i + 1]) ||  str[i + 1] == '\''))
+			i++;
+		if (str[i] && str[i] == '$' && str[i + 1] && !is_ws(str[i + 1]) && sq == -1)
 		{
 			var = ft_check_env(str + i + 1, data);
 			if (!ft_is_hd(str, i))
 			{
+				// fprintf(stderr, "ft_strlen_var_env(str + i) = %zu\n", ft_strlen_var_env(str + i));
 				ft_memmove(str + i, str + i + ft_strlen_var_env(str + i), ft_strlen(str + i + ft_strlen_var_env(str + i))+ 1);
 				str = ft_put_str_in_str(str, var, i);
 			}
+			else
+				i++;
 		}
-		i++;
+		else
+			i++;
 	}
 	return (str);
 	

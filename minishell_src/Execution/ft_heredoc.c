@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:39:00 by pbizien           #+#    #+#             */
-/*   Updated: 2023/03/21 11:18:34 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/21 15:08:04 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,12 @@ char	*ft_heredoc(t_data *data, char *delimiter, int w, int sq)
 		if (data->pip.tmp_fd == -1)
 			return (NULL); // GERER
 	}
-	str = readline(">");
+	if (!data->bool_redir_0 && !data->bool_redir_2)
+		str = readline(">");
+	else
+		str = get_next_line(0);
+	if (str[ft_strlen(str) - 1] == '\n')
+		str[ft_strlen(str) - 1] = '\0';
 	if (err_value == 130)
 	{
 		//FREE TOUT LE TINTOUIN
@@ -62,7 +67,12 @@ char	*ft_heredoc(t_data *data, char *delimiter, int w, int sq)
 	{
 		free(str);
 		rl_event_hook=event;
-		str = readline(">");
+		if (!data->bool_redir_0 && !data->bool_redir_2)
+			str = readline(">");
+		else
+			str = get_next_line(0);
+		if (str[ft_strlen(str) - 1] == '\n')
+			str[ft_strlen(str) - 1] = '\0';
 		if (err_value == 130)
 			break;
 		if (!sq)
@@ -80,7 +90,7 @@ char	*ft_heredoc(t_data *data, char *delimiter, int w, int sq)
 	{
 		ft_putstr_fd("warning: here-document delimited by end-of-file (wanted '", 2);
 		ft_putstr_fd(delimiter, 2);
-		ft_putstr_fd("'\n", 2);
+		ft_putstr_fd("')\n", 2);
 	}
 	free(NULL);
 	if(w)
