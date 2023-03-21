@@ -13,16 +13,10 @@ void	ft_free_err_mal_cmd_solo(char **cmd, char **cmd_quotes, t_data *data)
 
 int	ft_exec_cmd_solo(t_data *data, char **cmd, char **cmd_quotes)
 {
-	char **paths_env;
-	char *path_exec;
 	(void)cmd;
 
 	// fprintf(stderr, "HEEHEHEHEHEHHEHEHE\n");
-	paths_env = ft_get_paths(data);
-	if (paths_env == NULL)
-		ft_free_err_mal_cmd_solo(cmd, cmd_quotes, data);
 	// perror("EXEC");
-	path_exec = find_path(cmd, paths_env);
 
 	ft_dup_manage(data, 0);
 	// dup2(data->pip.fd_in, 0);
@@ -31,6 +25,8 @@ int	ft_exec_cmd_solo(t_data *data, char **cmd, char **cmd_quotes)
 		ft_close_all(data->pip);
 		ft_exec_builtin(cmd, data, cmd_quotes);
 		ft_init_in_out(data);
+		// free(cmd);
+		// free(cmd_quotes);
 		dup2(data->pip.saved_stdin, 0);
 		dup2(data->pip.saved_stdout, 1);
 		return (1);
@@ -146,8 +142,11 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 	if (ft_exec_cmd_solo(data, cmd, cmd_quotes) == 1)
 	{
 		ft_free_dchar(cmd);
+		ft_free_dchar(cmd_quotes);
+		ft_free_list(&data->exec);
 		return (1);
 	}
+	ft_free_dchar(cmd_quotes);
 	ft_free_dchar(cmd);
 	return (0);
 }

@@ -44,11 +44,24 @@ char **ft_get_paths(t_data *data)
     }
 	return (NULL);
 }
+void	ft_free_in_fpath(char **cmd, char **paths_env, t_data *data, char **cmd_quotes)
+{
+	ft_free_dchar(cmd);
+	ft_free_dchar(paths_env);
+	ft_free_dchar(cmd_quotes);
+	ft_free_env(data);
+	free(data->oldpwd);
+	free(data->pwd);
+	ft_free_list(&data->exec);
 
-char	*find_path(char **cmd, char **paths_env, t_data *data)
+}
+
+char	*find_path(char **cmd, char **paths_env, t_data *data, char **cmd_quotes)
 {
 	char *tmp;
 	int	i;
+	(void)cmd_quotes;
+	(void)data;
 
 	i = 0;
 	if (cmd && cmd[0] && !cmd[0][0])
@@ -263,7 +276,7 @@ void	ft_exec_cmd(t_data *data, char **cmd, int m, char **cmd_quotes)
 
 	env_tab = ft_get_env(&data->env); //GERER FREE ET FD SUR EXIT
 	paths_env = ft_get_paths(data); //GERER FREE ET FD SUR EXIT
-	path_exec = find_path(cmd, paths_env); //GERER FREE ET FD SUR EXIT
+	path_exec = find_path(cmd, paths_env, data, cmd_quotes); //GERER FREE ET FD SUR EXIT
 	ft_dup_manage(data, m);
 	if (ft_exec_builtin(cmd, data, cmd_quotes) == 1)
 	{
