@@ -78,13 +78,13 @@ int	ft_cd(char **str, t_data *data)
 		if (str[i] == 0)
 			return (0);
 		if (ft_strstrlen(str) != i + 1)
-			return (ft_putstr_fd("cd: too many arguments\n", 1), 1);	
+			return (ft_putstr_fd("cd: too many arguments\n", 2), 1);	
 		if (chdir(str[i]) != 0)
 		{
-			ft_putstr_fd("cd: ", 1);
-			ft_putstr_fd(str[i], 1);
-			ft_putstr_fd(": ", 1);
-			return (perror(path), 1);
+			ft_putstr_fd("cd: ", 2);
+			ft_putstr_fd(str[i], 2);
+			ft_putstr_fd(": ", 2);
+			return (perror(path), 2);
 		}
 	}
 	ft_change_pwd(data);

@@ -56,33 +56,45 @@ int	ft_exit(char **cmd)
 {
 	int i;
 	int good_exit;
+	char *tmp;
 
 	i = 0;
+	// ft_print_dchar(cmd);
 	if (ft_strstrlen(cmd) == 1)
 		exit(err_value);
 	good_exit = 1;
+	tmp = ft_strtrim(cmd[1], " ");
+	free(cmd[1]);
+	cmd[1] = tmp;
 	while (cmd[1][i])
 	{
-		if(ft_isdigit(cmd[1][i]) == 0 && cmd[1][i] != '-' && cmd[1][i] != '+')
+		if (cmd[1][0] == '-' && cmd[1][1] == '-' && cmd[1][2] == '\0')
+			good_exit = 1;
+		else if (ft_isdigit(cmd[1][1]) == 0 && cmd[1][0] == '-')
+			good_exit = 0;
+		else if (ft_isdigit(cmd[1][i]) == 0 && cmd[1][i] != '-' && cmd[1][i] != '+')
 			good_exit = 0;
 		i++;
+		// fprintf(stderr, "%dcmd = |%s|%d(%c)\n",good_exit,  cmd[1], ft_isdigit(cmd[1][1]), cmd[1][0]);
 	}
 	if (good_exit == 0)
 	{
-		ft_putstr_fd("exit: ", 1);
-		ft_putstr_fd(cmd[1], 1);
-		ft_putstr_fd(": numeric argument required\n", 1);
+		ft_putstr_fd("exit: ", 2);
+		ft_putstr_fd(cmd[1], 2);
+		ft_putstr_fd(": numeric argument required\n", 2);
 		exit(2);
 
 	}
 	else if (ft_strstrlen(cmd) == 3)
 	{
-		ft_putstr_fd("exit: too many arguments\n", 1);
-		return (1);
+		ft_putstr_fd("exit: too many arguments\n", 2);
+		return (2);
 	}
 	else if (ft_verif_good_exit(cmd[1]) == 1)
 	{
-		fprintf(stderr, "error\n\n");
+		ft_putstr_fd("exit: ", 2);
+		ft_putstr_fd(cmd[1], 2);
+		ft_putstr_fd(": numeric argument required\n", 2);
 		exit(2);
 	}
 	else

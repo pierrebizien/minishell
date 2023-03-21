@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:39:00 by pbizien           #+#    #+#             */
-/*   Updated: 2023/03/16 14:50:05 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/21 11:18:34 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ char	*ft_heredoc(t_data *data, char *delimiter, int w, int sq)
 {
 	char	*str;
 	char	*name;
-	fprintf(stderr, "limiter vaut %s\n", delimiter);
 	if (w)
 	{
 		name = ft_randomstr("/tmp/hd_", NULL, 16);

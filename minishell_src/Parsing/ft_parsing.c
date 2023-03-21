@@ -595,7 +595,7 @@ int ft_check_chev_pip(char **tab)
 	{
 		if (ft_strlen(tab[i]) != 0 && !ft_strncmp(tab[i], "<", ft_strlen(tab[i])))
 			if (tab[i + 1] && ft_strlen(tab[i + 1]) != 0 && !ft_strncmp(tab[i + 1], "<", ft_strlen(tab[i + 1])))
-				return (fprintf(stderr, "ERROR PRES DE GNEUGNEU\n"), 1);
+				return (1);
 		i++;
 	}
 	return (0);
@@ -616,9 +616,9 @@ int	ft_check_if_past_is_delim(t_exec *begin, int i)
 		j++;
 	}
 	if (tmp && (tmp->id == 4 || tmp->id == 1))
-		return (fprintf(stderr, "RETURN 1\n"), 1);
+		return (1);
 	else
-		return (fprintf(stderr, "RETURN 0\n"), 0);
+		return (0);
 	return (0);
 
 }

@@ -159,15 +159,15 @@ int ft_export(char **cmd, t_data *data, char **cmd_quotes)
 
 	i = 1;
 	(void) data;
-	ft_print_dchar(cmd);
-	ft_print_dchar(cmd_quotes);
+	// ft_print_dchar(cmd);
+	// ft_print_dchar(cmd_quotes);
 	if (ft_verif_option_export(cmd, cmd_quotes))
 		return (2);
 	if (ft_strstrlen(cmd) == 1)
 		return (ft_just_export(data));
 	while (cmd[i])
 	{
-		fprintf(stderr, "|%s| = %d\n", cmd[i], ft_verif_str_export(cmd[i]));
+		// fprintf(stderr, "|%s| = %d\n", cmd[i], ft_verif_str_export(cmd[i]));
 		if (ft_verif_str_export(cmd[i]) == 0)
 			ft_putstr_fd("error", 2);
 		else if (ft_verif_str_export(cmd[i]) == 1)
