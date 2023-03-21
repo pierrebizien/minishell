@@ -13,7 +13,6 @@ int	ft_verif_option_unset(char *str)
 	dq = -1;
 	while (str[i])
 	{
-		fprintf(stderr, "str[%d] = %c\n", i, str[i]);
 		ft_maj_quotes(&dq, &sq, str[i]);
 		if (sq == 1 || dq == 1)
 			i++;

@@ -30,8 +30,9 @@ int	ft_echo(char **cmd, char **cmd_quotes)
 	int i;
 	// int j;
 	int nl;
-	ft_print_dchar(cmd);
-	ft_print_dchar(cmd_quotes);
+	(void)cmd_quotes;
+	// ft_print_dchar(cmd);
+	// ft_print_dchar(cmd_quotes);
 	nl = 1;
 	i = ft_verif_nl_echo(cmd);
 	if (1 < i)

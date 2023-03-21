@@ -43,7 +43,6 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 		{
 			cmd = ft_join_dstr(cmd, begin->str);
 			cmd_quotes = ft_join_dstr(cmd_quotes, begin->quotes);
-			fprintf(stderr, "\n\n");
 			if (!cmd || !cmd_quotes)
 				return (MAL_ERCODE); //GERER
 		}

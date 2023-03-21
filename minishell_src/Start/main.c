@@ -14,19 +14,19 @@ void	ft_print_dargs(char **strstr)
 	}
 	
 }
-void	ft_print_dchar(char **strstr)
-{
-	int	i;
+// void	ft_print_dchar(char **strstr)
+// {
+// 	int	i;
 
-	i = 0;
-	while (strstr && strstr[i])
-	{
-		fprintf(stderr, "tab[%d] = |%s|\n", i, strstr[i]);
-		i++;
-	}
-	if (!strstr)
-		fprintf(stderr, "STRSTR N EXISTE PAS\n");
-}
+// 	i = 0;
+// 	while (strstr && strstr[i])
+// 	{
+// 		fprintf(stderr, "tab[%d] = |%s|\n", i, strstr[i]);
+// 		i++;
+// 	}
+// 	if (!strstr)
+// 		fprintf(stderr, "STRSTR N EXISTE PAS\n");
+// }
 
 
 char *ft_prompt(void)

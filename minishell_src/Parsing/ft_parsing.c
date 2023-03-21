@@ -2,18 +2,18 @@
 
 extern int err_value;
 
-// void ft_print_dchar(char **strstr)
-// {
-// 	int	i;
+void ft_print_dchar(char **strstr)
+{
+	int	i;
 
-// 	i = 0;
-// 	while (strstr && strstr[i])
-// 	{
-// 		printf("STRSTR VAUT |%s|\n", strstr[i]);
-// 		i++;
-// 	}
+	i = 0;
+	while (strstr && strstr[i])
+	{
+		printf("STRSTR VAUT |%s|\n", strstr[i]);
+		i++;
+	}
 	
-// }
+}
 void	ft_print_list(t_exec *begin)
 {
 	while (begin)
@@ -366,44 +366,28 @@ t_exec	*ft_lstnew_pars(void)
 	return (new);
 }
 
-char	*ft_pop_q(char *str)
+char	*ft_clean_quotes(char *str)
 {
 	int	i;
-	int	sq;
-	int	dq;
-	
+	int sq;
+	int dq;
+
 	i = 0;
-	sq = 0;
-	dq = 0;
+	sq = -1;
+	dq = -1;
 	while (str && str[i])
 	{
-		if (str[i] == '"' && !sq)
+		if ((str[i] == '"' && sq == -1) || (str[i] == '\'' && dq == -1))
 		{
-			if (i <= 0 || str[i - 1] != '\\')
-			{
-				ft_memmove(str + i , str + i + 1, ft_strlen(str + i + 1) + 1);
-				dq = ft_in_q(dq);
-			}
-			else
-				ft_memmove(str + i - 1 , str + i, ft_strlen(str + i) + 1);
+				ft_maj_quotes(&dq, &sq, str[i]);
+				ft_memmove(str + i, str + i + 1, ft_strlen(str + i + 1) + 1);
 		}
-		else if (str[i] == '\'' && !dq)
-		{
-			if (i <= 0 || str[i - 1] != '\\')
-			{
-				ft_memmove(str + i , str + i + 1, ft_strlen(str + i + 1) + 1);
-				sq = ft_in_q(sq);
-			}
-			else
-				ft_memmove(str + i - 1 , str + i, ft_strlen(str + i) + 1);
-		}
-		else
+		else 
 			i++;
 	}
 	return (str);
 	
 }
-
 
 void ft_clean_list_exec(t_data *data)
 {
@@ -421,8 +405,8 @@ void ft_clean_list_exec(t_data *data)
 		tmp->quotes[1] = '\0';
 		if (tmp->str[0] == '\'' || tmp->str[0] == '"')
 			tmp->quotes[0] = '1';
-		tmp->str = ft_strtrim_lq(tmp->str);
-		tmp->str = ft_pop_q(tmp->str);
+		tmp->str = ft_clean_quotes(tmp->str);
+
 		before = tmp;
 		tmp = tmp->next;
 		if (tmp != NULL)
@@ -595,7 +579,7 @@ int ft_check_chev_pip(char **tab)
 	{
 		if (ft_strlen(tab[i]) != 0 && !ft_strncmp(tab[i], "<", ft_strlen(tab[i])))
 			if (tab[i + 1] && ft_strlen(tab[i + 1]) != 0 && !ft_strncmp(tab[i + 1], "<", ft_strlen(tab[i + 1])))
-				return (fprintf(stderr, "ERROR PRES DE GNEUGNEU\n"), 1);
+				return (1);
 		i++;
 	}
 	return (0);
@@ -616,9 +600,9 @@ int	ft_check_if_past_is_delim(t_exec *begin, int i)
 		j++;
 	}
 	if (tmp && (tmp->id == 4 || tmp->id == 1))
-		return (fprintf(stderr, "RETURN 1\n"), 1);
+		return (1);
 	else
-		return (fprintf(stderr, "RETURN 0\n"), 0);
+		return (0);
 	return (0);
 
 }

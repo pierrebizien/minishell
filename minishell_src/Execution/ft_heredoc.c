@@ -39,7 +39,6 @@ char	*ft_heredoc(t_data *data, char *delimiter, int w, int sq)
 {
 	char	*str;
 	char	*name;
-	fprintf(stderr, "limiter vaut %s\n", delimiter);
 	if (w)
 	{
 		name = ft_randomstr("/tmp/hd_", NULL, 16);

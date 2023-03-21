@@ -34,7 +34,6 @@ int ft_exec_builtin(char **cmd, t_data *data, char **cmd_quotes)
 	if (cmd && ft_strncmp(cmd[0], "pwd", ft_strlen(cmd[0])) == 0)
 	{
 		err_value = ft_pwd(cmd, data);
-		fprintf(stderr, "error  = %d\n\n", err_value);
 		return (1);
 	}
 	if (cmd && ft_strncmp(cmd[0], "unset", ft_strlen(cmd[0])) == 0)
