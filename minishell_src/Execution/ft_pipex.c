@@ -467,3 +467,4 @@ void	ft_pipex(t_data *data)
 
 //< infile << stop < TAISTE << stop cat > out -e >sexe >>bisous | < infule << stop <out ls od > test >> out -la > out
 
+//
