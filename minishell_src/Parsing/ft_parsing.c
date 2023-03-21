@@ -192,7 +192,6 @@ char *ft_convert_variable(char *str, t_data *data)
 			{
 				ft_memmove(str + i, str + i + ft_strlen_var_env(str + i), ft_strlen(str + i + ft_strlen_var_env(str + i))+ 1);
 				str = ft_put_str_in_str(str, var, i);
-				i = 0;
 			}
 		}
 		i++;
@@ -224,7 +223,6 @@ char *ft_convert_variable_hd(char *str, t_data *data, char *delimiter)
 			{
 				ft_memmove(str + i, str + i + ft_strlen_var_env(str + i), ft_strlen(str + i + ft_strlen_var_env(str + i))+ 1);
 				str = ft_put_str_in_str(str, var, i);
-				i = 0;
 			}
 		}
 		if (str && str[i])
@@ -332,15 +330,11 @@ char *ft_parse(char *str, t_data *data) // CHECK GLOBAL ET SI > >OUT RETURN ERRO
 	char *tmp;
 
 	tmp = str;
-	fprintf(stderr, "coucou\n\n\n");
 	str = ft_convert_variable(str, data);
-	fprintf(stderr, "coucou\n\n\n");
 	str = ft_strtrim(str, WS);
 	if (!str || str[0] == '\0')
 		return (free(str), NULL);
-	fprintf(stderr, "coucou\n\n\n");
 	str = ft_clean(str);
-	fprintf(stderr, "coucou\n\n\n");
 	if (!str)
 		return (NULL);
 	if (ft_verif_et_ou(str) == 0 || ft_verif_just_chev(str) == 0 || ft_verif_pipe(str) == 0)
@@ -524,13 +518,26 @@ int ft_modif_in_out(t_data *data)
 			if (tmp->id == F_DELIMITER || tmp->id == F_DELIMITER_SQ)
 			{
 				if (bool_in == 1)
+					tmp->id = F_FALSED;
+				else
+					bool_in = 1;
+			}
+			tmp = tmp->prev;
+		}
+		tmp = tmpstart;
+		if (tmp->id == F_PIPE && tmp->next != NULL)
+			tmp = tmp->next;
+		while (tmp != NULL && tmp->id != F_PIPE)
+		{
+			if (tmp->id == F_DELIMITER || tmp->id == F_DELIMITER_SQ || tmp->id == F_FALSED)
+			{
+				if (tmp->id == F_FALSED)
 				{
 					ft_init_sigint_hd();
 					ft_heredoc(data, tmp->str, 0, 0);
 					if (err_value == 130)
 						return (1);
 					ft_init_sigint();
-					tmp->id = F_FALSED;
 				}
 				else if (tmp->id == F_DELIMITER)
 				{
@@ -539,7 +546,6 @@ int ft_modif_in_out(t_data *data)
 					if (err_value == 130)
 						return (1);
 					ft_init_sigint();
-					bool_in = 1;
 				}
 				else 
 				{
@@ -548,16 +554,10 @@ int ft_modif_in_out(t_data *data)
 					if (err_value == 130)
 						return (1);
 					ft_init_sigint();
-					bool_in = 1;
 				}
 			}
-			tmp = tmp->prev;
+			tmp = tmp->next;
 		}
-		tmp = tmpstart;
-		if (tmp->id == F_PIPE && tmp->next != NULL)
-			tmp = tmp->next;
-		while (tmp->next != NULL && tmp->id != F_PIPE)
-			tmp = tmp->next;
 		if (tmp != NULL)
 		{
 			tmp = tmp->next;
@@ -566,6 +566,7 @@ int ft_modif_in_out(t_data *data)
 		// fprintf(stderr, "en bas(%d) \t %s\t next = %p\n", tmp->id, tmp->str,tmp->next);
 
 	}
+		// ft_print_list(&data->exec);
 		return (0);
 }
 

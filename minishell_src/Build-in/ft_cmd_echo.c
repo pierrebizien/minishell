@@ -13,7 +13,7 @@ int ft_verif_nl_echo(char **cmd)
 	i = 1;
 	while (cmd && cmd[i] && cmd[i][0] == '-')
 	{
-		fprintf(stderr, "i = %d\n",i);
+		// fprintf(stderr, "i = %d\n",i);
 		j = 1;
 		while (cmd[i][j] == 'n')
 			j++;
@@ -21,7 +21,7 @@ int ft_verif_nl_echo(char **cmd)
 			return (i);
 		i++;
 	}
-		fprintf(stderr, "i = %d\n",i);
+		// fprintf(stderr, "i = %d\n",i);
 	return (i);
 }
 
