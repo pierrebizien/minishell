@@ -96,6 +96,7 @@ int	main(int ac, char **av, char**envp)
 {
 	char *str;
 	t_data data;
+	char *cpy_str_tty;
 
 	(void)ac;
 	(void)av;
@@ -115,11 +116,14 @@ int	main(int ac, char **av, char**envp)
 	else
 		str = get_next_line(0);
 	add_history(str);
+	cpy_str_tty = str;
 	while (str)
 	{
 		if (str && str[0])
 		{
 			str = ft_parse(str, &data);
+			if (!str && (data.bool_redir_0 || data.bool_redir_2))
+				return (ft_putstr_fd("Line: \n", 2), ft_putstr_fd(cpy_str_tty, 2), free(cpy_str_tty), err_value);
 			if (str && !ft_parse_for_exec(&data))
 			{
 				ft_pipex(&data);

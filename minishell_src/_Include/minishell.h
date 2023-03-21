@@ -95,7 +95,7 @@ typedef	struct	s_data
 	char	*oldpwd;
 	int		err_built_in;
 	int		last_err_num;
-	char	*last_err_str;
+	char	*cpy_str_tty;
 	
 }               t_data;
 
