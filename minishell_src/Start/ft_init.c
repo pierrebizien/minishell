@@ -24,6 +24,10 @@ int ft_init(char **env, t_data *data)
 	data->pip.saved_stdout = dup(1);
 	data->pip.fd_out = 1;
 	data->pip.hd_in = 0;
+	data->to_free.env_tab = NULL;
+	data->to_free.path_exec = NULL;
+	data->to_free.paths_env = NULL;
+	data->to_free.str = NULL;
 	ft_init_pipex_pipe(data);
 	ft_create_env(env, data);
 	rl_event_hook=event;
