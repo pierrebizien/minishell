@@ -144,7 +144,7 @@ int	ft_verif_option_export(char **cmd, char **cmd_quotes)
 	{
 		if (cmd_quotes[i][0] == 1)
 			i++;
-		else if (cmd[i][0] == '-' && (cmd[i][1] != '\0' || cmd[i][1] != '\0'))
+		else if (cmd[i][0] == '-')
 			return (ft_putstr_fd("export: usage: export [name[=value] ...] (no option)\n", 2), 1);
 		else 
 			i++;
