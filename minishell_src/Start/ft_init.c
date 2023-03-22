@@ -1,13 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_init.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/23 00:28:58 by ngriveau          #+#    #+#             */
+/*   Updated: 2023/03/23 00:30:50 by ngriveau         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../_Include/minishell.h"
 
-extern int g_err_value;
+extern int	g_err_value;
 
-int event(void)
-{ 
+int	event(void)
+{
 	return (42);
 }
 
-int ft_init(char **env, t_data *data)
+void	ft_init_data(char **env, t_data *data)
 {
 	data->sep = "|";
 	data->envp = env;
@@ -30,10 +42,14 @@ int ft_init(char **env, t_data *data)
 	data->to_free.str = NULL;
 	data->to_free.cmd = NULL;
 	data->to_free.cmd_quotes = NULL;
+}
+
+int	ft_init(char **env, t_data *data)
+{
+	ft_init_data(env, data);
 	ft_init_pipex_pipe(data);
 	ft_create_env(env, data);
-	rl_event_hook=event;
-	// FILE *none = fopen("/dev/null", "r");
+	rl_event_hook = event;
 	rl_outstream = stderr;
 	return (0);
 }
