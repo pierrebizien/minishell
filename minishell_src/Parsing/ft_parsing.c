@@ -373,11 +373,9 @@ char *ft_parse(char *str, t_data *data) // CHECK GLOBAL ET SI > >OUT RETURN ERRO
 		return (fprintf(stderr, "ERROR 7\n"), ft_pb_malloc(data), free(tmp), NULL);
 	free(tmp);
 	str = ft_clean(str, data);
-	if (!str)
-		return (NULL);
-	if (ft_verif_et_ou(str) == 0 || ft_verif_just_chev(str) == 0 || ft_verif_pipe(str) == 0)
+	if (!str || ft_verif_et_ou(str) == 0 || ft_verif_just_chev(str) == 0 || ft_verif_pipe(str) == 0)
 	{
-
+		fprintf(stderr, "\n\n\n\n\nFREEEEEE\n\n\n\n\n\n\n\n");
 		free(str);
 		ft_free_env(data);
 		free(data->pwd);
