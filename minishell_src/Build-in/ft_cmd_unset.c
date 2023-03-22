@@ -32,11 +32,9 @@ int	ft_unset(char **str, t_data *data)
     t_env *tmp;
     t_env *after;
 
-	if (ft_strstrlen(str) == 1)
+	if (str && ft_strstrlen(str) == 1)
 		return (0);
 	i = 1;
-	if (str[1][0] == '-' && str[1][1] == '\0')
-        return (0);
 	while (str && str[i])
 	{
 		if (str[i][0] == '-')
