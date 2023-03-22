@@ -559,7 +559,8 @@ int ft_modif_in_out(t_data *data)
 				if (tmp->id == F_FALSED)
 				{
 					ft_init_sigint_hd();
-					ft_heredoc(data, tmp->str, 0, 0);
+					fprintf(stderr, "ADRESSE ELEMENT TMP %p\n", tmp);
+					tmp->hd_filename = ft_heredoc(data, tmp->str, 0, 0);
 					if (err_value == 130)
 						return (1);
 					if (err_value == MAL_ERCODE)
@@ -568,6 +569,7 @@ int ft_modif_in_out(t_data *data)
 				}
 				else if (tmp->id == F_DELIMITER)
 				{
+					fprintf(stderr, "ADRESSE ELEMENT TMP %p\n", tmp);
 					ft_init_sigint_hd();
 					tmp->hd_filename = ft_heredoc(data, tmp->str, 1, 0);
 					if (err_value == 130)

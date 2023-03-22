@@ -274,12 +274,14 @@ void	ft_exec_cmd(t_data *data, char **cmd, int m, char **cmd_quotes)
 {
 	char *path_exec;
 
+	if (!contain_token(&data->exec, F_CMD, m))
+		return(ft_free_dchar(cmd_quotes), ft_free_dchar(cmd), ft_free_env(data), free(data->oldpwd), free(data->pwd), ft_free_list(&data->exec), exit(0)); // RAJOUTE PB MALLOC
 	data->to_free.env_tab = ft_get_env(&data->env); //GERER FREE ET FD SUR EXIT
 	if (data->to_free.env_tab == NULL)
-		(ft_free_dchar(cmd_quotes), ft_free_dchar(cmd), ft_free_list(&data->exec), ft_pb_malloc(data));
+		return(ft_free_dchar(cmd_quotes), ft_free_dchar(cmd), ft_free_list(&data->exec), ft_pb_malloc(data));
 	data->to_free.paths_env = ft_get_paths(data); //GERER FREE ET FD SUR EXIT
 	if (data->to_free.paths_env == NULL)
-		(ft_free_dchar(cmd_quotes), ft_free_dchar(cmd), ft_free_dchar(data->to_free.env_tab), ft_free_list(&data->exec), ft_pb_malloc(data));
+		return(ft_free_dchar(cmd_quotes), ft_free_dchar(cmd), ft_free_dchar(data->to_free.env_tab), ft_free_list(&data->exec), ft_pb_malloc(data));
 	path_exec = find_path(cmd, data->to_free.paths_env, data, cmd_quotes); //GERER FREE ET FD SUR EXIT
 	ft_dup_manage(data, m);
 	if (ft_exec_builtin(cmd, data, cmd_quotes) == 1)

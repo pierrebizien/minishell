@@ -17,11 +17,13 @@ int	ft_exec_cmd_solo(t_data *data, char **cmd, char **cmd_quotes)
 
 	// fprintf(stderr, "HEEHEHEHEHEHHEHEHE\n");
 	// perror("EXEC");
-
+	if (!contain_token(&data->exec, F_CMD, 0))
+		return (0);
 	ft_dup_manage(data, 0);
 	// dup2(data->pip.fd_in, 0);
 	if (ft_test_builtin(cmd) == 1)
 	{
+
 		ft_close_all(data->pip);
 		ft_exec_builtin(cmd, data, cmd_quotes);
 		ft_init_in_out(data);

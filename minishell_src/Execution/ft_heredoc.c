@@ -39,6 +39,7 @@ char	*ft_heredoc(t_data *data, char *delimiter, int w, int sq)
 {
 	char	*str;
 	char	*name;
+
 	if (w)
 	{
 		name = ft_randomstr("/tmp/hd_", NULL, 16);
@@ -50,6 +51,7 @@ char	*ft_heredoc(t_data *data, char *delimiter, int w, int sq)
 		data->pip.tmp_fd = open(name, O_TRUNC | O_CREAT | O_RDWR, 00777);
 		if (data->pip.tmp_fd == -1)
 			return (free(name), NULL); // GERER
+		
 	}
 	if (!data->bool_redir_0 && !data->bool_redir_2)
 		str = readline(">");
@@ -63,7 +65,7 @@ char	*ft_heredoc(t_data *data, char *delimiter, int w, int sq)
 		free(str);
 		return (NULL);
 	}
-	if (!sq)
+	if (!sq && str)
 	{
 		str = ft_convert_variable_hd(str, data, delimiter);
 		if(!str)
@@ -79,11 +81,11 @@ char	*ft_heredoc(t_data *data, char *delimiter, int w, int sq)
 			str = readline(">");
 		else
 			str = get_next_line(0);
-		if (str[ft_strlen(str) - 1] == '\n')
+		if (ft_strlen(str) > 0 && str[ft_strlen(str) - 1] == '\n')
 			str[ft_strlen(str) - 1] = '\0';
 		if (err_value == 130)
 			break;
-		if (!sq)
+		if (!sq && str)
 		{
 			str = ft_convert_variable_hd(str, data, delimiter);
 			if(!str)

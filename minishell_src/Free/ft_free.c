@@ -39,11 +39,8 @@ void	ft_free_list(t_exec *begin)
 	tmp = begin;
 	if (begin)
 	{
-		if (begin->str != NULL)
 			free(begin->str);
-		if (begin->hd_filename != NULL)
 			free(begin->hd_filename);
-		if (begin->quotes != NULL)
 			free(begin->quotes);
 		begin = begin->next;
 	}
@@ -52,11 +49,8 @@ void	ft_free_list(t_exec *begin)
 	{
 		// fprintf(stderr, "tmp->str vo %s\n", tmp->str);
 		
-		if (begin->str != NULL)
 			free(begin->str);
-		if (begin->hd_filename != NULL)
 			free(begin->hd_filename);
-		if (begin->quotes != NULL)
 			free(begin->quotes);
 		tmp = begin->next;
 		free(begin);
