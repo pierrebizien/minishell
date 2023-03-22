@@ -80,3 +80,13 @@ char *ft_tab_to_str(char **tab, char sep)
 	}
 	return (str);
 }
+
+int	ft_strlen_char(char *str, char c)
+{
+	size_t	i;
+
+	i = 0;
+	while (str[i] != '\0' && str[i] != c)
+		i++;
+	return (i);
+}
