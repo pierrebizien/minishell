@@ -273,6 +273,8 @@ int ft_verif_et_ou(char *str)
 		ft_maj_quotes(&dq, &sq, str[i]);
 		if (dq != 1 && sq != 1 && str[i] == '&')
 			return (ft_putstr_fd("error: unexpected `&'\n", 2), 0);
+		if (dq != 1 && sq != 1 && str[i] == ';')
+			return (ft_putstr_fd("error: unexpected `;'\n", 2), 0);
 		else if (dq != 1 && sq != 1 && str[i] == '|' && str[i+1] == '|')
 			return (ft_putstr_fd("error: unexpected `||'\n", 2), 0);
 		else
