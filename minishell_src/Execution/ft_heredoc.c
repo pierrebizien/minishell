@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:39:00 by pbizien           #+#    #+#             */
-/*   Updated: 2023/03/22 22:34:57 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/22 22:37:29 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	ft_manage_write(char *str, char *delimiter, t_data *data, int sq)
 }
 
 
-int ft_heredoc_if_w(char *name, t_data *data) 
+int ft_heredoc_if_w(char *name, t_data *data)
 {
 	name = ft_randomstr("/tmp/hd_", NULL, 16);
 	if (name == NULL)
@@ -48,13 +48,8 @@ int ft_heredoc_if_w(char *name, t_data *data)
 	return (1);
 }
 
-char	*ft_heredoc(t_data *data, char *delimiter, int w, int sq)
+int ft_heredoc_prompt(char *str, t_data *data)
 {
-	char	*str;
-	char	*name;
-
-	if (w && ft_heredoc_if_w(name, data) == 0)
-		return (NULL);
 	if (!data->bool_redir_0 && !data->bool_redir_2)
 		str = readline(">");
 	else
@@ -63,6 +58,26 @@ char	*ft_heredoc(t_data *data, char *delimiter, int w, int sq)
 		if (str && ft_strlen(str) >= 1 && str[ft_strlen(str) - 1] == '\n')
 			str[ft_strlen(str) - 1] = '\0';
 	}
+	
+}
+
+
+char	*ft_heredoc(t_data *data, char *delimiter, int w, int sq)
+{
+	char	*str;
+	char	*name;
+
+	if (w && ft_heredoc_if_w(name, data) == 0)
+		return (NULL);
+	ft_heredoc_prompt(str, data);
+	// if (!data->bool_redir_0 && !data->bool_redir_2)
+	// 	str = readline(">");
+	// else
+	// {
+	// 	str = get_next_line(0);
+	// 	if (str && ft_strlen(str) >= 1 && str[ft_strlen(str) - 1] == '\n')
+	// 		str[ft_strlen(str) - 1] = '\0';
+	// }
 	if (g_err_value == 130)
 	{
 		free(name);
@@ -81,14 +96,7 @@ char	*ft_heredoc(t_data *data, char *delimiter, int w, int sq)
 	{
 		free(str);
 		rl_event_hook = event;
-		if (!data->bool_redir_0 && !data->bool_redir_2)
-			str = readline(">");
-		else
-		{
-			str = get_next_line(0);
-			if (ft_strlen(str) > 0 && str[ft_strlen(str) - 1] == '\n')
-				str[ft_strlen(str) - 1] = '\0';
-		}
+		ft_heredoc_prompt(str, data);
 		if (g_err_value == 130)
 			break ;
 		if (!sq && str)
