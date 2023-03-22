@@ -56,6 +56,7 @@ void	ft_free_in_find_path(char **cmd, char **paths_env, t_data *data, char **cmd
 	ft_free_env(data);
 	free(data->oldpwd);
 	free(data->pwd);
+	ft_close_all(data->pip, data);
 	ft_free_list(&data->exec);
 
 }
@@ -278,25 +279,24 @@ char **ft_get_env(t_env *env)
 
 void	ft_exec_cmd(t_data *data, char **cmd, int m, char **cmd_quotes)
 {
-	char *path_exec;
 
 	if (!contain_token(&data->exec, F_CMD, m))
-		return(ft_free_dchar(cmd_quotes), ft_free_dchar(cmd), ft_free_env(data), free(data->oldpwd), free(data->pwd), ft_free_list(&data->exec), exit(0)); // RAJOUTE PB MALLOC
+		return(ft_close_all(data->pip, data), ft_free_dchar(cmd_quotes), ft_free_dchar(cmd), ft_free_env(data), free(data->oldpwd), free(data->pwd), ft_free_list(&data->exec), exit(0)); // RAJOUTE PB MALLOC
 	data->to_free.env_tab = ft_get_env(&data->env); //GERER FREE ET FD SUR EXIT
 	if (data->to_free.env_tab == NULL)
 		return(ft_free_dchar(cmd_quotes), ft_free_dchar(cmd), ft_free_list(&data->exec), fprintf(stderr, "error 21\n"), ft_pb_malloc(data));
 	data->to_free.paths_env = ft_get_paths(data, cmd, cmd_quotes); //GERER FREE ET FD SUR EXIT
-	path_exec = find_path(cmd, data->to_free.paths_env, data, cmd_quotes); //GERER FREE ET FD SUR EXIT
+	data->to_free.path_exec = find_path(cmd, data->to_free.paths_env, data, cmd_quotes); //GERER FREE ET FD SUR EXIT
 	ft_dup_manage(data, m);
 	if (ft_exec_builtin(cmd, data, cmd_quotes) == 1)
 	{
-		free(path_exec);
+		free(data->to_free.path_exec);
 		ft_free_in_find_path(cmd, data->to_free.paths_env, data, cmd_quotes);
-		ft_close_all(data->pip);
+		ft_close_all(data->pip, data);
 		exit(err_value);
 	}
-	execve(path_exec, cmd, data->to_free.env_tab);
-	free(path_exec);
+	execve(data->to_free.path_exec, cmd, data->to_free.env_tab);
+	free(data->to_free.path_exec);
 	if (errno == 13)
 	{
 		ft_putstr_fd(cmd[0],2);
@@ -325,6 +325,7 @@ void ft_free_child_exec(t_data *data, char **cmd, char **cmd_quotes)
 	ft_free_env(data);
 	free(data->oldpwd);
 	free(data->pwd);
+	ft_close_all(data->pip, data);
 	ft_free_list(&data->exec);
 }
 
@@ -400,6 +401,7 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 		}
 		else if (begin->id == F_APPEND)
 		{
+			ft_close(&data->pip.fd_out);
 			data->pip.fd_out = open(begin->str, O_CREAT | O_RDWR | O_APPEND, 0644);
 			if (data->pip.fd_out == -1)
 			{
@@ -411,6 +413,7 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 		}
 		else if (begin->id == F_TRONC)
 		{
+			ft_close(&data->pip.fd_out);
 			data->pip.fd_out = open(begin->str, O_CREAT | O_RDWR | O_TRUNC, 0644);
 			if (data->pip.fd_out == -1)
 			{
@@ -422,6 +425,7 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 		}
 			else if (begin->id == F_INFILE)
 		{
+			ft_close(&data->pip.fd_in);
 			data->pip.fd_in = open(begin->str, O_RDONLY, 0644);
 			if (data->pip.fd_in == -1)
 			{
@@ -442,6 +446,8 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 
 void	ft_init_in_out(t_data *data)
 {
+	ft_close(&data->pip.fd_in);
+	ft_close(&data->pip.fd_out);
 	data->pip.fd_in = dup(data->pip.saved_stdin);
 	data->pip.fd_out = dup(data->pip.saved_stdout);
 }
@@ -495,7 +501,7 @@ void	ft_pipex(t_data *data)
 		// fprintf(stderr, "2err_value = %d\n\n", err_value);
 		while (wait(NULL) != -1)
 			(void)begin;
-		ft_close_all(data->pip);
+		ft_close_all(data->pip, data);
 }
 
 

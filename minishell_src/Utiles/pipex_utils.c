@@ -55,10 +55,12 @@ char    *ft_strrjoin(char const *s1, char const *s2, char const *s3)
     return (new);
 }
 
-void    ft_close_all(t_pip pip)
+void    ft_close_all(t_pip pip, t_data *data)
 {
     ft_close(&pip.fd_in);
     ft_close(&pip.fd_out);
+    ft_close(&data->pip.saved_stdin);
+    ft_close(&data->pip.saved_stdout);
     ft_close(&pip.pipefd1[0]);
     ft_close(&pip.pipefd1[1]);
     ft_close(&pip.pipefd2[0]);

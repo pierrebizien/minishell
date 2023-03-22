@@ -16,7 +16,6 @@ int	ft_exec_cmd_solo(t_data *data, char **cmd, char **cmd_quotes)
 {
 	(void)cmd;
 
-	// fprintf(stderr, "HEEHEHEHEHEHHEHEHE\n");
 	// perror("EXEC");
 	if (!contain_token(&data->exec, F_CMD, 0))
 		return (0);
@@ -25,7 +24,7 @@ int	ft_exec_cmd_solo(t_data *data, char **cmd, char **cmd_quotes)
 	if (ft_test_builtin(cmd) == 1)
 	{
 
-		ft_close_all(data->pip);
+		ft_close_all(data->pip, data);
 		ft_exec_builtin(cmd, data, cmd_quotes);
 		ft_init_in_out(data);
 		// free(cmd);
@@ -81,7 +80,7 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 	}
 	begin = tmp;
 	if (!ft_test_builtin(cmd))
-		return (ft_free_dchar(cmd), ft_free_dchar(cmd_quotes), 0);
+		return (ft_close_all(data->pip, data), ft_free_dchar(cmd), ft_free_dchar(cmd_quotes), 0);
 	while (begin && begin->id != F_PIPE)
 	{
 		if (begin->id == F_FALSEI)
@@ -122,6 +121,7 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 		}
 		else if (begin->id == F_APPEND)
 		{
+			ft_close(&data->pip.fd_out);
 			data->pip.fd_out = open(begin->str, O_CREAT | O_RDWR | O_APPEND, 0644);
 			if (data->pip.fd_out == -1)
 			{
@@ -133,6 +133,7 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 		}
 		else if (begin->id == F_TRONC)
 		{
+			ft_close(&data->pip.fd_out);
 			data->pip.fd_out = open(begin->str, O_CREAT | O_RDWR | O_TRUNC, 0644);
 			if (data->pip.fd_out == -1)
 			{
@@ -144,6 +145,7 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 		}
 		else if (begin->id == F_INFILE)
 		{
+			ft_close(&data->pip.fd_in);
 			data->pip.fd_in = open(begin->str, O_RDONLY, 0644);
 			if (data->pip.fd_in == -1)
 			{
@@ -165,5 +167,6 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 	}
 	ft_free_dchar(cmd_quotes);
 	ft_free_dchar(cmd);
+	ft_close_all(data->pip, data);
 	return (0);
 }

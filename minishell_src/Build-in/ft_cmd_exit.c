@@ -60,6 +60,10 @@ void ft_free_before_exit(char **cmd, t_data *data, char **cmd_quotes)
 	ft_free_dchar(cmd_quotes);
 	ft_free_env(data);
 	ft_free_list(&data->exec);
+	ft_close_all(data->pip, data);
+	ft_free_dchar(data->to_free.env_tab);
+	ft_free_dchar(data->to_free.paths_env);
+	free(data->to_free.path_exec);
 	(void) data;
 }
 

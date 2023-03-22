@@ -57,6 +57,7 @@ typedef	struct	s_to_free
 	char 			*str;
 	char 			**env_tab;
 	char 			**paths_env;
+	char			*path_exec;
 	
 }               t_to_free;
 
@@ -215,7 +216,7 @@ void	ft_init_pipex_pipe(t_data *data);
 //PIPEX_UTILS
 void	ft_free_dchar(char **str);
 char    *ft_strrjoin(char const *s1, char const *s2, char const *s3);
-void    ft_close_all(t_pip pip);
+void    ft_close_all(t_pip pip, t_data *data);
 char *ft_tab_to_str(char **tab, char sep);
 
 //SPLIT_LQUOTES
