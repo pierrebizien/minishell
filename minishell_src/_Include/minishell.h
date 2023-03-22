@@ -60,6 +60,8 @@ typedef	struct	s_to_free
 	char			*path_exec;
 	char			**cmd;
 	char			**cmd_quotes;
+	int				w;
+	int				hd_break;
 
 	
 }               t_to_free;
@@ -212,12 +214,20 @@ int		ft_strstrlen(char **strstr);
 size_t	ft_strlen_WS(const char *str);
 char	*ft_put_str_in_str(char *dest, char *src, int ind);
 void	ft_maj_quotes(int *dq, int *sq, char c);
+void	ft_close(int *fd);
 
 
 //FT_HEREDOC
+void	ft_heredoc_end(t_data *data, char *delimiter, int w, char *str);
+char	*ft_heredoc_init_var(t_data *data, int w);
+int		ft_heredoc_maxi_while(char **str, t_data *data, char *delimiter, int sq);
 char	*ft_heredoc(t_data *data, char *delimiter, int w, int sq);
-void	ft_close(int *fd);
 void	ft_init_pipex_pipe(t_data *data);
+
+//1
+void	ft_manage_write(char *str, char *delimiter, t_data *data, int sq);
+int		ft_heredoc_if_w(char **name, t_data *data);
+char	*ft_heredoc_prompt(char *str, t_data *data);
 
 
 //PIPEX_UTILS

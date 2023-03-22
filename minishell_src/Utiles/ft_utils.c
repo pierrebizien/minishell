@@ -90,3 +90,10 @@ int	ft_strlen_char(char *str, char c)
 		i++;
 	return (i);
 }
+void	ft_close(int *fd)
+{
+	if (*fd == -1 || *fd == 1 || *fd == 0)
+		return ;
+	close(*fd);
+	*fd = -1;
+}

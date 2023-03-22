@@ -13,13 +13,15 @@ SRCS += ft_split_leave.c
 SRCS += ft_split_lquotes.c
 SRCS += main.c
 SRCS += pipex_utils.c
-SRCS += ft_heredoc.c
 SRCS += ft_strtrim_lq.c
 
 
+
+
+# SRC_PATH += /libft/src
+SRC_PATH += ./minishell_src/Build-in/
 SRCS += ft_exec_built_in_pt0.c
 SRCS += ft_exec_built_in_pt1.c
-SRCS += ft_exec_built_in_pt2.c
 SRCS += ft_cmd_test_buildin.c
 SRCS += ft_create_env.c
 SRCS += ft_cmd_env.c
@@ -32,17 +34,32 @@ SRCS += ft_cmd_unset.c
 SRCS += ft_cmd_exit.c
 SRCS += ft_free_env.c
 
-
-# SRC_PATH += /libft/src
-SRC_PATH += ./minishell_src/Build-in/
 SRC_PATH += ./minishell_src/Execution/
+SRCS += ft_heredoc_pt0.c
+SRCS += ft_heredoc_pt1.c
+
+
+
 SRC_PATH += ./minishell_src/Free/
+
+
 SRC_PATH += ./minishell_src/Parsing/
+
+
 SRC_PATH += ./minishell_src/Signal/
+
+
 SRC_PATH += ./minishell_src/Start/
+
+
 SRC_PATH += ./minishell_src/Utiles/
+
+
 SRC_PATH += ./minishell_src/Other/
+
+
 SRC_PATH += ./minishell_src/
+
 # SRC_PATH += /pipex
 
 
