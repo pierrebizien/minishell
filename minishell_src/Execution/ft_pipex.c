@@ -41,11 +41,12 @@ char **ft_get_paths(t_data *data)
     }
 	return (NULL);
 }
-void	ft_free_in_fpath(char **cmd, char **paths_env, t_data *data, char **cmd_quotes)
+void	ft_free_in_find_path(char **cmd, char **paths_env, t_data *data, char **cmd_quotes)
 {
+	ft_free_dchar(data->to_free.env_tab);
 	ft_free_dchar(cmd);
-	ft_free_dchar(paths_env);
 	ft_free_dchar(cmd_quotes);
+	ft_free_dchar(paths_env);
 	ft_free_env(data);
 	free(data->oldpwd);
 	free(data->pwd);
@@ -62,29 +63,34 @@ char	*find_path(char **cmd, char **paths_env, t_data *data, char **cmd_quotes)
 
 	i = 0;
 	if (cmd && cmd[0] && !cmd[0][0])
-		return (ft_putstr_fd(": Command not found\n", 2), exit(127), NULL);
+		return (ft_putstr_fd(": Command not found\n", 2), ft_free_in_find_path(cmd, paths_env, data, cmd_quotes), exit(127), NULL);
 	if (ft_strncmp(cmd[0], ".", ft_strlen(cmd[0])) == 0 || ft_strncmp(cmd[0], "..", ft_strlen(cmd[0])) == 0)
-		return (ft_putstr_fd(cmd[0], 2), ft_putstr_fd(": Command not found\n", 2), exit(127), NULL);
+		return (ft_putstr_fd(cmd[0], 2), ft_putstr_fd(": Command not found\n", 2), ft_free_in_find_path(cmd, paths_env, data, cmd_quotes), exit(127), NULL);
 	if (ft_test_builtin(cmd) == 1)
 		return (NULL);
 	if ((cmd[0][0] == '/' || cmd[0][0] == '.') && access(cmd[0], F_OK))
-		return (ft_putstr_fd(cmd[0], 2), ft_putstr_fd(": No such file or directory\n", 2), exit(127), NULL);
+		return (ft_putstr_fd(cmd[0], 2), ft_putstr_fd(": No such file or directory\n", 2), ft_free_in_find_path(cmd, paths_env, data, cmd_quotes), exit(127), NULL);
 	if (!access(cmd[0], F_OK))
 	{
 		if (access(cmd[0], X_OK))
-			return (perror(cmd[0]), exit(126), NULL);
+			return (perror(cmd[0]), ft_free_in_find_path(cmd, paths_env, data, cmd_quotes), exit(126), NULL);
 		else
-			return (ft_strdup(cmd[0]));
+		{
+			tmp = ft_strdup(cmd[0]);
+			if (tmp == NULL)
+				return (ft_free_in_find_path(cmd, paths_env, data, cmd_quotes), ft_putstr_fd(MALLOC_ERROR, 2),exit(MAL_ERCODE),  NULL);
+			return (tmp);
+		}
 	}
 	while (paths_env && paths_env[i])
 	{
 		tmp = ft_strrjoin(paths_env[i], "/", cmd[0]);
 		if(!tmp)
-			return (ft_putstr_fd(MALLOC_ERROR, 2), NULL);
+			return (ft_free_in_find_path(cmd, paths_env, data, cmd_quotes), ft_putstr_fd(MALLOC_ERROR, 2),exit(MAL_ERCODE),  NULL);
 		if (!access(tmp, F_OK))
 		{
 			if (access(tmp, X_OK))
-				return (perror(cmd[i]), free(tmp), exit(126), NULL);
+				return (perror(cmd[i]), free(tmp), ft_free_in_find_path(cmd, paths_env, data, cmd_quotes), exit(126), NULL);
 			else
 				return (tmp);
 		}
@@ -96,7 +102,7 @@ char	*find_path(char **cmd, char **paths_env, t_data *data, char **cmd_quotes)
 		ft_putstr_fd(": No such file or directory\n", 2);
 	else
 		ft_putstr_fd(": Command not found\n", 2);
-	return (exit(127), NULL);
+	return (ft_free_in_find_path(cmd, paths_env, data, cmd_quotes), exit(127), NULL);
 }
 int	is_out(char *str)
 {
@@ -266,36 +272,33 @@ char **ft_get_env(t_env *env)
 
 void	ft_exec_cmd(t_data *data, char **cmd, int m, char **cmd_quotes)
 {
-	char **paths_env;
 	char *path_exec;
-	char **env_tab;
-	(void)cmd;
 
-	env_tab = ft_get_env(&data->env); //GERER FREE ET FD SUR EXIT
-	if (env_tab == NULL)
+	data->to_free.env_tab = ft_get_env(&data->env); //GERER FREE ET FD SUR EXIT
+	if (data->to_free.env_tab == NULL)
 		(ft_free_dchar(cmd_quotes), ft_free_dchar(cmd), ft_free_list(&data->exec), ft_pb_malloc(data));
-	paths_env = ft_get_paths(data); //GERER FREE ET FD SUR EXIT
-	if (paths_env == NULL)
-		(ft_free_dchar(cmd_quotes), ft_free_dchar(cmd), ft_free_dchar(env_tab), ft_free_list(&data->exec), ft_pb_malloc(data));
-	path_exec = find_path(cmd, paths_env, data, cmd_quotes); //GERER FREE ET FD SUR EXIT
-
-	
+	data->to_free.paths_env = ft_get_paths(data); //GERER FREE ET FD SUR EXIT
+	if (data->to_free.paths_env == NULL)
+		(ft_free_dchar(cmd_quotes), ft_free_dchar(cmd), ft_free_dchar(data->to_free.env_tab), ft_free_list(&data->exec), ft_pb_malloc(data));
+	path_exec = find_path(cmd, data->to_free.paths_env, data, cmd_quotes); //GERER FREE ET FD SUR EXIT
 	ft_dup_manage(data, m);
 	if (ft_exec_builtin(cmd, data, cmd_quotes) == 1)
 	{
+		free(path_exec);
+		ft_free_in_find_path(cmd, data->to_free.paths_env, data, cmd_quotes);
 		ft_close_all(data->pip);
-		if (data->pip.nb_pipes)
-			exit(err_value);
-		else
-			return ;
+		exit(err_value);
 	}
-	execve(path_exec, cmd, env_tab);
+	execve(path_exec, cmd, data->to_free.env_tab);
+	free(path_exec);
 	if (errno == 13)
 	{
 		ft_putstr_fd(cmd[0],2);
+		ft_free_in_find_path(cmd, data->to_free.paths_env, data, cmd_quotes);
 		ft_putstr_fd(": Is a directory\n", 2);
 		exit(126);
 	}
+	ft_free_in_find_path(cmd, data->to_free.paths_env, data, cmd_quotes);
 	perror("");
 	//CLOSE ET FREE TOUT
 	exit(errno);

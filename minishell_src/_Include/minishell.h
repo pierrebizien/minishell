@@ -55,6 +55,8 @@ typedef	struct	s_env
 typedef	struct	s_to_free
 {
 	char 			*str;
+	char 			**env_tab;
+	char 			**paths_env;
 	
 }               t_to_free;
 

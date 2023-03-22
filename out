@@ -1,0 +1,13 @@
+total 216
+drwxr-xr-x  7 ngriveau 2022_paris   4096 Mar 22 10:13 .
+drwxr-xr-x  3 ngriveau 2022_paris   4096 Mar 22 09:07 ..
+drwxr-xr-x  2 ngriveau 2022_paris   4096 Mar 22 09:07 assets
+-rw-r--r--  1 ngriveau 2022_paris   6148 Mar 22 09:07 .DS_Store
+drwxr-xr-x  8 ngriveau 2022_paris   4096 Mar 22 09:30 .git
+drwxr-xr-x  4 ngriveau 2022_paris   4096 Mar 22 09:08 libft
+-rwxr-xr-x  1 ngriveau 2022_paris   3615 Mar 22 09:07 Makefile
+-rwxr-xr-x  1 ngriveau 2022_paris 147392 Mar 22 10:13 minishell
+drwxr-xr-x 11 ngriveau 2022_paris   4096 Mar 22 09:08 minishell_src
+-rw-r--r--  1 ngriveau 2022_paris      0 Mar 22 10:14 out
+-rw-r--r--  1 ngriveau 2022_paris  30725 Mar 22 09:07 tester.py
+drwxr-xr-x  2 ngriveau 2022_paris   4096 Mar 22 09:07 .vscode

@@ -81,6 +81,7 @@ char	*ft_clean(char *str, t_data *data)
 				return (free(str), ft_pb_malloc(data), NULL);
 			free(str);
 			str = tmp;
+
 			i++;
 		}
 		else
@@ -376,6 +377,7 @@ char *ft_parse(char *str, t_data *data) // CHECK GLOBAL ET SI > >OUT RETURN ERRO
 		return (NULL);
 	if (ft_verif_et_ou(str) == 0 || ft_verif_just_chev(str) == 0 || ft_verif_pipe(str) == 0)
 	{
+		free(str);
 		err_value = 2;
 		return (NULL);
 	}
@@ -789,3 +791,26 @@ int ft_parse_for_exec(t_data *data)
 // < make <<test <oui << stop cat > out -ls >sexe >>bisous
 
 // < make <<test <oui << stop cat > out -ls >sexe >>bisous | < infule << stop <out ls od > test >> out -la > out 
+
+
+// ./
+// ./: Is a directory
+// ==292593== 
+// ==292593== HEAP SUMMARY:
+// ==292593==     in use at exit: 208,337 bytes in 225 blocks
+// ==292593==   total heap usage: 771 allocs, 546 frees, 252,589 bytes allocated
+// ==292593== 
+// ==292593== LEAK SUMMARY:
+// ==292593==    definitely lost: 0 bytes in 0 blocks
+// ==292593==    indirectly lost: 0 bytes in 0 blocks
+// ==292593==      possibly lost: 0 bytes in 0 blocks
+// ==292593==    still reachable: 0 bytes in 0 blocks
+// ==292593==         suppressed: 208,337 bytes in 225 blocks
+// ==292593== 
+// ==292593== For lists of detected and suppressed errors, rerun with: -s
+// ==292593== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+// minishell (/minishell) ls | ls -la < Makefile >out |  
+// syntax error near unexpected token `newline'
+// minishell (/minishell) 
+// minishell (/minishell) ls | ls -la < Makefile >out
+// minishell (/minishell) ls | ls -la < Makefile >out | env
