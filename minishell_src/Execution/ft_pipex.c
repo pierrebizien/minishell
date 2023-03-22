@@ -318,6 +318,18 @@ void	ft_reset_param_pip(t_data *data)
 }
 
 
+void ft_free_child_exec(t_data *data, char **cmd, char **cmd_quotes)
+{
+	ft_free_dchar(cmd_quotes);
+	ft_free_dchar(cmd);
+	ft_free_env(data);
+	free(data->oldpwd);
+	free(data->pwd);
+	ft_free_list(&data->exec);
+}
+
+
+
 int	ft_child_exec(t_exec *begin, t_data *data, int m)
 {
 	int tmp_fd;
@@ -336,6 +348,7 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 			{
 				perror(begin->str);
 				err_value = 1;
+				ft_free_child_exec(data, cmd, cmd_quotes);
 				exit(1);
 			}
 			ft_close(&tmp_fd);
@@ -347,6 +360,7 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 			{
 				perror(begin->str);
 				err_value = 1;
+				ft_free_child_exec(data, cmd, cmd_quotes);
 				exit(1);
 			}
 			ft_close(&tmp_fd);
@@ -358,6 +372,7 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 			{
 				perror(begin->str);
 				err_value = 1;
+				ft_free_child_exec(data, cmd, cmd_quotes);
 				exit(1);
 			}
 			ft_close(&tmp_fd);
@@ -390,6 +405,7 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 			{
 				perror(begin->str);
 				err_value = 1;
+				ft_free_child_exec(data, cmd, cmd_quotes);
 				exit(1);
 			}
 		}
@@ -400,6 +416,7 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 			{
 				perror(begin->str);
 				err_value = 1;
+				ft_free_child_exec(data, cmd, cmd_quotes);
 				exit(1);
 			}
 		}
@@ -410,6 +427,7 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 			{
 				perror(begin->str);
 				err_value = 1;
+				ft_free_child_exec(data, cmd, cmd_quotes);
 				exit(1);
 			}
 		}

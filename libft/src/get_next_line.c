@@ -6,125 +6,86 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 10:30:09 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/21 18:45:46 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/22 14:56:02 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./inc/get_next_line.h"
 
-static t_fdList	*find_fdbegin(int fd, t_fdList **fd_list)
+int	ft_s(char *str, int verif)
 {
-	t_fdList			*current;
+	int	i;
 
-	if (!(*fd_list))
-		*fd_list = ftlst_new_fd(fd);
-	if (!(*fd_list))
-		return (NULL);
-	current = *fd_list;
-	while (current->next_fd && current->fd != fd)
-		current = current->next_fd;
-	if (current->fd != fd)
-	{
-		current->next_fd = ftlst_new_fd(fd);
-		current = current->next_fd;
-	}
-	return (current);
-}
-
-static int	read_file(int fd, t_bufferList *begin, t_bufferList *current)
-{
-	int	readed;
-
-	readed = 0;
-	if (begin && end_of_line(begin->content))
-		return (1);
-	else if (begin && (begin->content[0]))
-	{
-		begin->next = ftlst_new_buffer();
-		current = begin->next;
-	}
-	while (1)
-	{
-		readed = read(fd, current->content, BUFFER_SIZE);
-		if (readed <= 0)
-			break ;
-		(current->content)[readed] = '\0';
-		if (end_of_line(current->content))
-			break ;
-		current->next = ftlst_new_buffer();
-		current = current->next;
-	}
-	if (!(begin->content[0]))
-		return (0);
-	return (1);
-}
-
-static char	*join_buffers(t_bufferList *current)
-{
-	char			*line;
-	size_t			i;
-	size_t			j;
-
-	line = malloc(count_memory(current));
-	if (!line)
-		return (NULL);
 	i = 0;
-	while (current && current->content)
-	{
-		j = 0;
-		while ((current->content)[j] && (i == 0 || line[i - 1] != '\n'))
-			line[i++] = (current->content)[j++];
-		current = current->next;
-	}
-	line[i] = '\0';
-	return (line);
-}
-
-static void	clean_buffers(t_bufferList *current, t_fdList *current_fd)
-{
-	size_t			i;
-	size_t			j;
-	t_bufferList	*next;
-
-	while (current->next)
-	{
-		next = current->next;
-		free(current->content);
-		free(current);
-		current = next;
-		current_fd->begin = next;
-	}
-	i = 0;
-	while ((current->content)[i])
-	{
+	while (str[i] != '\0' && str[i] != '\n')
 		i++;
-		if ((current->content)[i - 1] == '\n')
-			break ;
-	}
+	if (str[i] == '\n' && verif == 1)
+		i++;
+	return (i);
+}
+
+char	*ft_my_malloc(char *buffer, char *ligne, int size)
+{
+	int		i;
+	int		j;
+	char	*upligne;
+
+	i = 0;
 	j = 0;
-	while ((current->content)[i])
-		(current->content)[j++] = (current->content)[i++];
-	(current->content)[j] = '\0';
+	if (buffer[i] == '\0')
+		return (ligne);
+	while (buffer[i] == -42)
+		i++;
+	upligne = malloc(sizeof(char) * (ft_s(ligne, 1) + ft_s(&buffer[i], 1) + 2));
+	if (upligne == NULL)
+		return (NULL);
+	upligne[ft_s(ligne, 1) + ft_s(&buffer[i], 1)] = '\0';
+	size = ft_s(ligne, 1);
+	while (--size + 1)
+	{
+		upligne[j] = ligne[j];
+		j++;
+	}
+	upligne = ft_dup_upligne(upligne, buffer, i, j);
+	free(ligne);
+	return (upligne);
+}
+
+char	*ft_new_line(char *buffer, int size, int fd)
+{	
+	char	*ligne;
+
+	ligne = malloc(sizeof(char));
+	if (ligne == NULL)
+		return (NULL);
+	ligne[0] = '\0';
+	while (size != 0)
+	{
+		ligne = ft_my_malloc(buffer, ligne, size);
+		if (ligne == NULL)
+			return (free(ligne), NULL);
+		if (ligne[ft_s(ligne, 0)] == '\n')
+			return (ligne);
+		size = read(fd, buffer, BUFFER_SIZE);
+	}
+	if (ligne[0] == '\0')
+	{
+		free(ligne);
+		return (NULL);
+	}
+	return (ligne);
 }
 
 char	*get_next_line(int fd)
 {
-	static t_fdList		*fd_list;
-	t_fdList			*c_fd;
-	t_bufferList		*begin;
-	char				*line;
+	int			size;
+	static char	buffer[BUFFER_SIZE + 1] = {0};
 
-	if (fd < 0 || BUFFER_SIZE < 1)
+	size = -5;
+	buffer[BUFFER_SIZE] = '\0';
+	if (buffer[0] == '\0')
+		size = read(fd, buffer, BUFFER_SIZE);
+	if (size == 0 || size == -1)
 		return (NULL);
-	c_fd = find_fdbegin(fd, &fd_list);
-	if (!c_fd)
-		return (NULL);
-	begin = c_fd->begin;
-	if (read_file(fd, begin, begin))
-		line = join_buffers(begin);
-	else
-		line = NULL;
-	clean_buffers(begin, c_fd);
-	fd_list = clean_fd_list(fd_list, c_fd);
-	return (line);
+	return (ft_new_line(buffer, size, fd));
 }

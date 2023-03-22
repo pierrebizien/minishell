@@ -44,7 +44,6 @@ void	ft_free_list(t_exec *begin)
 			free(begin->quotes);
 		begin = begin->next;
 	}
-	
 	while (begin)
 	{
 		// fprintf(stderr, "tmp->str vo %s\n", tmp->str);

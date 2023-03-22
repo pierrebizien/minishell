@@ -63,7 +63,7 @@ char	*ft_clean(char *str, t_data *data)
 			in_sq = ft_in_q(in_sq);
 		}
 		if (!in_dq && !in_sq && is_ws(str[i]) && is_ws(str[i + 1]))
-			ft_memmove(str + i, (str + i + 1), ft_strlen(str + i) + 2);
+			ft_memmove(str + i, (str + i + 1), ft_strlen(str + i + 1) + 1);
 		else if (in_sq == 0 && in_dq == 0 && ((str[i] && str[i] == '<' && str[i+1] != '<' && str[i+1] != ' ' && str[i+1]) || (str[i] == '>' && str[i+1] != '>' && str[i+1] != ' ' && str[i+1])))
 		{
 			// fprintf(stderr, "on rentre 1 str + i vaut %s et dq vaut %d\n", str + i, in_dq);
@@ -206,10 +206,10 @@ char *ft_convert_variable(char *str, t_data *data)
 				if (!str)
 					return (free(var), free(tmp), NULL);
 				free(tmp);
-				free(var);
 			}
 			else
 				i++;
+			free(var);
 		}
 		else
 			i++;
@@ -248,9 +248,9 @@ char *ft_convert_variable_hd(char *str, t_data *data, char *delimiter)
 					err_value = MAL_ERCODE;
 					return (free(var), free(tmp), NULL);
 				}
-				free(var);
 				free(tmp);
 			}
+			free(var);
 		}
 		if (str && str[i])
 			i++;
@@ -377,7 +377,11 @@ char *ft_parse(char *str, t_data *data) // CHECK GLOBAL ET SI > >OUT RETURN ERRO
 		return (NULL);
 	if (ft_verif_et_ou(str) == 0 || ft_verif_just_chev(str) == 0 || ft_verif_pipe(str) == 0)
 	{
+
 		free(str);
+		ft_free_env(data);
+		free(data->pwd);
+		free(data->oldpwd);
 		err_value = 2;
 		return (NULL);
 	}
@@ -559,7 +563,7 @@ int ft_modif_in_out(t_data *data)
 				if (tmp->id == F_FALSED)
 				{
 					ft_init_sigint_hd();
-					tmp->hd_filename = ft_heredoc(data, tmp->str, 0, 0);
+					ft_heredoc(data, tmp->str, 0, 0);
 					if (err_value == 130)
 						return (1);
 					if (err_value == MAL_ERCODE)
@@ -667,6 +671,7 @@ int ft_parse_for_exec(t_data *data)
 	tmp = &data->exec;
 	tmp->id = -43;
 	tmp->next = NULL;
+	tmp->hd_filename = NULL;
 	tmp->str = NULL;
 	j = -1;
 	count_p = 0;

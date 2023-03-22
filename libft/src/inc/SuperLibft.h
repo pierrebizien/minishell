@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 17:32:42 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/03/06 13:19:54 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/22 14:57:28 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,6 @@ char	*ft_randomstr(char *prefix, char *suffix, size_t len);
 /* get_next_line_c */
 char			*get_next_line(int fd);
 
-/* get_next_line_utils.c */
-t_bufferList	*ftlst_new_buffer(void);
-t_fdList		*ftlst_new_fd(int fd);
-int				end_of_line(char *content);
-size_t			count_memory(t_bufferList *current);
-t_fdList		*clean_fd_list(t_fdList *fd_list, t_fdList *current);
 
 int		ft_writechar(char ch, int nbrch);
 int		ft_writestr(char *str, int nbrch);

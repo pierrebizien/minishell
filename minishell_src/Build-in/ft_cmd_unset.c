@@ -48,7 +48,7 @@ int	ft_unset(char **str, t_data *data)
 		before = NULL;
 		while (tmp)
 		{
-			if (ft_strncmp(tmp->key, str[i], ft_strlen(str[i])) == 0)
+			if (ft_strlen(str[i]) != 0 && ft_strncmp(tmp->key, str[i], ft_strlen(str[i])) == 0)
 			{
 				after = tmp->next;
 				free(tmp->key);

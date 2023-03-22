@@ -124,7 +124,6 @@ int	main(int ac, char **av, char**envp)
 	cpy_str_tty = ft_strdup(str);
 	while (str)
 	{
-		fprintf(stderr, "str = |%s|\n\n\n", str);
 		if (str && str[0])
 		{
 			str = ft_parse(str, &data);
@@ -140,14 +139,15 @@ int	main(int ac, char **av, char**envp)
 					
 				ft_pipex(&data);
 				ft_close_all(data.pip);
-				ft_unlink_hd(&data.exec);
+				// ft_unlink_hd(&data.exec);
 				ft_free_list(&data.exec);
 			}
 			ft_init_sigint();
 			ft_init_sigquit();
-
+			str=NULL;
 		}
-			free(cpy_str_tty);
+		free(cpy_str_tty);
+		free(str);
 
 		if (!data.bool_redir_0 && !data.bool_redir_2)
 			str = ft_prompt();

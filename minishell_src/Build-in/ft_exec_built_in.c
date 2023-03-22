@@ -37,6 +37,14 @@ int	ft_exec_cmd_solo(t_data *data, char **cmd, char **cmd_quotes)
 	else
 		return (0);
 }
+
+void ft_free_child_exec_solo(t_data *data, char **cmd, char **cmd_quotes)
+{
+	(void) data;
+	ft_free_dchar(cmd_quotes);
+	ft_free_dchar(cmd);
+}
+
 int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 {
 	int tmp_fd;
@@ -58,14 +66,12 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 			if (!cmd)
 			{
 				ft_free_list(&data->exec);
-				fprintf(stderr, "ERROR 1\n");
 				ft_pb_malloc(data);
 				return (MAL_ERCODE); //GERER
 			}
 			cmd_quotes = ft_join_dstr(cmd_quotes, begin->quotes);
 			if (!cmd_quotes)
 			{
-				fprintf(stderr, "ERROR 2\n");
 				ft_free_list(&data->exec);
 				ft_pb_malloc(data);
 				return (MAL_ERCODE); //GERER
@@ -85,7 +91,8 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 			{
 				perror(begin->str);
 				err_value = 1;
-				return(errno);
+				ft_free_child_exec_solo(data, cmd, cmd_quotes);
+				return(1);
 			}
 			ft_close(&tmp_fd);
 		}
@@ -96,7 +103,8 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 			{
 				perror(begin->str);
 				err_value = 1;
-				return(errno);
+				ft_free_child_exec_solo(data, cmd, cmd_quotes);
+				return(1);
 			}
 			ft_close(&tmp_fd);
 		}
@@ -107,7 +115,8 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 			{
 				perror(begin->str);
 				err_value = 1;
-				return(errno);
+				ft_free_child_exec_solo(data, cmd, cmd_quotes);
+				return(1);
 			}
 			ft_close(&tmp_fd);
 		}
@@ -118,7 +127,8 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 			{
 				perror(begin->str);
 				err_value = 1;
-				return(errno);
+				ft_free_child_exec_solo(data, cmd, cmd_quotes);
+				return(1);
 			}
 		}
 		else if (begin->id == F_TRONC)
@@ -128,7 +138,8 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 			{
 				perror(begin->str);
 				err_value = 1;
-				return(errno);
+				ft_free_child_exec_solo(data, cmd, cmd_quotes);
+				return(1);
 			}
 		}
 		else if (begin->id == F_INFILE)
@@ -138,7 +149,8 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 			{
 				perror(begin->str);
 				err_value = 1;
-				return(errno);
+				ft_free_child_exec_solo(data, cmd, cmd_quotes);
+				return(1);
 			}
 		}
 		begin = begin->next;
