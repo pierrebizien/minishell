@@ -267,19 +267,6 @@ def read_outputs(minishell_stdout, minishell_stderr, bash_stdout, bash_stderr, m
                         index = line.find("==", 2)
                         new_lines.append(line[index+2:])
                 minishell_readed_leaks = "\n".join(new_lines)
-                minishell_readed_leaks = minishell_readed_leaks.split('\n')
-                i = 0
-                while i < len(minishell_readed_leaks):
-                    if ("<inherited from parent>" in minishell_readed_leaks[i]):
-                        minishell_readed_leaks[i] = ""
-                        minishell_readed_leaks[i - 1] = ""
-                    i += 1
-                minishell_readed_leaks = "\n".join(minishell_readed_leaks)
-                minishell_readed_leaks = minishell_readed_leaks.rstrip(" \n")
-                if ('\n' not in minishell_readed_leaks and "FILE DESCRIPTORS:" in minishell_readed_leaks):
-                    minishell_readed_leaks = ""
-                else:
-                    minishell_readed_leaks += '\n'
 
     return minishell_readed_stdout, minishell_readed_stderr, bash_readed_stdout, bash_readed_stderr, minishell_readed_leaks
 
@@ -311,7 +298,7 @@ def print_cmd(instruction, minishell_readed_stdout, minishell_readed_stderr, min
 def compare_outputs(minishell_readed_stdout, minishell_readed_stderr, minishell_exitcode, bash_readed_stdout, bash_readed_stderr, bash_exitcode, minishell_readed_leaks):
     if (minishell_readed_stdout != bash_readed_stdout):
         return ("KO")
-    elif ("in loss record" in minishell_readed_leaks):
+    elif (minishell_readed_leaks != ""):
         return ("KO")
     elif (minishell_exitcode != bash_exitcode):
         return ("KO")
@@ -396,12 +383,8 @@ def print_leaks(minishell_readed_leaks):
     global leaks_nbr
 
     if (minishell_readed_leaks != ""):
-        if ("in loss record" in minishell_readed_leaks):
-            print(f"\n{BOLDRED}LEAKS{NC}")
-        else:
-            print(f"\n{BOLDORANGE}VALGRIND WARNINGS{NC}")
-        minishell_readed_leaks = minishell_readed_leaks.rstrip(" \n")
-        print(f"{minishell_readed_leaks}")
+        print(f"{BOLDWHITE}leaks{NC}")
+        print(minishell_readed_leaks)
         leaks_nbr += 1
 
 
@@ -660,6 +643,15 @@ def send_instructions(check_rules, ignore_rules):
         input("echo $PWD, $OLDPWD\n"
               "cd /tmp\n"
               "echo $PWD, $OLDPWD\n")
+        input("echo $PWD, $OLDPWD\n"
+              "cd - /tmp\n"
+              "echo $PWD, $OLDPWD\n")
+        input("echo $PWD, $OLDPWD\n"
+              "cd -- /tmp\n"
+              "echo $PWD, $OLDPWD\n")
+        input("echo $PWD, $OLDPWD\n"
+              "cd --- /tmp\n"
+              "echo $PWD, $OLDPWD\n")
         input("cd /root\n")
         input("echo $PWD, $OLDPWD\n"
               "cd /root\n"
@@ -676,7 +668,7 @@ def send_instructions(check_rules, ignore_rules):
         input("pwd\n")
         input("export PWD=$HOME\n"
               "pwd\n")
-        input("pwd 4815162342\n")
+        input("pwd 4815162342 --\n")
         input("pwd Quarante deux\n")
         input("echo -wrongoption -wrongoption\n")
         input("cd -wrongoption /notanexistingfolder\n")
@@ -719,14 +711,17 @@ def send_instructions(check_rules, ignore_rules):
         input("unset\n")
         input("unset \"\"\n")
         input("export | grep \"OLDPWD\"\n")
+        input("export | grep \"PWD\"\n")
         input("export --wrongoption=123 --wrongoption=123\n")
         input("export --wrongoption --wrongoption\n")
         input("export -wrongoption=42 -wrongoption=42\n")
         input("export | grep \"SHLVL\"\n")
+        input("export -\n")
+        input("unset -\n")
         input("unset -wrongoption -wrongoption\n")
-        input("unset --wrongoption -wrongoption\n")
         input("env -wrongoption -wrongoption\n")
         input("env --wrongoption\n")
+        input("env -\n")
 
     rule += 1
     if (rule not in ignore_rules and (check_rules == [] or rule in check_rules)):
@@ -758,6 +753,9 @@ def send_instructions(check_rules, ignore_rules):
         input("exit -9223372036854775809\n"
               "test\n")
         input("exit -wrongoption -wrongoption\n")
+        input("exit --\n")
+        input("exit -- --\n")
+        input("exit -\n")
 
 
 def print_results():
