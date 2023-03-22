@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strtrim_lq.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/23 00:23:06 by ngriveau          #+#    #+#             */
+/*   Updated: 2023/03/23 00:25:26 by ngriveau         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static char	*find_begin(char const *s1, char const *set)
@@ -76,10 +88,10 @@ static char	*fill_str(char const *begin, char const *end)
 
 char	*ft_strtrim_lq(char const *s1)
 {
-	char	*begin;
-	char	*end;
-	char	*new;
-	const char set[] = "\"'";
+	char		*begin;
+	char		*end;
+	char		*new;
+	const char	set[] = "\"'";
 
 	begin = find_begin(s1, set);
 	end = find_end(s1, set, s1);
