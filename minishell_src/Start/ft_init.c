@@ -28,6 +28,8 @@ int ft_init(char **env, t_data *data)
 	data->to_free.path_exec = NULL;
 	data->to_free.paths_env = NULL;
 	data->to_free.str = NULL;
+	data->to_free.cmd = NULL;
+	data->to_free.cmd_quotes = NULL;
 	ft_init_pipex_pipe(data);
 	ft_create_env(env, data);
 	rl_event_hook=event;
