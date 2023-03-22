@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:39:00 by pbizien           #+#    #+#             */
-/*   Updated: 2023/03/22 22:28:50 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/22 22:34:57 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,23 +33,28 @@ void	ft_manage_write(char *str, char *delimiter, t_data *data, int sq)
 	write (data->pip.tmp_fd, "\n", 1);
 }
 
+
+int ft_heredoc_if_w(char *name, t_data *data) 
+{
+	name = ft_randomstr("/tmp/hd_", NULL, 16);
+	if (name == NULL)
+	{
+		g_err_value = MAL_ERCODE;
+		return (0);
+	}
+	data->pip.tmp_fd = open(name, O_TRUNC | O_CREAT | O_RDWR, 00777);
+	if (data->pip.tmp_fd == -1)
+		return (free(name), 0);
+	return (1);
+}
+
 char	*ft_heredoc(t_data *data, char *delimiter, int w, int sq)
 {
 	char	*str;
 	char	*name;
 
-	if (w)
-	{
-		name = ft_randomstr("/tmp/hd_", NULL, 16);
-		if (name == NULL)
-		{
-			g_err_value = MAL_ERCODE;
-			return (NULL);
-		}
-		data->pip.tmp_fd = open(name, O_TRUNC | O_CREAT | O_RDWR, 00777);
-		if (data->pip.tmp_fd == -1)
-			return (free(name), NULL);
-	}
+	if (w && ft_heredoc_if_w(name, data) == 0)
+		return (NULL);
 	if (!data->bool_redir_0 && !data->bool_redir_2)
 		str = readline(">");
 	else
