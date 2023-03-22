@@ -6,7 +6,7 @@
 /*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 18:45:47 by pbizien           #+#    #+#             */
-/*   Updated: 2023/03/22 18:52:00 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/03/22 19:10:07 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	ft_free_before_exit(char **cmd, t_data *data, char **cmd_quotes)
 	(void) data;
 }
 
-int	ft_exit_bis(char **cmd, t_data *data, char **cmd_quotes)
+int	ft_exit_bis(char **cmd, t_data *data, char **cmd_quotes, int good_exit)
 {
 	if (good_exit == 0)
 	{
@@ -130,5 +130,5 @@ int	ft_exit(char **cmd, t_data *data, char **cmd_quotes)
 			good_exit = 0;
 		i++;
 	}
-	return (ft_exit_bis(cmd, data, cmd_quotes));
+	return (ft_exit_bis(cmd, data, cmd_quotes, good_exit));
 }

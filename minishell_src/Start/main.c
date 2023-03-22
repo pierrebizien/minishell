@@ -1,6 +1,6 @@
 #include "../_Include/minishell.h"
 
-int		err_value;
+int		g_err_value;
 
 void	ft_print_dargs(char **strstr)
 {
@@ -36,11 +36,11 @@ char *ft_prompt(void)
 	free(path);
 	path = ft_put_str_in_str("\001\e[36;1m\002minishell (\001\e[32;1m\002/\001\e[36;1m\002) \001\e[0m\002", minipath, 30);
 	free(minipath);
-	// if (err_value == 0)
+	// if (g_err_value == 0)
 	// 	minipath = ft_put_str_in_str(path, "\001\e[32;1m\002● ", 0);
 	// else
 	// 	minipath = ft_put_str_in_str(path, "\001\e[31;1m\002● ", 0);
-	// path = ft_put_str_in_str(path, ft_itoa(err_value), 0); // error value 
+	// path = ft_put_str_in_str(path, ft_itoa(g_err_value), 0); // error value 
 	str = readline(path);
 	free(path);
 	return (str);
@@ -128,14 +128,14 @@ int	main(int ac, char **av, char**envp)
 		{
 			str = ft_parse(str, &data);
 			data.to_free.str = str;
-			if (!str && err_value != -42 && (data.bool_redir_0 || data.bool_redir_2))
-				return (ft_putstr_fd(cpy_str_tty, 2), free(cpy_str_tty), ft_close_all(data.pip, &data),  err_value);
+			if (!str && g_err_value != -42 && (data.bool_redir_0 || data.bool_redir_2))
+				return (ft_putstr_fd(cpy_str_tty, 2), free(cpy_str_tty), ft_close_all(data.pip, &data),  g_err_value);
 			free(cpy_str_tty);
 			cpy_str_tty = NULL;
 			if (str && !ft_parse_for_exec(&data))
 			{
-				if (err_value == MAL_ERCODE)
-					return (err_value);
+				if (g_err_value == MAL_ERCODE)
+					return (g_err_value);
 					
 				ft_pipex(&data);
 				ft_close_all(data.pip, &data);
@@ -168,6 +168,6 @@ int	main(int ac, char **av, char**envp)
 	ft_free_end(&data);
 	if (!data.bool_redir_0 && !data.bool_redir_2)
 		write(2,"\nexit\n", 6);
-	return (err_value);
+	return (g_err_value);
 }
 

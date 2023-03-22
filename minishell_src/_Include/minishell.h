@@ -115,7 +115,7 @@ int	ft_parse_for_exec(t_data *data);
 char	*ft_parse(char *str, t_data *data);
 int		is_ws(char c);
 char	*ft_check_env(char *str, t_data *data);
-size_t	ft_strlen_WS_quotes(const char *str);
+size_t	ft_strlen_ws_quotes(const char *str);
 char *ft_convert_variable(char *str, t_data *data);
 char *ft_convert_variable_hd(char *str, t_data *data, char *delimiter);
 char	*ft_clean(char *str, t_data *data);
@@ -143,6 +143,8 @@ int		ft_unset(char **strr, t_data *data);
 
 //FT_EXPORT
 int		ft_export(char **tab, t_data *data, char **cmd_quotes);
+size_t	ft_strlen_ws(const char *str);
+int	ft_just_export(t_data *data);
 
 
 

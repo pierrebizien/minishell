@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:39:00 by pbizien           #+#    #+#             */
-/*   Updated: 2023/03/22 16:36:58 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/22 19:10:07 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../_Include/minishell.h"
 
-extern int err_value;
+extern int g_err_value;
 
 void	ft_close(int *fd)
 {
@@ -45,7 +45,7 @@ char	*ft_heredoc(t_data *data, char *delimiter, int w, int sq)
 		name = ft_randomstr("/tmp/hd_", NULL, 16);
 		if (name == NULL)
 		{
-			err_value = MAL_ERCODE;
+			g_err_value = MAL_ERCODE;
 			return (NULL);
 		}
 		data->pip.tmp_fd = open(name, O_TRUNC | O_CREAT | O_RDWR, 00777);
@@ -61,7 +61,7 @@ char	*ft_heredoc(t_data *data, char *delimiter, int w, int sq)
 	if (str && ft_strlen(str) >= 1 && str[ft_strlen(str) - 1] == '\n')
 		str[ft_strlen(str) - 1] = '\0';
 	}
-	if (err_value == 130)
+	if (g_err_value == 130)
 	{
 		free(name);
 		free(str);
@@ -87,7 +87,7 @@ char	*ft_heredoc(t_data *data, char *delimiter, int w, int sq)
 			if (ft_strlen(str) > 0 && str[ft_strlen(str) - 1] == '\n')
 				str[ft_strlen(str) - 1] = '\0';
 		}
-		if (err_value == 130)
+		if (g_err_value == 130)
 			break;
 		if (!sq && str)
 		{
@@ -98,7 +98,7 @@ char	*ft_heredoc(t_data *data, char *delimiter, int w, int sq)
 		if (w && str && ft_strncmp(delimiter, str, ft_strlen(delimiter) + 1))
 			ft_manage_write(str, delimiter, data, sq);
 	}
-	if (err_value == 130)
+	if (g_err_value == 130)
 	{
 		free(name);
 		free(str);

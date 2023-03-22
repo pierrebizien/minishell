@@ -1,6 +1,6 @@
 #include "./minishell.h"
 
-extern int err_value;
+extern int g_err_value;
 
 
 char **ft_join_dstr(char **dest, char* src)
@@ -293,7 +293,7 @@ void	ft_exec_cmd(t_data *data, char **cmd, int m, char **cmd_quotes)
 		free(data->to_free.path_exec);
 		ft_free_in_find_path(cmd, data->to_free.paths_env, data, cmd_quotes);
 		ft_close_all(data->pip, data);
-		exit(err_value);
+		exit(g_err_value);
 	}
 	execve(data->to_free.path_exec, cmd, data->to_free.env_tab);
 	free(data->to_free.path_exec);
@@ -348,7 +348,7 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 			if (tmp_fd == -1)
 			{
 				perror(begin->str);
-				err_value = 1;
+				g_err_value = 1;
 				ft_free_child_exec(data, cmd, cmd_quotes);
 				exit(1);
 			}
@@ -360,7 +360,7 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 			if (tmp_fd == -1)
 			{
 				perror(begin->str);
-				err_value = 1;
+				g_err_value = 1;
 				ft_free_child_exec(data, cmd, cmd_quotes);
 				exit(1);
 			}
@@ -372,7 +372,7 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 			if (tmp_fd == -1)
 			{
 				perror(begin->str);
-				err_value = 1;
+				g_err_value = 1;
 				ft_free_child_exec(data, cmd, cmd_quotes);
 				exit(1);
 			}
@@ -406,7 +406,7 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 			if (data->pip.fd_out == -1)
 			{
 				perror(begin->str);
-				err_value = 1;
+				g_err_value = 1;
 				ft_free_child_exec(data, cmd, cmd_quotes);
 				exit(1);
 			}
@@ -418,7 +418,7 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 			if (data->pip.fd_out == -1)
 			{
 				perror(begin->str);
-				err_value = 1;
+				g_err_value = 1;
 				ft_free_child_exec(data, cmd, cmd_quotes);
 				exit(1);
 			}
@@ -430,7 +430,7 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 			if (data->pip.fd_in == -1)
 			{
 				perror(begin->str);
-				err_value = 1;
+				g_err_value = 1;
 				ft_free_child_exec(data, cmd, cmd_quotes);
 				exit(1);
 			}
@@ -494,11 +494,11 @@ void	ft_pipex(t_data *data)
 		
 		m++;
 	}
-		// fprintf(stderr, "1err_value = %d\n\n", err_value);
-		waitpid(data->pip.last_id, &err_value, 0);
-		if (WIFEXITED(err_value))
-			err_value = WEXITSTATUS(err_value);
-		// fprintf(stderr, "2err_value = %d\n\n", err_value);
+		// fprintf(stderr, "1g_err_value = %d\n\n", g_err_value);
+		waitpid(data->pip.last_id, &g_err_value, 0);
+		if (WIFEXITED(g_err_value))
+			g_err_value = WEXITSTATUS(g_err_value);
+		// fprintf(stderr, "2g_err_value = %d\n\n", g_err_value);
 		while (wait(NULL) != -1)
 			(void)begin;
 		ft_close_all(data->pip, data);
