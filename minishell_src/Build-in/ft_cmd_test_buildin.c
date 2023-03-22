@@ -23,7 +23,7 @@ int ft_exec_builtin(char **cmd, t_data *data, char **cmd_quotes)
 	}
 	if (cmd && ft_strncmp(cmd[0], "exit", ft_strlen(cmd[0])) == 0 && ft_strlen(cmd[0]) == 4)
 	{
-		err_value = ft_exit(cmd);
+		err_value = ft_exit(cmd, data, cmd_quotes);
 		return (1);
 	}
 	if (cmd && ft_strncmp(cmd[0], "cd", ft_strlen(cmd[0])) == 0 && ft_strlen(cmd[0]) == 2)

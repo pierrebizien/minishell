@@ -124,6 +124,7 @@ int	main(int ac, char **av, char**envp)
 	cpy_str_tty = ft_strdup(str);
 	while (str)
 	{
+		fprintf(stderr, "str = |%s|\n\n\n", str);
 		if (str && str[0])
 		{
 			str = ft_parse(str, &data);
@@ -131,6 +132,7 @@ int	main(int ac, char **av, char**envp)
 			if (!str && err_value != -42 && (data.bool_redir_0 || data.bool_redir_2))
 				return (ft_putstr_fd(cpy_str_tty, 2), free(cpy_str_tty), err_value);
 			free(cpy_str_tty);
+			cpy_str_tty = NULL;
 			if (str && !ft_parse_for_exec(&data))
 			{
 				if (err_value == MAL_ERCODE)
@@ -145,6 +147,8 @@ int	main(int ac, char **av, char**envp)
 			ft_init_sigquit();
 
 		}
+			free(cpy_str_tty);
+
 		if (!data.bool_redir_0 && !data.bool_redir_2)
 			str = ft_prompt();
 		else

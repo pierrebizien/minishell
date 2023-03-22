@@ -262,7 +262,7 @@ def run_process(instruction):
             with open(minishell_leaks, "w") as fd_leaks_stderr:
                 leaks_process = subprocess.Popen(
                     # ['make', 'valgrind'], stdin=leaks_slave_out, stdout=fd_leaks_stdout, stderr=fd_leaks_stderr)
-                    ['valgrind', '-q', '--track-fds=yes', '--suppressions=' + ignore_readline_leaks, '--leak-check=full', '--show-leak-kinds=all', './minishell'], stdin=leaks_slave_out, stdout=fd_leaks_stdout, stderr=fd_leaks_stderr)
+                    ['valgrind', '-q', '--suppressions=' + ignore_readline_leaks, '--leak-check=full', '--show-leak-kinds=all', './minishell'], stdin=leaks_slave_out, stdout=fd_leaks_stdout, stderr=fd_leaks_stderr)
         os.write(leaks_master_out, instruction.encode())
         os.write(leaks_master_out, "exit\n".encode())
         leaks_process.wait()

@@ -52,7 +52,18 @@ int	ft_verif_good_exit(char *str)
 	return (0);
 }
 
-int	ft_exit(char **cmd)
+void ft_free_before_exit(char **cmd, t_data *data, char **cmd_quotes)
+{
+	free(data->oldpwd);
+	free(data->pwd);
+	ft_free_dchar(cmd);
+	ft_free_dchar(cmd_quotes);
+	ft_free_env(data);
+	ft_free_list(&data->exec);
+	(void) data;
+}
+
+int	ft_exit(char **cmd, t_data *data, char **cmd_quotes)
 {
 	int i;
 	int good_exit;
@@ -61,7 +72,10 @@ int	ft_exit(char **cmd)
 	i = 0;
 	// ft_print_dchar(cmd);
 	if (ft_strstrlen(cmd) == 1)
+	{
+		ft_free_before_exit(cmd, data, cmd_quotes);
 		exit(err_value);
+	}
 	good_exit = 1;
 	tmp = ft_strtrim(cmd[1], " ");
 	free(cmd[1]);
@@ -77,6 +91,7 @@ int	ft_exit(char **cmd)
 		ft_putstr_fd("exit: ", 2);
 		ft_putstr_fd(cmd[1], 2);
 		ft_putstr_fd(": numeric argument required\n", 2);
+		ft_free_before_exit(cmd, data, cmd_quotes);
 		exit(2);
 
 	}
@@ -90,11 +105,13 @@ int	ft_exit(char **cmd)
 		ft_putstr_fd("exit: ", 2);
 		ft_putstr_fd(cmd[1], 2);
 		ft_putstr_fd(": numeric argument required\n", 2);
+		ft_free_before_exit(cmd, data, cmd_quotes);
 		exit(2);
 	}
 	else
 	{
 		good_exit = ft_atoi(cmd[1]);
+		ft_free_before_exit(cmd, data, cmd_quotes);
 		exit((unsigned char) good_exit);
 	}
 	return (0);

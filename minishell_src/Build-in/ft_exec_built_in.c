@@ -57,8 +57,8 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 			cmd = ft_join_dstr(cmd, begin->str);
 			if (!cmd)
 			{
-				fprintf(stderr, "ERROR 1\n");
 				ft_free_list(&data->exec);
+				fprintf(stderr, "ERROR 1\n");
 				ft_pb_malloc(data);
 				return (MAL_ERCODE); //GERER
 			}

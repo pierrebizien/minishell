@@ -155,7 +155,7 @@ int		ft_pwd(char **cmd, t_data *data);
 int		ft_cd(char **str, t_data *data);
 
 // FT_EXIT
-int		ft_exit(char **str);
+int		ft_exit(char **cmd, t_data *data, char **cmd_quotes);
 
 //FT_TEST_BUILDTIN
 int		ft_test_builtin(char **str);
@@ -194,7 +194,7 @@ void	ft_pipex(t_data *data);
 void ft_dup_manage(t_data *data, int m);
 int	contain_token(t_exec* begin, int token, int m);
 char	*find_path(char **cmd, char **paths_env, t_data *data, char **cmd_quotes);
-char **ft_get_paths(t_data *data);
+char **ft_get_paths(t_data *data, char **cmd, char **cmd_quotes);
 char **ft_join_dstr(char **dest, char* src);
 void	ft_init_in_out(t_data *data);
 
