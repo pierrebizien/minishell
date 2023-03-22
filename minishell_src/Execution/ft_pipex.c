@@ -364,12 +364,16 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 			if (!cmd)
 			{
 				ft_free_list(&data->exec);
+				fprintf(stderr, "ERROR 3\n");
+
 				ft_pb_malloc(data);
 				return (MAL_ERCODE); //GERER
 			}
 			cmd_quotes = ft_join_dstr(cmd_quotes, begin->quotes);
 			if (!cmd_quotes)
 			{
+				fprintf(stderr, "ERROR 4\n");
+
 				ft_free_list(&data->exec);
 				ft_pb_malloc(data);
 				return (MAL_ERCODE); //GERER

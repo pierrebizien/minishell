@@ -69,7 +69,7 @@ char	*ft_clean(char *str, t_data *data)
 			// fprintf(stderr, "on rentre 1 str + i vaut %s et dq vaut %d\n", str + i, in_dq);
 			tmp = ft_put_str_in_str(str, " ", ++i);
 			if (!tmp)
-				return (free(str), ft_pb_malloc(data), NULL);
+				return (free(str), fprintf(stderr, "ERROR 5\n"), ft_pb_malloc(data), NULL);
 			free(str);
 			str = tmp;
 		}
@@ -78,7 +78,7 @@ char	*ft_clean(char *str, t_data *data)
 			// fprintf(stderr, "on rentre 2 str + i vaut %s et dq vaut %d\n", str + i, in_dq);
 			tmp = ft_put_str_in_str(str, " ", ++i);
 			if (!tmp)
-				return (free(str), ft_pb_malloc(data), NULL);
+				return (free(str), fprintf(stderr, "ERROR 6\n"), ft_pb_malloc(data), NULL);
 			free(str);
 			str = tmp;
 
@@ -286,7 +286,7 @@ void	ft_pb_malloc(t_data *data)
 	ft_free_env(data);
 	free(data->oldpwd);
 	free(data->pwd);
-	ft_putstr_fd("MALLOC ERROR\n", 2);
+	ft_putstr_fd("MALLOC ERRRRROR\n", 2);
 	exit(MAL_ERCODE);
 
 }
@@ -369,8 +369,8 @@ char *ft_parse(char *str, t_data *data) // CHECK GLOBAL ET SI > >OUT RETURN ERRO
 	str = ft_convert_variable(str, data);
 	tmp = str;
 	str = ft_strtrim(str, WS);
-	if (!str || str[0] == '\0')
-		return (ft_pb_malloc(data), free(tmp), NULL);
+	if (!str)
+		return (fprintf(stderr, "ERROR 7\n"), ft_pb_malloc(data), free(tmp), NULL);
 	free(tmp);
 	str = ft_clean(str, data);
 	if (!str)
@@ -384,7 +384,7 @@ char *ft_parse(char *str, t_data *data) // CHECK GLOBAL ET SI > >OUT RETURN ERRO
 
 	data->args = ft_split_k(str, "|");
 	if (data->args == NULL)
-		return (ft_pb_malloc(data), free(str), NULL);
+		return (fprintf(stderr, "ERROR 8\n"), ft_pb_malloc(data), free(str), NULL);
 	ft_clean_ws(data);
 	 return (str);
 }
@@ -441,7 +441,7 @@ void ft_clean_list_exec(t_data *data)
 		
 		tmp->quotes = malloc(sizeof(char) * 2);
 		if (!tmp->quotes)
-			return (ft_free_end(data), ft_pb_malloc(data));
+			return (ft_free_end(data), fprintf(stderr, "ERROR 9\n"), ft_pb_malloc(data));
 		tmp->quotes[0] = '0';
 		tmp->quotes[1] = '\0';
 		if (tmp->str[0] == '\'' || tmp->str[0] == '"')
@@ -559,7 +559,6 @@ int ft_modif_in_out(t_data *data)
 				if (tmp->id == F_FALSED)
 				{
 					ft_init_sigint_hd();
-					fprintf(stderr, "ADRESSE ELEMENT TMP %p\n", tmp);
 					tmp->hd_filename = ft_heredoc(data, tmp->str, 0, 0);
 					if (err_value == 130)
 						return (1);
@@ -569,7 +568,6 @@ int ft_modif_in_out(t_data *data)
 				}
 				else if (tmp->id == F_DELIMITER)
 				{
-					fprintf(stderr, "ADRESSE ELEMENT TMP %p\n", tmp);
 					ft_init_sigint_hd();
 					tmp->hd_filename = ft_heredoc(data, tmp->str, 1, 0);
 					if (err_value == 130)
@@ -676,7 +674,7 @@ int ft_parse_for_exec(t_data *data)
 	{
 		tab = ft_split_lq(data->args[j], " ");
 		if (tab == NULL)
-			return (ft_pb_malloc(data), -42);
+			return (fprintf(stderr, "ERROR 10\n"), ft_pb_malloc(data), -42);
 		// ft_print_dchar(tab);
 		if (ft_check_chev_pip(tab) == 1)
 			return (1);
@@ -699,7 +697,7 @@ int ft_parse_for_exec(t_data *data)
 				tmp->str = ft_strdup(tab[i]);
 				tmp->next = ft_lstnew_pars();
 				if (!tmp->str || !tmp->next)
-					return (ft_free_list(&data->exec), ft_free_dchar(tab), ft_pb_malloc(data), -42);
+					return (ft_free_list(&data->exec), ft_free_dchar(tab), fprintf(stderr, "ERROR 11\n"), ft_pb_malloc(data), -42);
 				tmp = tmp->next;
 				tmp->next = NULL;
 				i++;
@@ -714,7 +712,7 @@ int ft_parse_for_exec(t_data *data)
 					tmp->str = ft_strdup(tab[i]);
 					tmp->next = ft_lstnew_pars();
 					if (!tmp->str || !tmp->next)
-						return (ft_free_list(&data->exec), ft_free_dchar(tab), ft_pb_malloc(data), -42);
+						return (ft_free_list(&data->exec), ft_free_dchar(tab), fprintf(stderr, "ERROR 12\n"), ft_pb_malloc(data), -42);
 					tmp = tmp->next;
 					tmp->next = NULL;
 					i++;	
@@ -730,7 +728,7 @@ int ft_parse_for_exec(t_data *data)
 					tmp->str = ft_strdup(tab[i]);
 					tmp->next = ft_lstnew_pars();
 					if (!tmp->str || !tmp->next)
-						return (ft_free_list(&data->exec), ft_free_dchar(tab), ft_pb_malloc(data), -42);
+						return (ft_free_list(&data->exec), ft_free_dchar(tab), fprintf(stderr, "ERROR 13\n"), ft_pb_malloc(data), -42);
 					tmp = tmp->next;
 					tmp->next = NULL;
 					i++;	
@@ -742,7 +740,7 @@ int ft_parse_for_exec(t_data *data)
 					tmp->str = ft_strdup(tab[i]);
 					tmp->next = ft_lstnew_pars();
 					if (!tmp->str || !tmp->next)
-						return (ft_free_list(&data->exec), ft_free_dchar(tab), ft_pb_malloc(data), -42);
+						return (ft_free_list(&data->exec), ft_free_dchar(tab), fprintf(stderr, "ERROR 14\n"), ft_pb_malloc(data), -42);
 					tmp = tmp->next;
 					tmp->next = NULL;
 					i++;	
@@ -754,7 +752,7 @@ int ft_parse_for_exec(t_data *data)
 					tmp->str = ft_strdup(tab[i]);
 					tmp->next = ft_lstnew_pars();
 					if (!tmp->str || !tmp->next)
-						return (ft_free_list(&data->exec), ft_free_dchar(tab), ft_pb_malloc(data), -42);
+						return (ft_free_list(&data->exec), ft_free_dchar(tab),fprintf(stderr, "ERROR 15\n"),  ft_pb_malloc(data), -42);
 					tmp = tmp->next;
 					tmp->next = NULL;
 					i++;	
@@ -765,7 +763,7 @@ int ft_parse_for_exec(t_data *data)
 					tmp->str = ft_strdup(tab[i]);
 					tmp->next = ft_lstnew_pars();
 					if (!tmp->str || !tmp->next)
-						return (ft_free_list(&data->exec), ft_free_dchar(tab), ft_pb_malloc(data), -42);
+						return (ft_free_list(&data->exec), ft_free_dchar(tab), fprintf(stderr, "ERROR 16\n"), ft_pb_malloc(data), -42);
 					tmp->hd_filename = NULL;
 					tmp = tmp->next;
 					tmp->next = NULL;
@@ -780,7 +778,7 @@ int ft_parse_for_exec(t_data *data)
 	if (ft_modif_in_out(data))
 	{
 		if (err_value == MAL_ERCODE)
-			return(ft_free_list(&data->exec), ft_pb_malloc(data), err_value);
+			return(ft_free_list(&data->exec), fprintf(stderr, "ERROR 17\n"), ft_pb_malloc(data), err_value);
 		return (err_value);
 	}
 	data->pip.nb_pipes = ft_count_pipes(&data->exec);

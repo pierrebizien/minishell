@@ -7,6 +7,7 @@ void	ft_free_err_mal_cmd_solo(char **cmd, char **cmd_quotes, t_data *data)
 		ft_free_dchar(cmd);
 		ft_free_dchar(cmd_quotes);
 		ft_free_list(&data->exec);
+		fprintf(stderr, "ERROR 0\n");
 		ft_pb_malloc(data);
 }
 
@@ -56,6 +57,7 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 			cmd = ft_join_dstr(cmd, begin->str);
 			if (!cmd)
 			{
+				fprintf(stderr, "ERROR 1\n");
 				ft_free_list(&data->exec);
 				ft_pb_malloc(data);
 				return (MAL_ERCODE); //GERER
@@ -63,6 +65,7 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 			cmd_quotes = ft_join_dstr(cmd_quotes, begin->quotes);
 			if (!cmd_quotes)
 			{
+				fprintf(stderr, "ERROR 2\n");
 				ft_free_list(&data->exec);
 				ft_pb_malloc(data);
 				return (MAL_ERCODE); //GERER

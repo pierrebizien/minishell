@@ -115,9 +115,13 @@ int	main(int ac, char **av, char**envp)
 	if (!data.bool_redir_0 && !data.bool_redir_2)
 		str = ft_prompt();
 	else
+	{
 		str = get_next_line(0);
+		if (str && ft_strlen(str) >= 1 && str[ft_strlen(str) - 1] == '\n')
+			str[ft_strlen(str) - 1] = '\0';
+	}
 	add_history(str);
-	cpy_str_tty = str;
+	cpy_str_tty = ft_strdup(str);
 	while (str)
 	{
 		if (str && str[0])
@@ -125,7 +129,8 @@ int	main(int ac, char **av, char**envp)
 			str = ft_parse(str, &data);
 			data.to_free.str = str;
 			if (!str && err_value != -42 && (data.bool_redir_0 || data.bool_redir_2))
-				return (ft_putstr_fd("Line: \n", 2), ft_putstr_fd(cpy_str_tty, 2), free(cpy_str_tty), err_value);
+				return (ft_putstr_fd(cpy_str_tty, 2), free(cpy_str_tty), err_value);
+			free(cpy_str_tty);
 			if (str && !ft_parse_for_exec(&data))
 			{
 				if (err_value == MAL_ERCODE)
@@ -143,9 +148,15 @@ int	main(int ac, char **av, char**envp)
 		if (!data.bool_redir_0 && !data.bool_redir_2)
 			str = ft_prompt();
 		else
+		{
 			str = get_next_line(0);
+			if (str && ft_strlen(str) >= 1 && str[ft_strlen(str) - 1] == '\n')
+				str[ft_strlen(str) - 1] = '\0';
+		}
+		cpy_str_tty = ft_strdup(str);
 		add_history(str);
 	}
+	free(cpy_str_tty);
 	free(str);
 	ft_close(&data.pip.saved_stdin);
 	ft_close(&data.pip.saved_stdout);

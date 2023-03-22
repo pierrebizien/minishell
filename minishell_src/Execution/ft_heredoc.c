@@ -56,9 +56,11 @@ char	*ft_heredoc(t_data *data, char *delimiter, int w, int sq)
 	if (!data->bool_redir_0 && !data->bool_redir_2)
 		str = readline(">");
 	else
+	{
 		str = get_next_line(0);
 	if (str && ft_strlen(str) >= 1 && str[ft_strlen(str) - 1] == '\n')
 		str[ft_strlen(str) - 1] = '\0';
+	}
 	if (err_value == 130)
 	{
 		free(name);
@@ -80,9 +82,11 @@ char	*ft_heredoc(t_data *data, char *delimiter, int w, int sq)
 		if (!data->bool_redir_0 && !data->bool_redir_2)
 			str = readline(">");
 		else
-			str = get_next_line(0);
-		if (ft_strlen(str) > 0 && str[ft_strlen(str) - 1] == '\n')
-			str[ft_strlen(str) - 1] = '\0';
+		{
+				str = get_next_line(0);
+			if (ft_strlen(str) > 0 && str[ft_strlen(str) - 1] == '\n')
+				str[ft_strlen(str) - 1] = '\0';
+		}
 		if (err_value == 130)
 			break;
 		if (!sq && str)
