@@ -1,19 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_cmd_echo.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/22 18:41:05 by pbizien           #+#    #+#             */
+/*   Updated: 2023/03/22 18:42:58 by pbizien          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../_Include/minishell.h"
 
-
-
-
-int ft_verif_nl_echo(char **cmd)
+int	ft_verif_nl_echo(char **cmd)
 {
-	int i;
-	int j;
-	int last;
+	int	i;
+	int	j;
+	int	last;
 
 	last = 0;
 	i = 1;
 	while (cmd && cmd[i] && cmd[i][0] == '-')
 	{
-		// fprintf(stderr, "i = %d\n",i);
 		j = 1;
 		while (cmd[i][j] == 'n')
 			j++;
@@ -21,18 +29,15 @@ int ft_verif_nl_echo(char **cmd)
 			return (i);
 		i++;
 	}
-		// fprintf(stderr, "i = %d\n",i);
 	return (i);
 }
 
 int	ft_echo(char **cmd, char **cmd_quotes)
 {
-	int i;
-	// int j;
-	int nl;
+	int	i;
+	int	nl;
+
 	(void)cmd_quotes;
-	// ft_print_dchar(cmd);
-	// ft_print_dchar(cmd_quotes);
 	nl = 1;
 	i = ft_verif_nl_echo(cmd);
 	if (1 < i)
@@ -40,42 +45,11 @@ int	ft_echo(char **cmd, char **cmd_quotes)
 	while (cmd[i])
 	{
 		ft_putstr_fd(cmd[i], 1);
-		if (cmd[i+1] != NULL)
+		if (cmd[i + 1] != NULL)
 			ft_putstr_fd(" ", 1);
 		i++;
 	}
 	if (nl)
 		ft_putstr_fd("\n", 1);
-	return (0);	
+	return (0);
 }
-// int main(void)
-// {
-// 	char *test;
-
-// 	test = "echo";
-// 	fprintf(stderr, "|");
-// 	ft_echo(test);
-// 	fprintf(stderr, "|");
-
-// 	test = "echo test";
-// 	fprintf(stderr, "|");
-// 	ft_echo(test);
-// 	fprintf(stderr, "|");
-
-// 	test = "echo -n test";
-// 	fprintf(stderr, "|");
-// 	ft_echo(test);
-// 	fprintf(stderr, "|");
-	
-// 	test = "echo -nnnnnn -n -nnnnnnnnd Bonjour les amis";
-// 	fprintf(stderr, "|");
-// 	ft_echo(test);
-// 	fprintf(stderr, "|");
-
-// 	test = "echo -nnnnnnnn -n";
-// 	fprintf(stderr, "|");
-// 	ft_echo(test);
-// 	fprintf(stderr, "|");
-
-
-// }
