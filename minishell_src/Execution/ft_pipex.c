@@ -36,10 +36,7 @@ char **ft_get_paths(t_data *data)
     while (tmp)
     {
         if (ft_strncmp(tmp->key, "PATH", ft_strlen(tmp->key)) == 0)
-        {
-            // fprintf(stderr, "tmp->key = |%s|\t value = |%s|\n\n", tmp->key, tmp->value);
             return (ft_split(tmp->value, ':'));
-        }
         tmp = tmp->next;
     }
 	return (NULL);
@@ -275,8 +272,14 @@ void	ft_exec_cmd(t_data *data, char **cmd, int m, char **cmd_quotes)
 	(void)cmd;
 
 	env_tab = ft_get_env(&data->env); //GERER FREE ET FD SUR EXIT
+	if (env_tab == NULL)
+		(ft_free_dchar(cmd_quotes), ft_free_dchar(cmd), ft_free_list(&data->exec), ft_pb_malloc(data));
 	paths_env = ft_get_paths(data); //GERER FREE ET FD SUR EXIT
+	if (paths_env == NULL)
+		(ft_free_dchar(cmd_quotes), ft_free_dchar(cmd), ft_free_dchar(env_tab), ft_free_list(&data->exec), ft_pb_malloc(data));
 	path_exec = find_path(cmd, paths_env, data, cmd_quotes); //GERER FREE ET FD SUR EXIT
+
+	
 	ft_dup_manage(data, m);
 	if (ft_exec_builtin(cmd, data, cmd_quotes) == 1)
 	{
@@ -382,7 +385,6 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 			data->pip.fd_out = open(begin->str, O_CREAT | O_RDWR | O_TRUNC, 0644);
 			if (data->pip.fd_out == -1)
 			{
-				fprintf(stderr, "errno vaut %d\n", errno);
 				perror(begin->str);
 				err_value = 1;
 				exit(1);
@@ -403,6 +405,7 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 	}
 	ft_exec_cmd(data, cmd, m, cmd_quotes);
 	ft_free_dchar(cmd);
+	ft_free_dchar(cmd_quotes);
 	return (0);
 }
 
