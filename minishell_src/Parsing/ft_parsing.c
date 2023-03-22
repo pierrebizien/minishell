@@ -565,7 +565,7 @@ int ft_modif_in_out(t_data *data)
 					ft_init_sigint_hd();
 					ft_heredoc(data, tmp->str, 0, 0);
 					if (err_value == 130)
-						return (1);
+						return (ft_free_list(&data->exec), 1);
 					if (err_value == MAL_ERCODE)
 						return (MAL_ERCODE);
 					ft_init_sigint();
@@ -575,7 +575,7 @@ int ft_modif_in_out(t_data *data)
 					ft_init_sigint_hd();
 					tmp->hd_filename = ft_heredoc(data, tmp->str, 1, 0);
 					if (err_value == 130)
-						return (1);
+						return (ft_free_list(&data->exec), 1);
 					if (err_value == MAL_ERCODE)
 						return (MAL_ERCODE);
 					ft_init_sigint();
@@ -585,7 +585,7 @@ int ft_modif_in_out(t_data *data)
 					ft_init_sigint_hd();
 					tmp->hd_filename = ft_heredoc(data, tmp->str, 1, 1);
 					if (err_value == 130)
-						return (1);
+						return (ft_free_list(&data->exec), 1);
 					if (err_value == MAL_ERCODE)
 						return (MAL_ERCODE);
 					ft_init_sigint();
