@@ -1,6 +1,6 @@
 #include "../_Include/minishell.h"
 
-extern int err_value;
+extern int g_err_value;
 
 int event(void)
 { 

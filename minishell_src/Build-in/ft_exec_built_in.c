@@ -1,6 +1,6 @@
 #include "../_Include/minishell.h"
 
-extern int err_value;
+extern int g_err_value;
 
 void	ft_free_err_mal_cmd_solo(char **cmd, char **cmd_quotes, t_data *data)
 {
@@ -89,7 +89,7 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 			if (tmp_fd == -1)
 			{
 				perror(begin->str);
-				err_value = 1;
+				g_err_value = 1;
 				ft_free_child_exec_solo(data, cmd, cmd_quotes);
 				return(1);
 			}
@@ -101,7 +101,7 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 			if (tmp_fd == -1)
 			{
 				perror(begin->str);
-				err_value = 1;
+				g_err_value = 1;
 				ft_free_child_exec_solo(data, cmd, cmd_quotes);
 				return(1);
 			}
@@ -113,7 +113,7 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 			if (tmp_fd == -1)
 			{
 				perror(begin->str);
-				err_value = 1;
+				g_err_value = 1;
 				ft_free_child_exec_solo(data, cmd, cmd_quotes);
 				return(1);
 			}
@@ -126,7 +126,7 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 			if (data->pip.fd_out == -1)
 			{
 				perror(begin->str);
-				err_value = 1;
+				g_err_value = 1;
 				ft_free_child_exec_solo(data, cmd, cmd_quotes);
 				return(1);
 			}
@@ -138,7 +138,7 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 			if (data->pip.fd_out == -1)
 			{
 				perror(begin->str);
-				err_value = 1;
+				g_err_value = 1;
 				ft_free_child_exec_solo(data, cmd, cmd_quotes);
 				return(1);
 			}
@@ -150,7 +150,7 @@ int	ft_exec_built_in_solo(t_exec *begin, t_data *data)
 			if (data->pip.fd_in == -1)
 			{
 				perror(begin->str);
-				err_value = 1;
+				g_err_value = 1;
 				ft_free_child_exec_solo(data, cmd, cmd_quotes);
 				return(1);
 			}

@@ -1,10 +1,10 @@
 #include "../_Include/minishell.h"
-extern int err_value;
+extern int g_err_value;
 
 void	ft_ctrlc(int a)
 {
 	(void)a;
-	err_value = 130;
+	g_err_value = 130;
 	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
@@ -14,7 +14,7 @@ void	ft_ctrlc(int a)
 void	ft_ctrlc_exec(int a)
 {
 	(void)a;
-	err_value = 130;
+	g_err_value = 130;
 	// write(1, "\n", 2);
 	return ;
 }
@@ -22,7 +22,7 @@ void	ft_ctrlc_exec(int a)
 void	ft_ctrlc_hd(int a)
 {
 	(void)a;
-	err_value = 130;
+	g_err_value = 130;
 	rl_done = 1;
 	return ;
 }

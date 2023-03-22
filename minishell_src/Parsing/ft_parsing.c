@@ -1,6 +1,6 @@
 #include "../_Include/minishell.h"
 
-extern int err_value;
+extern int g_err_value;
 
 void ft_print_dchar(char **strstr)
 {
@@ -134,7 +134,7 @@ size_t	ft_strlen_var_env(char *str)
 	}
 	return (i);
 }
-size_t	ft_strlen_WS_quotes(const char *str)
+size_t	ft_strlen_ws_quotes(const char *str)
 {
 	size_t	i;
 
@@ -149,7 +149,7 @@ char	*ft_check_env(char *str, t_data *data)
 	t_env *tmp_env;
 	tmp_env = &data->env;
 	if (str && str[0]=='?')
-		return (ft_itoa(err_value));
+		return (ft_itoa(g_err_value));
 	while (tmp_env)
 	{
 		if (!strncmp(str, tmp_env->key, ft_strlen_var_env(str)))
@@ -245,7 +245,7 @@ char *ft_convert_variable_hd(char *str, t_data *data, char *delimiter)
 				str = ft_put_str_in_str(str, var, i);
 				if (!str)
 				{
-					err_value = MAL_ERCODE;
+					g_err_value = MAL_ERCODE;
 					return (free(var), free(tmp), NULL);
 				}
 				free(tmp);
@@ -380,7 +380,7 @@ char *ft_parse(char *str, t_data *data) // CHECK GLOBAL ET SI > >OUT RETURN ERRO
 		ft_free_env(data);
 		free(data->pwd);
 		free(data->oldpwd);
-		err_value = 2;
+		g_err_value = 2;
 		return (NULL);
 	}
 
@@ -562,9 +562,9 @@ int ft_modif_in_out(t_data *data)
 				{
 					ft_init_sigint_hd();
 					ft_heredoc(data, tmp->str, 0, 0);
-					if (err_value == 130)
+					if (g_err_value == 130)
 						return (ft_free_list(&data->exec), 1);
-					if (err_value == MAL_ERCODE)
+					if (g_err_value == MAL_ERCODE)
 						return (MAL_ERCODE);
 					ft_init_sigint();
 				}
@@ -572,9 +572,9 @@ int ft_modif_in_out(t_data *data)
 				{
 					ft_init_sigint_hd();
 					tmp->hd_filename = ft_heredoc(data, tmp->str, 1, 0);
-					if (err_value == 130)
+					if (g_err_value == 130)
 						return (ft_free_list(&data->exec), 1);
-					if (err_value == MAL_ERCODE)
+					if (g_err_value == MAL_ERCODE)
 						return (MAL_ERCODE);
 					ft_init_sigint();
 				}
@@ -582,9 +582,9 @@ int ft_modif_in_out(t_data *data)
 				{
 					ft_init_sigint_hd();
 					tmp->hd_filename = ft_heredoc(data, tmp->str, 1, 1);
-					if (err_value == 130)
+					if (g_err_value == 130)
 						return (ft_free_list(&data->exec), 1);
-					if (err_value == MAL_ERCODE)
+					if (g_err_value == MAL_ERCODE)
 						return (MAL_ERCODE);
 					ft_init_sigint();
 				}
@@ -780,9 +780,9 @@ int ft_parse_for_exec(t_data *data)
 	ft_clean_list_exec(data);
 	if (ft_modif_in_out(data))
 	{
-		if (err_value == MAL_ERCODE)
-			return(ft_free_list(&data->exec), fprintf(stderr, "ERROR 17\n"), ft_pb_malloc(data), err_value);
-		return (err_value);
+		if (g_err_value == MAL_ERCODE)
+			return(ft_free_list(&data->exec), fprintf(stderr, "ERROR 17\n"), ft_pb_malloc(data), g_err_value);
+		return (g_err_value);
 	}
 	data->pip.nb_pipes = ft_count_pipes(&data->exec);
 	return (0);
