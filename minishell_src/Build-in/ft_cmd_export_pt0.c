@@ -1,16 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_cmd_export _pt0.c                               :+:      :+:    :+:   */
+/*   ft_cmd_export_pt0.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 18:54:23 by pbizien           #+#    #+#             */
-/*   Updated: 2023/03/22 19:03:56 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/03/22 19:25:33 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../_Include/minishell.h"
+
+static void	ft_ok_export_bis(char *str, int i, char *var, t_env *tmp)
+{
+	if (ft_strncmp(var, tmp->key, i) == 0)
+	{
+		free(tmp->value);
+		free(var);
+		tmp->value = ft_strdup(str + i);
+	}
+	else
+	{
+		tmp->next = ft_lstnew_env();
+		tmp = tmp->next;
+		tmp->key = var;
+		tmp->value = ft_substr(str, i, ft_strlen_ws(str + i));
+		tmp->printable = 1;
+	}
+}
 
 static int	ft_ok_export(char *str, t_data *data, char **cmd_quotes)
 {
@@ -35,28 +53,35 @@ static int	ft_ok_export(char *str, t_data *data, char **cmd_quotes)
 	while (str[k + i + 1] && is_ws(str[k + i + 1]) == 0)
 		k++;
 	i = i + 1;
+	ft_ok_export_bis(str, i, var, tmp);
+	return (0);
+}
+
+static void	ft_p_e_exp_bis(char *str, int i, char *var, t_env *tmp)
+{
+	char	*tmp_for_join;
+
 	if (ft_strncmp(var, tmp->key, i) == 0)
 	{
+		tmp_for_join = ft_strjoin(tmp->value, str + i);
 		free(tmp->value);
+		tmp->value = tmp_for_join;
 		free(var);
-		tmp->value = ft_strdup(str + i);
 	}
 	else
 	{
 		tmp->next = ft_lstnew_env();
 		tmp = tmp->next;
 		tmp->key = var;
-		tmp->value = ft_substr(str, i, ft_strlen_ws(str + i));
+		tmp->value = ft_strdup(str + i);
 		tmp->printable = 1;
 	}
-	return (0);
 }
 
 static int	ft_plus_egal_export(char *str, t_data *data, char **cmd_quotes)
 {
 	t_env	*tmp;
 	char	*var;
-	char	*tmp_for_join;
 	int		i;
 	int		k;
 
@@ -77,64 +102,7 @@ static int	ft_plus_egal_export(char *str, t_data *data, char **cmd_quotes)
 	while (str[k + i + 1] && is_ws(str[k + i + 1]) == 0)
 		k++;
 	i = i + 2;
-	if (ft_strncmp(var, tmp->key, i) == 0)
-	{
-		tmp_for_join = ft_strjoin(tmp->value, str + i);
-		free(tmp->value);
-		tmp->value = tmp_for_join;
-		free(var);
-	}
-	else
-	{
-		tmp->next = ft_lstnew_env();
-		tmp = tmp->next;
-		tmp->key = var;
-		tmp->value = ft_strdup(str + i);
-		tmp->printable = 1;
-	}
-	return (0);
-}
-
-static int	ft_verif_str_export(char *str)
-{
-	int	i;
-
-	i = 0;
-	if (ft_isdigit(str[i]) == 1 || str[i] == '=' || str[i] == '/' || \
-		str[i] == '\0' || str[i] == '+' || str[i] == '$' || (str[0] == '-' && \
-			(str[1] == '\0' || str[1] == '\0')))
-		return (0);
-	while (str[++i] != '=' && str[i] != '+')
-	{
-		if (is_ws(str[i]) == 1 || str[i] == '\0')
-			return (1);
-		if (ft_isalnum(str[i]) == 0 && str[i] != '_')
-			return (0);
-	}
-	if (str[i] == '+' && str[i + 1] != '=')
-		return (0);
-	if (str[i] == '=')
-		return (2);
-	if (str[i] == '+')
-		return (3);
-	return (1);
-}
-
-int	ft_verif_option_export(char **cmd, char **cmd_quotes)
-{
-	int	i;
-
-	i = 1;
-	while (cmd[i])
-	{
-		if (cmd_quotes[i][0] == 1)
-			i++;
-		else if (cmd[i][0] == '-')
-			return (ft_putstr_fd("export: usage: export \
-				[name[=value] ...] (no option)\n", 2), 1);
-		else
-			i++;
-	}
+	ft_p_e_exp_bis(str, i, var, tmp);
 	return (0);
 }
 
@@ -153,9 +121,7 @@ int	ft_export(char **cmd, t_data *data, char **cmd_quotes)
 	{
 		if (ft_verif_str_export(cmd[i]) == 0)
 		{
-			ft_putstr_fd("export: `", 2);
-			ft_putstr_fd(cmd[i], 2);
-			ft_putstr_fd("': not a valid identifier\n", 2);
+			ft_export_putstr(cmd[i]);
 			error = 1;
 		}
 		else if (ft_verif_str_export(cmd[i]) == 1)

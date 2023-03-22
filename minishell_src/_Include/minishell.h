@@ -145,7 +145,9 @@ int		ft_unset(char **strr, t_data *data);
 int		ft_export(char **tab, t_data *data, char **cmd_quotes);
 size_t	ft_strlen_ws(const char *str);
 int	ft_just_export(t_data *data);
-
+int	ft_verif_str_export(char *str);
+int	ft_verif_option_export(char **cmd, char **cmd_quotes);
+void	ft_export_putstr(char *cmd);
 
 
 // FT_ECHO
