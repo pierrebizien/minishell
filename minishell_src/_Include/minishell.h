@@ -119,8 +119,8 @@ char	*ft_parse(char *str, t_data *data);
 int		is_ws(char c);
 char	*ft_check_env(char *str, t_data *data);
 size_t	ft_strlen_ws_quotes(const char *str);
-char *ft_convert_variable(char *str, t_data *data);
-char *ft_convert_variable_hd(char *str, t_data *data, char *delimiter);
+char	*ft_convert_variable(char *str, t_data *data);
+char	*ft_convert_variable_hd(char *str, t_data *data, char *delimiter);
 char	*ft_clean(char *str, t_data *data);
 
 
@@ -147,9 +147,9 @@ int		ft_unset(char **strr, t_data *data);
 //FT_EXPORT
 int		ft_export(char **tab, t_data *data, char **cmd_quotes);
 size_t	ft_strlen_ws(const char *str);
-int	ft_just_export(t_data *data);
-int	ft_verif_str_export(char *str);
-int	ft_verif_option_export(char **cmd, char **cmd_quotes);
+int		ft_just_export(t_data *data);
+int		ft_verif_str_export(char *str);
+int		ft_verif_option_export(char **cmd, char **cmd_quotes);
 void	ft_export_putstr(char *cmd);
 
 
@@ -230,8 +230,21 @@ char *ft_tab_to_str(char **tab, char sep);
 char	**ft_split_lq(char const *s, char *sep);
 
 //FT_EXEC_BUILT_IN
-int	ft_exec_built_in_solo(t_exec *begin, t_data *data);
-
+void	ft_free_err_mal_cmd_solo(char **cmd, char **cmd_quotes, t_data *data);
+int		ft_exec_cmd_solo(t_data *data, char **cmd, char **cmd_quotes);
+void	ft_free_child_exec_solo(t_data *data, char **cmd, char **cmd_quotes);
+int		ft_exec_built_in_solo_test_builtin(t_exec *begin, t_data *data, int *rt_val);
+int		
+ft_exec_built_in_solo(t_exec *begin, t_data *data);
+//1
+int		ft_ebs_falsin(t_exec *begin, t_data *data);
+int		ft_ebs_fasea(t_exec *begin, t_data *data);
+int		ft_ebs_faset(t_exec *begin, t_data *data);
+int		ft_ebs_append(t_exec *begin, t_data *data);
+int		ft_ebs_tronc(t_exec *begin, t_data *data);
+//2
+int		ft_ebs_infile(t_exec *begin, t_data *data);
+int		ft_exec_built_in_solo_finish(t_data *data);
 // int	pipex(int ac, char **av, char **envp);
 
 // MAIN

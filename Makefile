@@ -14,10 +14,12 @@ SRCS += ft_split_lquotes.c
 SRCS += main.c
 SRCS += pipex_utils.c
 SRCS += ft_heredoc.c
-SRCS += ft_exec_built_in.c
 SRCS += ft_strtrim_lq.c
 
 
+SRCS += ft_exec_built_in_pt0.c
+SRCS += ft_exec_built_in_pt1.c
+SRCS += ft_exec_built_in_pt2.c
 SRCS += ft_cmd_test_buildin.c
 SRCS += ft_create_env.c
 SRCS += ft_cmd_env.c
