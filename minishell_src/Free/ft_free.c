@@ -1,26 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_free.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/23 00:19:45 by ngriveau          #+#    #+#             */
+/*   Updated: 2023/03/23 00:20:57 by ngriveau         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./minishell.h"
-
-// void ft_free_dchar(char **str)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (str && str[i])
-// 	{
-// 		free(str[i]);
-// 		i++;
-// 	}
-// 	free (str);
-// }
 
 void	ft_unlink_hd(t_exec *begin)
 {
-	t_exec *tmp;
+	t_exec	*tmp;
 
 	tmp = begin;
-
-	// ft_print_list(begin);
-
 	while (tmp)
 	{
 		if (tmp->hd_filename != NULL)
@@ -29,40 +25,35 @@ void	ft_unlink_hd(t_exec *begin)
 		}
 		tmp = tmp->next;
 	}
-	
 }
 
 void	ft_free_list(t_exec *begin)
 {
-	t_exec *tmp;
+	t_exec	*tmp;
 
 	tmp = begin;
 	if (begin)
 	{
-			free(begin->str);
-			free(begin->hd_filename);
-			free(begin->quotes);
+		free(begin->str);
+		free(begin->hd_filename);
+		free(begin->quotes);
 		begin = begin->next;
 	}
 	while (begin)
 	{
-		// fprintf(stderr, "tmp->str vo %s\n", tmp->str);
-		
-			free(begin->str);
-			free(begin->hd_filename);
-			free(begin->quotes);
+		free(begin->str);
+		free(begin->hd_filename);
+		free(begin->quotes);
 		tmp = begin->next;
 		free(begin);
 		begin = tmp;
 	}
 }
 
-void ft_free_end(t_data *data)
+void	ft_free_end(t_data *data)
 {
 	free(data->pwd);
 	free(data->oldpwd);
 	rl_clear_history();
-	
-	// ft_free_list(&data->exec);
 	ft_free_env(data);
 }
