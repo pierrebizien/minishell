@@ -58,6 +58,9 @@ typedef	struct	s_to_free
 	char 			**env_tab;
 	char 			**paths_env;
 	char			*path_exec;
+	char			**cmd;
+	char			**cmd_quotes;
+
 	
 }               t_to_free;
 
