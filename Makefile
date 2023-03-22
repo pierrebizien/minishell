@@ -22,6 +22,7 @@ SRCS += ft_strtrim_lq.c
 SRC_PATH += ./minishell_src/Build-in/
 SRCS += ft_exec_built_in_pt0.c
 SRCS += ft_exec_built_in_pt1.c
+SRCS += ft_exec_built_in_pt2.c
 SRCS += ft_cmd_test_buildin.c
 SRCS += ft_create_env.c
 SRCS += ft_cmd_env.c
