@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 10:35:10 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/03/23 10:38:39 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/23 10:59:45 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,22 @@ char	*ft_prompt(void)
 	return (str);
 }
 
+char	*ft_input(t_data *data)
+{
+	char *str;
+
+	if (!data->bool_redir_0 && !data->bool_redir_2)
+		str = ft_prompt();
+	else
+	{
+		str = get_next_line(0);
+		if (str && ft_strlen(str) >= 1 && str[ft_strlen(str) - 1] == '\n')
+			str[ft_strlen(str) - 1] = '\0';
+	}
+	add_history(str);
+	return (str);
+}
+
 int	main(int ac, char **av, char**envp)
 {
 	char	*str;
@@ -50,21 +66,7 @@ int	main(int ac, char **av, char**envp)
 	(void)ac;
 	(void)av;
 	ft_init(envp, &data);
-	if (isatty(0) == 0)
-		data.bool_redir_0 = 1;
-	if (isatty(2) == 0)
-		data.bool_redir_2 = 1;
-	ft_init_sigint();
-	ft_init_sigquit();
-	if (!data.bool_redir_0 && !data.bool_redir_2)
-		str = ft_prompt();
-	else
-	{
-		str = get_next_line(0);
-		if (str && ft_strlen(str) >= 1 && str[ft_strlen(str) - 1] == '\n')
-			str[ft_strlen(str) - 1] = '\0';
-	}
-	add_history(str);
+	str = ft_input(&data);
 	cpy_str_tty = ft_strdup(str);
 	while (str)
 	{
@@ -94,23 +96,10 @@ int	main(int ac, char **av, char**envp)
 		}
 		free(cpy_str_tty);
 		free(str);
-		if (!data.bool_redir_0 && !data.bool_redir_2)
-			str = ft_prompt();
-		else
-		{
-			str = get_next_line(0);
-			if (str && ft_strlen(str) >= 1 && str[ft_strlen(str) - 1] == '\n')
-				str[ft_strlen(str) - 1] = '\0';
-		}
+		str = ft_input(&data);
 		cpy_str_tty = ft_strdup(str);
-		add_history(str);
 	}
-	free(cpy_str_tty);
-	free(str);
-	ft_close(&data.pip.saved_stdin);
-	ft_close(&data.pip.saved_stdout);
-	ft_free_end(&data);
 	if (!data.bool_redir_0 && !data.bool_redir_2)
 		write(2, "\nexit\n", 6);
-	return (g_err_value);
+	return (free(cpy_str_tty), free(str), ft_close(&data.pip.saved_stdin), ft_close(&data.pip.saved_stdout), ft_free_end(&data), g_err_value);
 }
