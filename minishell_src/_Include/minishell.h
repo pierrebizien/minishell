@@ -72,6 +72,7 @@ typedef	struct	s_to_free
 	char			**cmd_quotes;
 	int				w;
 	int				hd_break;
+	char 			**tab;
 
 	
 }               t_to_free;
@@ -157,7 +158,13 @@ int ft_delimiter(t_data *data, t_exec **tmp, int *ret_val);
 int ft_delimiter_sq(t_data *data, t_exec **tmp, int *ret_val);
 int ft_verif_pipe(char *str);
 int ft_verif_just_chev(char *str);
-// char	*ft_clean(char *str, t_data *data);
+int	ft_parse_for_e_cmd(t_data *data, t_exec **tmp, int *count_p, int *i);
+int	ft_parse_for_e_del(t_data *data, t_exec **tmp, int *count_p, int *i);
+int	ft_parse_for_e_append(t_data *data, t_exec **tmp, int *count_p, int *i);
+int	ft_parse_for_e_tronc(t_data *data, t_exec **tmp, int *count_p, int *i);
+int	ft_parse_for_e_infile(t_data *data, t_exec **tmp, int *count_p, int *i);
+int	ft_parse_for_e_pipe(t_data *data, t_exec **tmp, int *count_p, int *i);
+int	ft_parse_for_e_end(t_data *data);
 
 
 
