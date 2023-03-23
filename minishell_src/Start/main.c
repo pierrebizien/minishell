@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 10:35:10 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/03/23 16:00:18 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/03/23 16:06:02 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ int	main_pt2(t_data *data)
 		data->bool_redir_2))
 		return (ft_putstr_fd(data->to_free.cpy_str_tty, 2), \
 			free(data->to_free.cpy_str_tty), ft_close_all(data->pip, data), \
-			free(data->oldpwd), free(data->pwd), ft_free_env(data), exit(g_err_value), -22);
+			free(data->oldpwd), free(data->pwd), ft_free_env(data), \
+			exit(g_err_value), -22);
 	free(data->to_free.cpy_str_tty);
 	data->to_free.cpy_str_tty = NULL;
 	if (data->to_free.str && !ft_parse_for_exec(data))

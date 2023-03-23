@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parsing_pt0.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 12:02:48 by pbizien           #+#    #+#             */
-/*   Updated: 2023/03/23 15:58:38 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/03/23 16:05:16 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,6 @@ char	*ft_parse(char *str, t_data *data)
 	ft_verif_just_chev(str) == 0 || ft_verif_pipe(str) == 0)
 	{
 		free(str);
-		// ft_free_env(data);
-		// free(data->pwd);
-		// free(data->oldpwd);
 		g_err_value = 2;
 		return (NULL);
 	}
