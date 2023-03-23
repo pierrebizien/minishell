@@ -153,6 +153,9 @@ void ft_mod_in_out_bis(t_exec **tmp, int *bool_out, int *bool_in);
 int ft_falsed(t_data *data, t_exec **tmp, int *ret_val);
 int ft_delimiter(t_data *data, t_exec **tmp, int *ret_val);
 int ft_delimiter_sq(t_data *data, t_exec **tmp, int *ret_val);
+int ft_verif_pipe(char *str);
+int ft_verif_just_chev(char *str);
+// char	*ft_clean(char *str, t_data *data);
 
 
 

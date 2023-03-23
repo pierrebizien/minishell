@@ -51,6 +51,8 @@ SRCS += ft_parsing_pt4.c
 SRCS += ft_parsing_pt5.c 
 SRCS += ft_parsing_pt6.c 
 SRCS += ft_parsing_pt7.c 
+SRCS += ft_parsing_pt8.c 
+SRCS += ft_parsing_pt9.c 
 
 SRC_PATH += ./minishell_src/Signal/
 
