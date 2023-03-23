@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 11:43:04 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/03/23 13:45:49 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/23 14:21:26 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 
 void	ft_pipex_pt2(t_data *data, t_exec *begin, int m)
 {
+	fprintf(stderr, "\nboucle pipex_pt2\n");
 	ft_init_in_out(data);
 	if (!m || m % 2 == 0)
 		pipe(data->pip.pipefd1);
@@ -39,8 +40,10 @@ void	ft_pipex_pt2(t_data *data, t_exec *begin, int m)
 	signal(SIGINT, SIG_IGN);
 	ft_init_sigquit_exec();
 	data->pip.last_id = fork();
+	fprintf(stderr, "avant enfant\n");
 	if (data->pip.last_id == 0)
 		ft_child_exec(begin, data, m);
+	fprintf(stderr, "apres enfant\n");
 	if (!m || m % 2 == 0)
 	{
 		ft_close(&data->pip.pipefd2[0]);
@@ -65,12 +68,15 @@ void	ft_pipex(t_data *data)
 
 	begin = &data->exec;
 	m = 0;
+	fprintf(stderr, "debut pipex\n")
 	if (!data->pip.nb_pipes)
 		if (ft_exec_built_in_solo(begin, data))
 			return ;
 	begin = &data->exec;
+	fprintf(stderr, "apres buitin solo\n");
 	while (begin)
 		ft_pipex_pt2(data, begin, m);
+	fprintf(stderr, "apres boucle pipex_pt2\n");
 	waitpid(data->pip.last_id, &g_err_value, 0);
 	if (WIFEXITED(g_err_value))
 		g_err_value = WEXITSTATUS(g_err_value);
