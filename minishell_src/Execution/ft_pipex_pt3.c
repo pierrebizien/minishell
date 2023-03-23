@@ -6,13 +6,24 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 11:43:04 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/03/23 13:01:35 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/23 13:36:45 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./minishell.h"
 
 extern int	g_err_value;
+
+void	ft_exec_cmd_is_a_dir(t_data *data, char **cmd, char **cmd_quotes)
+{
+	if (errno == 13)
+	{
+		ft_putstr_fd(cmd[0], 2);
+		ft_free_in_find_path(cmd, data->to_free.paths_env, data, cmd_quotes);
+		ft_putstr_fd(": Is a directory\n", 2);
+		exit(126);
+	}
+}
 
 void	ft_exec_cmd(t_data *data, char **cmd, int m, char **cmd_quotes)
 {
@@ -37,21 +48,120 @@ ft_free_list(&data->exec), fprintf(stderr, "error 21\n"), ft_pb_malloc(data));
 	}
 	execve(data->to_free.path_exec, cmd, data->to_free.env_tab);
 	free(data->to_free.path_exec);
-	if (errno == 13)
-	{
-		ft_putstr_fd(cmd[0], 2);
-		ft_free_in_find_path(cmd, data->to_free.paths_env, data, cmd_quotes);
-		ft_putstr_fd(": Is a directory\n", 2);
-		exit(126);
-	}
+	ft_exec_cmd_is_a_dir(data, cmd, cmd_quotes);
 	ft_free_in_find_path(cmd, data->to_free.paths_env, data, cmd_quotes);
 	perror("");
 	exit(errno);
 }
 
-int	ft_child_exec(t_exec *begin, t_data *data, int m)
+
+void	ft_c_e_falsei(t_exec *begin, t_data *data, char **cmd, char **quotes)
 {
 	int		tmp_fd;
+
+	tmp_fd = open(begin->str, O_RDWR);
+	if (tmp_fd == -1)
+	{
+		perror(begin->str);
+		g_err_value = 1;
+		ft_free_child_exec(data, cmd, quotes);
+		exit(1);
+	}
+	ft_close(&tmp_fd);
+}
+
+void	ft_c_e_falsea(t_exec *begin, t_data *data, char **cmd, char **quotes)
+{
+	int		tmp_fd;
+
+	tmp_fd = open(begin->str, M_C_RW | O_APPEND, 0644);
+	if (tmp_fd == -1)
+	{
+		perror(begin->str);
+		g_err_value = 1;
+		ft_free_child_exec(data, cmd, quotes);
+		exit(1);
+	}
+	ft_close(&tmp_fd);
+}
+
+void	ft_c_e_falset(t_exec *begin, t_data *data, char **cmd, char **quotes)
+{
+	int		tmp_fd;
+
+	tmp_fd = open(begin->str, M_C_RW | O_TRUNC, 0644);
+	if (tmp_fd == -1)
+	{
+		perror(begin->str);
+		g_err_value = 1;
+		ft_free_child_exec(data, cmd, quotes);
+		exit(1);
+	}
+	ft_close(&tmp_fd);
+}
+
+void	ft_c_e_cmd(t_exec *begin, t_data *data, char **cmd, char **quotes)
+{
+	cmd = ft_join_dstr(cmd, begin->str);
+	if (!cmd)
+	{
+		ft_free_list(&data->exec);
+		ft_pb_malloc(data);
+		return ;
+	}
+	quotes = ft_join_dstr(quotes, begin->quotes);
+	if (!quotes)
+	{
+		ft_free_list(&data->exec);
+		ft_pb_malloc(data);
+		return ;
+	}
+}
+
+void	ft_c_e_append(t_exec *begin, t_data *data, char **cmd, char **quotes)
+{
+	ft_close(&data->pip.fd_out);
+	data->pip.fd_out = open(begin->str, M_C_RW | O_APPEND, 0644);
+	if (data->pip.fd_out == -1)
+	{
+		perror(begin->str);
+		g_err_value = 1;
+		ft_free_child_exec(data, cmd, quotes);
+		exit(1);
+	}
+}
+
+void	ft_c_e_tronc(t_exec *begin, t_data *data, char **cmd, char **quotes)
+{
+	ft_close(&data->pip.fd_out);
+	data->pip.fd_out = open(begin->str, M_C_RW | O_TRUNC, 0644);
+	if (data->pip.fd_out == -1)
+	{
+		perror(begin->str);
+		g_err_value = 1;
+		ft_free_child_exec(data, cmd, quotes);
+		exit(1);
+	}
+}
+
+void	ft_c_e_infile(t_exec *begin, t_data *data, char **cmd, char **quotes)
+{
+	ft_close(&data->pip.fd_in);
+	data->pip.fd_in = open(begin->str, O_RDONLY, 0644);
+	if (data->pip.fd_in == -1)
+	{
+		perror(begin->str);
+		g_err_value = 1;
+		ft_free_child_exec(data, cmd, quotes);
+		exit(1);
+	}
+}
+
+
+
+
+int	ft_child_exec(t_exec *begin, t_data *data, int m)
+{
 	char	**cmd;
 	char	**cmd_quotes;
 
@@ -61,94 +171,19 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 	while (begin && begin->id != F_PIPE)
 	{
 		if (begin->id == F_FALSEI)
-		{
-			tmp_fd = open(begin->str, O_RDWR);
-			if (tmp_fd == -1)
-			{
-				perror(begin->str);
-				g_err_value = 1;
-				ft_free_child_exec(data, cmd, cmd_quotes);
-				exit(1);
-			}
-			ft_close(&tmp_fd);
-		}
+			ft_c_e_falsei(begin, data, cmd, cmd_quotes);
 		else if (begin->id == F_FALSEA)
-		{
-			tmp_fd = open(begin->str, M_C_RW | O_APPEND, 0644);
-			if (tmp_fd == -1)
-			{
-				perror(begin->str);
-				g_err_value = 1;
-				ft_free_child_exec(data, cmd, cmd_quotes);
-				exit(1);
-			}
-			ft_close(&tmp_fd);
-		}
+			ft_c_e_falsea(begin, data, cmd, cmd_quotes);
 		else if (begin->id == F_FALSET)
-		{
-			tmp_fd = open(begin->str, M_C_RW | O_TRUNC, 0644);
-			if (tmp_fd == -1)
-			{
-				perror(begin->str);
-				g_err_value = 1;
-				ft_free_child_exec(data, cmd, cmd_quotes);
-				exit(1);
-			}
-			ft_close(&tmp_fd);
-		}
+			ft_c_e_falset(begin, data, cmd, cmd_quotes);
 		else if (begin->id == F_CMD)
-		{
-			cmd = ft_join_dstr(cmd, begin->str);
-			if (!cmd)
-			{
-				ft_free_list(&data->exec);
-				ft_pb_malloc(data);
-				return (MAL_ERCODE);
-			}
-			cmd_quotes = ft_join_dstr(cmd_quotes, begin->quotes);
-			if (!cmd_quotes)
-			{
-				ft_free_list(&data->exec);
-				ft_pb_malloc(data);
-				return (MAL_ERCODE);
-			}
-		}
+			ft_c_e_cmd(begin, data, cmd, cmd_quotes);
 		else if (begin->id == F_APPEND)
-		{
-			ft_close(&data->pip.fd_out);
-			data->pip.fd_out = open(begin->str, M_C_RW | O_APPEND, 0644);
-			if (data->pip.fd_out == -1)
-			{
-				perror(begin->str);
-				g_err_value = 1;
-				ft_free_child_exec(data, cmd, cmd_quotes);
-				exit(1);
-			}
-		}
+			ft_c_e_append(begin, data, cmd, cmd_quotes);
 		else if (begin->id == F_TRONC)
-		{
-			ft_close(&data->pip.fd_out);
-			data->pip.fd_out = open(begin->str, M_C_RW | O_TRUNC, 0644);
-			if (data->pip.fd_out == -1)
-			{
-				perror(begin->str);
-				g_err_value = 1;
-				ft_free_child_exec(data, cmd, cmd_quotes);
-				exit(1);
-			}
-		}
+			ft_c_e_tronc(begin, data, cmd, cmd_quotes);
 		else if (begin->id == F_INFILE)
-		{
-			ft_close(&data->pip.fd_in);
-			data->pip.fd_in = open(begin->str, O_RDONLY, 0644);
-			if (data->pip.fd_in == -1)
-			{
-				perror(begin->str);
-				g_err_value = 1;
-				ft_free_child_exec(data, cmd, cmd_quotes);
-				exit(1);
-			}
-		}
+			ft_c_e_infile(begin, data, cmd, cmd_quotes);
 		begin = begin->next;
 	}
 	ft_exec_cmd(data, cmd, m, cmd_quotes);
@@ -162,6 +197,7 @@ void	ft_pipex(t_data *data)
 	t_exec	*begin;
 	int		m;
 
+	fprintf(stderr, "ici\n");
 	begin = &data->exec;
 	m = 0;
 	if (!data->pip.nb_pipes)
