@@ -6,7 +6,7 @@
 /*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 11:43:04 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/03/23 15:02:38 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/03/23 15:18:34 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 	char	**cmd_quotes;
 
 	ft_init_sigint_exec();
+	ft_init_sigquit_exec();
 	cmd = NULL;
 	cmd_quotes = NULL;
 	ft_c_e_while(begin, data, &cmd, &cmd_quotes);
@@ -37,7 +38,6 @@ void	ft_pipex_pt2(t_data *data, t_exec **begin, int *m)
 	else
 		pipe(data->pip.pipefd2);
 	signal(SIGINT, SIG_IGN);
-	ft_init_sigquit_exec();
 	data->pip.last_id = fork();
 	if (data->pip.last_id == 0)
 		ft_child_exec(*begin, data, *m);
