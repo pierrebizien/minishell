@@ -5,7 +5,6 @@ SRCS += ft_init.c
 SRCS += ft_quotes.c
 SRCS += ft_free.c
 SRCS += ft_logo.c
-SRCS += ft_pipex.c
 SRCS += main.c
 SRCS += pipex_utils.c
 SRCS += ft_strtrim_lq.c
@@ -34,6 +33,10 @@ SRCS += ft_free_env.c
 SRC_PATH += ./minishell_src/Execution/
 SRCS += ft_heredoc_pt0.c
 SRCS += ft_heredoc_pt1.c
+SRCS += ft_pipex_pt0.c
+SRCS += ft_pipex_pt1.c
+SRCS += ft_pipex_pt2.c
+SRCS += ft_pipex_pt3.c
 
 
 #Free

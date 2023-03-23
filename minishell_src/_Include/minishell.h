@@ -256,8 +256,24 @@ void ft_free_end(t_data *data);
 int	ft_in_q(int in_q);
 
 //FT_PIPEX
-
-
+char	**ft_get_paths(t_data *data, char **cmd, char **cmd_quotes);
+void	ft_free_in_find_path(char **cmd, char **paths_env, t_data *data, char **cmd_quotes);
+int	is_out(char *str);
+int	contain_token(t_exec *begin, int token, int m);
+void	ft_print_fd(t_data *data);
+//1
+int	ft_search_hd_name(t_exec *begin, int m);
+int	ft_len_list(t_env *begin);
+void	ft_reset_param_pip(t_data *data);
+void	ft_free_child_exec(t_data *data, char **cmd, char **cmd_quotes);
+void	ft_init_in_out(t_data *data);
+//2
+char	*find_path(char **cmd, char **paths_env, t_data *data, char **cmd_quotes);
+void	ft_dup_manage(t_data *data, int m);
+char	**ft_get_env(t_env *env);
+void	ft_exec_cmd(t_data *data, char **cmd, int m, char **cmd_quotes);
+int		ft_child_exec(t_exec *begin, t_data *data, int m);
+void	ft_pipex(t_data *data);
 
 //FT_UTILS
 int		ft_strstrlen(char **strstr);
@@ -265,6 +281,7 @@ size_t	ft_strlen_WS(const char *str);
 char	*ft_put_str_in_str(char *dest, char *src, int ind);
 void	ft_maj_quotes(int *dq, int *sq, char c);
 void	ft_close(int *fd);
+char	**ft_join_dstr(char **dest, char *src);
 
 
 //FT_HEREDOC
