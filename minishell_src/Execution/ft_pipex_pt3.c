@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipex_pt3.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 11:43:04 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/03/23 15:00:41 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/03/23 16:21:51 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ ft_free_list(&data->exec), ft_pb_malloc(data));
 		ft_close_all(data->pip, data);
 		exit(g_err_value);
 	}
-
 	execve(data->to_free.path_exec, cmd, data->to_free.env_tab);
 	free(data->to_free.path_exec);
 	ft_exec_cmd_is_a_dir(data, cmd, cmd_quotes);

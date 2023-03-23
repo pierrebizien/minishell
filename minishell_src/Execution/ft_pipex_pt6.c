@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipex_pt6.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 11:43:04 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/03/23 15:18:34 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/03/23 16:21:34 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,9 @@ void	ft_pipex_pt2(t_data *data, t_exec **begin, int *m)
 		ft_close(&data->pip.pipefd2[1]);
 	}
 	while (*begin && (*begin)->id != F_PIPE)
-	{
 		*begin = (*begin)->next;
-	}
 	if (*begin && (*begin)->id == F_PIPE)
-	{
 		*begin = (*begin)->next;
-	}
 	*m = *m + 1;
 }
 
