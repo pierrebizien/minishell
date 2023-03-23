@@ -37,6 +37,7 @@ SRCS += ft_pipex_pt0.c
 SRCS += ft_pipex_pt1.c
 SRCS += ft_pipex_pt2.c
 SRCS += ft_pipex_pt3.c
+SRCS += ft_pipex_pt4.c
 
 
 #Free
