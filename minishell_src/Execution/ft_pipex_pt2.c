@@ -1,79 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pipex.c                                         :+:      :+:    :+:   */
+/*   ft_pipex_pt2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 11:43:04 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/03/23 12:08:44 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/23 12:54:03 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./minishell.h"
 
 extern int	g_err_value;
-
-char	**ft_join_dstr(char **dest, char *src)
-{
-	int		i;
-	char	**tmp;
-
-	i = 0;
-	tmp = malloc(sizeof(char *) * (ft_strstrlen(dest) + 2));
-	if (!tmp)
-		return (NULL);
-	while (dest && dest[i])
-	{
-		tmp[i] = ft_strdup(dest[i]);
-		if (!tmp[i])
-			return (ft_free_dchar(tmp), NULL);
-		i++;
-	}
-	tmp[i] = ft_strdup(src);
-	if (!tmp[i])
-		return (ft_free_dchar(tmp), NULL);
-	i++;
-	tmp[i] = 0;
-	ft_free_dchar(dest);
-	return (tmp);
-}
-
-char	**ft_get_paths(t_data *data, char **cmd, char **cmd_quotes)
-{
-	t_env	*tmp;
-	char	**tab;
-
-	tmp = &data->env;
-	while (tmp)
-	{
-		if (ft_strncmp(tmp->key, "PATH", ft_strlen(tmp->key)) == 0)
-		{
-			tab = ft_split(tmp->value, ':');
-			if (tab == NULL)
-				return (ft_free_dchar(cmd_quotes), ft_free_dchar(cmd), \
-ft_free_dchar(data->to_free.env_tab), ft_free_list(&data->exec), \
-fprintf(stderr, "error 22\n"), ft_pb_malloc(data), NULL);
-			return (tab);
-		}
-		tmp = tmp->next;
-	}
-	return (NULL);
-}
-
-void	ft_free_in_find_path(char **cmd, char **paths_env, \
-	t_data *data, char **cmd_quotes)
-{
-	ft_free_dchar(data->to_free.env_tab);
-	ft_free_dchar(cmd);
-	ft_free_dchar(cmd_quotes);
-	ft_free_dchar(paths_env);
-	ft_free_env(data);
-	free(data->oldpwd);
-	free(data->pwd);
-	ft_close_all(data->pip, data);
-	ft_free_list(&data->exec);
-}
 
 char	*find_path(char **cmd, char **paths_env, t_data *data, \
 	char **cmd_quotes)
@@ -135,84 +74,6 @@ ft_free_in_find_path(cmd, paths_env, data, cmd_quotes), exit(126), NULL);
 		NULL);
 }
 
-int	is_out(char *str)
-{
-	int		i;
-	char	**tmp;
-
-	i = 0;
-	if (!str || !str[0])
-		return (0);
-	tmp = ft_split(str, '/');
-	if (!tmp)
-		return (-1);
-	if (ft_strncmp(tmp[0], "dev", ft_strlen(tmp[0])) == 0 && \
-		ft_strncmp(tmp[1], "stdout", ft_strlen(tmp[1])) == 0)
-		return (ft_free_dchar(tmp), 1);
-	ft_free_dchar(tmp);
-	return (0);
-}
-
-int	contain_token(t_exec *begin, int token, int m)
-{
-	int		count;
-	t_exec	*tmp;
-
-	tmp = begin;
-	begin = tmp;
-	count = 0;
-	while (begin && count < m)
-	{
-		if (begin->id == F_PIPE)
-			count++;
-		begin = begin->next;
-	}
-	while (begin && begin->id != F_PIPE)
-	{
-		if (begin->id == token && !is_out(begin->str))
-			return (1);
-		begin = begin->next;
-	}
-	begin = tmp;
-	return (0);
-}
-
-void	ft_print_fd(t_data *data)
-{
-	fprintf(stderr, "fd in %d\n", data->pip.fd_in);
-	fprintf(stderr, "fd out %d\n", data->pip.fd_out);
-	fprintf(stderr, "pipefd1 [0] %d\n", data->pip.pipefd1[0]);
-	fprintf(stderr, "pipefd1 [1] %d\n", data->pip.pipefd1[1]);
-	fprintf(stderr, "pipefd2 [0]  %d\n", data->pip.pipefd2[0]);
-	fprintf(stderr, "pipefd2 [1] %d\n", data->pip.pipefd2[1]);
-}
-
-int	ft_search_hd_name(t_exec *begin, int m)
-{
-	t_exec	*tmp;
-	int		fd;
-
-	tmp = begin;
-	while (m)
-	{
-		if (tmp->id == F_PIPE)
-			m--;
-		tmp = tmp->next;
-	}
-	while (tmp && tmp->id != F_PIPE)
-	{
-		if (tmp->id == F_DELIMITER || tmp->id == F_DELIMITER_SQ)
-		{
-			fd = open(tmp->hd_filename, O_RDONLY);
-			if (fd == -1)
-				return (-1);
-			return (fd);
-		}
-		tmp = tmp->next;
-	}
-	return (-2);
-}
-
 void	ft_dup_manage(t_data *data, int m)
 {
 	int	tmp_fd;
@@ -259,22 +120,6 @@ void	ft_dup_manage(t_data *data, int m)
 	}
 }
 
-int	ft_len_list(t_env *begin)
-{
-	t_env	*tmp;
-	int		count;
-
-	tmp = begin;
-	count = 0;
-	while (begin)
-	{
-		count++;
-		begin = begin->next;
-	}
-	begin = tmp;
-	return (count);
-}
-
 char	**ft_get_env(t_env *env)
 {
 	t_env	*tmp;
@@ -298,12 +143,12 @@ char	**ft_get_env(t_env *env)
 		ft_memcpy(output[k], env->key, ft_strlen(env->key));
 		output[k][ft_strlen(env->key)] = '=';
 		ft_memcpy(output[k] + ft_strlen(env->key) + 1, env->value, \
-			ft_strlen(env->value)  + 1);
+			ft_strlen(env->value) + 1);
 		k++;
 		env = env->next;
 		count++;
 	}
-	env  = tmp;
+	env = tmp;
 	return (output);
 }
 
@@ -340,24 +185,6 @@ ft_free_list(&data->exec), fprintf(stderr, "error 21\n"), ft_pb_malloc(data));
 	ft_free_in_find_path(cmd, data->to_free.paths_env, data, cmd_quotes);
 	perror("");
 	exit(errno);
-}
-
-void	ft_reset_param_pip(t_data *data)
-{
-	data->pip.fd_in = 0;
-	data->pip.fd_out = 1;
-	data->pip.hd_in = 0;
-}
-
-void	ft_free_child_exec(t_data *data, char **cmd, char **cmd_quotes)
-{
-	ft_free_dchar(cmd_quotes);
-	ft_free_dchar(cmd);
-	ft_free_env(data);
-	free(data->oldpwd);
-	free(data->pwd);
-	ft_close_all(data->pip, data);
-	ft_free_list(&data->exec);
 }
 
 int	ft_child_exec(t_exec *begin, t_data *data, int m)
@@ -466,14 +293,6 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 	ft_free_dchar(cmd);
 	ft_free_dchar(cmd_quotes);
 	return (0);
-}
-
-void	ft_init_in_out(t_data *data)
-{
-	ft_close(&data->pip.fd_in);
-	ft_close(&data->pip.fd_out);
-	data->pip.fd_in = dup(data->pip.saved_stdin);
-	data->pip.fd_out = dup(data->pip.saved_stdout);
 }
 
 void	ft_pipex(t_data *data)

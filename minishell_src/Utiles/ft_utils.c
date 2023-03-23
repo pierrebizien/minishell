@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 00:55:45 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/03/23 10:34:52 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/23 12:48:23 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,29 @@ void	ft_print_dargs(char **strstr)
 		printf("|%s| \n", strstr[i]);
 		i++;
 	}
+}
+
+char	**ft_join_dstr(char **dest, char *src)
+{
+	int		i;
+	char	**tmp;
+
+	i = 0;
+	tmp = malloc(sizeof(char *) * (ft_strstrlen(dest) + 2));
+	if (!tmp)
+		return (NULL);
+	while (dest && dest[i])
+	{
+		tmp[i] = ft_strdup(dest[i]);
+		if (!tmp[i])
+			return (ft_free_dchar(tmp), NULL);
+		i++;
+	}
+	tmp[i] = ft_strdup(src);
+	if (!tmp[i])
+		return (ft_free_dchar(tmp), NULL);
+	i++;
+	tmp[i] = 0;
+	ft_free_dchar(dest);
+	return (tmp);
 }
