@@ -6,7 +6,7 @@
 /*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 07:35:47 by pbizien           #+#    #+#             */
-/*   Updated: 2023/03/23 11:14:32 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/03/23 15:34:45 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,16 @@ void	ft_clean2(char *str, int *in_sq, int *in_dq, int i)
 		*in_sq = ft_in_q(*in_sq);
 }
 
-char	*ft_clean3(char *str, t_data *data, int *i)
+char	*ft_clean3(char **str, t_data *data, int *i)
 {
 	char	*tmp;
 
-	tmp = ft_put_str_in_str(str, " ", ++*i);
+	*i = *i + 1;
+	tmp = ft_put_str_in_str(*str, " ", *i);
 	if (!tmp)
-		return (free(str), ft_pb_malloc(data), NULL);
-	free(str);
-	str = tmp;
+		return (free(*str), ft_pb_malloc(data), NULL);
+	free(*str);
+	*str = tmp;
 	return (NULL);
 }
 
@@ -71,11 +72,11 @@ char	*ft_clean(char *str, t_data *data)
 		ft_clean2(str, &in_sq, &in_dq, i);
 		if (!in_dq && !in_sq && is_ws(str[i]) && is_ws(str[i + 1]))
 			ft_memmove(str + i, (str + i + 1), ft_strlen(str + i + 1) + 1);
-		else if (ft_test_clean2(in_sq, in_dq, str, i))
-			ft_clean3(str, data, &i);
+		else if (ft_test_clean1(in_sq, in_dq, str, i))
+			ft_clean3(&str, data, &i);
 		else if (ft_test_clean2(in_sq, in_dq, str, i))
 		{
-			ft_clean3(str, data, &i);
+			ft_clean3(&str, data, &i);
 			i++;
 		}
 		else
