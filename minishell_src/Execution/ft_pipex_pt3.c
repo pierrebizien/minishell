@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 11:43:04 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/03/23 13:36:45 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/23 13:39:34 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ ft_free_list(&data->exec), fprintf(stderr, "error 21\n"), ft_pb_malloc(data));
 	perror("");
 	exit(errno);
 }
-
 
 void	ft_c_e_falsei(t_exec *begin, t_data *data, char **cmd, char **quotes)
 {
@@ -157,8 +156,27 @@ void	ft_c_e_infile(t_exec *begin, t_data *data, char **cmd, char **quotes)
 	}
 }
 
-
-
+void	ft_c_e_while(t_exec *begin, t_data *data, char **cmd, char **quotes)
+{
+	while (begin && begin->id != F_PIPE)
+	{
+		if (begin->id == F_FALSEI)
+			ft_c_e_falsei(begin, data, cmd, quotes);
+		else if (begin->id == F_FALSEA)
+			ft_c_e_falsea(begin, data, cmd, quotes);
+		else if (begin->id == F_FALSET)
+			ft_c_e_falset(begin, data, cmd, quotes);
+		else if (begin->id == F_CMD)
+			ft_c_e_cmd(begin, data, cmd, quotes);
+		else if (begin->id == F_APPEND)
+			ft_c_e_append(begin, data, cmd, quotes);
+		else if (begin->id == F_TRONC)
+			ft_c_e_tronc(begin, data, cmd, quotes);
+		else if (begin->id == F_INFILE)
+			ft_c_e_infile(begin, data, cmd, quotes);
+		begin = begin->next;
+	}	
+}
 
 int	ft_child_exec(t_exec *begin, t_data *data, int m)
 {
@@ -168,24 +186,7 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 	ft_init_sigint_exec();
 	cmd = NULL;
 	cmd_quotes = NULL;
-	while (begin && begin->id != F_PIPE)
-	{
-		if (begin->id == F_FALSEI)
-			ft_c_e_falsei(begin, data, cmd, cmd_quotes);
-		else if (begin->id == F_FALSEA)
-			ft_c_e_falsea(begin, data, cmd, cmd_quotes);
-		else if (begin->id == F_FALSET)
-			ft_c_e_falset(begin, data, cmd, cmd_quotes);
-		else if (begin->id == F_CMD)
-			ft_c_e_cmd(begin, data, cmd, cmd_quotes);
-		else if (begin->id == F_APPEND)
-			ft_c_e_append(begin, data, cmd, cmd_quotes);
-		else if (begin->id == F_TRONC)
-			ft_c_e_tronc(begin, data, cmd, cmd_quotes);
-		else if (begin->id == F_INFILE)
-			ft_c_e_infile(begin, data, cmd, cmd_quotes);
-		begin = begin->next;
-	}
+	ft_c_e_while(begin, data, cmd, cmd_quotes);
 	ft_exec_cmd(data, cmd, m, cmd_quotes);
 	ft_free_dchar(cmd);
 	ft_free_dchar(cmd_quotes);
