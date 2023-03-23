@@ -286,11 +286,11 @@ void	ft_c_e_falsei(t_exec *begin, t_data *data, char **cmd, char **quotes);
 void	ft_c_e_falsea(t_exec *begin, t_data *data, char **cmd, char **quotes);
 void	ft_c_e_falset(t_exec *begin, t_data *data, char **cmd, char **quotes);
 // 5
-void	ft_c_e_cmd(t_exec *begin, t_data *data, char **cmd, char **quotes);
+void	ft_c_e_cmd(t_exec *begin, t_data *data, char ***cmd, char ***quotes);
 void	ft_c_e_append(t_exec *begin, t_data *data, char **cmd, char **quotes);
 void	ft_c_e_tronc(t_exec *begin, t_data *data, char **cmd, char **quotes);
 void	ft_c_e_infile(t_exec *begin, t_data *data, char **cmd, char **quotes);
-void	ft_c_e_while(t_exec *begin, t_data *data, char **cmd, char **quotes);
+void	ft_c_e_while(t_exec *begin, t_data *data, char ***cmd, char ***quotes);
 
 
 //FT_UTILS

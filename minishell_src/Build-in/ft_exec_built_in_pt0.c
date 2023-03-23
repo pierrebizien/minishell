@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec_built_in_pt0.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:14:54 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/03/22 22:21:13 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/23 14:41:40 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	ft_free_err_mal_cmd_solo(char **cmd, char **cmd_quotes, t_data *data)
 	ft_free_dchar(cmd);
 	ft_free_dchar(cmd_quotes);
 	ft_free_list(&data->exec);
-	fprintf(stderr, "ERROR 0\n");
 	ft_pb_malloc(data);
 }
 

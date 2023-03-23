@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipex_pt3.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 11:43:04 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/03/23 14:19:32 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/23 15:00:41 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ ft_free_list(&data->exec), exit(0));
 	data->to_free.env_tab = ft_get_env(&data->env);
 	if (data->to_free.env_tab == NULL)
 		return (ft_free_dchar(cmd_quotes), ft_free_dchar(cmd), \
-ft_free_list(&data->exec), fprintf(stderr, "error 21\n"), ft_pb_malloc(data));
+ft_free_list(&data->exec), ft_pb_malloc(data));
 	data->to_free.paths_env = ft_get_paths(data, cmd, cmd_quotes);
 	data->to_free.path_exec = \
 		find_path(cmd, data->to_free.paths_env, data, cmd_quotes);
@@ -46,6 +46,7 @@ ft_free_list(&data->exec), fprintf(stderr, "error 21\n"), ft_pb_malloc(data));
 		ft_close_all(data->pip, data);
 		exit(g_err_value);
 	}
+
 	execve(data->to_free.path_exec, cmd, data->to_free.env_tab);
 	free(data->to_free.path_exec);
 	ft_exec_cmd_is_a_dir(data, cmd, cmd_quotes);

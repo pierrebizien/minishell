@@ -6,7 +6,7 @@
 /*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 07:35:47 by pbizien           #+#    #+#             */
-/*   Updated: 2023/03/23 07:41:19 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/03/23 14:43:41 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,7 @@ void	ft_print_dchar(char **strstr)
 	i = 0;
 	while (strstr && strstr[i])
 	{
-		printf("STRSTR VAUT |%s|\n", strstr[i]);
 		i++;
-	}
-}
-
-void	ft_print_list(t_exec *begin)
-{
-	while (begin)
-	{
-		fprintf(stderr, "(%d) \t |%s|\n", begin->id, begin->str);
-		begin = begin->next;
 	}
 }
 
