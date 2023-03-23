@@ -234,7 +234,6 @@ char	*ft_heredoc_prompt(char *str, t_data *data);
 void	ft_free_dchar(char **str);
 char    *ft_strrjoin(char const *s1, char const *s2, char const *s3);
 void    ft_close_all(t_pip pip, t_data *data);
-char *ft_tab_to_str(char **tab, char sep);
 
 //SPLIT_LQUOTES
 char	**ft_split_lq(char const *s, char *sep);

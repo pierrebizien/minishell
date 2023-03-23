@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_utils.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/23 00:55:45 by ngriveau          #+#    #+#             */
+/*   Updated: 2023/03/23 00:57:48 by ngriveau         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../_Include/minishell.h"
 
 int	ft_strstrlen(char **strstr)
@@ -9,23 +21,21 @@ int	ft_strstrlen(char **strstr)
 	{
 		i++;
 	}
-	return (i);	
+	return (i);
 }
 
-char *ft_put_str_in_str(char *dest, char *src, int ind)
+char	*ft_put_str_in_str(char *dest, char *src, int ind)
 {
-	int 	i;
+	int		i;
 	size_t	len;
 	char	*output;
-	size_t		j;
+	size_t	j;
 	int		k;
 
-	// fprintf(stderr, "LAIZEGUEA1 dest vaut %s \n", dest);
 	len = ft_strlen(dest) + ft_strlen(src);
-	// fprintf(stderr, "len vaut %zu\n", len);
 	output = malloc(sizeof(char) * len + 1);
 	if (!output)
-		return (NULL); //GERER
+		return (NULL);
 	i = 0;
 	j = 0;
 	k = 0;
@@ -36,49 +46,8 @@ char *ft_put_str_in_str(char *dest, char *src, int ind)
 		else
 			output[j++] = dest[i++];
 	}
-	// fprintf(stderr, "LAIZEGUEAU2 j vaut %zu \n", j);
 	output[j] = '\0';
 	return (output);
-}
-
-char *ft_tab_to_str(char **tab, char sep)
-{
-	int i;
-	int len;
-	int j;
-	int k;
-	char *str;
-
-	i = -1;
-	j = 0;
-	len = 0;
-	while (tab[++i])
-		len += ft_strlen(tab[i]);
-	len += i - 1;
-	str = malloc(sizeof(char) * len + 1);
-	if (!str)
-		return (NULL);
-	str[len] = '\0';
-	i = 0;
-	k = 0;
-	while (tab[i])
-	{
-		j = 0;
-		while(tab[i][j])
-		{
-			str[k] = tab[i][j];
-			j++;
-			k++;
-
-		}
-		if (k < len)
-		{
-			str[k] = sep;
-			k++;
-		}
-		i++;
-	}
-	return (str);
 }
 
 int	ft_strlen_char(char *str, char c)
@@ -90,6 +59,7 @@ int	ft_strlen_char(char *str, char c)
 		i++;
 	return (i);
 }
+
 void	ft_close(int *fd)
 {
 	if (*fd == -1 || *fd == 1 || *fd == 0)
