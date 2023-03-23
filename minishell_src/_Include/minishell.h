@@ -220,11 +220,15 @@ size_t	count_words_2(char const *s, char *sep);
 
 
 
-
-
-
-
+// Split_leave
+size_t	count_words_3(char const *s, char *sep);
+void	fill_tab_3(char *new, char const *s, char *sep);
+void	free_tabstr_3(char **tab);
+int		set_mem_3(char **tab, char const *s, char *sep);
 char	**ft_split_l(char const *s, char *sep);
+//1
+int	is_sep_3(char c, char *sep);
+
 //FT_STRTRIM_LQ
 char	*ft_strtrim_lq(char const *s1);
 

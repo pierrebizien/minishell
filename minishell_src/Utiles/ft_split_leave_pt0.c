@@ -1,35 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split_leave.c                                   :+:      :+:    :+:   */
+/*   ft_split_leave_pt0.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 18:29:02 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/03/22 19:10:07 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/03/23 09:04:01 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern int g_err_value;
+extern int	g_err_value;
 
-static int	is_sep_3(char c, char *sep)
-{
-	size_t	i;
-
-	i = 0;
-	while (sep && i < ft_strlen(sep))
-	{
-		if (sep && c == sep[i])
-			return (1);
-		i++;
-	}
-	return (0);
-	
-}
-
-static size_t	count_words_3(char const *s, char *sep)
+size_t	count_words_3(char const *s, char *sep)
 {
 	size_t	words;
 	size_t	i;
@@ -38,14 +23,15 @@ static size_t	count_words_3(char const *s, char *sep)
 	i = 0;
 	while (s[i])
 	{
-		if (!is_sep_3(s[i], sep) && (is_sep_3(s[i + 1], sep) || s[i + 1] == '\0'))
+		if (!is_sep_3(s[i], sep) && (is_sep_3(s[i + 1], sep) || \
+			s[i + 1] == '\0'))
 			words++;
 		i++;
 	}
-	return (2*words - 1);
+	return (2 * words - 1);
 }
 
-static void	fill_tab_3(char *new, char const *s, char *sep)
+void	fill_tab_3(char *new, char const *s, char *sep)
 {
 	size_t	i;
 
@@ -73,7 +59,7 @@ void	free_tabstr_3(char **tab)
 	free(tab);
 }
 
-static int	set_mem_3(char **tab, char const *s, char *sep)
+int	set_mem_3(char **tab, char const *s, char *sep)
 {
 	size_t	count;
 	size_t	index;

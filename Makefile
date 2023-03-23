@@ -14,10 +14,6 @@ SRCS += ft_free.c
 SRCS += ft_logo.c
 SRCS += ft_pipex.c
 SRCS += ft_signal.c
-SRCS += ft_split_keep_pt0.c
-SRCS += ft_split_keep_pt1.c
-SRCS += ft_split_leave.c
-SRCS += ft_split_lquotes.c
 SRCS += main.c
 SRCS += pipex_utils.c
 SRCS += ft_strtrim_lq.c
@@ -25,7 +21,7 @@ SRCS += ft_strtrim_lq.c
 
 
 
-# SRC_PATH += /libft/src
+#Build-in
 SRC_PATH += ./minishell_src/Build-in/
 SRCS += ft_exec_built_in_pt0.c
 SRCS += ft_exec_built_in_pt1.c
@@ -42,27 +38,33 @@ SRCS += ft_cmd_unset.c
 SRCS += ft_cmd_exit.c
 SRCS += ft_free_env.c
 
+#Execution
 SRC_PATH += ./minishell_src/Execution/
 SRCS += ft_heredoc_pt0.c
 SRCS += ft_heredoc_pt1.c
 
 
-
+#Free
 SRC_PATH += ./minishell_src/Free/
 
-
+#Parsing
 SRC_PATH += ./minishell_src/Parsing/
 
-
+#Signal
 SRC_PATH += ./minishell_src/Signal/
 
-
+#Start
 SRC_PATH += ./minishell_src/Start/
 
-
+# Utiles
 SRC_PATH += ./minishell_src/Utiles/
+SRCS += ft_split_keep_pt0.c
+SRCS += ft_split_keep_pt1.c
+SRCS += ft_split_leave_pt0.c
+SRCS += ft_split_leave_pt1.c
+SRCS += ft_split_lquotes.c
 
-
+# Other
 SRC_PATH += ./minishell_src/Other/
 
 
