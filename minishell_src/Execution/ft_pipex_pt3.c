@@ -6,13 +6,24 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 11:43:04 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/03/23 13:01:35 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/23 13:11:48 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./minishell.h"
 
 extern int	g_err_value;
+
+void	ft_exec_cmd_is_a_dir(t_data *data, char **cmd, char **cmd_quotes)
+{
+	if (errno == 13)
+	{
+		ft_putstr_fd(cmd[0], 2);
+		ft_free_in_find_path(cmd, data->to_free.paths_env, data, cmd_quotes);
+		ft_putstr_fd(": Is a directory\n", 2);
+		exit(126);
+	}
+}
 
 void	ft_exec_cmd(t_data *data, char **cmd, int m, char **cmd_quotes)
 {
@@ -37,13 +48,7 @@ ft_free_list(&data->exec), fprintf(stderr, "error 21\n"), ft_pb_malloc(data));
 	}
 	execve(data->to_free.path_exec, cmd, data->to_free.env_tab);
 	free(data->to_free.path_exec);
-	if (errno == 13)
-	{
-		ft_putstr_fd(cmd[0], 2);
-		ft_free_in_find_path(cmd, data->to_free.paths_env, data, cmd_quotes);
-		ft_putstr_fd(": Is a directory\n", 2);
-		exit(126);
-	}
+	ft_exec_cmd_is_a_dir(data, cmd, cmd_quotes);
 	ft_free_in_find_path(cmd, data->to_free.paths_env, data, cmd_quotes);
 	perror("");
 	exit(errno);
