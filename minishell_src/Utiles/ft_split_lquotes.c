@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_lquotes.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 18:29:02 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/03/22 19:10:07 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/03/23 09:19:39 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern int g_err_value;
+extern int	g_err_value;
 
 static int	is_sep_4(char c, char *sep)
 {
@@ -26,7 +26,6 @@ static int	is_sep_4(char c, char *sep)
 		i++;
 	}
 	return (0);
-	
 }
 
 static size_t	count_words_4(char const *s, char *sep)
@@ -45,8 +44,8 @@ static size_t	count_words_4(char const *s, char *sep)
 		if (s[i] == '"' || s[i] == '\'')
 			if (i <= 0 || s[i - 1] != '\\')
 				ft_maj_quotes(&dq, &sq, s[i]);
-		// fprintf(stderr, "s[%zu[i]] vaut %s et dq vaut %d et sq vaut %d et words %zu\n", i, s + i, dq, sq, words);
-		if ((dq == -1 && sq == -1) && (!is_sep_4(s[i], sep) && (is_sep_4(s[i + 1], sep) || s[i + 1] == '\0')))
+		if ((dq == -1 && sq == -1) && (!is_sep_4(s[i], sep) && \
+			(is_sep_4(s[i + 1], sep) || s[i + 1] == '\0')))
 			words++;
 		i++;
 	}
@@ -81,57 +80,52 @@ void	free_tabstr_4(char **tab)
 	free(tab);
 }
 
-static int	set_mem_4(char **tab, char const *s, char *sep)
+static int	set_mem_4(char **tab, char const *s, char *sep, t_split	*split)
 {
-	size_t	count;
-	size_t	index;
-	size_t	i;
-	int dq;
-	int sq;
+	int		dq;
+	int		sq;
 
-	index = 0;
-	i = 0;
+	split->index = 0;
+	split->i = 0;
 	dq = -1;
 	sq = -1;
-	while (s && s[index])
+	while (s && s[split->index])
 	{
-		count = 0;
-		// fprintf(stderr, "s[%zu] = |%s| dq %d sq %d is sep %d\n", index, s + index, dq, sq, is_sep_4(s[index], sep));
-		if (s[index] == '\'' || s[index] == '"')
-				ft_maj_quotes(&dq, &sq, s[index]);
-		while (s[index + count] && (dq == 1 || sq == 1 || (!is_sep_4(s[index + count], sep))))
+		split->count = 0;
+		ft_maj_quotes(&dq, &sq, s[split->index]);
+		while (s[split->index + split->count] && (dq == 1 || sq == 1 || \
+			(!is_sep_4(s[split->index + split->count], sep))))
 		{
-			count++;
-			if (s[index + count] == '\'' || s[index + count] == '"')
-				ft_maj_quotes(&dq, &sq, s[index + count]);
+			split->count++;
+			if (s[split->index + split->count] == '\'' || s[split->index + split->count] == '"')
+				ft_maj_quotes(&dq, &sq, s[split->index + split->count]);
 		}
-		// fprintf(stderr, "count %zu s vaut %s dq %d sq %d\n", count, s + count + index, dq, sq);
-		if (count > 0)
+		if (split->count > 0)
 		{
-			tab[i] = malloc(sizeof(char) * (count + 1));
-			if (!tab[i])
+			tab[split->i] = malloc(sizeof(char) * (split->count + 1));
+			if (!tab[split->i])
 				return (free_tabstr_4(tab), 0);
-			fill_tab_4(tab[i], (s + index), count);
-			i++;
-			index = index + count;
+			fill_tab_4(tab[split->i], (s + split->index), split->count);
+			split->i++;
+			split->index = split->index + split->count;
 		}
 		else
-			index++;
+			split->index++;
 	}
-	tab[i] = 0;
+	tab[split->i] = 0;
 	return (0);
 }
 
 char	**ft_split_lq(char const *s, char *sep)
 {
 	size_t	words;
+	t_split	split;
 	char	**tab;
 
 	words = count_words_4(s, sep);
-	// fprintf(stderr, "COUNT WORDS %zu \n", words);
 	tab = malloc(sizeof(char *) * (words + 1));
 	if (!tab)
 		return (NULL);
-	set_mem_4(tab, s, sep);
+	set_mem_4(tab, s, sep, &split);
 	return (tab);
 }
