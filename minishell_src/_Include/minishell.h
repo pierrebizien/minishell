@@ -23,6 +23,7 @@
 #define WS " \t\n\f\v\r"
 #define MALLOC_ERROR "erreur de malloc"
 #define MAL_ERCODE -42
+#define M_C_RW O_CREAT | O_RDWR
 
 
 #define F_INFILE 0
