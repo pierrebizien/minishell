@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_pc_id.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolasgriveau <nicolasgriveau@student.    +#+  +:+       +#+        */
+/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 13:46:43 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/02/18 11:38:54 by nicolasgriv      ###   ########.fr       */
+/*   Updated: 2023/03/23 01:05:25 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "SuperLibft.h"
-
 
 void	ft_putchar_pc_idu(char c)
 {

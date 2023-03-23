@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 17:32:42 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/03/22 14:57:28 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/23 01:07:37 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,6 @@
 # include "get_next_line.h" 
 // # include <bsd/string.h>
 
-
-
-
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
 # endif
@@ -39,7 +36,6 @@ typedef struct s_list
 	void			*content;
 	struct s_list	*next;
 }					t_list;
-
 
 int		ft_atoi(const char *str);
 void	ft_bzero(void *s, size_t n);
@@ -87,10 +83,8 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 char	*ft_strrjoin(char const *s1, char const *s2, char const *s3);
 char	*ft_randomstr(char *prefix, char *suffix, size_t len);
 
-
 /* get_next_line_c */
-char			*get_next_line(int fd);
-
+char	*get_next_line(int fd);
 
 int		ft_writechar(char ch, int nbrch);
 int		ft_writestr(char *str, int nbrch);
