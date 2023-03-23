@@ -6,15 +6,13 @@
 /*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 07:35:47 by pbizien           #+#    #+#             */
-/*   Updated: 2023/03/23 12:20:44 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/03/23 12:50:29 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../_Include/minishell.h"
 
 extern int	g_err_value;
-
-
 
 void	ft_parse_for_e_init(t_data *data, t_exec **tmp, int *j, int *count_p)
 {
@@ -36,9 +34,9 @@ int	ft_test_loop_1(char *str, char *token)
 		return (0);
 }
 
-int	ft_test_loop_2(char *str, int i, char *token)
+int	ft_test_loop_2(char *s, int i, char *token)
 {
-	if (0 < i && str && ft_strlen(str) != 0 && !ft_strncmp(str, token, ft_strlen(str)))
+	if (0 < i && s && ft_strlen(s) != 0 && !ft_strncmp(s, token, ft_strlen(s)))
 		return (1);
 	else
 		return (0);
@@ -71,12 +69,12 @@ void	ft_parse_for_exec_loop(t_data *data, t_exec **tmp, int *count_p, int *i)
 	}
 }
 
-int ft_parse_for_exec(t_data *data)
+int	ft_parse_for_exec(t_data *data)
 {
-	int i;
-	int j;
-	int count_p;
-	t_exec *tmp;
+	int		i;
+	int		j;
+	int		count_p;
+	t_exec	*tmp;
 
 	ft_parse_for_e_init(data, &tmp, &j, &count_p);
 	while (data->args[++j])
@@ -95,4 +93,3 @@ int ft_parse_for_exec(t_data *data)
 	}
 	return (ft_parse_for_e_end(data));
 }
-
