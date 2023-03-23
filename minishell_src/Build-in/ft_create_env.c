@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_create_env.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 19:48:06 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/03/22 20:13:39 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/23 15:50:28 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,9 @@ int	ft_create_env(char **envp, t_data *data)
 
 	i = -1;
 	tmp = &data->env;
+	tmp->key = NULL;
+	tmp->printable = 1;
+	tmp->value = NULL;
 	while (envp[++i])
 	{
 		if (ft_create_env_pt2(envp, tmp, i) == 1)
