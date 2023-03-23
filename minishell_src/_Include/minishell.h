@@ -52,6 +52,14 @@ typedef	struct	s_env
 	
 }               t_env;
 
+typedef	struct	s_split
+{
+	size_t			count;
+	size_t			index;
+	size_t			i;
+
+}               t_split;
+
 typedef	struct	s_to_free
 {
 	char 			*str;
@@ -206,9 +214,29 @@ int event(void);
 void	ft_ctrlc(int a);
 
 
+// Split_keep
 
+void	free_tabstr_2(char **tab);
+int		set_mem_2_if(char **tab, char const *s, char *sep, t_split	*split);
+int		set_mem_2_else(char **tab, char const *s, t_split	*split);
+int		set_mem_2(char **tab, char const *s, char *sep, t_split	*split);
 char	**ft_split_k(char const *s, char *sep);
+//1
+void	fill_tab_2(char *new, char const *s, char *sep);
+int	is_sep(char c, char *sep);
+size_t	count_words_2(char const *s, char *sep);
+
+
+
+// Split_leave
+size_t	count_words_3(char const *s, char *sep);
+void	fill_tab_3(char *new, char const *s, char *sep);
+void	free_tabstr_3(char **tab);
+int		set_mem_3(char **tab, char const *s, char *sep);
 char	**ft_split_l(char const *s, char *sep);
+//1
+int	is_sep_3(char c, char *sep);
+
 //FT_STRTRIM_LQ
 char	*ft_strtrim_lq(char const *s1);
 
