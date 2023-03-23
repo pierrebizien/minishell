@@ -146,7 +146,6 @@ char *ft_parse(char *str, t_data *data) // CHECK GLOBAL ET SI > >OUT RETURN ERRO
 		g_err_value = 2;
 		return (NULL);
 	}
-
 	data->args = ft_split_k(str, "|");
 	if (data->args == NULL)
 		return (fprintf(stderr, "ERROR 8\n"), ft_pb_malloc(data), free(str), NULL);

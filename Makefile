@@ -2,13 +2,6 @@ SHELL = /bin/bash
 
 SRCS = ft_utils.c 
 SRCS += ft_init.c 
-SRCS += ft_parsing_pt0.c 
-SRCS += ft_parsing_pt1.c 
-SRCS += ft_parsing_pt2.c 
-SRCS += ft_parsing_pt3.c 
-SRCS += ft_parsing_pt4.c 
-SRCS += ft_parsing_pt5.c 
-SRCS += ft_parsing_pt6.c 
 SRCS += ft_quotes.c
 SRCS += ft_free.c
 SRCS += ft_logo.c
@@ -52,6 +45,14 @@ SRC_PATH += ./minishell_src/Free/
 
 SRC_PATH += ./minishell_src/Parsing/
 
+SRCS += ft_parsing_pt0.c 
+SRCS += ft_parsing_pt1.c 
+SRCS += ft_parsing_pt2.c 
+SRCS += ft_parsing_pt3.c 
+SRCS += ft_parsing_pt4.c 
+SRCS += ft_parsing_pt5.c 
+SRCS += ft_parsing_pt6.c 
+SRCS += ft_parsing_pt7.c 
 
 SRC_PATH += ./minishell_src/Signal/
 

@@ -36,11 +36,6 @@ char *ft_prompt(void)
 	free(path);
 	path = ft_put_str_in_str("\001\e[36;1m\002minishell (\001\e[32;1m\002/\001\e[36;1m\002) \001\e[0m\002", minipath, 30);
 	free(minipath);
-	// if (g_err_value == 0)
-	// 	minipath = ft_put_str_in_str(path, "\001\e[32;1m\002● ", 0);
-	// else
-	// 	minipath = ft_put_str_in_str(path, "\001\e[31;1m\002● ", 0);
-	// path = ft_put_str_in_str(path, ft_itoa(g_err_value), 0); // error value 
 	str = readline(path);
 	free(path);
 	return (str);

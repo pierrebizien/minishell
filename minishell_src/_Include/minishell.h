@@ -140,6 +140,14 @@ int	ft_find_if_hd_quotes(t_data *data, int count_p);
 char	*ft_clean_quotes(char *str);
 void ft_clean_list_exec(t_data *data);
 int ft_modif_in_out(t_data *data);
+void ft_mod_in_out_bis_2(t_exec **tmp, int *bool_in);
+void ft_mod_in_out_bis(t_exec **tmp, int *bool_out, int *bool_in);
+int ft_falsed(t_data *data, t_exec **tmp, int *ret_val);
+int ft_delimiter(t_data *data, t_exec **tmp, int *ret_val);
+int ft_delimiter_sq(t_data *data, t_exec **tmp, int *ret_val);
+
+
+
 
 void	ft_pb_malloc(t_data *data);
 void	ft_free_list(t_exec *begin);
