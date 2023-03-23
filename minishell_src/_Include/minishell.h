@@ -281,6 +281,17 @@ char	**ft_get_env(t_env *env);
 void	ft_exec_cmd(t_data *data, char **cmd, int m, char **cmd_quotes);
 int		ft_child_exec(t_exec *begin, t_data *data, int m);
 void	ft_pipex(t_data *data);
+//
+void	ft_c_e_falsei(t_exec *begin, t_data *data, char **cmd, char **quotes);
+void	ft_c_e_falsea(t_exec *begin, t_data *data, char **cmd, char **quotes);
+void	ft_c_e_falset(t_exec *begin, t_data *data, char **cmd, char **quotes);
+// 5
+void	ft_c_e_cmd(t_exec *begin, t_data *data, char **cmd, char **quotes);
+void	ft_c_e_append(t_exec *begin, t_data *data, char **cmd, char **quotes);
+void	ft_c_e_tronc(t_exec *begin, t_data *data, char **cmd, char **quotes);
+void	ft_c_e_infile(t_exec *begin, t_data *data, char **cmd, char **quotes);
+void	ft_c_e_while(t_exec *begin, t_data *data, char **cmd, char **quotes);
+
 
 //FT_UTILS
 int		ft_strstrlen(char **strstr);
