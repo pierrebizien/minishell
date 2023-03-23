@@ -132,7 +132,21 @@ size_t	ft_strlen_ws_quotes(const char *str);
 char	*ft_convert_variable(char *str, t_data *data);
 char	*ft_convert_variable_hd(char *str, t_data *data, char *delimiter);
 char	*ft_clean(char *str, t_data *data);
-
+void	ft_free_dchar(char **str);
+void	ft_print_list(t_exec *begin);
+void	ft_clean_ws(t_data *data);
+size_t	ft_strlen_var_env(char *str);
+char	*ft_check_env(char *str, t_data *data);
+int	ft_is_hd(char *str, int	i);
+int	ft_count_pipes (t_exec *begin);
+char ft_first_no_chev(char *str);
+int ft_verif_et_ou(char *str);
+t_exec	*ft_lstnew_pars(void);
+int ft_check_chev_pip(char **tab);
+int	ft_check_if_past_is_delim(t_exec *begin, int i);
+int	ft_find_if_hd_quotes(t_data *data, int count_p);
+char	*ft_clean_quotes(char *str);
+void ft_clean_list_exec(t_data *data);
 
 void	ft_pb_malloc(t_data *data);
 void	ft_free_list(t_exec *begin);
@@ -179,7 +193,6 @@ int		ft_exit(char **cmd, t_data *data, char **cmd_quotes);
 int		ft_test_builtin(char **str);
 int		ft_exec_builtin(char **cmd, t_data *data, char **cmd_quotes);
 
-void	ft_print_list(t_exec *begin);
 
 
 void	ft_ctrlb(int a);
@@ -191,7 +204,6 @@ int event(void);
 
 void	ft_ctrlc(int a);
 
-void	ft_print_dchar(char **strstr);
 
 // Split_keep
 
@@ -255,7 +267,6 @@ char	*ft_heredoc_prompt(char *str, t_data *data);
 
 
 //PIPEX_UTILS
-void	ft_free_dchar(char **str);
 char    *ft_strrjoin(char const *s1, char const *s2, char const *s3);
 void    ft_close_all(t_pip pip, t_data *data);
 
