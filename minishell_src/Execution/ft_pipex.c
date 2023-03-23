@@ -1,53 +1,68 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_pipex.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/23 11:43:04 by ngriveau          #+#    #+#             */
+/*   Updated: 2023/03/23 12:08:44 by ngriveau         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./minishell.h"
 
-extern int g_err_value;
+extern int	g_err_value;
 
-
-char **ft_join_dstr(char **dest, char* src)
+char	**ft_join_dstr(char **dest, char *src)
 {
-	int	i;
-	char **tmp;
+	int		i;
+	char	**tmp;
 
 	i = 0;
 	tmp = malloc(sizeof(char *) * (ft_strstrlen(dest) + 2));
-	if (!tmp) //GERER
+	if (!tmp)
 		return (NULL);
 	while (dest && dest[i])
 	{
 		tmp[i] = ft_strdup(dest[i]);
 		if (!tmp[i])
-			return (ft_free_dchar(tmp), NULL); //GERER LE FREE DE CEUX D AVANT
+			return (ft_free_dchar(tmp), NULL);
 		i++;
 	}
 	tmp[i] = ft_strdup(src);
 	if (!tmp[i])
-		return (ft_free_dchar(tmp), NULL); 
+		return (ft_free_dchar(tmp), NULL);
 	i++;
 	tmp[i] = 0;
 	ft_free_dchar(dest);
 	return (tmp);
 }
 
-char **ft_get_paths(t_data *data, char **cmd, char **cmd_quotes)
+char	**ft_get_paths(t_data *data, char **cmd, char **cmd_quotes)
 {
-    t_env *tmp;
-	char **tab;
+	t_env	*tmp;
+	char	**tab;
 
-    tmp = &data->env;
-    while (tmp)
-    {
-        if (ft_strncmp(tmp->key, "PATH", ft_strlen(tmp->key)) == 0)
+	tmp = &data->env;
+	while (tmp)
+	{
+		if (ft_strncmp(tmp->key, "PATH", ft_strlen(tmp->key)) == 0)
 		{
-            tab = ft_split(tmp->value, ':');
+			tab = ft_split(tmp->value, ':');
 			if (tab == NULL)
-				return(ft_free_dchar(cmd_quotes), ft_free_dchar(cmd), ft_free_dchar(data->to_free.env_tab), ft_free_list(&data->exec), fprintf(stderr, "error 22\n"), ft_pb_malloc(data), NULL);
+				return (ft_free_dchar(cmd_quotes), ft_free_dchar(cmd), \
+ft_free_dchar(data->to_free.env_tab), ft_free_list(&data->exec), \
+fprintf(stderr, "error 22\n"), ft_pb_malloc(data), NULL);
 			return (tab);
 		}
-        tmp = tmp->next;
-    }
+		tmp = tmp->next;
+	}
 	return (NULL);
 }
-void	ft_free_in_find_path(char **cmd, char **paths_env, t_data *data, char **cmd_quotes)
+
+void	ft_free_in_find_path(char **cmd, char **paths_env, \
+	t_data *data, char **cmd_quotes)
 {
 	ft_free_dchar(data->to_free.env_tab);
 	ft_free_dchar(cmd);
@@ -58,46 +73,53 @@ void	ft_free_in_find_path(char **cmd, char **paths_env, t_data *data, char **cmd
 	free(data->pwd);
 	ft_close_all(data->pip, data);
 	ft_free_list(&data->exec);
-
 }
 
-char	*find_path(char **cmd, char **paths_env, t_data *data, char **cmd_quotes)
+char	*find_path(char **cmd, char **paths_env, t_data *data, \
+	char **cmd_quotes)
 {
-	char *tmp;
-	int	i;
-	(void)cmd_quotes;
-	(void)data;
+	char	*tmp;
+	int		i;
 
 	i = 0;
 	if (cmd && cmd[0] && !cmd[0][0])
-		return (ft_putstr_fd(": Command not found\n", 2), ft_free_in_find_path(cmd, paths_env, data, cmd_quotes), exit(127), NULL);
-	if (ft_strncmp(cmd[0], ".", ft_strlen(cmd[0])) == 0 || ft_strncmp(cmd[0], "..", ft_strlen(cmd[0])) == 0)
-		return (ft_putstr_fd(cmd[0], 2), ft_putstr_fd(": Command not found\n", 2), ft_free_in_find_path(cmd, paths_env, data, cmd_quotes), exit(127), NULL);
+		return (ft_putstr_fd(": Command not found\n", 2), \
+ft_free_in_find_path(cmd, paths_env, data, cmd_quotes), exit(127), NULL);
+	if (ft_strncmp(cmd[0], ".", ft_strlen(cmd[0])) == 0 || \
+ft_strncmp(cmd[0], "..", ft_strlen(cmd[0])) == 0)
+		return (ft_putstr_fd(cmd[0], 2), ft_putstr_fd(": Command not found\n", \
+2), ft_free_in_find_path(cmd, paths_env, data, cmd_quotes), exit(127), NULL);
 	if (ft_test_builtin(cmd) == 1)
 		return (NULL);
 	if ((cmd[0][0] == '/' || cmd[0][0] == '.') && access(cmd[0], F_OK))
-		return (ft_putstr_fd(cmd[0], 2), ft_putstr_fd(": No such file or directory\n", 2), ft_free_in_find_path(cmd, paths_env, data, cmd_quotes), exit(127), NULL);
+		return (ft_putstr_fd(cmd[0], 2), \
+ft_putstr_fd(": No such file or directory\n", 2), \
+ft_free_in_find_path(cmd, paths_env, data, cmd_quotes), exit(127), NULL);
 	if (!access(cmd[0], F_OK))
 	{
 		if (access(cmd[0], X_OK))
-			return (perror(cmd[0]), ft_free_in_find_path(cmd, paths_env, data, cmd_quotes), exit(126), NULL);
+			return (perror(cmd[0]), \
+ft_free_in_find_path(cmd, paths_env, data, cmd_quotes), exit(126), NULL);
 		else
 		{
 			tmp = ft_strdup(cmd[0]);
 			if (tmp == NULL)
-				return (ft_free_in_find_path(cmd, paths_env, data, cmd_quotes), ft_putstr_fd(MALLOC_ERROR, 2),exit(MAL_ERCODE),  NULL);
+				return (ft_free_in_find_path(cmd, paths_env, data, cmd_quotes), \
+				ft_putstr_fd(MALLOC_ERROR, 2), exit(MAL_ERCODE), NULL);
 			return (tmp);
 		}
 	}
 	while (paths_env && paths_env[i])
 	{
 		tmp = ft_strrjoin(paths_env[i], "/", cmd[0]);
-		if(!tmp)
-			return (ft_free_in_find_path(cmd, paths_env, data, cmd_quotes), ft_putstr_fd(MALLOC_ERROR, 2),exit(MAL_ERCODE),  NULL);
+		if (!tmp)
+			return (ft_free_in_find_path(cmd, paths_env, data, cmd_quotes), \
+				ft_putstr_fd(MALLOC_ERROR, 2), exit(MAL_ERCODE), NULL);
 		if (!access(tmp, F_OK))
 		{
 			if (access(tmp, X_OK))
-				return (perror(cmd[i]), free(tmp), ft_free_in_find_path(cmd, paths_env, data, cmd_quotes), exit(126), NULL);
+				return (perror(cmd[i]), free(tmp), ft_free_in_find_path(cmd, \
+					paths_env, data, cmd_quotes), exit(126), NULL);
 			else
 				return (tmp);
 		}
@@ -109,12 +131,14 @@ char	*find_path(char **cmd, char **paths_env, t_data *data, char **cmd_quotes)
 		ft_putstr_fd(": No such file or directory\n", 2);
 	else
 		ft_putstr_fd(": Command not found\n", 2);
-	return (ft_free_in_find_path(cmd, paths_env, data, cmd_quotes), exit(127), NULL);
+	return (ft_free_in_find_path(cmd, paths_env, data, cmd_quotes), exit(127), \
+		NULL);
 }
+
 int	is_out(char *str)
 {
-	int	i;
-	char **tmp;
+	int		i;
+	char	**tmp;
 
 	i = 0;
 	if (!str || !str[0])
@@ -122,15 +146,17 @@ int	is_out(char *str)
 	tmp = ft_split(str, '/');
 	if (!tmp)
 		return (-1);
-	if (ft_strncmp(tmp[0], "dev", ft_strlen(tmp[0])) == 0 && ft_strncmp(tmp[1], "stdout", ft_strlen(tmp[1])) == 0)
-		return (ft_free_dchar(tmp),1);
+	if (ft_strncmp(tmp[0], "dev", ft_strlen(tmp[0])) == 0 && \
+		ft_strncmp(tmp[1], "stdout", ft_strlen(tmp[1])) == 0)
+		return (ft_free_dchar(tmp), 1);
 	ft_free_dchar(tmp);
 	return (0);
 }
-int	contain_token(t_exec* begin, int token, int m) // ET PAS STDOUT
+
+int	contain_token(t_exec *begin, int token, int m)
 {
-	int count;
-	t_exec *tmp;
+	int		count;
+	t_exec	*tmp;
 
 	tmp = begin;
 	begin = tmp;
@@ -151,7 +177,7 @@ int	contain_token(t_exec* begin, int token, int m) // ET PAS STDOUT
 	return (0);
 }
 
-void ft_print_fd(t_data *data)
+void	ft_print_fd(t_data *data)
 {
 	fprintf(stderr, "fd in %d\n", data->pip.fd_in);
 	fprintf(stderr, "fd out %d\n", data->pip.fd_out);
@@ -161,9 +187,9 @@ void ft_print_fd(t_data *data)
 	fprintf(stderr, "pipefd2 [1] %d\n", data->pip.pipefd2[1]);
 }
 
-int ft_search_hd_name(t_exec *begin, int m)
+int	ft_search_hd_name(t_exec *begin, int m)
 {
-	t_exec *tmp;
+	t_exec	*tmp;
 	int		fd;
 
 	tmp = begin;
@@ -179,7 +205,7 @@ int ft_search_hd_name(t_exec *begin, int m)
 		{
 			fd = open(tmp->hd_filename, O_RDONLY);
 			if (fd == -1)
-				return (-1); // GERER
+				return (-1);
 			return (fd);
 		}
 		tmp = tmp->next;
@@ -187,11 +213,12 @@ int ft_search_hd_name(t_exec *begin, int m)
 	return (-2);
 }
 
-void ft_dup_manage(t_data *data, int m)
+void	ft_dup_manage(t_data *data, int m)
 {
-	int tmp_fd;
+	int	tmp_fd;
 
-	if (contain_token(&data->exec, F_DELIMITER, m) || contain_token(&data->exec, F_DELIMITER_SQ, m))
+	if (contain_token(&data->exec, F_DELIMITER, m) || \
+		contain_token(&data->exec, F_DELIMITER_SQ, m))
 	{
 		tmp_fd = ft_search_hd_name(&data->exec, m);
 		dup2(tmp_fd, 0);
@@ -201,12 +228,11 @@ void ft_dup_manage(t_data *data, int m)
 	{
 		dup2(data->pip.fd_in, 0);
 	}
-	else if (m &&  m % 2 == 0)
+	else if (m && m % 2 == 0)
 	{
 		ft_close(&data->pip.pipefd2[1]);
 		dup2(data->pip.pipefd2[0], 0);
 		ft_close(&data->pip.pipefd2[0]);
-
 	}
 	else
 	{
@@ -214,7 +240,8 @@ void ft_dup_manage(t_data *data, int m)
 		dup2(data->pip.pipefd1[0], 0);
 		ft_close(&data->pip.pipefd1[0]);
 	}
-	if (contain_token(&data->exec, F_APPEND, m) || contain_token(&data->exec, F_TRONC, m) || m == data->pip.nb_pipes)
+	if (contain_token(&data->exec, F_APPEND, m) || \
+		contain_token(&data->exec, F_TRONC, m) || m == data->pip.nb_pipes)
 	{
 		dup2(data->pip.fd_out, 1);
 	}
@@ -234,8 +261,8 @@ void ft_dup_manage(t_data *data, int m)
 
 int	ft_len_list(t_env *begin)
 {
-	t_env *tmp;
-	int	count;
+	t_env	*tmp;
+	int		count;
 
 	tmp = begin;
 	count = 0;
@@ -248,13 +275,14 @@ int	ft_len_list(t_env *begin)
 	return (count);
 }
 
-
-char **ft_get_env(t_env *env)
+char	**ft_get_env(t_env *env)
 {
-	t_env *tmp;
-	char **output;
-	int	k;
-	int count = 0;
+	t_env	*tmp;
+	char	**output;
+	int		k;
+	int		count;
+
+	count = 0;
 	tmp = env;
 	k = 0;
 	output = malloc(sizeof(char *) * (ft_len_list(env) + 1));
@@ -263,12 +291,14 @@ char **ft_get_env(t_env *env)
 	output[ft_len_list(env)] = 0;
 	while (env)
 	{
-		output[k] = malloc(sizeof(char) * (ft_strlen(env->key) + ft_strlen(env->value) + 2));
+		output[k] = malloc(sizeof(char) * (ft_strlen(env->key) + \
+			ft_strlen(env->value) + 2));
 		if (!output[k])
 			return (ft_free_dchar(output), NULL);
 		ft_memcpy(output[k], env->key, ft_strlen(env->key));
 		output[k][ft_strlen(env->key)] = '=';
-		ft_memcpy(output[k] + ft_strlen(env->key) + 1, env->value, ft_strlen(env->value)  + 1);
+		ft_memcpy(output[k] + ft_strlen(env->key) + 1, env->value, \
+			ft_strlen(env->value)  + 1);
 		k++;
 		env = env->next;
 		count++;
@@ -279,14 +309,17 @@ char **ft_get_env(t_env *env)
 
 void	ft_exec_cmd(t_data *data, char **cmd, int m, char **cmd_quotes)
 {
-
 	if (!contain_token(&data->exec, F_CMD, m))
-		return(ft_close_all(data->pip, data), ft_free_dchar(cmd_quotes), ft_free_dchar(cmd), ft_free_env(data), free(data->oldpwd), free(data->pwd), ft_free_list(&data->exec), exit(0)); // RAJOUTE PB MALLOC
-	data->to_free.env_tab = ft_get_env(&data->env); //GERER FREE ET FD SUR EXIT
+		return (ft_close_all(data->pip, data), ft_free_dchar(cmd_quotes), \
+ft_free_dchar(cmd), ft_free_env(data), free(data->oldpwd), free(data->pwd), \
+ft_free_list(&data->exec), exit(0));
+	data->to_free.env_tab = ft_get_env(&data->env);
 	if (data->to_free.env_tab == NULL)
-		return(ft_free_dchar(cmd_quotes), ft_free_dchar(cmd), ft_free_list(&data->exec), fprintf(stderr, "error 21\n"), ft_pb_malloc(data));
-	data->to_free.paths_env = ft_get_paths(data, cmd, cmd_quotes); //GERER FREE ET FD SUR EXIT
-	data->to_free.path_exec = find_path(cmd, data->to_free.paths_env, data, cmd_quotes); //GERER FREE ET FD SUR EXIT
+		return (ft_free_dchar(cmd_quotes), ft_free_dchar(cmd), \
+ft_free_list(&data->exec), fprintf(stderr, "error 21\n"), ft_pb_malloc(data));
+	data->to_free.paths_env = ft_get_paths(data, cmd, cmd_quotes);
+	data->to_free.path_exec = \
+		find_path(cmd, data->to_free.paths_env, data, cmd_quotes);
 	ft_dup_manage(data, m);
 	if (ft_exec_builtin(cmd, data, cmd_quotes) == 1)
 	{
@@ -299,14 +332,13 @@ void	ft_exec_cmd(t_data *data, char **cmd, int m, char **cmd_quotes)
 	free(data->to_free.path_exec);
 	if (errno == 13)
 	{
-		ft_putstr_fd(cmd[0],2);
+		ft_putstr_fd(cmd[0], 2);
 		ft_free_in_find_path(cmd, data->to_free.paths_env, data, cmd_quotes);
 		ft_putstr_fd(": Is a directory\n", 2);
 		exit(126);
 	}
 	ft_free_in_find_path(cmd, data->to_free.paths_env, data, cmd_quotes);
 	perror("");
-	//CLOSE ET FREE TOUT
 	exit(errno);
 }
 
@@ -317,8 +349,7 @@ void	ft_reset_param_pip(t_data *data)
 	data->pip.hd_in = 0;
 }
 
-
-void ft_free_child_exec(t_data *data, char **cmd, char **cmd_quotes)
+void	ft_free_child_exec(t_data *data, char **cmd, char **cmd_quotes)
 {
 	ft_free_dchar(cmd_quotes);
 	ft_free_dchar(cmd);
@@ -329,13 +360,11 @@ void ft_free_child_exec(t_data *data, char **cmd, char **cmd_quotes)
 	ft_free_list(&data->exec);
 }
 
-
-
 int	ft_child_exec(t_exec *begin, t_data *data, int m)
 {
-	int tmp_fd;
-	char **cmd;
-	char **cmd_quotes;
+	int		tmp_fd;
+	char	**cmd;
+	char	**cmd_quotes;
 
 	ft_init_sigint_exec();
 	cmd = NULL;
@@ -356,7 +385,7 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 		}
 		else if (begin->id == F_FALSEA)
 		{
-			tmp_fd = open(begin->str, O_RDWR | O_APPEND | O_CREAT, 0644);
+			tmp_fd = open(begin->str, M_C_RW | O_APPEND, 0644);
 			if (tmp_fd == -1)
 			{
 				perror(begin->str);
@@ -368,7 +397,7 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 		}
 		else if (begin->id == F_FALSET)
 		{
-			tmp_fd = open(begin->str, O_CREAT | O_RDWR | O_TRUNC, 0644);
+			tmp_fd = open(begin->str, M_C_RW | O_TRUNC, 0644);
 			if (tmp_fd == -1)
 			{
 				perror(begin->str);
@@ -384,25 +413,21 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 			if (!cmd)
 			{
 				ft_free_list(&data->exec);
-				fprintf(stderr, "ERROR 3\n");
-
 				ft_pb_malloc(data);
-				return (MAL_ERCODE); //GERER
+				return (MAL_ERCODE);
 			}
 			cmd_quotes = ft_join_dstr(cmd_quotes, begin->quotes);
 			if (!cmd_quotes)
 			{
-				fprintf(stderr, "ERROR 4\n");
-
 				ft_free_list(&data->exec);
 				ft_pb_malloc(data);
-				return (MAL_ERCODE); //GERER
+				return (MAL_ERCODE);
 			}
 		}
 		else if (begin->id == F_APPEND)
 		{
 			ft_close(&data->pip.fd_out);
-			data->pip.fd_out = open(begin->str, O_CREAT | O_RDWR | O_APPEND, 0644);
+			data->pip.fd_out = open(begin->str, M_C_RW | O_APPEND, 0644);
 			if (data->pip.fd_out == -1)
 			{
 				perror(begin->str);
@@ -414,7 +439,7 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 		else if (begin->id == F_TRONC)
 		{
 			ft_close(&data->pip.fd_out);
-			data->pip.fd_out = open(begin->str, O_CREAT | O_RDWR | O_TRUNC, 0644);
+			data->pip.fd_out = open(begin->str, M_C_RW | O_TRUNC, 0644);
 			if (data->pip.fd_out == -1)
 			{
 				perror(begin->str);
@@ -423,7 +448,7 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 				exit(1);
 			}
 		}
-			else if (begin->id == F_INFILE)
+		else if (begin->id == F_INFILE)
 		{
 			ft_close(&data->pip.fd_in);
 			data->pip.fd_in = open(begin->str, O_RDONLY, 0644);
@@ -436,7 +461,6 @@ int	ft_child_exec(t_exec *begin, t_data *data, int m)
 			}
 		}
 		begin = begin->next;
-		
 	}
 	ft_exec_cmd(data, cmd, m, cmd_quotes);
 	ft_free_dchar(cmd);
@@ -451,18 +475,16 @@ void	ft_init_in_out(t_data *data)
 	data->pip.fd_in = dup(data->pip.saved_stdin);
 	data->pip.fd_out = dup(data->pip.saved_stdout);
 }
+
 void	ft_pipex(t_data *data)
 {
 	t_exec	*begin;
-	// int		id;
 	int		m;
-	// int		id;
-
 
 	begin = &data->exec;
 	m = 0;
 	if (!data->pip.nb_pipes)
-		if(ft_exec_built_in_solo(begin, data))
+		if (ft_exec_built_in_solo(begin, data))
 			return ;
 	begin = &data->exec;
 	while (begin)
@@ -491,20 +513,12 @@ void	ft_pipex(t_data *data)
 			begin = begin->next;
 		if (begin && begin->id == F_PIPE)
 			begin = begin->next;
-		
 		m++;
 	}
-		// fprintf(stderr, "1g_err_value = %d\n\n", g_err_value);
-		waitpid(data->pip.last_id, &g_err_value, 0);
-		if (WIFEXITED(g_err_value))
-			g_err_value = WEXITSTATUS(g_err_value);
-		// fprintf(stderr, "2g_err_value = %d\n\n", g_err_value);
-		while (wait(NULL) != -1)
-			(void)begin;
-		ft_close_all(data->pip, data);
+	waitpid(data->pip.last_id, &g_err_value, 0);
+	if (WIFEXITED(g_err_value))
+		g_err_value = WEXITSTATUS(g_err_value);
+	while (wait(NULL) != -1)
+		(void)begin;
+	ft_close_all(data->pip, data);
 }
-
-
-//< infile << stop < TAISTE << stop cat > out -e >sexe >>bisous | < infule << stop <out ls od > test >> out -la > out
-
-//

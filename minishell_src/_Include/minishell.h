@@ -23,6 +23,7 @@
 #define WS " \t\n\f\v\r"
 #define MALLOC_ERROR "erreur de malloc"
 #define MAL_ERCODE -42
+#define M_C_RW O_CREAT | O_RDWR
 
 
 #define F_INFILE 0
@@ -65,6 +66,7 @@ typedef	struct	s_split
 typedef	struct	s_to_free
 {
 	char 			*str;
+	char 			*cpy_str_tty;
 	char 			**env_tab;
 	char 			**paths_env;
 	char			*path_exec;

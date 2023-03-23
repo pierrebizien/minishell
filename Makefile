@@ -11,7 +11,7 @@ SRCS += pipex_utils.c
 SRCS += ft_strtrim_lq.c
 
 
-
+# < infile << stop < TAISTE << stop cat > out -e >sexe >>bisous | < infule << stop <out ls od > test >> out -la > out
 
 #Build-in
 SRC_PATH += ./minishell_src/Build-in/
