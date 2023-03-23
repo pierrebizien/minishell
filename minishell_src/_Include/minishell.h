@@ -65,6 +65,7 @@ typedef	struct	s_split
 typedef	struct	s_to_free
 {
 	char 			*str;
+	char 			*cpy_str_tty;
 	char 			**env_tab;
 	char 			**paths_env;
 	char			*path_exec;

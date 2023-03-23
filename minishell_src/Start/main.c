@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 10:35:10 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/03/23 10:59:45 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/23 11:36:36 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*ft_prompt(void)
 
 char	*ft_input(t_data *data)
 {
-	char *str;
+	char	*str;
 
 	if (!data->bool_redir_0 && !data->bool_redir_2)
 		str = ft_prompt();
@@ -57,49 +57,53 @@ char	*ft_input(t_data *data)
 	return (str);
 }
 
+int	main_pt2(t_data *data)
+{
+	data->to_free.str = ft_parse(data->to_free.str, data);
+	if (!data->to_free.str && g_err_value != -42 && (data->bool_redir_0 || \
+		data->bool_redir_2))
+		return (ft_putstr_fd(data->to_free.cpy_str_tty, 2), \
+			free(data->to_free.cpy_str_tty), ft_close_all(data->pip, data), \
+			exit(g_err_value), -22);
+	free(data->to_free.cpy_str_tty);
+	data->to_free.cpy_str_tty = NULL;
+	if (data->to_free.str && !ft_parse_for_exec(data))
+	{
+		if (g_err_value == MAL_ERCODE)
+			exit(g_err_value);
+		ft_pipex(data);
+		ft_close_all(data->pip, data);
+		ft_unlink_hd(&data->exec);
+		ft_free_list(&data->exec);
+	}
+	ft_close_all(data->pip, data);
+	ft_init_sigint();
+	ft_init_sigquit();
+	data->to_free.str = NULL;
+	return (1);
+}
+
 int	main(int ac, char **av, char**envp)
 {
-	char	*str;
 	t_data	data;
-	char	*cpy_str_tty;
 
 	(void)ac;
 	(void)av;
 	ft_init(envp, &data);
-	str = ft_input(&data);
-	cpy_str_tty = ft_strdup(str);
-	while (str)
+	data.to_free.str = ft_input(&data);
+	data.to_free.cpy_str_tty = ft_strdup(data.to_free.str);
+	while (data.to_free.str)
 	{
-		if (str && str[0])
-		{
-			str = ft_parse(str, &data);
-			data.to_free.str = str;
-			if (!str && g_err_value != -42 && (data.bool_redir_0 || \
-				data.bool_redir_2))
-				return (ft_putstr_fd(cpy_str_tty, 2), free(cpy_str_tty), \
-					ft_close_all(data.pip, &data), g_err_value);
-			free(cpy_str_tty);
-			cpy_str_tty = NULL;
-			if (str && !ft_parse_for_exec(&data))
-			{
-				if (g_err_value == MAL_ERCODE)
-					return (g_err_value);
-				ft_pipex(&data);
-				ft_close_all(data.pip, &data);
-				ft_unlink_hd(&data.exec);
-				ft_free_list(&data.exec);
-			}
-			ft_close_all(data.pip, &data);
-			ft_init_sigint();
-			ft_init_sigquit();
-			str = NULL;
-		}
-		free(cpy_str_tty);
-		free(str);
-		str = ft_input(&data);
-		cpy_str_tty = ft_strdup(str);
+		if (data.to_free.str && data.to_free.str[0])
+			main_pt2(&data);
+		free(data.to_free.cpy_str_tty);
+		free(data.to_free.str);
+		data.to_free.str = ft_input(&data);
+		data.to_free.cpy_str_tty = ft_strdup(data.to_free.str);
 	}
 	if (!data.bool_redir_0 && !data.bool_redir_2)
 		write(2, "\nexit\n", 6);
-	return (free(cpy_str_tty), free(str), ft_close(&data.pip.saved_stdin), ft_close(&data.pip.saved_stdout), ft_free_end(&data), g_err_value);
+	return (free(data.to_free.cpy_str_tty), free(data.to_free.str), \
+		ft_close(&data.pip.saved_stdin), ft_close(&data.pip.saved_stdout), \
+		ft_free_end(&data), g_err_value);
 }
