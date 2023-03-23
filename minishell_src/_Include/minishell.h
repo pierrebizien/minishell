@@ -57,6 +57,8 @@ typedef	struct	s_split
 	size_t			count;
 	size_t			index;
 	size_t			i;
+	int				sq;
+	int				dq;
 
 }               t_split;
 
@@ -148,6 +150,14 @@ int	ft_find_if_hd_quotes(t_data *data, int count_p);
 char	*ft_clean_quotes(char *str);
 void ft_clean_list_exec(t_data *data);
 int ft_modif_in_out(t_data *data);
+void ft_mod_in_out_bis_2(t_exec **tmp, int *bool_in);
+void ft_mod_in_out_bis(t_exec **tmp, int *bool_out, int *bool_in);
+int ft_falsed(t_data *data, t_exec **tmp, int *ret_val);
+int ft_delimiter(t_data *data, t_exec **tmp, int *ret_val);
+int ft_delimiter_sq(t_data *data, t_exec **tmp, int *ret_val);
+
+
+
 
 void	ft_pb_malloc(t_data *data);
 void	ft_free_list(t_exec *begin);
@@ -276,7 +286,16 @@ char    *ft_strrjoin(char const *s1, char const *s2, char const *s3);
 void    ft_close_all(t_pip pip, t_data *data);
 
 //SPLIT_LQUOTES
+void	free_tabstr_4(char **tab);
+int	set_mem_4_if(char **tab, char const *s, t_split *split);
+void	set_mem_4_while(char const *s, char *sep, t_split	*split);
+int	set_mem_4(char **tab, char const *s, char *sep, t_split	*split);
 char	**ft_split_lq(char const *s, char *sep);
+//1
+int	is_sep_4(char c, char *sep);
+size_t	count_words_4(char const *s, char *sep);
+void	fill_tab_4(char *new, char const *s, int len);
+
 
 //FT_EXEC_BUILT_IN
 void	ft_free_err_mal_cmd_solo(char **cmd, char **cmd_quotes, t_data *data);

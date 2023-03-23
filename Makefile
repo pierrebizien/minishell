@@ -2,18 +2,10 @@ SHELL = /bin/bash
 
 SRCS = ft_utils.c 
 SRCS += ft_init.c 
-SRCS += ft_parsing_pt0.c 
-SRCS += ft_parsing_pt1.c 
-SRCS += ft_parsing_pt2.c 
-SRCS += ft_parsing_pt3.c 
-SRCS += ft_parsing_pt4.c 
-SRCS += ft_parsing_pt5.c 
-SRCS += ft_parsing_pt6.c 
 SRCS += ft_quotes.c
 SRCS += ft_free.c
 SRCS += ft_logo.c
 SRCS += ft_pipex.c
-SRCS += ft_signal.c
 SRCS += main.c
 SRCS += pipex_utils.c
 SRCS += ft_strtrim_lq.c
@@ -50,8 +42,18 @@ SRC_PATH += ./minishell_src/Free/
 #Parsing
 SRC_PATH += ./minishell_src/Parsing/
 
-#Signal
+SRCS += ft_parsing_pt0.c 
+SRCS += ft_parsing_pt1.c 
+SRCS += ft_parsing_pt2.c 
+SRCS += ft_parsing_pt3.c 
+SRCS += ft_parsing_pt4.c 
+SRCS += ft_parsing_pt5.c 
+SRCS += ft_parsing_pt6.c 
+SRCS += ft_parsing_pt7.c 
+
 SRC_PATH += ./minishell_src/Signal/
+SRCS += ft_signal.c
+SRCS += ft_signal_sigaction.c
 
 #Start
 SRC_PATH += ./minishell_src/Start/
@@ -62,7 +64,8 @@ SRCS += ft_split_keep_pt0.c
 SRCS += ft_split_keep_pt1.c
 SRCS += ft_split_leave_pt0.c
 SRCS += ft_split_leave_pt1.c
-SRCS += ft_split_lquotes.c
+SRCS += ft_split_lquotes_pt0.c
+SRCS += ft_split_lquotes_pt1.c
 
 # Other
 SRC_PATH += ./minishell_src/Other/
