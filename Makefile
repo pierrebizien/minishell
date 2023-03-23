@@ -6,7 +6,6 @@ SRCS += ft_quotes.c
 SRCS += ft_free.c
 SRCS += ft_logo.c
 SRCS += ft_pipex.c
-SRCS += ft_signal.c
 SRCS += main.c
 SRCS += pipex_utils.c
 SRCS += ft_strtrim_lq.c
@@ -55,6 +54,8 @@ SRCS += ft_parsing_pt8.c
 SRCS += ft_parsing_pt9.c 
 
 SRC_PATH += ./minishell_src/Signal/
+SRCS += ft_signal.c
+SRCS += ft_signal_sigaction.c
 
 #Start
 SRC_PATH += ./minishell_src/Start/
@@ -65,7 +66,8 @@ SRCS += ft_split_keep_pt0.c
 SRCS += ft_split_keep_pt1.c
 SRCS += ft_split_leave_pt0.c
 SRCS += ft_split_leave_pt1.c
-SRCS += ft_split_lquotes.c
+SRCS += ft_split_lquotes_pt0.c
+SRCS += ft_split_lquotes_pt1.c
 
 # Other
 SRC_PATH += ./minishell_src/Other/

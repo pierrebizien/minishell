@@ -57,6 +57,8 @@ typedef	struct	s_split
 	size_t			count;
 	size_t			index;
 	size_t			i;
+	int				sq;
+	int				dq;
 
 }               t_split;
 
@@ -287,7 +289,16 @@ char    *ft_strrjoin(char const *s1, char const *s2, char const *s3);
 void    ft_close_all(t_pip pip, t_data *data);
 
 //SPLIT_LQUOTES
+void	free_tabstr_4(char **tab);
+int	set_mem_4_if(char **tab, char const *s, t_split *split);
+void	set_mem_4_while(char const *s, char *sep, t_split	*split);
+int	set_mem_4(char **tab, char const *s, char *sep, t_split	*split);
 char	**ft_split_lq(char const *s, char *sep);
+//1
+int	is_sep_4(char c, char *sep);
+size_t	count_words_4(char const *s, char *sep);
+void	fill_tab_4(char *new, char const *s, int len);
+
 
 //FT_EXEC_BUILT_IN
 void	ft_free_err_mal_cmd_solo(char **cmd, char **cmd_quotes, t_data *data);

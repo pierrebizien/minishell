@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 00:55:45 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/03/23 00:57:48 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/23 10:34:52 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,16 @@ void	ft_close(int *fd)
 		return ;
 	close(*fd);
 	*fd = -1;
+}
+
+void	ft_print_dargs(char **strstr)
+{
+	int	i;
+
+	i = 0;
+	while (strstr && strstr[i])
+	{
+		printf("|%s| \n", strstr[i]);
+		i++;
+	}
 }

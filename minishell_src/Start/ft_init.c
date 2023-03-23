@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 00:28:58 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/03/23 00:30:50 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/23 10:45:28 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,11 @@ int	ft_init(char **env, t_data *data)
 	ft_create_env(env, data);
 	rl_event_hook = event;
 	rl_outstream = stderr;
+	if (isatty(0) == 0)
+		data->bool_redir_0 = 1;
+	if (isatty(2) == 0)
+		data->bool_redir_2 = 1;
+	ft_init_sigint();
+	ft_init_sigquit();
 	return (0);
 }
