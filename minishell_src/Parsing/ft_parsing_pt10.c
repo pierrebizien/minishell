@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parsing_pt10.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 07:35:47 by pbizien           #+#    #+#             */
-/*   Updated: 2023/03/23 12:50:29 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/03/23 14:27:26 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,13 @@ int	ft_test_loop_2(char *s, int i, char *token)
 void	ft_parse_for_exec_loop(t_data *data, t_exec **tmp, int *count_p, int *i)
 {
 	if (ft_test_loop_1(data->to_free.tab[*i], "<"))
-		i++;
+		*i = *i + 1;
 	else if (ft_test_loop_1(data->to_free.tab[*i], "<<"))
-		i++;
+		*i = *i + 1;
 	else if (ft_test_loop_1(data->to_free.tab[*i], ">"))
-		i++;
+		*i = *i + 1;
 	else if (ft_test_loop_1(data->to_free.tab[*i], ">>"))
-		i++;
+		*i = *i + 1;
 	else if (ft_test_loop_1(data->to_free.tab[*i], "|"))
 		ft_parse_for_e_pipe(data, tmp, count_p, i);
 	else
