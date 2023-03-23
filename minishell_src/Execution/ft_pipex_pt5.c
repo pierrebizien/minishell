@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipex_pt5.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 11:43:04 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/03/23 14:42:14 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/03/23 16:24:03 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	ft_c_e_cmd(t_exec *begin, t_data *data, char ***cmd, char ***quotes)
 void	ft_c_e_append(t_exec *begin, t_data *data, char **cmd, char **quotes)
 {
 	ft_close(&data->pip.fd_out);
-	data->pip.fd_out = open(begin->str, M_C_RW | O_APPEND, 0644);
+	data->pip.fd_out = open(begin->str, O_CREAT | O_RDWR | O_APPEND, 0644);
 	if (data->pip.fd_out == -1)
 	{
 		perror(begin->str);
@@ -48,7 +48,7 @@ void	ft_c_e_append(t_exec *begin, t_data *data, char **cmd, char **quotes)
 void	ft_c_e_tronc(t_exec *begin, t_data *data, char **cmd, char **quotes)
 {
 	ft_close(&data->pip.fd_out);
-	data->pip.fd_out = open(begin->str, M_C_RW | O_TRUNC, 0644);
+	data->pip.fd_out = open(begin->str, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (data->pip.fd_out == -1)
 	{
 		perror(begin->str);

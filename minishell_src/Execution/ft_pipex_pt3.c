@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 11:43:04 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/03/23 16:21:51 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/23 16:23:53 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	ft_c_e_falsea(t_exec *begin, t_data *data, char **cmd, char **quotes)
 {
 	int		tmp_fd;
 
-	tmp_fd = open(begin->str, M_C_RW | O_APPEND, 0644);
+	tmp_fd = open(begin->str, O_CREAT | O_RDWR | O_APPEND, 0644);
 	if (tmp_fd == -1)
 	{
 		perror(begin->str);
@@ -88,7 +88,7 @@ void	ft_c_e_falset(t_exec *begin, t_data *data, char **cmd, char **quotes)
 {
 	int		tmp_fd;
 
-	tmp_fd = open(begin->str, M_C_RW | O_TRUNC, 0644);
+	tmp_fd = open(begin->str, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (tmp_fd == -1)
 	{
 		perror(begin->str);
