@@ -139,6 +139,7 @@ int	ft_check_if_past_is_delim(t_exec *begin, int i);
 int	ft_find_if_hd_quotes(t_data *data, int count_p);
 char	*ft_clean_quotes(char *str);
 void ft_clean_list_exec(t_data *data);
+int ft_modif_in_out(t_data *data);
 
 void	ft_pb_malloc(t_data *data);
 void	ft_free_list(t_exec *begin);
