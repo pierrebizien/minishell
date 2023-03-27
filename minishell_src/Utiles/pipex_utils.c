@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 01:03:48 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/03/23 01:03:57 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/27 18:03:10 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ char	*ft_strrjoin(char const *s1, char const *s2, char const *s3)
 
 void	ft_close_all(t_pip pip, t_data *data)
 {
+	(void) data;
 	ft_close(&pip.fd_in);
 	ft_close(&pip.fd_out);
 	ft_close(&data->pip.saved_stdin);
