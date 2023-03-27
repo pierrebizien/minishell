@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cmd_export_pt0.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 18:54:23 by pbizien           #+#    #+#             */
-/*   Updated: 2023/03/22 19:25:33 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/03/27 12:30:56 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,28 @@ static int	ft_plus_egal_export(char *str, t_data *data, char **cmd_quotes)
 	return (0);
 }
 
+void ft_export_local(char *str, t_data *data)
+{
+	int i;
+	char **newtab;
+
+	i = -1;
+	while (data->just_export && data->just_export[++i])
+	{
+		if (ft_strcmp(data->just_export[i], str) == 0)
+			return ;	
+	}
+	newtab = malloc(sizeof(char *) * (ft_strstrlen(data->just_export) + 2));
+	newtab[ft_strstrlen(data->just_export) + 1] = 0;
+	i = -1;
+	while (data->just_export && data->just_export[++i])
+		newtab[i] = data->just_export[i];
+	newtab[ft_strstrlen(data->just_export)] = ft_strdup(str);
+	free(data->just_export);
+	data->just_export = newtab;
+}
+
+
 int	ft_export(char **cmd, t_data *data, char **cmd_quotes)
 {
 	int		i;
@@ -125,7 +147,7 @@ int	ft_export(char **cmd, t_data *data, char **cmd_quotes)
 			error = 1;
 		}
 		else if (ft_verif_str_export(cmd[i]) == 1)
-			ft_putstr_fd("exporting a local variable is not possible\n", 2);
+			ft_export_local(cmd[i], data);
 		else if (ft_verif_str_export(cmd[i]) == 2)
 			ft_ok_export(cmd[i], data, cmd_quotes);
 		else if (ft_verif_str_export(cmd[i]) == 3)

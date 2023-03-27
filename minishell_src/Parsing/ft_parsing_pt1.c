@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parsing_pt1.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 07:35:47 by pbizien           #+#    #+#             */
-/*   Updated: 2023/03/23 14:43:41 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/03/27 11:48:02 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	ft_print_dchar(char **strstr)
 	i = 0;
 	while (strstr && strstr[i])
 	{
+		fprintf(stderr, "tab[%d] = |%s|\n", i, strstr[i]);
 		i++;
 	}
 }

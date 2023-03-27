@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 16:05:10 by pbizien           #+#    #+#             */
-/*   Updated: 2023/03/23 16:24:11 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/27 12:10:04 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,10 +103,11 @@ typedef struct s_pip
 
 typedef struct s_data
 {
-	t_env		env;
 	t_exec		exec;
 	t_pip		pip;
 	t_to_free	to_free;
+	t_env		env;
+	char		**just_export;
 	char		**args;
 	int			ac;
 	char		**av;
@@ -280,6 +281,8 @@ char	*ft_put_str_in_str(char *dest, char *src, int ind);
 void	ft_maj_quotes(int *dq, int *sq, char c);
 void	ft_close(int *fd);
 char	**ft_join_dstr(char **dest, char *src);
+void	ft_print_dchar(char **strstr);
+
 
 //FT_HEREDOC
 void	ft_heredoc_end(t_data *data, char *delimiter, int w, char *str);
