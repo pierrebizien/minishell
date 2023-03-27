@@ -112,13 +112,8 @@ vpath %.h ${HEAD_PATH}
 
 all: ${NAME}
 
-run: all
-# @	clear
-	@	./${NAME}
-
-valgrind: all
-	valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --suppressions=assets/ignore_readline_leaks.supp  ./${NAME}
-# valgrind --leak-check=full --show-leak-kinds=all --suppressions=assets/ignore_readline_leaks.supp  ./${NAME}
+# valgrind: all
+# 	valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --suppressions=assets/ignore_readline_leaks.supp  ./${NAME}
 
 
 NOCOLOR='\033[0m'
