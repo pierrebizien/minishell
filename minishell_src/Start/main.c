@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 10:35:10 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/03/23 16:06:02 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/27 16:03:31 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,8 @@ int	main(int ac, char **av, char**envp)
 			main_pt2(&data);
 		free(data.to_free.cpy_str_tty);
 		free(data.to_free.str);
+		data.last_err_num = g_err_value;
+		g_err_value = 0;
 		data.to_free.str = ft_input(&data);
 		data.to_free.cpy_str_tty = ft_strdup(data.to_free.str);
 	}

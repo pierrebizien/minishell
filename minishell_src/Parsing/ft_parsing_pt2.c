@@ -6,7 +6,7 @@
 /*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 07:35:47 by pbizien           #+#    #+#             */
-/*   Updated: 2023/03/23 07:44:35 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/03/27 16:11:05 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,9 @@ char	*ft_check_env(char *str, t_data *data)
 	t_env	*tmp_env;
 
 	tmp_env = &data->env;
-	if (str && str[0] == '?')
+	if (str && str[0] == '?' && g_err_value != 130)
+		return (ft_itoa(data->last_err_num));
+	if (str && str[0] == '?' && g_err_value == 130)
 		return (ft_itoa(g_err_value));
 	while (tmp_env)
 	{
