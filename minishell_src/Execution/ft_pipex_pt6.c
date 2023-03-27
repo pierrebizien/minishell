@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipex_pt6.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 11:43:04 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/03/23 16:21:34 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/27 14:35:16 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ void	ft_pipex(t_data *data)
 	waitpid(data->pip.last_id, &g_err_value, 0);
 	if (WIFEXITED(g_err_value))
 		g_err_value = WEXITSTATUS(g_err_value);
+	if (g_err_value == 131)
+		ft_putstr_fd("Quit (core dumped)\n", 2);
 	while (wait(NULL) != -1)
 		(void)begin;
 	ft_close_all(data->pip, data);
