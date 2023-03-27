@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 12:02:48 by pbizien           #+#    #+#             */
-/*   Updated: 2023/03/23 16:23:02 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/27 10:54:22 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ char	*ft_parse(char *str, t_data *data)
 	str = ft_strtrim(str, WS);
 	if (!str)
 		return (ft_pb_malloc(data), free(tmp), NULL);
+	if (str[0] == 0)
+		return (free(tmp), free(str), NULL);
 	free(tmp);
 	str = ft_clean(str, data);
 	if (!str || ft_verif_et_ou(str) == 0 || \
