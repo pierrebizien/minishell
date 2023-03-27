@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 12:02:48 by pbizien           #+#    #+#             */
-/*   Updated: 2023/03/27 10:54:22 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/27 16:04:59 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ char	*ft_parse(char *str, t_data *data)
 		return (NULL);
 	}
 	data->args = ft_split_k(str, "|");
+	ft_print_dchar(data->args);
 	if (data->args == NULL)
 		return (ft_pb_malloc(data), free(str), NULL);
 	ft_clean_ws(data);

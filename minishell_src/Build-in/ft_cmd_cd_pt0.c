@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_cmd_cd.c_pt0                                    :+:      :+:    :+:   */
+/*   ft_cmd_cd_pt0.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 18:42:21 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/03/22 19:05:57 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/27 15:33:38 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ int	ft_cd_pt2(char **str, t_data *data)
 	if (ft_strstrlen(str) == 1)
 	{
 		path = ft_just_cd(data);
+		if (path == NULL)
+			return (ft_putstr_fd("cd: HOME not set\n", 2), 1);
 		if (chdir(path) != 0)
 			return (free(path), perror(NULL), 1);
 		free(path);
