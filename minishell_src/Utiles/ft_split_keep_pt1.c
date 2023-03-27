@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 18:29:02 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/03/23 08:47:14 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/27 16:08:20 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ size_t	count_words_2(char const *s, char *sep)
 {
 	size_t	words;
 	size_t	i;
+	int		sq;
+	int		dq;
 
 	words = 0;
 	i = 0;

@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 18:45:47 by pbizien           #+#    #+#             */
-/*   Updated: 2023/03/27 12:38:20 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/27 15:34:16 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,6 @@ int	ft_exit(char **cmd, t_data *data, char **cmd_quotes)
 	int		good_exit;
 	char	*tmp;
 
-	fprintf(stderr, "ce exit la ici\n\n\n");
 	i = 0;
 	if (ft_strstrlen(cmd) == 1)
 	{
