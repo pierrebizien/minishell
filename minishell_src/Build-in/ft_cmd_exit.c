@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 18:45:47 by pbizien           #+#    #+#             */
-/*   Updated: 2023/03/27 15:34:16 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/27 19:22:37 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ void	ft_free_before_exit(char **cmd, t_data *data, char **cmd_quotes)
 	ft_free_env(data);
 	ft_free_list(&data->exec);
 	ft_close_all(data->pip, data);
+	ft_close(&data->pip.saved_stdin);
+	ft_close(&data->pip.saved_stdout);
 	ft_free_dchar(data->to_free.env_tab);
 	ft_free_dchar(data->to_free.paths_env);
 	free(data->to_free.path_exec);

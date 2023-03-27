@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:14:54 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/03/27 18:12:31 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/27 20:15:56 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ int	ft_exec_cmd_solo(t_data *data, char **cmd, char **cmd_quotes)
 		dup2(data->pip.saved_stdin, 0);
 		dup2(data->pip.saved_stdout, 1);
 		ft_close_all(data->pip, data);
-		// fprintf(stderr, "data->pip.saved_stdin = %d\n", data->pip.saved_stdout);
-		// fprintf(stderr, "data->pip.saved_stdin = %d\n", data->pip.saved_stdout);
+
 		return (1);
 	}
 	else

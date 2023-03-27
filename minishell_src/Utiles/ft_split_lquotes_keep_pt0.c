@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 18:29:02 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/03/27 18:08:16 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/27 20:16:02 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	free_tabstr_5(char **tab)
 int	set_mem_5_if(char **tab, char const *s, t_split *split)
 {
 	tab[split->i] = malloc(sizeof(char) * (split->count + 1));
-	fprintf(stderr, "len mot if = %lu\n\n", split->count + 1);
 	if (!tab[split->i])
 		return (free_tabstr_5(tab), 0);
 	fill_tab_5(tab[split->i], (s + split->index), split->count);
@@ -55,7 +54,6 @@ int set_mem_sep(char **tab, char const *s, char*sep, t_split *split)
 {
 	(void)s;
 	tab[split->i] = malloc(sizeof(char) * (ft_strlen(sep) + 1));
-	fprintf(stderr, "len mot = %lu\n\n", ft_strlen(sep) + 1);
 	if (!tab[split->i])
 		return (free_tabstr_5(tab), 0);
 	fill_tab_5(tab[split->i], sep, ft_strlen(sep));
@@ -97,7 +95,6 @@ char	**ft_split_lq_k(char const *s, char *sep)
 	char	**tab;
 
 	words = count_words_5(s, sep);
-	fprintf(stderr, "mot = %zu\n", words);
 	tab = malloc(sizeof(char *) * (words + 1));
 	if (!tab)
 		return (NULL);

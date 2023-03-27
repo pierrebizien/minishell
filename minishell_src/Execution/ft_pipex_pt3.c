@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 11:43:04 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/03/27 18:17:54 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/27 19:16:07 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ ft_free_list(&data->exec), ft_pb_malloc(data));
 		ft_close_all(data->pip, data);
 		exit(g_err_value);
 	}
-	fprintf(stdout, "stdin = %d\tstdout = %d\n", data->pip.saved_stdin, data->pip.saved_stdout);
 	execve(data->to_free.path_exec, cmd, data->to_free.env_tab);
 	free(data->to_free.path_exec);
 	ft_exec_cmd_is_a_dir(data, cmd, cmd_quotes);

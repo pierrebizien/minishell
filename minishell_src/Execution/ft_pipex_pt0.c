@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipex_pt0.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 11:43:04 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/03/23 14:47:42 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/03/27 19:19:16 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ ft_pb_malloc(data), NULL);
 void	ft_free_in_find_path(char **cmd, char **paths_env, \
 	t_data *data, char **cmd_quotes)
 {
+	ft_close(&data->pip.saved_stdin);
+	ft_close(&data->pip.saved_stdout);
 	ft_free_dchar(data->to_free.env_tab);
 	ft_free_dchar(cmd);
 	ft_free_dchar(cmd_quotes);

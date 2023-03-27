@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parsing_pt2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 07:35:47 by pbizien           #+#    #+#             */
-/*   Updated: 2023/03/27 16:11:05 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/03/27 19:54:49 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,9 @@ size_t	ft_strlen_ws_quotes(const char *str)
 char	*ft_check_env(char *str, t_data *data)
 {
 	t_env	*tmp_env;
+	char	str2[1];
 
+	str2[0] = -1;
 	tmp_env = &data->env;
 	if (str && str[0] == '?' && g_err_value != 130)
 		return (ft_itoa(data->last_err_num));
@@ -55,7 +57,7 @@ char	*ft_check_env(char *str, t_data *data)
 			return (ft_strdup(tmp_env->value));
 		tmp_env = tmp_env->next;
 	}
-	return (NULL);
+	return (ft_strdup(str2));
 }
 
 int	ft_is_hd(char *str, int i)
