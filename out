@@ -1,0 +1,2 @@
+cat | ls > out
+[0m
