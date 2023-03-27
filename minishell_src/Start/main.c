@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 10:35:10 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/03/23 16:06:02 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/27 14:33:16 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*ft_prompt(void)
 	i = 0;
 	path = getcwd(NULL, 0);
 	if (!path)
-		return (NULL);
+		return (readline("\001\e[36;1m\002minishell\001\e[0m\002"));
 	while (path && path[i])
 		i++;
 	i--;
@@ -103,7 +103,7 @@ int	main(int ac, char **av, char**envp)
 		data.to_free.cpy_str_tty = ft_strdup(data.to_free.str);
 	}
 	if (!data.bool_redir_0 && !data.bool_redir_2)
-		write(2, "\nexit\n", 6);
+		write(2, "exit\n", 5);
 	return (free(data.to_free.cpy_str_tty), free(data.to_free.str), \
 		ft_close(&data.pip.saved_stdin), ft_close(&data.pip.saved_stdout), \
 		ft_free_end(&data), g_err_value);
