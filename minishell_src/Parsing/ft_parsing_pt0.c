@@ -6,27 +6,13 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 12:02:48 by pbizien           #+#    #+#             */
-/*   Updated: 2023/03/27 21:08:31 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/27 21:29:32 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../_Include/minishell.h"
 
 extern int	g_err_value;
-
-int	ft_test_neg(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str && str[i])
-	{
-		if (str[i] < 0)
-			return (1);
-		i++;
-	}
-	return (0);
-}
 
 int	ft_verif_ambig_bis(char *str, int i, int *r_val)
 {
@@ -42,7 +28,6 @@ int	ft_verif_ambig_bis(char *str, int i, int *r_val)
 		else
 			break ;
 	}
-	// (void)r_val;
 	return (1);
 }
 
@@ -84,11 +69,11 @@ int	ft_del_fvar_search_chev(char *str, int i)
 	return (0);
 }
 
-char *ft_del_fvar(char *str)
+char	*ft_del_fvar(char *str)
 {
 	int	i;
-	int start;
-	int end;
+	int	start;
+	int	end;
 
 	i = 0;
 	while (str && str[i])
@@ -104,7 +89,6 @@ char *ft_del_fvar(char *str)
 				ft_memmove(str + start, str + end, ft_strlen(str + end) + 1);
 			else
 				ft_memmove(str + i, str + i + 1, ft_strlen(str + i + 1) + 1);
-				
 			i = 0;
 		}
 		else
@@ -116,8 +100,7 @@ char *ft_del_fvar(char *str)
 char	*ft_parse(char *str, t_data *data)
 {
 	char	*tmp;
-	
-	
+
 	if (ft_test_neg(str) == 1)
 		return (ft_putstr_fd("ASCII over 127\n", 2), NULL);
 	str = ft_convert_variable(str, data);
@@ -131,17 +114,12 @@ char	*ft_parse(char *str, t_data *data)
 	str = ft_clean(str, data);
 	if (!str || ft_verif_et_ou(str) == 0 || \
 	ft_verif_just_chev(str) == 0 || ft_verif_pipe(str) == 0)
-	{
-		free(str);
-		g_err_value = 2;
-		return (NULL);
-	}
+		return (free(str), g_err_value = 2, NULL);
 	ft_verif_ambig(str);
 	str = ft_del_fvar(str);
 	if (str && str[0] == '\0')
 		return (free(str), NULL);
 	data->args = ft_split_lq_k(str, "|");
-	// ft_print_dchar(data->args);
 	if (data->args == NULL)
 		return (ft_pb_malloc(data), free(str), NULL);
 	ft_clean_ws(data);

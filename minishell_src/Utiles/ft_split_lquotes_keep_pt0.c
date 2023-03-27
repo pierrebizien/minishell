@@ -6,28 +6,13 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 18:29:02 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/03/27 20:16:02 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/27 21:31:43 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 extern int	g_err_value;
-
-void	free_tabstr_5(char **tab)
-{
-	size_t	i;
-
-	if (!tab)
-		return ;
-	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
-}
 
 int	set_mem_5_if(char **tab, char const *s, t_split *split)
 {
@@ -50,7 +35,7 @@ void	set_mem_5_while(char const *s, char *sep, t_split	*split)
 	}
 }
 
-int set_mem_sep(char **tab, char const *s, char*sep, t_split *split)
+int	set_mem_sep(char **tab, char const *s, char*sep, t_split *split)
 {
 	(void)s;
 	tab[split->i] = malloc(sizeof(char) * (ft_strlen(sep) + 1));
@@ -77,7 +62,6 @@ int	set_mem_5(char **tab, char const *s, char *sep, t_split	*split)
 		{
 			if (set_mem_5_if(tab, s, split) == 0)
 				return (0);
-			// if (s[split->index])
 		}
 		else if (is_sep_5(s[split->index], sep))
 			set_mem_sep(tab, s, sep, split);

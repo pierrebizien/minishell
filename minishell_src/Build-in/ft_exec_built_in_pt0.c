@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:14:54 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/03/27 21:23:19 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/27 21:32:49 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	ft_exec_cmd_solo(t_data *data, char **cmd, char **cmd_quotes)
 {
 	if (!contain_token(&data->exec, F_CMD, 0))
 		return (0);
-	// write(1, "TEST\n\n\n", 7);
 	ft_dup_manage(data, 0);
 	if (ft_test_builtin(cmd) == 1)
 	{
@@ -35,7 +34,6 @@ int	ft_exec_cmd_solo(t_data *data, char **cmd, char **cmd_quotes)
 		dup2(data->pip.saved_stdin, 0);
 		dup2(data->pip.saved_stdout, 1);
 		ft_close_all(data->pip, data);
-
 		return (1);
 	}
 	else
@@ -72,7 +70,7 @@ int	ft_exec_built_in_solo_test_builtin(t_exec *begin, t_data *data, int *rt_val)
 	}
 	if (!ft_test_builtin(data->to_free.cmd))
 		return (ft_close_all(data->pip, data), ft_free_dchar(data->to_free.cmd) \
-, ft_free_dchar(data->to_free.cmd_quotes), ft_close(&data->pip.saved_stdin) , \
+, ft_free_dchar(data->to_free.cmd_quotes), ft_close(&data->pip.saved_stdin), \
 ft_close(&data->pip.saved_stdout), *rt_val = 0);
 	return (*rt_val = 1);
 }

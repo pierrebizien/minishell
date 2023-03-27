@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 18:54:23 by pbizien           #+#    #+#             */
-/*   Updated: 2023/03/27 12:30:56 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/27 21:36:41 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,16 +106,16 @@ static int	ft_plus_egal_export(char *str, t_data *data, char **cmd_quotes)
 	return (0);
 }
 
-void ft_export_local(char *str, t_data *data)
+void	ft_export_local(char *str, t_data *data)
 {
-	int i;
-	char **newtab;
+	int		i;
+	char	**newtab;
 
 	i = -1;
 	while (data->just_export && data->just_export[++i])
 	{
 		if (ft_strcmp(data->just_export[i], str) == 0)
-			return ;	
+			return ;
 	}
 	newtab = malloc(sizeof(char *) * (ft_strstrlen(data->just_export) + 2));
 	newtab[ft_strstrlen(data->just_export) + 1] = 0;
@@ -125,34 +125,4 @@ void ft_export_local(char *str, t_data *data)
 	newtab[ft_strstrlen(data->just_export)] = ft_strdup(str);
 	free(data->just_export);
 	data->just_export = newtab;
-}
-
-
-int	ft_export(char **cmd, t_data *data, char **cmd_quotes)
-{
-	int		i;
-	int		error;
-
-	i = 1;
-	error = 0;
-	if (ft_verif_option_export(cmd, cmd_quotes))
-		return (2);
-	if (ft_strstrlen(cmd) == 1)
-		return (ft_just_export(data));
-	while (cmd[i])
-	{
-		if (ft_verif_str_export(cmd[i]) == 0)
-		{
-			ft_export_putstr(cmd[i]);
-			error = 1;
-		}
-		else if (ft_verif_str_export(cmd[i]) == 1)
-			ft_export_local(cmd[i], data);
-		else if (ft_verif_str_export(cmd[i]) == 2)
-			ft_ok_export(cmd[i], data, cmd_quotes);
-		else if (ft_verif_str_export(cmd[i]) == 3)
-			ft_plus_egal_export(cmd[i], data, cmd_quotes);
-		i++;
-	}
-	return (error);
 }

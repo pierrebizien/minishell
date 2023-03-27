@@ -22,6 +22,7 @@ SRCS += ft_cmd_env.c
 SRCS += ft_cmd_echo.c
 SRCS += ft_cmd_export_pt0.c
 SRCS += ft_cmd_export_pt1.c
+SRCS += ft_cmd_export_pt2.c
 SRCS += ft_cmd_pwd.c
 SRCS += ft_cmd_cd_pt0.c
 SRCS += ft_cmd_unset.c

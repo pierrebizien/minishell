@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 01:03:48 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/03/27 19:14:49 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/27 21:31:10 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,6 @@ void	ft_close_all(t_pip pip, t_data *data)
 	(void) data;
 	ft_close(&pip.fd_in);
 	ft_close(&pip.fd_out);
-	// ft_close(&data->pip.saved_stdin);
-	// ft_close(&data->pip.saved_stdout);
 	ft_close(&pip.pipefd1[0]);
 	ft_close(&pip.pipefd1[1]);
 	ft_close(&pip.pipefd2[0]);

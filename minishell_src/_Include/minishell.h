@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 16:05:10 by pbizien           #+#    #+#             */
-/*   Updated: 2023/03/27 17:13:14 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/03/27 21:37:26 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,7 @@ int		ft_parse_for_e_end(t_data *data);
 void	ft_pb_malloc(t_data *data);
 void	ft_free_list(t_exec *begin);
 void	ft_free_err_mal_cmd_solo(char **cmd, char **cmd_quotes, t_data *data);
+int		ft_test_neg(char *str);
 
 //FT_INIT
 
@@ -235,14 +236,12 @@ int		is_sep_3(char c, char *sep);
 char	**ft_split_lq_k(char const *s, char *sep);
 void	fill_tab_5(char *new, char const *s, int len);
 size_t	count_words_5(char const *s, char *sep);
-int	is_sep_5(char c, char *sep);
-int	set_mem_5(char **tab, char const *s, char *sep, t_split	*split);
-int set_mem_sep(char **tab, char const *s, char*sep, t_split *split);
+int		is_sep_5(char c, char *sep);
+int		set_mem_5(char **tab, char const *s, char *sep, t_split	*split);
+int		set_mem_sep(char **tab, char const *s, char*sep, t_split *split);
 void	set_mem_5_while(char const *s, char *sep, t_split	*split);
-int	set_mem_5_if(char **tab, char const *s, t_split *split);
+int		set_mem_5_if(char **tab, char const *s, t_split *split);
 void	free_tabstr_5(char **tab);
-
-
 
 //FT_STRTRIM_LQ
 char	*ft_strtrim_lq(char const *s1);
@@ -294,7 +293,7 @@ void	ft_maj_quotes(int *dq, int *sq, char c);
 void	ft_close(int *fd);
 char	**ft_join_dstr(char **dest, char *src);
 void	ft_print_dchar(char **strstr);
-
+void	free_tabstr_5(char **tab);
 
 //FT_HEREDOC
 void	ft_heredoc_end(t_data *data, char *delimiter, int w, char *str);

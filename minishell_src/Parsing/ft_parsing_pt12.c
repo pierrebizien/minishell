@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parsing_pt12.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 07:35:47 by pbizien           #+#    #+#             */
-/*   Updated: 2023/03/23 12:50:50 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/03/27 21:29:36 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,19 @@ int	ft_parse_for_e_end(t_data *data)
 		return (g_err_value);
 	}
 	data->pip.nb_pipes = ft_count_pipes(&data->exec);
+	return (0);
+}
+
+int	ft_test_neg(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str && str[i])
+	{
+		if (str[i] < 0)
+			return (1);
+		i++;
+	}
 	return (0);
 }
