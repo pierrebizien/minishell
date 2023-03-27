@@ -76,6 +76,8 @@ SRCS += ft_split_leave_pt0.c
 SRCS += ft_split_leave_pt1.c
 SRCS += ft_split_lquotes_pt0.c
 SRCS += ft_split_lquotes_pt1.c
+SRCS += ft_split_lquotes_keep_pt0.c
+SRCS += ft_split_lquotes_keep_pt1.c
 SRCS += ft_utils_pt1.c
 SRCS += ft_utils_pt2.c
 

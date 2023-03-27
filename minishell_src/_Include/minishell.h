@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 16:05:10 by pbizien           #+#    #+#             */
-/*   Updated: 2023/03/27 12:10:04 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/27 17:13:14 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,6 +231,18 @@ int		set_mem_3(char **tab, char const *s, char *sep);
 char	**ft_split_l(char const *s, char *sep);
 //1
 int		is_sep_3(char c, char *sep);
+
+char	**ft_split_lq_k(char const *s, char *sep);
+void	fill_tab_5(char *new, char const *s, int len);
+size_t	count_words_5(char const *s, char *sep);
+int	is_sep_5(char c, char *sep);
+int	set_mem_5(char **tab, char const *s, char *sep, t_split	*split);
+int set_mem_sep(char **tab, char const *s, char*sep, t_split *split);
+void	set_mem_5_while(char const *s, char *sep, t_split	*split);
+int	set_mem_5_if(char **tab, char const *s, t_split *split);
+void	free_tabstr_5(char **tab);
+
+
 
 //FT_STRTRIM_LQ
 char	*ft_strtrim_lq(char const *s1);
