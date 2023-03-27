@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 00:15:27 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/03/23 00:18:40 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/27 12:28:01 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	ft_free_env(t_data *data)
 	t_env	*tmp;
 	t_env	*adresse;
 
+	ft_free_dchar(data->just_export);
 	tmp = &data->env;
 	free(tmp->key);
 	free(tmp->value);

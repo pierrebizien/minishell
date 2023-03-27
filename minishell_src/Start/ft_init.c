@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 00:28:58 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/03/23 16:08:29 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/27 11:53:15 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	ft_init_data(char **env, t_data *data)
 	data->to_free.str = NULL;
 	data->to_free.cmd = NULL;
 	data->to_free.cmd_quotes = NULL;
+	data->just_export = NULL;
 }
 
 int	ft_init(char **env, t_data *data)
