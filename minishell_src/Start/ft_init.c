@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 00:28:58 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/03/27 11:53:15 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/27 19:08:17 by pbizien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void	ft_init_data(char **env, t_data *data)
 
 int	ft_init(char **env, t_data *data)
 {
-	ft_logo();
 	ft_init_data(env, data);
 	ft_init_pipex_pipe(data);
 	ft_create_env(env, data);
