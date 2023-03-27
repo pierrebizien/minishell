@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec_built_in_pt0.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:14:54 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/03/23 14:41:40 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/03/27 18:12:31 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,17 @@ int	ft_exec_cmd_solo(t_data *data, char **cmd, char **cmd_quotes)
 {
 	if (!contain_token(&data->exec, F_CMD, 0))
 		return (0);
+	// write(1, "TEST\n\n\n", 7);
 	ft_dup_manage(data, 0);
 	if (ft_test_builtin(cmd) == 1)
 	{
-		ft_close_all(data->pip, data);
 		ft_exec_builtin(cmd, data, cmd_quotes);
 		ft_init_in_out(data);
 		dup2(data->pip.saved_stdin, 0);
 		dup2(data->pip.saved_stdout, 1);
+		ft_close_all(data->pip, data);
+		// fprintf(stderr, "data->pip.saved_stdin = %d\n", data->pip.saved_stdout);
+		// fprintf(stderr, "data->pip.saved_stdin = %d\n", data->pip.saved_stdout);
 		return (1);
 	}
 	else
