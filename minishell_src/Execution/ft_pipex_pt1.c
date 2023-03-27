@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 11:43:04 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/03/23 12:54:11 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/27 21:16:29 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ void	ft_free_child_exec(t_data *data, char **cmd, char **cmd_quotes)
 	free(data->oldpwd);
 	free(data->pwd);
 	ft_close_all(data->pip, data);
+	ft_close(&data->pip.saved_stdin);
+	ft_close(&data->pip.saved_stdout);
 	ft_free_list(&data->exec);
 }
 

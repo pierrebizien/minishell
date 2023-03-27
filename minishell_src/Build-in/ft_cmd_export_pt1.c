@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 18:54:23 by pbizien           #+#    #+#             */
-/*   Updated: 2023/03/27 12:28:40 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/27 21:19:04 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ int	ft_verif_option_export(char **cmd, char **cmd_quotes)
 			i++;
 		else if (cmd[i][0] == '-')
 			return (ft_putstr_fd("export: usage: export \
-				[name[=value] ...] (no option)\n", 2), 1);
+[name[=value] ...] (no option)\n", 2), 1);
 		else
 			i++;
 	}

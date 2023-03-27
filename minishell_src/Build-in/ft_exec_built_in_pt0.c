@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 20:14:54 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/03/27 20:15:56 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/27 21:23:19 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	ft_free_child_exec_solo(t_data *data, char **cmd, char **cmd_quotes)
 	(void) data;
 	ft_free_dchar(cmd_quotes);
 	ft_free_dchar(cmd);
+	ft_close(&data->pip.saved_stdin);
+	ft_close(&data->pip.saved_stdout);
 }
 
 int	ft_exec_built_in_solo_test_builtin(t_exec *begin, t_data *data, int *rt_val)
@@ -70,7 +72,8 @@ int	ft_exec_built_in_solo_test_builtin(t_exec *begin, t_data *data, int *rt_val)
 	}
 	if (!ft_test_builtin(data->to_free.cmd))
 		return (ft_close_all(data->pip, data), ft_free_dchar(data->to_free.cmd) \
-			, ft_free_dchar(data->to_free.cmd_quotes), *rt_val = 0);
+, ft_free_dchar(data->to_free.cmd_quotes), ft_close(&data->pip.saved_stdin) , \
+ft_close(&data->pip.saved_stdout), *rt_val = 0);
 	return (*rt_val = 1);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbizien <pbizien@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 10:35:10 by ngriveau          #+#    #+#             */
-/*   Updated: 2023/03/27 16:13:25 by pbizien          ###   ########.fr       */
+/*   Updated: 2023/03/27 21:13:36 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	main_pt2(t_data *data)
 		return (ft_putstr_fd(data->to_free.cpy_str_tty, 2), \
 			free(data->to_free.cpy_str_tty), ft_close_all(data->pip, data), \
 			free(data->oldpwd), free(data->pwd), ft_free_env(data), \
+			ft_close(&data->pip.saved_stdin), ft_close(&data->pip.saved_stdout) , \
 			exit(g_err_value), -22);
 	free(data->to_free.cpy_str_tty);
 	data->to_free.cpy_str_tty = NULL;
@@ -108,5 +109,5 @@ int	main(int ac, char **av, char**envp)
 		write(2, "exit\n", 5);
 	return (free(data.to_free.cpy_str_tty), free(data.to_free.str), \
 		ft_close(&data.pip.saved_stdin), ft_close(&data.pip.saved_stdout), \
-		ft_free_end(&data), g_err_value);
+		ft_free_end(&data), data.last_err_num);
 }

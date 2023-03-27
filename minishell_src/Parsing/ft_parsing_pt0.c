@@ -6,7 +6,7 @@
 /*   By: ngriveau <ngriveau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 12:02:48 by pbizien           #+#    #+#             */
-/*   Updated: 2023/03/27 20:32:30 by ngriveau         ###   ########.fr       */
+/*   Updated: 2023/03/27 21:08:31 by ngriveau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	ft_verif_ambig_bis(char *str, int i, int *r_val)
 	{
 		if (is_ws(str[j]))
 			j--;
-		else if (str[j] == '<')
+		else if (str[j] == '<' || str[j] == '>')
 			return (ft_putstr_fd("ambiguous redirect\n", 2), *r_val = 0, 0);
 		else
 			break ;
@@ -69,6 +69,21 @@ int	ft_verif_ambig(char *str)
 	return (1);
 }
 
+int	ft_del_fvar_search_chev(char *str, int i)
+{
+	i--;
+	while (0 <= i && str[i])
+	{
+		if (is_ws(str[i]))
+			i--;
+		else if (str[i] == '<' || str[i] == '>')
+			return (1);
+		else
+			return (0);
+	}
+	return (0);
+}
+
 char *ft_del_fvar(char *str)
 {
 	int	i;
@@ -85,8 +100,11 @@ char *ft_del_fvar(char *str)
 			end = i;
 			while (str[end] != '|' && str[end] != '\0')
 				end++;
-			
-			ft_memmove(str + start, str + end, ft_strlen(str + end) + 1);
+			if (ft_del_fvar_search_chev(str, i) == 1)
+				ft_memmove(str + start, str + end, ft_strlen(str + end) + 1);
+			else
+				ft_memmove(str + i, str + i + 1, ft_strlen(str + i + 1) + 1);
+				
 			i = 0;
 		}
 		else
